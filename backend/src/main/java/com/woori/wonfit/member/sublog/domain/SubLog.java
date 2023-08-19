@@ -2,6 +2,7 @@ package com.woori.wonfit.member.sublog.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
+import com.woori.wonfit.product.product.domain.Product;
 import lombok.Getter;
 
 import javax.persistence.*;
