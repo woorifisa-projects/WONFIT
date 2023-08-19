@@ -23,7 +23,7 @@ public class Member {
     @Column(name = "member_login_id", length = 15, nullable = false)
     private String memberLoginId; // 회원 아이디 (10자 이하)
 
-    @Column(name = "member_pw", length = 20, nullable = false)
+    @Column(name = "member_pw", length = 100, nullable = false)
     private String memberPw; // 회원 패스워드 (20자 이하)
 
     @Column(name = "member_name", length = 10, nullable = false)

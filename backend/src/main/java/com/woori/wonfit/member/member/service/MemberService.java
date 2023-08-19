@@ -29,14 +29,14 @@ public class MemberService {
         return MemberDto.fromEntity(saveMember);
     }
 
-    public String login(String memberId, String memberPw) {
-        Member member = memberRepository.findByMemberLoginId(memberId)
-                .orElseThrow(() -> new RuntimeException("가입되지 않은 사원입니다."));
+    public String login(String memberLoginId, String memberPw) {
+        Member member = memberRepository.findByMemberLoginId(memberLoginId)
+                .orElseThrow(() -> new RuntimeException("회원정보를 찾을 수 없습니다."));
 
         if (!bCryptPasswordEncoder.matches(memberPw, member.getMemberPw())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
-        return JwtUtil.createToken(memberId, expireTimeMs);
+        return JwtUtil.createToken(memberLoginId, expireTimeMs);
     }
 }
