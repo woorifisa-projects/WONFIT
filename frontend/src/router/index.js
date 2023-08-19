@@ -40,6 +40,15 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "ivtest" */ "@/views/Ivtest.vue"),
       },
+
+      {
+        path: "managerpage",
+        name: "Managerpage",
+        component: () =>
+          import(
+            /* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"
+          ),
+      },
     ],
   },
 ];
