@@ -2,7 +2,6 @@ package com.woori.wonfit.member.member.domain;
 
 
 import com.woori.wonfit.member.sublog.domain.SubLog;
-import com.woori.wonfit.product.productdeposit.domain.ProductDeposit;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 

@@ -1,4 +1,4 @@
-package com.woori.wonfit.member.member;
+package com.woori.wonfit.member.member.repository;
 
 
 import com.woori.wonfit.member.member.domain.Member;

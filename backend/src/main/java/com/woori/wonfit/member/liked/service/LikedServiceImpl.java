@@ -2,7 +2,7 @@ package com.woori.wonfit.member.liked.service;
 
 import com.woori.wonfit.member.liked.domain.Liked;
 import com.woori.wonfit.member.liked.repository.LikedRepository;
-import com.woori.wonfit.member.member.domain.MemberRepository;
+import com.woori.wonfit.member.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
