@@ -33,7 +33,7 @@ public class Member {
     private String memberEmail; // 회원 이메일
 
     @Column(name = "member_registration_number", length = 13, nullable = false)
-    private byte memberRegistrationNumber; // 회원 주민번호
+    private String memberRegistrationNumber; // 회원 주민번호
 
     @Column(name = "member_status")
     @ColumnDefault("1")
