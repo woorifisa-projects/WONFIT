@@ -1,7 +1,6 @@
 package com.woori.wonfit.product.productsavings.domain;
 
 
-import com.woori.wonfit.product.product.domain.Product;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -13,9 +12,9 @@ public class ProductSavings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+//    @OneToOne
+//    @JoinColumn(name = "product_id")
+//    private Product product;
 
     @Column(name = "product_savings_name")
     private String productSavingsName;

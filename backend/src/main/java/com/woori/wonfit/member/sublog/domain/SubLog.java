@@ -2,11 +2,13 @@ package com.woori.wonfit.member.sublog.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.product.product.domain.Product;
+import com.woori.wonfit.product.productdeposit.domain.ProductDeposit;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,13 +18,9 @@ public class SubLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product productId; // 상품 아이디
 
     @Column(name = "sub_date")
     private LocalDateTime subDate; // 가입 날짜
@@ -40,6 +38,7 @@ public class SubLog {
     @Column(name = "sub_status")
     private SubStatus subStatus; // 가입 상태(가입 중, 만료, 해지 등)
 
-    @Column(name = "monthly_charge" ,nullable = true)
+    @Column(name = "monthly_charge", nullable = true)
     private int monthlyCharge; //월 납입 금액
+
 }

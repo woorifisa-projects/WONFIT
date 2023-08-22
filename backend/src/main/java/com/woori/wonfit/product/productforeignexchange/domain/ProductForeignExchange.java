@@ -1,7 +1,6 @@
 package com.woori.wonfit.product.productforeignexchange.domain;
 
 
-import com.woori.wonfit.product.product.domain.Product;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -14,9 +13,9 @@ public class ProductForeignExchange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+//    @OneToOne
+//    @JoinColumn(name = "product_id")
+//    private Product product;
 
     @Column(name = "product_foreign_exchange_name")
     private String productForeignExchangeName;
