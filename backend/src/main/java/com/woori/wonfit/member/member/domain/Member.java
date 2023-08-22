@@ -1,19 +1,20 @@
 package com.woori.wonfit.member.member.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.woori.wonfit.member.sublog.domain.SubLog;
+import com.woori.wonfit.product.productdeposit.domain.ProductDeposit;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Builder
-@Entity
 @Table(name = "member")
 public class Member {
     @Id
@@ -32,16 +33,18 @@ public class Member {
     @Column(name = "member_email", length = 50, nullable = false)
     private String memberEmail; // 회원 이메일
 
-    @Column(name = "member_registration_number", length = 13, nullable = false)
+    @Column(name = "member_registration_number", length = 20, nullable = false)
     private String memberRegistrationNumber; // 회원 주민번호
 
     @Column(name = "member_status")
     @ColumnDefault("1")
-    private boolean status; // 회원 상태(정상, 탈퇴) 휴면 추가할건지?
+    private boolean status; // 회원 상태(정상, 탈퇴)
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SubLog> subLogs = new ArrayList<>();
 
 
-
-// ID: 영문/숫자 10자 이하
+// ID: 영문/숫자 15자 이하
 // PW: 영문/숫자/특수문자 포함 8자 이상 최대 20자 이하
 
 }
