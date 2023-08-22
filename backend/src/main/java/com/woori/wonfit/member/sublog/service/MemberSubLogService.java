@@ -1,6 +1,5 @@
 package com.woori.wonfit.member.sublog.service;
 
-import com.woori.wonfit.member.member.MemberRepository;
 import com.woori.wonfit.member.sublog.domain.SubLog;
 import com.woori.wonfit.member.sublog.repository.MemberSubLogRepository;
 import lombok.RequiredArgsConstructor;
