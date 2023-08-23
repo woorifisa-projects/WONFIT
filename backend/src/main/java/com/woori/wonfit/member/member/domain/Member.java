@@ -39,8 +39,6 @@ public class Member {
     @ColumnDefault("1")
     private boolean status; // 회원 상태(정상, 탈퇴)
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SubscribeLog> subLogs = new ArrayList<>();
 
 
 // ID: 영문/숫자 15자 이하

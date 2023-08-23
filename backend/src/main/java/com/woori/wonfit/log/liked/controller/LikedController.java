@@ -1,7 +1,7 @@
-package com.woori.wonfit.member.liked.controller;
+package com.woori.wonfit.log.liked.controller;
 
-import com.woori.wonfit.member.liked.domain.Liked;
-import com.woori.wonfit.member.liked.service.LikedServiceImpl;
+import com.woori.wonfit.log.liked.service.LikedServiceImpl;
+import com.woori.wonfit.log.liked.domain.Liked;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

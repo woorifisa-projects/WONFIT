@@ -1,4 +1,4 @@
-package com.woori.wonfit.member.liked.domain;
+package com.woori.wonfit.log.liked.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;

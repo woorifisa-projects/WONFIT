@@ -1,6 +1,5 @@
 package com.woori.wonfit.log.loginlog.domain;
 
-
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Table(name = "member_login_log")
-public class MemberLoginLog {
+public class LoginLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

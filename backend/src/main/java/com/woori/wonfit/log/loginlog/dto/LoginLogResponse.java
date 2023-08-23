@@ -1,4 +1,4 @@
 package com.woori.wonfit.log.loginlog.dto;
 
-public class MemberLoginLogResponse {
+public class LoginLogResponse {
 }

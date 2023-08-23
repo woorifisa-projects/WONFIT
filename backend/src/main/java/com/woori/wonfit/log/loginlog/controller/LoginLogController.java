@@ -1,4 +1,4 @@
 package com.woori.wonfit.log.loginlog.controller;
 
-public class MemberLoginLog {
+public class LoginLogController {
 }
