@@ -1,7 +1,7 @@
 package com.woori.wonfit.member.member.domain;
 
 
-import com.woori.wonfit.member.subscribelog.domain.SubscribeLog;
+import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
