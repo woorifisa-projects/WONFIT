@@ -1,4 +1,2 @@
-package com.woori.wonfit.product.deposit.service;
-
-public class DepositService {
+package com.woori.wonfit.product.deposit.service;public interface DepositService {
 }

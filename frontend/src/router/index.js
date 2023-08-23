@@ -8,54 +8,67 @@ const routes = [
     children: [
       {
         path: "",
-        name: "Main",
-        component: () =>
-          import(/* webpackChunkName: "main" */ "@/views/Main.vue"),
+        name: "MainPage",
+        component: () => import(/* webpackChunkName: "main" */ "@/views/Main.vue"),
       },
 
       {
         path: "login",
-        name: "Login",
-        component: () =>
-          import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
+        name: "LoginPage",
+        component: () => import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
       },
 
       {
         path: "signup",
-        name: "Signup",
-        component: () =>
-          import(/* webpackChunkName: "signup" */ "@/views/Signup.vue"),
+        name: "SignupPage",
+        component: () => import(/* webpackChunkName: "signup" */ "@/views/Signup.vue"),
       },
 
       {
         path: "recommend",
         name: "Recommend",
-        component: () =>
-          import(/* webpackChunkName: "recommend" */ "@/views/Recommend.vue"),
+        component: () => import(/* webpackChunkName: "recommend" */ "@/views/Recommend.vue"),
       },
 
       {
-        path: "ivtest",
-        name: "Ivtest",
-        component: () =>
-          import(/* webpackChunkName: "ivtest" */ "@/views/Ivtest.vue"),
+        path: "fundtest",
+        name: "fundtest",
+        component: () => import(/* webpackChunkName: "fundtest" */ "@/views/FundTest.vue"),
+      },
+
+      {
+        path: "loantest",
+        name: "loantest",
+        component: () => import(/* webpackChunkName: "loantest" */ "@/views/LoanTest.vue"),
+      },
+
+      {
+        path: "deposittest",
+        name: "deposittest",
+        component: () => import(/* webpackChunkName: "deposittest" */ "@/views/DepositTest.vue"),
+      },
+
+      {
+        path: "savingstest",
+        name: "savingstest",
+        component: () => import(/* webpackChunkName: "savingstest" */ "@/views/SavingsTest.vue"),
       },
 
       {
         path: "managerpage",
         name: "Managerpage",
-        component: () =>
-          import(
-            /* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"
-          ),
+        component: () => import(/* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"),
       },
+
       {
         path: "Income",
         name: "Income",
-        component: () =>
-          import(
-            /* webpackChunkName: "managerpage" */ "@/views/Income.vue"
-          ),
+        component: () => import(/* webpackChunkName: "managerpage" */ "@/views/Income.vue"),
+      },
+      {
+        path: "mypage",
+        name: "MyPage",
+        component: () => import(/* webpackChunkName: "mypage" */ "@/views/MyPage.vue"),
       },
     ],
   },
