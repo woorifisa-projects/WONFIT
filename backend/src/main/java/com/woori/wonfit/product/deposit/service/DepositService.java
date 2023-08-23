@@ -1,4 +1,9 @@
 package com.woori.wonfit.product.deposit.service;
 
-public class DepositService {
+import com.woori.wonfit.product.deposit.dto.DepositResponse;
+
+import java.util.List;
+
+public interface DepositService {
+    List<DepositResponse> findAll();
 }
