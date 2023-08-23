@@ -1,7 +1,7 @@
 package com.woori.wonfit.member.member.domain;
 
 
-import com.woori.wonfit.member.sublog.domain.SubLog;
+import com.woori.wonfit.member.subscribelog.domain.SubscribeLog;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -40,7 +40,7 @@ public class Member {
     private boolean status; // 회원 상태(정상, 탈퇴)
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SubLog> subLogs = new ArrayList<>();
+    private List<SubscribeLog> subLogs = new ArrayList<>();
 
 
 // ID: 영문/숫자 15자 이하
