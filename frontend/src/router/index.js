@@ -49,6 +49,14 @@ const routes = [
             /* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"
           ),
       },
+      {
+        path: "Income",
+        name: "Income",
+        component: () =>
+          import(
+            /* webpackChunkName: "managerpage" */ "@/views/Income.vue"
+          ),
+      },
     ],
   },
 ];
