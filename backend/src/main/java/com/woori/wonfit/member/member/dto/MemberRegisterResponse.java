@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class MemberRegisterResponse {
-    private String memberLoginId;
+    private String loginId;
 }

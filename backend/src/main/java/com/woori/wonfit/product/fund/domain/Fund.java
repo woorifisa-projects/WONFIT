@@ -1,9 +1,13 @@
 package com.woori.wonfit.product.fund.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
+import lombok.Getter;
 
 import javax.persistence.*;
 
+@Entity
+@Getter
+@Table(name = "fund")
 public class Fund {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

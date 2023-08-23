@@ -1,6 +1,5 @@
-package com.woori.wonfit.product.deposit.repository;
+package com.woori.wonfit.product.deposit.domain;
 
-import com.woori.wonfit.product.deposit.domain.Deposit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

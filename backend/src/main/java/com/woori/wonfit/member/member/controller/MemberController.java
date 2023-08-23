@@ -19,12 +19,12 @@ public class MemberController {
     @PostMapping("/register")
     public ResponseEntity<MemberRegisterResponse> register(@RequestBody MemberRegisterRequest memeberRegisterRequest) {
         MemberDto memberDto = memberService.register(memeberRegisterRequest);
-        return new ResponseEntity<>(new MemberRegisterResponse(memberDto.getMemberLoginId()), HttpStatus.OK);
+        return new ResponseEntity<>(new MemberRegisterResponse(memberDto.getLoginId()), HttpStatus.OK);
     }
 
     @PostMapping("/login")
     public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String token = memberService.login(memberLoginRequest.getMemberLoginId(), memberLoginRequest.getMemberPw());
+        String token = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
         return new ResponseEntity<>(new MemberLoginResponse(token), HttpStatus.OK);
     }
 }

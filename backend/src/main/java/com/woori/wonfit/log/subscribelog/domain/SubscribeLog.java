@@ -2,6 +2,10 @@ package com.woori.wonfit.log.subscribelog.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
+import com.woori.wonfit.product.deposit.domain.Deposit;
+import com.woori.wonfit.product.fund.domain.Fund;
+import com.woori.wonfit.product.loan.domain.Loan;
+import com.woori.wonfit.product.savings.domain.Savings;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -25,7 +29,28 @@ public class SubscribeLog {
     @Column(name = "expire_date")
     private LocalDateTime expireDate; // 만료 날짜
 
-    @Column(name = "sub_status")
-    private boolean subStatus; // ACTIVE(가입중), INACTIVE(해지)
+    @Column(name = "subscribe_deposit")
+    private int subDeposit; // 금융 상품 가입 시 예금 금액
 
+    @Column(name = "monthly_charge")
+    private int monthlyCharge; //월 납입 금액
+
+    @Column(name = "subscribe_status")
+    private boolean subscribeStatus; // ACTIVE(가입중), INACTIVE(해지)
+
+    @ManyToOne
+    @JoinColumn(name = "deposit_id")
+    private Deposit deposit;
+
+    @ManyToOne
+    @JoinColumn(name = "savings_id")
+    private Savings savings;
+
+    @ManyToOne
+    @JoinColumn(name = "fund_id")
+    private Fund fund;
+
+    @ManyToOne
+    @JoinColumn(name = "loan_id")
+    private Loan loan;
 }

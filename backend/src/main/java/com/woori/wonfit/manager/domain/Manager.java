@@ -1,23 +1,24 @@
 package com.woori.wonfit.manager.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name ="question")
 @Getter
-@ToString
-@NoArgsConstructor
+@Table(name ="manager")
 public class Manager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "question_id")
-    private Long questionId;
+    private Long id;
 
-    @Column(name = "question_content")
-    private String questionContent;
+    @Column(name = "login_id")
+    private Long lgoinId;
+
+    @Column(name = "password")
+    private String password;
+
 }
+
+

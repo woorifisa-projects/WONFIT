@@ -12,18 +12,18 @@ import lombok.Getter;
 public class MemberDto {
 
     private Long id;
-    private String memberLoginId; // 회원 아이디
-    private String memberPw; // 회원 패스워드
-    private String memberEmail; // 회원 이메일
-    private String memberName; // 회원 이름
+    private String loginId; // 회원 아이디
+    private String password; // 회원 패스워드
+    private String email; // 회원 이메일
+    private String name; // 회원 이름
     private boolean status; // 회원 상태
 
     public static MemberDto fromEntity(Member member)  {
         MemberDto memberDto = MemberDto.builder()
-                .memberLoginId(member.getMemberLoginId())
-                .memberPw(member.getMemberPw())
-                .memberEmail(member.getMemberEmail())
-                .memberName(member.getMemberName())
+                .loginId(member.getLoginId())
+                .password(member.getPassword())
+                .email(member.getEmail())
+                .name(member.getName())
                 .status(member.isStatus())
                 .build();
         return memberDto;
