@@ -1,10 +1,9 @@
 package com.woori.wonfit.manager.service;
 
-import com.woori.wonfit.manager.domain.ManagerRepository;
+import com.woori.wonfit.manager.repository.ManagerRepository;
 import com.woori.wonfit.manager.dto.ManagerResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
