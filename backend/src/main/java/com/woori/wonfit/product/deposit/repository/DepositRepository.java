@@ -10,5 +10,4 @@ import java.util.List;
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
     List<Deposit> findByMemberId(Long memberId);
 
-    // Custom query methods can be added here
 }

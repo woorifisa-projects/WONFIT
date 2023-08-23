@@ -1,4 +1,4 @@
-package com.woori.wonfit.product.deposit.domain;
+package com.woori.wonfit.product.savings.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "deposit")
-public class Deposit {
+@Table(name = "savings")
+public class Savings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,8 +18,8 @@ public class Deposit {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "deposit_name")
-    private String depositName;
+    @Column(name = "savings_name")
+    private String savingsName;
 
     @Column(name = "interest_rate")
     private double interestRate;
@@ -30,16 +30,17 @@ public class Deposit {
     @Column(name = "target")
     private String target;
 
-    @Column(name = "min_deposit")
-    private int minDeposit;
+    @Column(name = "max_deposit")
+    private int maxDeposit;
 
-    @Column(name = "deposit_info")
-    private String depositInfo; // 간단 설명
+    @Column(name = "savings_info")
+    private String savingsInfo;
 
-    @Column(name = "deposit_desc")
-    private String depositDesc; // 상세 설명
+    @Column(name = "savings_desc")
+    private String savingsDesc; // 상세 설명
 
     @Column(name ="sorting_options")
     private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
+
 
 }

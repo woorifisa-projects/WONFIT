@@ -1,5 +1,6 @@
 package com.woori.wonfit.product.loan.domain;
 
+import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,22 +15,33 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @Column(name = "loan_name")
     private String loanName;
 
+    @Column(name = "interest_rate")
+    private double interestRate;
+
+    @Column(name = "period")
+    private int period;
+
+    @Column(name = "target")
+    private String target;
+
     @Column(name = "loan_limit")
-    private String limit;
-
-    @Column(name = "loan_target")
-    private String loanTarget; // 가입 대상
-
-    @Column(name = "loan_period")
-    private String loanPeriod; // 가입기간
-
-    @Column(name = "basic_interest_rate")
-    private double basicInterestRate; // 기본 금리
+    private long loanLimit;
 
     @Column(name = "loan_info")
-    private String loanInfo; // 상품 설명
+    private String loanInfo;
+
+    @Column(name = "loan_desc")
+    private String loanDesc; // 상세 설명
+
+    @Column(name ="sorting_options")
+    private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
+
 
 }
