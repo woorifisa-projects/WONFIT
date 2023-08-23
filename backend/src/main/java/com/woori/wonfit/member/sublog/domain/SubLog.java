@@ -2,13 +2,10 @@ package com.woori.wonfit.member.sublog.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.product.productdeposit.domain.ProductDeposit;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

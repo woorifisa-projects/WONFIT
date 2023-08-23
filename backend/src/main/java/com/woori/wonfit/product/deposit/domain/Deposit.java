@@ -1,16 +1,15 @@
-package com.woori.wonfit.product.productdeposit.domain;
+package com.woori.wonfit.product.deposit.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Table(name = "product_deposit")
-public class ProductDeposit {
+public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
