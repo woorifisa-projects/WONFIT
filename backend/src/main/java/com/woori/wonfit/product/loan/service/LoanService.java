@@ -1,4 +1,10 @@
 package com.woori.wonfit.product.loan.service;
 
-public class LoanService {
+import com.woori.wonfit.product.loan.dto.LoanResponse;
+
+import java.util.List;
+
+public interface LoanService {
+
+    List<LoanResponse> findAll();
 }

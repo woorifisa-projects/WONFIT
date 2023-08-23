@@ -1,19 +1,13 @@
 package com.woori.wonfit.log.subscribelog.service;
 
-import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
-import com.woori.wonfit.log.subscribelog.domain.SubscribeLogRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
+import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
+
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class SubscribeLogService {
 
-    private final SubscribeLogRepository subscribeLongRepository;
+public interface SubscribeLogService {
+    List<SubscribeLogResponse> findByMemberId(Long memberId);
 
-    public List<SubscribeLog> SubscribeLogsByMemberId(Long memberId) {
-        return subscribeLongRepository.findAllByMemberId(memberId);
-    }
 }
