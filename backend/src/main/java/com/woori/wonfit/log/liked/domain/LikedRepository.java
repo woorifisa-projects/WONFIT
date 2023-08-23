@@ -1,6 +1,5 @@
-package com.woori.wonfit.log.liked.repository;
+package com.woori.wonfit.log.liked.domain;
 
-import com.woori.wonfit.log.liked.domain.Liked;
 import org.springframework.data.repository.CrudRepository;
 
 

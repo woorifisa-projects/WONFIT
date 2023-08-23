@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "member_login_log")
+@Table(name = "login_log")
 public class LoginLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +18,12 @@ public class LoginLog {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(name = "login_browser")
+    private String loginBrowser; // login browser
+    @Column(name = "login_device")
+    private String loginDevice; // login device
     @Column(name = "login_time")
     private LocalDateTime loginTime; // login time
     @Column(name = "login_ip")
     private String loginIp; // login ip
-    @Column(name = "login_device")
-    private String loginDevice; // login device
-    @Column(name = "login_browser")
-    private String loginBrowser; // login browser
 }

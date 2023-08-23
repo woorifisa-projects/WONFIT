@@ -1,4 +1,4 @@
-package com.woori.wonfit.log.subscribelog.repository;
+package com.woori.wonfit.log.subscribelog.domain;
 
 import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import org.springframework.data.jpa.repository.JpaRepository;
