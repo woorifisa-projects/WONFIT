@@ -1,4 +1,4 @@
-package com.woori.wonfit.member.membersearchlog.domain;
+package com.woori.wonfit.member.searchlog.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
