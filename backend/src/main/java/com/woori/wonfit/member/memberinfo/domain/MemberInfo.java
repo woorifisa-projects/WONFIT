@@ -38,4 +38,7 @@ public class MemberInfo {
     @Column(name = "job")
     private String job;
 
+    @Column(name="invest_type", nullable = true)
+    private String investType; // 투자성향
+
 }
