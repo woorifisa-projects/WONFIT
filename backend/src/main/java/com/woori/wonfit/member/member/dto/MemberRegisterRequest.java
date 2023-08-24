@@ -1,6 +1,8 @@
 package com.woori.wonfit.member.member.dto;
 
 import com.woori.wonfit.member.member.domain.Member;
+import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
+import com.woori.wonfit.member.memberinfo.dto.MemberInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +18,14 @@ public class MemberRegisterRequest {
     private String email; // 회원 이메일
     private String name; // 회원 이름
     private String registrationNumber;
-    private boolean status; // 회원 상태
+
+    private String address;
+    private String job;
+    private int childrenCount;
+    private boolean isAnnuity;
+    private boolean isHouseHolder;
+    private boolean isMarried;
+    private boolean marketingInfoAgree;
 
     public Member toEntity(String password) {
         return Member.builder()
@@ -24,7 +33,18 @@ public class MemberRegisterRequest {
                 .email(email)
                 .name(name)
                 .registrationNumber(registrationNumber)
-                .status(status)
+                .build();
+    }
+
+    public MemberInfo toInfoEntity(MemberRegisterRequest request){
+        return MemberInfo.builder()
+                .address(request.address)
+                .job(request.job)
+                .childrenCount(request.childrenCount)
+                .isAnnuity(request.isAnnuity)
+                .isHouseholder(request.isHouseHolder)
+                .isMarried(request.isMarried)
+                .marketingInfoAgree(request.marketingInfoAgree)
                 .build();
     }
 }
