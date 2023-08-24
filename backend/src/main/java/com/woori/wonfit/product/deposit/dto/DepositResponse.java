@@ -17,5 +17,7 @@ public class DepositResponse {
     private int minDeposit;
     private String depositInfo;
     private String depositDesc;
+    private String depositType;
+
 }
 

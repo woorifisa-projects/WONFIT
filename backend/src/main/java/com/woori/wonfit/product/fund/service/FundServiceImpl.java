@@ -1,9 +1,9 @@
 package com.woori.wonfit.product.fund.service;
 
 import com.woori.wonfit.product.fund.domain.Fund;
-import com.woori.wonfit.product.fund.domain.FundRepository;
 import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.fund.dto.FundResponse;
+import com.woori.wonfit.product.fund.repository.FundRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,10 @@ public class FundServiceImpl implements FundService {
         List<FundResponse> getfunds = fundRepository.findAll()
                 .stream()
                 .map(fund -> new FundResponse
+
                         (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo(), fund.getFundDesc())).collect(Collectors.toList());
+
+      
 
 
         return getfunds;

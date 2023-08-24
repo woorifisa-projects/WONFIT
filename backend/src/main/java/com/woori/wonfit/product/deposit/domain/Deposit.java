@@ -15,10 +15,6 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
     @Column(name = "deposit_name")
     private String depositName;
 
@@ -39,6 +35,9 @@ public class Deposit {
 
     @Column(name = "deposit_desc")
     private String depositDesc; // 상세 설명
+
+    @Column(name = "deposit_type")
+    private String depositType; // 안정형, 중립형, 공격형
 
 
 }

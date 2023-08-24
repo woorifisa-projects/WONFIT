@@ -16,10 +16,6 @@ public class Savings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = true)
-    private Member member;
-
     @Column(name = "savings_name")
     private String savingsName;
 
@@ -41,6 +37,8 @@ public class Savings {
     @Column(name = "savings_desc")
     private String savingsDesc; // 상세 설명
 
+    @Column(name = "savings_type")
+    private String savingsType; // 안정형, 중립형, 공격형
 
 
 }

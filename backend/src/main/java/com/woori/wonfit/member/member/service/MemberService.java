@@ -2,7 +2,7 @@ package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.member.member.domain.JwtUtil;
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.domain.MemberRepository;
+import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import lombok.RequiredArgsConstructor;

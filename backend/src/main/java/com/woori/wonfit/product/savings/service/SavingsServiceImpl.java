@@ -1,6 +1,6 @@
 package com.woori.wonfit.product.savings.service;
 
-import com.woori.wonfit.product.savings.domain.SavingsRepository;
+import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import com.woori.wonfit.product.savings.dto.SavingsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,9 @@ public class SavingsServiceImpl implements SavingsService {
     @Override
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> getsavings = savingsRepository.findAll().stream()
+
                 .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsDesc()))
+
                         .collect(Collectors.toList());
 
         return getsavings;

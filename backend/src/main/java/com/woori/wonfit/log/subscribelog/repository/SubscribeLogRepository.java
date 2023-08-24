@@ -1,5 +1,6 @@
-package com.woori.wonfit.log.subscribelog.domain;
+package com.woori.wonfit.log.subscribelog.repository;
 
+import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
