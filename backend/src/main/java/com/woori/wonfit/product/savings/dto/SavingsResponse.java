@@ -12,11 +12,11 @@ public class SavingsResponse {
     private Long id;
     private String savingsName;
     private double interestRate;
-    private int priod;
+    private int period;
     private String target;
     private int maxDeposit;
     private String savingsInfo;
     private String savingsDesc;
-    private String sortingOptions;
+    private String savingsType;
 
 }

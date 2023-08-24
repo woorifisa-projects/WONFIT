@@ -14,9 +14,6 @@ public class Fund {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
 
     @Column(name = "fund_name")
     private String fundName;
@@ -38,8 +35,5 @@ public class Fund {
 
     @Column(name = "fund_desc")
     private String fundDesc; // 상세 설명
-
-    @Column(name ="sorting_options")
-    private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
 
 }

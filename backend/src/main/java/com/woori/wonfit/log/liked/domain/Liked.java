@@ -6,9 +6,12 @@ import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 @Getter
 @Table(name = "liked")
@@ -22,20 +25,25 @@ public class Liked {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "deposit_id")
+    @JoinColumn(name = "deposit_id", nullable = true)
     private Deposit deposit;
 
     @ManyToOne
-    @JoinColumn(name = "savings_id")
+    @JoinColumn(name = "savings_id", nullable = true)
     private Savings savings;
 
     @ManyToOne
-    @JoinColumn(name = "fund_id")
+    @JoinColumn(name = "fund_id", nullable = true)
     private Fund fund;
 
     @ManyToOne
-    @JoinColumn(name = "loan_id")
+    @JoinColumn(name = "loan_id", nullable = true)
     private Loan loan;
 
+    @Column(name = "product_type")
+    private String productType;
+
+    @Column(name = "investment_type")
+    private String investmentType;
 
 }

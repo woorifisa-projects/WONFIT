@@ -11,7 +11,6 @@ import lombok.*;
 public class DepositResponse {
 
     private Long id;
-    private Member member;
     private String depositName;
     private double interestRate;
     private int period;
@@ -19,5 +18,5 @@ public class DepositResponse {
     private int minDeposit;
     private String depositInfo;
     private String depositDesc;
-    private String sortingOptions;
+    private String depositType;
 }

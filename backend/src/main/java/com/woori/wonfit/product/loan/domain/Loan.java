@@ -15,10 +15,6 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
     @Column(name = "loan_name")
     private String loanName;
 
@@ -40,8 +36,8 @@ public class Loan {
     @Column(name = "loan_desc")
     private String loanDesc; // 상세 설명
 
-    @Column(name ="sorting_options")
-    private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
+    @Column(name = "loan_type")
+    private String loanType; // 안정형, 중립형, 공격형
 
 
 }
