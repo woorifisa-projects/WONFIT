@@ -2,13 +2,13 @@ package com.woori.wonfit.product.fund.dto;
 
 import lombok.*;
 
-
 @Builder
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class FundResponse {
+public class FundRequest {
 
         private Long id;
         private String fundName;

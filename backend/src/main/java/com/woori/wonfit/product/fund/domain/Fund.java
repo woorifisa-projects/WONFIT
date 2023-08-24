@@ -1,12 +1,14 @@
 package com.woori.wonfit.product.fund.domain;
 
+import com.woori.wonfit.manager.domain.Manager;
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "fund")
 public class Fund {
     @Id
@@ -27,9 +29,6 @@ public class Fund {
 
     @Column(name = "fund_type")
     private String fundType; // 안정형, 중립형, 공격형
-
-    @Column(name = "target")
-    private String target;
 
     @Column(name = "fund_price")
     private double fundPrice;
