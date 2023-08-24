@@ -1,15 +1,15 @@
 package com.woori.wonfit.member.member.controller;
 
+import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
 import com.woori.wonfit.member.member.service.MemberService;
 import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -29,5 +29,11 @@ public class MemberController {
     public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest) {
         String token = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
         return new ResponseEntity<>(new MemberLoginResponse(token), HttpStatus.OK);
+    }
+
+    @GetMapping("/members")
+    public ResponseEntity<List<Member>> getAllMembers(){
+        List<Member> member = memberService.getAllMembers();
+        return new ResponseEntity<>(member, HttpStatus.OK);
     }
 }
