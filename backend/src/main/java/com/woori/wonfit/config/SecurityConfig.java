@@ -20,7 +20,7 @@ public class SecurityConfig{
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests(auth -> auth.antMatchers("/member/**", "/api/sublogs/member/**","/question", "/api/mypage/**/liked","/loan","/savings").permitAll().anyRequest().authenticated());
+                .authorizeRequests(auth -> auth.antMatchers("/member/**", "/api/sublogs/member/**","/question", "/api/mypage/**/liked","/loan","/savings", "/**").permitAll().anyRequest().authenticated());
         return http.build();
     }
     @Bean

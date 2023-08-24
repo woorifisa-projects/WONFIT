@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -38,5 +40,10 @@ public class MemberService {
         }
 
         return JwtUtil.createToken(loginId, expireTimeMs);
+    }
+
+    public List<Member> getAllMembers(){
+        List<Member> member = memberRepository.findAll();
+        return member;
     }
 }
