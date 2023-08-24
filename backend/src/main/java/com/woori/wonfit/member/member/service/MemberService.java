@@ -17,7 +17,7 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Value("${jwt.token.secret}")
     private String secretkey;
-    private final long expireTimeMs = 1000 * 60 * 60 * 24 * 7; // 토큰 7일
+    private final long expireTimeMs = 1000 * 60 * 60 * 24; // 토큰 하루
 
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByLoginId(request.getLoginId())

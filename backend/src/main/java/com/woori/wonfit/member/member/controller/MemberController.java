@@ -2,6 +2,7 @@ package com.woori.wonfit.member.member.controller;
 
 import com.woori.wonfit.member.member.dto.*;
 import com.woori.wonfit.member.member.service.MemberService;
+import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final MemberInfoService memberInfoService;
 
     @PostMapping("/register")
     public ResponseEntity<MemberRegisterResponse> register(@RequestBody MemberRegisterRequest memeberRegisterRequest) {
         MemberDto memberDto = memberService.register(memeberRegisterRequest);
+        memberInfoService.saveMemberInfo(memeberRegisterRequest);
         return new ResponseEntity<>(new MemberRegisterResponse(memberDto.getLoginId()), HttpStatus.OK);
     }
 
