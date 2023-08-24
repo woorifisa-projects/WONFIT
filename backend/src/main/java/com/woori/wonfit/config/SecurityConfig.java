@@ -20,8 +20,8 @@ public class SecurityConfig{
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-
                 .authorizeRequests(auth -> auth.antMatchers("/member/**", "/manager/**", "/api/sublogs/member/**","/question", "/api/mypage/**/liked","/product/**").permitAll().anyRequest().authenticated());
+
 
         return http.build();
     }

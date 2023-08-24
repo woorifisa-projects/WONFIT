@@ -22,7 +22,10 @@ public class FundServiceImpl implements FundService {
         List<FundResponse> getfunds = fundRepository.findAll()
                 .stream()
                 .map(fund -> new FundResponse
-                        (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo(), fund.getFundDesc(), fund.getFundType())).collect(Collectors.toList());
+
+                        (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo(), fund.getFundDesc())).collect(Collectors.toList());
+
+      
 
 
         return getfunds;

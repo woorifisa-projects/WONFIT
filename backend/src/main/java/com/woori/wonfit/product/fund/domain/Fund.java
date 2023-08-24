@@ -36,4 +36,5 @@ public class Fund {
     @Column(name = "fund_desc")
     private String fundDesc; // 상세 설명
 
+
 }

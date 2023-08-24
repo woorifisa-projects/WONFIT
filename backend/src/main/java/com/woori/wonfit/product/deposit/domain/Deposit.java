@@ -3,11 +3,12 @@ package com.woori.wonfit.product.deposit.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "deposit")
 public class Deposit {
     @Id
@@ -37,5 +38,6 @@ public class Deposit {
 
     @Column(name = "deposit_type")
     private String depositType; // 안정형, 중립형, 공격형
+
 
 }

@@ -2,12 +2,14 @@ package com.woori.wonfit.product.savings.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "savings")
 public class Savings {
     @Id
@@ -37,5 +39,6 @@ public class Savings {
 
     @Column(name = "savings_type")
     private String savingsType; // 안정형, 중립형, 공격형
+
 
 }

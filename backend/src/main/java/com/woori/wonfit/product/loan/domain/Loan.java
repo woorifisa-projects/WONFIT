@@ -40,4 +40,5 @@ public class Loan {
     private String loanType; // 안정형, 중립형, 공격형
 
 
+
 }
