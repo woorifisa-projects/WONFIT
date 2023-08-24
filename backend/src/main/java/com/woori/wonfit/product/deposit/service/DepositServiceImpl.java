@@ -2,18 +2,16 @@ package com.woori.wonfit.product.deposit.service;
 
 import com.woori.wonfit.product.deposit.domain.DepositRepository;
 import com.woori.wonfit.product.deposit.dto.DepositResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DepositServiceImpl implements DepositService {
     private final DepositRepository depositRepository;
-
-    public DepositServiceImpl(DepositRepository depositRepository) {
-        this.depositRepository = depositRepository;
-    }
 
     @Override
     public List<DepositResponse> findAll() {

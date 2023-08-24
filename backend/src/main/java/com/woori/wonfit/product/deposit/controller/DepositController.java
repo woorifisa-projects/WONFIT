@@ -2,6 +2,7 @@ package com.woori.wonfit.product.deposit.controller;
 
 import com.woori.wonfit.product.deposit.dto.DepositResponse;
 import com.woori.wonfit.product.deposit.service.DepositService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,15 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @RestController
-@RequestMapping("/product_deposit")
+@RequestMapping("/product/deposit")
+@RequiredArgsConstructor
 public class DepositController {
 
-    private DepositService depositService;
+    private final DepositService depositService;
 
-    public DepositController(DepositService depositService) {
-
-        this.depositService = depositService;
-    }
 
     @GetMapping
     public List<DepositResponse> findAll() {

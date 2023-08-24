@@ -5,6 +5,7 @@ import com.woori.wonfit.product.savings.service.SavingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/savings")
+@RequestMapping("/product/savings")
 @RequiredArgsConstructor
 public class SavingsController {
 
@@ -21,8 +22,13 @@ public class SavingsController {
     @GetMapping
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> list = savingsService.findAll();
-        System.out.println(savingsService);
         log.info("list call {}", list.get(0));
         return list;
+    }
+
+    @PostMapping
+    public void save() {
+        savingsService.save();
+        log.info("save call");
     }
 }

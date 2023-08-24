@@ -1,16 +1,38 @@
 package com.woori.wonfit.product.fund.controller;
 
+import com.woori.wonfit.product.fund.domain.Fund;
+import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.fund.dto.FundResponse;
 import com.woori.wonfit.product.fund.service.FundService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+//@Slf4j // log 기록
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/product/fund")
 public class FundController {
+
+    private final FundService fundService;
+
+    @GetMapping
+    public List<FundResponse> findAll() {
+        List<FundResponse> list = fundService.findAll();
+//        log.info("list call {}", list.get(0));
+        return list;
+    }
+
+    @PostMapping
+    public ResponseEntity<Fund> createFund(@RequestBody FundRequest fundRequest) {
+        Fund createFund = fundService.createFund(fundRequest);
+        return ResponseEntity.ok(createFund);
+    }
+
+
+
 
 
 }

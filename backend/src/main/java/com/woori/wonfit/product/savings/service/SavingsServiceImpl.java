@@ -23,4 +23,9 @@ public class SavingsServiceImpl implements SavingsService {
 
         return getsavings;
     }
+
+    @Override
+    public void save() {
+
+    }
 }

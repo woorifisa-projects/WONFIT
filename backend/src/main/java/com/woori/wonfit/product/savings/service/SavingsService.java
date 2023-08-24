@@ -8,4 +8,6 @@ import java.util.List;
 public interface SavingsService {
 
     List<SavingsResponse> findAll();
+
+    void save();
 }
