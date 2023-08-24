@@ -19,6 +19,8 @@ public class Manager {
     @Column(name = "password")
     private String password;
 
+
+
 }
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/loan")
+@RequestMapping("/product/loan")
 public class LoanController {
 
     private LoanService loanService;

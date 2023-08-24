@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/savings")
+@RequestMapping("/product/savings")
 @RequiredArgsConstructor
 public class SavingsController {
 
@@ -21,8 +21,8 @@ public class SavingsController {
     @GetMapping
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> list = savingsService.findAll();
-        System.out.println(savingsService);
         log.info("list call {}", list.get(0));
         return list;
     }
+
 }
