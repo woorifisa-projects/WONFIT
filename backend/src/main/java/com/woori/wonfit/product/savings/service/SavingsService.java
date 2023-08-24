@@ -9,5 +9,4 @@ public interface SavingsService {
 
     List<SavingsResponse> findAll();
 
-    void save();
 }
