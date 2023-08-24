@@ -9,3 +9,4 @@ public class MemberLoginRequest {
     private String loginId;
     private String password;
 }
+

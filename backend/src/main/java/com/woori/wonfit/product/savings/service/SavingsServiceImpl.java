@@ -18,10 +18,13 @@ public class SavingsServiceImpl implements SavingsService {
     @Override
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> getsavings = savingsRepository.findAll().stream()
-                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsDesc(),savings.getSortingOptions()))
+                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsDesc()))
                         .collect(Collectors.toList());
 
         return getsavings;
     }
 
+
 }
+
+

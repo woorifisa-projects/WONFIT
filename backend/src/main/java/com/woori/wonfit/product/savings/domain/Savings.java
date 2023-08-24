@@ -2,12 +2,14 @@ package com.woori.wonfit.product.savings.domain;
 
 
 import com.woori.wonfit.member.member.domain.Member;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "savings")
 public class Savings {
     @Id
@@ -39,8 +41,6 @@ public class Savings {
     @Column(name = "savings_desc")
     private String savingsDesc; // 상세 설명
 
-    @Column(name ="sorting_options")
-    private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
 
 
 }

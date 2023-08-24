@@ -3,11 +3,12 @@ package com.woori.wonfit.product.deposit.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "deposit")
 public class Deposit {
     @Id
@@ -39,7 +40,5 @@ public class Deposit {
     @Column(name = "deposit_desc")
     private String depositDesc; // 상세 설명
 
-    @Column(name ="sorting_options")
-    private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
 
 }

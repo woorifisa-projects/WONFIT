@@ -18,6 +18,5 @@ public class FundRequest {
         private double fundPrice;
         private String fundInfo;
         private String fundDesc; // 상세 설명
-        private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
 
 }

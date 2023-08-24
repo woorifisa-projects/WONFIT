@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SavingsResponse {
+public class SavingsRequest {
 
     private Long id;
     private String savingsName;
@@ -17,5 +17,6 @@ public class SavingsResponse {
     private int maxDeposit;
     private String savingsInfo;
     private String savingsDesc;
+    private String sortingOptions;
 
 }

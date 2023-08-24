@@ -40,8 +40,6 @@ public class Loan {
     @Column(name = "loan_desc")
     private String loanDesc; // 상세 설명
 
-    @Column(name ="sorting_options")
-    private String sortingOptions; // 정렬 옵션(인기순, 출시순, 금리순)
 
 
 }
