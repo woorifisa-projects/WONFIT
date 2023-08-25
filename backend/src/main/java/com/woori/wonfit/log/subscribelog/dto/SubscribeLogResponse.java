@@ -28,7 +28,7 @@ public class SubscribeLogResponse {
     private Fund fund;
     private Loan loan;
 
-    public static SubscribeLogResponse From(SubscribeLog subscribeLog) {
+    public static SubscribeLogResponse From_sub_log(SubscribeLog subscribeLog) {
         return SubscribeLogResponse.builder()
                 .id(subscribeLog.getId())
                 .member(subscribeLog.getMember())
