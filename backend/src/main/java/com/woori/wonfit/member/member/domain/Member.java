@@ -33,6 +33,9 @@ public class Member {
     @Column(name = "registration_number", length = 20, nullable = false)
     private String registrationNumber; // 회원 주민번호
 
+    @Column(name = "phone_number", length = 15, nullable = false)
+    private String phoneNumber; // 회원 전화번호
+
     @Column(name = "status")
     @ColumnDefault("1")
     private boolean status; // 회원 상태(정상, 탈퇴)

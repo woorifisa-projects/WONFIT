@@ -2,7 +2,7 @@ package com.woori.wonfit.member.member.controller;
 
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
-import com.woori.wonfit.member.member.service.MemberService;
+import com.woori.wonfit.member.member.service.MemberServiceImpl;
 import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberService memberService;
+    private final MemberServiceImpl memberService;
     private final MemberInfoService memberInfoService;
 
     @PostMapping("/register")
@@ -35,5 +35,12 @@ public class MemberController {
     public ResponseEntity<List<Member>> getAllMembers(){
         List<Member> member = memberService.getAllMembers();
         return new ResponseEntity<>(member, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberDetails> getMemberDetails(@PathVariable Long id){
+        MemberDetails memberDetails = memberService.findById(id);
+
+        return new ResponseEntity<>(memberDetails, HttpStatus.OK);
     }
 }

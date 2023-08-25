@@ -1,6 +1,5 @@
 package com.woori.wonfit.product.deposit.dto;
 
-import com.woori.wonfit.member.member.domain.Member;
 import lombok.*;
 
 @Builder
@@ -18,5 +17,6 @@ public class DepositRequest {
     private int minDeposit;
     private String depositInfo;
     private String depositDesc;
+    private String depositType;
 }
 
