@@ -18,6 +18,7 @@ public class MemberRegisterRequest {
     private String email; // 회원 이메일
     private String name; // 회원 이름
     private String registrationNumber;
+    private String phoneNumber;
 
     private String address;
     private String job;
@@ -33,6 +34,7 @@ public class MemberRegisterRequest {
                 .email(email)
                 .name(name)
                 .registrationNumber(registrationNumber)
+                .phoneNumber(phoneNumber)
                 .build();
     }
 

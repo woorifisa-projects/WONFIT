@@ -1,8 +1,10 @@
 package com.woori.wonfit.member.memberinfo.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @Getter
 @Table(name = "member_info")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
