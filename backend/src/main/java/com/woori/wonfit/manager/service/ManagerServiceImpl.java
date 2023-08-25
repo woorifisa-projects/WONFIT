@@ -1,14 +1,14 @@
 package com.woori.wonfit.manager.service;
 
 import com.woori.wonfit.product.deposit.domain.Deposit;
-import com.woori.wonfit.product.deposit.domain.DepositRepository;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
+import com.woori.wonfit.product.deposit.repository.DepositRepository;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.savings.domain.Savings;
-import com.woori.wonfit.product.savings.domain.SavingsRepository;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
 import com.woori.wonfit.product.fund.repository.FundRepository;
+import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,19 +48,9 @@ public class ManagerServiceImpl implements ManagerService {
         savings.setMaxDeposit(savingsRequest.getMaxDeposit());
 
         return savingsRepository.save(savings);
-
-    public Fund createFund(FundRequest fundRequest) {
-        Fund fund = new Fund();
-        fund.setFundName(fundRequest.getFundName());
-        fund.setFundInfo(fundRequest.getFundInfo());
-        fund.setFundDesc(fundRequest.getFundDesc());
-        fund.setReturnRate1(fundRequest.getReturnRate1());
-        fund.setReturnRate2(fundRequest.getReturnRate2());
-        fund.setFundPrice(fundRequest.getFundPrice());
-        fund.setFundType(fundRequest.getFundType());
-        return fundRepository.save(fund);
-
     }
+
+
 
     @Override
     public Deposit createDeposit(DepositRequest depositRequest) {

@@ -1,14 +1,15 @@
 package com.woori.wonfit.product.loan.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Loan {
 
     @Id

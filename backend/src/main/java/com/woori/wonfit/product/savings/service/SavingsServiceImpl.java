@@ -19,7 +19,7 @@ public class SavingsServiceImpl implements SavingsService {
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> getsavings = savingsRepository.findAll().stream()
 
-                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsDesc()))
+                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsDesc(),savings.getSavingsType()))
 
                         .collect(Collectors.toList());
 
