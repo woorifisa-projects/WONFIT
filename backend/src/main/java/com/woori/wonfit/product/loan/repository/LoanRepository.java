@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findAll();
+    Loan save(Loan loan);
+
 }

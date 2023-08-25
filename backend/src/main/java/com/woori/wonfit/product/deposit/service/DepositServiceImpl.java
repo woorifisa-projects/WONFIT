@@ -17,7 +17,7 @@ public class DepositServiceImpl implements DepositService {
     public List<DepositResponse> findAll() {
         List<DepositResponse> DepositResponses = depositRepository.findAll().stream()
           
-                .map(Deposit -> new DepositResponse(Deposit.getId(),Deposit.getDepositName(),Deposit.getInterestRate(),Deposit.getPeriod(),Deposit.getTarget(),Deposit.getMinDeposit(),Deposit.getDepositInfo(),Deposit.getDepositDesc()))
+                .map(Deposit -> new DepositResponse(Deposit.getId(),Deposit.getDepositName(),Deposit.getInterestRate(),Deposit.getPeriod(),Deposit.getTarget(),Deposit.getMinDeposit(),Deposit.getDepositInfo(),Deposit.getDepositDesc(),Deposit.getDepositType()))
           
                 .collect(Collectors.toList());
 
