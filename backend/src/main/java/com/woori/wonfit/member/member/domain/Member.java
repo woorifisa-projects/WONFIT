@@ -40,7 +40,8 @@ public class Member {
 
     @Column(name = "status")
     @ColumnDefault("true")
-    private Boolean status; // 회원 상태(정상, 탈퇴)
+    private boolean status; // 회원 상태(정상, 탈퇴)
+
 
 
 

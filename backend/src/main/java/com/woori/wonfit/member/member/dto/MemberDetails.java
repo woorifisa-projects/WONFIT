@@ -18,6 +18,7 @@ public class MemberDetails {
     private String registrationNumber;
     private String job;
     private int childrenCount;
+    private boolean status;
     private boolean isAnnuity;
     private boolean isHouseHolder;
     private boolean isMarried;
@@ -35,6 +36,7 @@ public class MemberDetails {
                 .registrationNumber(member.getRegistrationNumber())
                 .job(memberInfo.getJob())
                 .childrenCount(memberInfo.getChildrenCount())
+                .status(member.isStatus())
                 .isAnnuity(memberInfo.isAnnuity())
                 .isHouseHolder(memberInfo.isHouseholder())
                 .isMarried(memberInfo.isMarried())
