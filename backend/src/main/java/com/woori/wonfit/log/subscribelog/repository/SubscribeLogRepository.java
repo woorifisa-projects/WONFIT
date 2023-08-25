@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface SubscribeLogRepository extends JpaRepository<SubscribeLog, Long> {
 
-     List<SubscribeLog> findByMemberId(Long memberId);
+     SubscribeLog findByMemberId(Long memberId);
 
 }
