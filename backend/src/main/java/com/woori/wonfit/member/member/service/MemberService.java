@@ -15,4 +15,6 @@ public interface MemberService {
     List<Member> getAllMembers();
 
     MemberDetails findById(Long id);
+
+    String leaveMember(String loginId, String memberPw);
 }

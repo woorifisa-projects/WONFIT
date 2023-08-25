@@ -1,5 +1,6 @@
 package com.woori.wonfit.product.loan.service;
 
+import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.loan.repository.LoanRepository;
 import com.woori.wonfit.product.loan.dto.LoanResponse;
 import org.springframework.stereotype.Service;

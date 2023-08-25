@@ -31,8 +31,8 @@ public class LoanResponse {
         this.loanInfo = loanInfo;
         this.loanDesc = loanDesc;
 
-}
-public static LoanResponse FromLoan(Loan loan) {
+    }
+    public static LoanResponse FromLoan(Loan loan) {
         return LoanResponse.builder()
                 .id(loan.getId())
                 .loanName(loan.getLoanName())
@@ -44,6 +44,6 @@ public static LoanResponse FromLoan(Loan loan) {
                 .loanDesc(loan.getLoanDesc())
 
                 .build();
-}
+    }
 
 }

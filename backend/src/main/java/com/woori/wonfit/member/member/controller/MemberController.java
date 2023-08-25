@@ -43,4 +43,12 @@ public class MemberController {
 
         return new ResponseEntity<>(memberDetails, HttpStatus.OK);
     }
+
+    @PostMapping("/leave")
+    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest){
+        String message = memberService.leaveMember(memberLoginRequest.getLoginId(),memberLoginRequest.getPassword());
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+
+    }
 }

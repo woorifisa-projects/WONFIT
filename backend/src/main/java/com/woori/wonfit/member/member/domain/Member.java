@@ -4,6 +4,7 @@ package com.woori.wonfit.member.member.domain;
 import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Setter
 @Table(name = "member")
 public class Member {
     @Id
@@ -37,8 +39,8 @@ public class Member {
     private String phoneNumber; // 회원 전화번호
 
     @Column(name = "status")
-    @ColumnDefault("1")
-    private boolean status; // 회원 상태(정상, 탈퇴)
+    @ColumnDefault("true")
+    private Boolean status; // 회원 상태(정상, 탈퇴)
 
 
 
