@@ -9,7 +9,6 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-
 public class LoanResponse {
     private Long id;
     private String loanName;
