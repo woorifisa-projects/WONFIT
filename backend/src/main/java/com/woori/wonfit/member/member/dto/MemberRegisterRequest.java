@@ -17,6 +17,7 @@ public class MemberRegisterRequest {
     private String password; // 회원 패스워드
     private String email; // 회원 이메일
     private String name; // 회원 이름
+    private Boolean status;
     private String registrationNumber;
     private String phoneNumber;
 
@@ -33,6 +34,7 @@ public class MemberRegisterRequest {
                 .loginId(loginId).password(password)
                 .email(email)
                 .name(name)
+                .status(status)
                 .registrationNumber(registrationNumber)
                 .phoneNumber(phoneNumber)
                 .build();

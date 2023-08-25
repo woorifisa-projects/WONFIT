@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService{
         List<Member> member = memberRepository.findAll();
         return member;
     }
-    //@Override
+    @Override
     public MemberDetails findById(Long id){
         Optional<Member> member = memberRepository.findById(id);
 
@@ -61,5 +61,19 @@ public class MemberServiceImpl implements MemberService{
         MemberDetails memberDetails = MemberDetails.fromEntity(member.get(), memberInfo);
 
         return memberDetails;
+    }
+
+    @Override
+    public String leaveMember(String loginId, String password){
+        Member member = memberRepository.findByLoginId(loginId).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+
+        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
+            return "비밀번호가 일치하지 않습니다.";
+        }
+        else {
+            member.setStatus(false);
+            memberRepository.save(member);
+            return "회원 탈퇴가 완료되었습니다.";
+        }
     }
 }
