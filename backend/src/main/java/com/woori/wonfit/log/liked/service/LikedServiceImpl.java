@@ -17,8 +17,8 @@ public class LikedServiceImpl implements LikedService {
     }
 
     @Override
-    public Liked findByMemberId(Long memberId){
-        return likedRepository.findByMemberId(memberId);
+    public List<Liked> findByAllMemberId(Long memberId){
+        return likedRepository.findAllByMemberId(memberId);
     }
 
 }

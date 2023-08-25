@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/member/mypage")
@@ -18,9 +20,9 @@ public class LikedController {
     private final LikedService likedService;
 
     @GetMapping("/member/{memberId}")
-    public LikedResponse findByMemberId(@PathVariable Long memberId) {
-        Liked liked = likedService.findByMemberId(memberId);
-        return LikedResponse.From_liked(liked);
+    public List<Liked> findByMemberId(@PathVariable Long memberId) {
+        List<Liked> list = likedService.findByAllMemberId(memberId);
+        return list;
     }
 
 }

@@ -9,6 +9,6 @@ import java.util.List;
 @Service
 public interface LikedService {
 
-    Liked findByMemberId(Long memberId);
+    List<Liked> findByAllMemberId(Long memberId);
 
 }
