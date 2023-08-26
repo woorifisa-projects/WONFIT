@@ -37,5 +37,4 @@ public class SearchLogController {
         return new ResponseEntity<>("검색 기록 삭제 완료", HttpStatus.OK);
     }
 
-
 }
