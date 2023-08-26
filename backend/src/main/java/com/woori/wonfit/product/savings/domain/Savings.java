@@ -1,15 +1,15 @@
 package com.woori.wonfit.product.savings.domain;
 
 
-import com.woori.wonfit.member.member.domain.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "savings")
 public class Savings {
     @Id

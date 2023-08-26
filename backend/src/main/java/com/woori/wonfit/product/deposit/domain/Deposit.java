@@ -1,15 +1,16 @@
 package com.woori.wonfit.product.deposit.domain;
 
 
-import com.woori.wonfit.member.member.domain.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
 @Table(name = "deposit")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +41,7 @@ public class Deposit {
     private String depositType; // 안정형, 중립형, 공격형
 
 
+
 }
+
+
