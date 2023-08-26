@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface SearchLogRepository extends JpaRepository<SearchLog, Long> {
     List<SearchLog> findByMemberId(Long memberId);
+
+    void deleteById(Long id);
+
+    SearchLog findByMemberIdAndSearchWord(Long memberId, String searchWord);
 }

@@ -10,4 +10,6 @@ public interface SearchLogService {
     void saveSearchLog(Long id, SearchLogRequest searchLogRequest);
 
     List<SearchLogResponse> findById(Long memberid);
+
+    void deleteSearchLog(Long memberid, String searchWord);
 }
