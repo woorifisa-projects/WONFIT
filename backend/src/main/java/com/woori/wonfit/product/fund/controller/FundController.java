@@ -20,17 +20,13 @@ public class FundController {
     private final FundService fundService;
 
     @GetMapping
-    public List<FundResponse> findAll() {
-        List<FundResponse> list = fundService.findAll();
+        public List<FundResponse> findAll() {
+            List<FundResponse> list = fundService.findAll();
 //        log.info("list call {}", list.get(0));
-        return list;
-    }
+            return list;
+        }
 
-    @PostMapping
-    public ResponseEntity<Fund> createFund(@RequestBody FundRequest fundRequest) {
-        Fund createFund = fundService.createFund(fundRequest);
-        return ResponseEntity.ok(createFund);
-    }
+
 
 
 

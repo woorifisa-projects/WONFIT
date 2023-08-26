@@ -1,6 +1,7 @@
 package com.woori.wonfit.product.fund.service;
 
 import com.woori.wonfit.product.fund.domain.Fund;
+import com.woori.wonfit.product.fund.dto.FundDTO;
 import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.fund.dto.FundResponse;
 import com.woori.wonfit.product.fund.repository.FundRepository;
@@ -25,25 +26,26 @@ public class FundServiceImpl implements FundService {
 
                         (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo(), fund.getFundDesc())).collect(Collectors.toList());
 
-      
-
 
         return getfunds;
     }
 
-    @Override
-    public Fund createFund(FundRequest fundRequest) {
-        Fund fund = new Fund();
-        fund.setFundName(fundRequest.getFundName());
-        fund.setFundInfo(fundRequest.getFundInfo());
-        fund.setFundDesc(fundRequest.getFundDesc());
-        fund.setReturnRate1(fundRequest.getReturnRate1());
-        fund.setReturnRate2(fundRequest.getReturnRate2());
-        fund.setFundPrice(fundRequest.getFundPrice());
-        fund.setFundType(fundRequest.getFundType());
 
-        return fundRepository.save(fund);
+    public void updateFund(Long id, FundDTO request) {
+        Fund fund = fundRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Deposit not found"));
+
+        Fund newFund = Fund.builder()
+                .id(id)
+                .fundName(request.getFundName())
+                .returnRate1(request.getReturnRate1())
+                .returnRate2(request.getReturnRate2())
+                .fundPrice(request.getFundPrice())
+                .fundType(request.getFundType())
+                .fundInfo(request.getFundInfo())
+                .fundDesc(request.getFundDesc())
+                .build();
+
+        fundRepository.save(newFund); // 수정된 내용을 저장
     }
-
 
 }

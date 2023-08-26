@@ -1,14 +1,14 @@
 package com.woori.wonfit.product.deposit.dto;
 
-import com.woori.wonfit.member.member.domain.Member;
+import com.woori.wonfit.product.deposit.domain.Deposit;
 import lombok.*;
 
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class DepositResponse {
+
     private Long id;
     private String depositName;
     private double interestRate;

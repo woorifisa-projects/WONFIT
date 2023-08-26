@@ -10,4 +10,5 @@ import java.util.List;
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
     List<Deposit> findAll();
 
+
 }
