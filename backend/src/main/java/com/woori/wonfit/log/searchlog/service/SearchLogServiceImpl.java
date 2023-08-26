@@ -49,4 +49,16 @@ public class SearchLogServiceImpl implements SearchLogService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteSearchLog(Long memberId, String searchWord) {
+        SearchLog searchLog = searchLogRepository.findByMemberIdAndSearchWord(memberId, searchWord);
+
+        if (searchLog != null) {
+            searchLogRepository.delete(searchLog);
+        } else {
+            throw new IllegalArgumentException("해당 검색기록이 없습니다. id=" + memberId);
+        }
+    }
+
 }

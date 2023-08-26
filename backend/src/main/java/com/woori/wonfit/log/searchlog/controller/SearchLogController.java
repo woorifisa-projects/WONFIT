@@ -31,6 +31,11 @@ public class SearchLogController {
         return new ResponseEntity<>(searchLogList, HttpStatus.OK);
     }
 
-    // 검색 기록 삭제
+    @DeleteMapping("/{memberid}/{searchWord}")
+    public ResponseEntity<String> deleteSearchLog(@PathVariable Long memberid, @PathVariable String searchWord) {
+        searchLogService.deleteSearchLog(memberid, searchWord);
+        return new ResponseEntity<>("검색 기록 삭제 완료", HttpStatus.OK);
+    }
+
 
 }
