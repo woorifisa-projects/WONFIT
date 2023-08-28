@@ -1,16 +1,14 @@
 package com.woori.wonfit.product.fund.domain;
 
-import com.woori.wonfit.manager.domain.Manager;
-import com.woori.wonfit.member.member.domain.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "fund")
 public class Fund {
     @Id
