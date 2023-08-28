@@ -70,6 +70,18 @@ const routes = [
         name: "MyPage",
         component: () => import(/* webpackChunkName: "mypage" */ "@/views/MyPage.vue"),
       },
+      {
+        path: "productsearch",
+        name: "ProductSearchPage",
+        component: () =>
+          import(/* webpackChunkName: "productsearch" */ "@/views/ProductSearch.vue"),
+      },
+      {
+        path: "InvestmentResult",
+        name: "InvestmentResultPage",
+        component: () =>
+          import(/* webpackChunkName: "investmentresult" */ "@/views/InvestmentResult.vue"),
+      },
     ],
   },
 ];

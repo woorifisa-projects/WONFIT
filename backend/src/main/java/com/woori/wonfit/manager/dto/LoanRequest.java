@@ -18,9 +18,10 @@ public class LoanRequest {
     private long loanLimit;
     private String loanInfo;
     private String loanDesc;
+    private String loanType;
 
     @Builder
-    public LoanRequest(String loanName, double interestRate, int period, String target, long loanLimit, String loanInfo, String loanDesc){
+    public LoanRequest(String loanName, double interestRate, int period, String target, long loanLimit, String loanInfo, String loanDesc,String loanType) {
         this.loanName = loanName;
         this.interestRate = interestRate;
         this.period = period;
@@ -28,6 +29,7 @@ public class LoanRequest {
         this.loanLimit = loanLimit;
         this.loanInfo = loanInfo;
         this.loanDesc = loanDesc;
+        this.loanType = loanType;
     }
     public static Loan toLoan(LoanRequest loanRequest) {
         return Loan.builder()
@@ -38,7 +40,12 @@ public class LoanRequest {
                 .loanLimit(loanRequest.getLoanLimit())
                 .loanInfo(loanRequest.getLoanInfo())
                 .loanDesc(loanRequest.getLoanDesc())
+                .loanType(loanRequest.getLoanType())
                 .build();
     }
+
+
+
+
 
 }

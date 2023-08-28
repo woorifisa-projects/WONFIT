@@ -1,5 +1,7 @@
 package com.woori.wonfit.product.savings.service;
 
+import com.woori.wonfit.product.savings.domain.Savings;
+import com.woori.wonfit.product.savings.dto.SavingsDTO;
 import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import com.woori.wonfit.product.savings.dto.SavingsResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,25 @@ public class SavingsServiceImpl implements SavingsService {
                         .collect(Collectors.toList());
 
         return getsavings;
+    }
+
+    public void updateSavings(Long id, SavingsDTO request) {
+        Savings savings = savingsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Savings not found"));
+
+        Savings newSavings = Savings.builder()
+                .id(id)
+                .savingsName(request.getSavingsName())
+                .interestRate(request.getInterestRate())
+                .period(request.getPeriod())
+                .target(request.getTarget())
+                .maxDeposit(request.getMaxDeposit())
+                .savingsInfo(request.getSavingsInfo())
+                .savingsDesc(request.getSavingsDesc())
+                .savingsType(request.getSavingsType())
+                .build();
+
+
+        savingsRepository.save(newSavings); // 수정된 내용을 저장
     }
 
 

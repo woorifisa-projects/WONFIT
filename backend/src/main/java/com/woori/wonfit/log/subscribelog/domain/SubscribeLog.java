@@ -19,8 +19,8 @@ public class SubscribeLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id", nullable = true)
     private Member member;
 
     @Column(name = "subscribe_date")
@@ -39,18 +39,18 @@ public class SubscribeLog {
     private boolean subscribeStatus; // ACTIVE(가입중), INACTIVE(해지)
 
     @ManyToOne
-    @JoinColumn(name = "deposit_id")
+    @JoinColumn(name = "deposit_id", nullable = true)
     private Deposit deposit;
 
     @ManyToOne
-    @JoinColumn(name = "savings_id")
+    @JoinColumn(name = "savings_id", nullable = true)
     private Savings savings;
 
     @ManyToOne
-    @JoinColumn(name = "fund_id")
+    @JoinColumn(name = "fund_id", nullable = true)
     private Fund fund;
 
     @ManyToOne
-    @JoinColumn(name = "loan_id")
+    @JoinColumn(name = "loan_id", nullable = true)
     private Loan loan;
 }

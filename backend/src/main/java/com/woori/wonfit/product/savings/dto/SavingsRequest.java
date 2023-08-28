@@ -17,6 +17,6 @@ public class SavingsRequest {
     private int maxDeposit;
     private String savingsInfo;
     private String savingsDesc;
-    private String sortingOptions;
+    private String savingsType;
 
 }

@@ -58,8 +58,8 @@ import axios from 'axios';
 export default {
   data: () => ({
     visible: false,
-    loginId: '',     // 수정: memberid → loginId
-    password: '',    // 수정: memberpw → password
+    loginId: '',
+    password: '',
   }),
 
   methods: {
@@ -68,18 +68,17 @@ export default {
         axios.defaults.withCredentials = true;
 
         const requestBody = {
-          loginId: this.loginId,     // 수정: MemberId → loginId
-          password: this.password,   // 수정: MemberPw → password
+          loginId: this.loginId,
+          password: this.password,
         };
 
         console.log(this.loginId);
         console.log(this.password);
 
         const response = await axios.post('http://localhost:8080/member/login', requestBody);
-        console.log("로그인 성공~!~!");
-        console.log(response.data); // 서버에서 전달된 데이터 출력
+        console.log("로그인 성공");
+        console.log(response.data);
 
-        // 로그인 성공 후 처리를 추가할 수 있습니다.
       } catch (error) {
         console.error('An error occurred:', error);
       }
