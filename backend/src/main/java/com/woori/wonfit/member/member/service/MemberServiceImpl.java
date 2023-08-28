@@ -1,5 +1,7 @@
 package com.woori.wonfit.member.member.service;
 
+import com.woori.wonfit.log.loginlog.domain.LoginLog;
+import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
 import com.woori.wonfit.member.member.domain.JwtUtil;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
@@ -8,11 +10,15 @@ import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +28,8 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberInfoService memberInfoService;
+    private final LoginLogRepository loginLogRepository;
+
     @Value("${jwt.token.secret}")
     private String secretkey;
     private final long expireTimeMs = 1000 * 60 * 60 * 24; // 토큰 하루
@@ -37,7 +45,7 @@ public class MemberServiceImpl implements MemberService{
         return MemberDto.fromEntity(saveMember);
     }
     @Override
-    public String login(String loginId, String memberPw) {
+    public String login(String loginId, String memberPw, HttpServletRequest request) {
         Member member = memberRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new RuntimeException("회원정보를 찾을 수 없습니다."));
 
@@ -49,9 +57,31 @@ public class MemberServiceImpl implements MemberService{
             return "이미 탈퇴한 회원입니다.";
         }
         else {
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            String loginTime = dateTime.format(formatter).substring(0, 19);
+            String loginIp = request.getRemoteAddr();
+            String userAgent = request.getHeader("User-Agent");
+            String loginBrowser = extractBrowser(userAgent);
+            String loginDevice = extractDevice(userAgent);
+
+            LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
+            loginLogRepository.save(loginLog);
+
             return JwtUtil.createToken(loginId, expireTimeMs);
         }
     }
+    private String extractBrowser(String userAgent) {
+        UserAgent ua = UserAgent.parseUserAgentString(userAgent);
+        return ua.getBrowser().getName();
+    }
+
+    private String extractDevice(String userAgent) {
+        UserAgent ua = UserAgent.parseUserAgentString(userAgent);
+        return ua.getOperatingSystem().getDeviceType().getName();
+    }
+
     @Override
     public List<Member> getAllMembers(){
         List<Member> member = memberRepository.findAll();
