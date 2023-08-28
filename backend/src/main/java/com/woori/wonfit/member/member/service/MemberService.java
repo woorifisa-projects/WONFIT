@@ -5,12 +5,13 @@ import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MemberService {
     MemberDto register(MemberRegisterRequest request);
 
-    String login(String loginId, String memberPw);
+    String login(String loginId, String memberPw, HttpServletRequest request);
 
     List<Member> getAllMembers();
 

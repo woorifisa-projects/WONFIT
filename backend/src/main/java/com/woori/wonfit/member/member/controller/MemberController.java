@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,9 +27,9 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String token = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
-        return new ResponseEntity<>(new MemberLoginResponse(token), HttpStatus.OK);
+    public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletRequest request) {
+        String result = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
+        return new ResponseEntity<>(new MemberLoginResponse(result), HttpStatus.OK);
     }
 
     @GetMapping("/members")
