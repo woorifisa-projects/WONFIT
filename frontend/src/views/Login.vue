@@ -20,8 +20,8 @@
           rel="noopener noreferrer"
           target="_blank"
         >
-          Forgot login password?</a
-        >
+          Forgot login password?
+        </a>
       </div>
 
       <v-text-field
@@ -30,14 +30,12 @@
         density="compact"
         placeholder="Enter your password"
         prepend-inner-icon="mdi-lock-outline"
-        variant="outlined"
         v-model="password"
+        variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
 
-        <v-btn block class="mb-8" color="blue" size="large" variant="tonal" @click="login"> Log In </v-btn>
-
-
+      <v-btn block class="mb-8" color="blue" size="large" variant="tonal" @click="login"> Log In </v-btn>
 
       <v-card-text class="text-center">
         <a
