@@ -12,6 +12,9 @@ import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ManagerServiceImpl implements ManagerService {
@@ -22,42 +25,71 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Fund createFund(FundRequest fundRequest) {
-        Fund fund = new Fund();
-        fund.setFundName(fundRequest.getFundName());
-        fund.setFundInfo(fundRequest.getFundInfo());
-        fund.setFundDesc(fundRequest.getFundDesc());
-        fund.setReturnRate1(fundRequest.getReturnRate1());
-        fund.setReturnRate2(fundRequest.getReturnRate2());
-        fund.setFundPrice(fundRequest.getFundPrice());
-        fund.setFundType(fundRequest.getFundType());
+        Fund fund = Fund.builder()
+                .fundName(fundRequest.getFundName())
+                .fundInfo(fundRequest.getFundInfo())
+                .fundDesc(fundRequest.getFundDesc())
+                .returnRate1(fundRequest.getReturnRate1())
+                .returnRate2(fundRequest.getReturnRate2())
+                .fundPrice(fundRequest.getFundPrice())
+                .fundType(fundRequest.getFundType())
+                .build();
 
         return fundRepository.save(fund);
     }
 
     @Override
     public Savings createSavings(SavingsRequest savingsRequest) {
-        Savings savings = new Savings();
-        savings.setSavingsName(savingsRequest.getSavingsName());
-        savings.setSavingsInfo(savingsRequest.getSavingsInfo());
-        savings.setSavingsDesc(savingsRequest.getSavingsDesc());
-        savings.setInterestRate(savingsRequest.getInterestRate());
-        savings.setPeriod(savingsRequest.getPeriod());
-        savings.setTarget(savingsRequest.getTarget());
-        savings.setMaxDeposit(savingsRequest.getMaxDeposit());
+        Savings savings = Savings.builder()
+                .savingsName(savingsRequest.getSavingsName())
+                .savingsInfo(savingsRequest.getSavingsInfo())
+                .savingsDesc(savingsRequest.getSavingsDesc())
+                .interestRate(savingsRequest.getInterestRate())
+                .period(savingsRequest.getPeriod())
+                .target(savingsRequest.getTarget())
+                .maxDeposit(savingsRequest.getMaxDeposit())
+                .savingsType(savingsRequest.getSavingsType())
+                .build();
 
         return savingsRepository.save(savings);
     }
     @Override
     public Deposit createDeposit(DepositRequest depositRequest) {
-        Deposit deposit = new Deposit();
-        deposit.setDepositName(depositRequest.getDepositName());
-        deposit.setDepositInfo(depositRequest.getDepositInfo());
-        deposit.setDepositDesc(depositRequest.getDepositDesc());
-        deposit.setInterestRate(depositRequest.getInterestRate());
-        deposit.setPeriod(depositRequest.getPeriod());
-        deposit.setTarget(depositRequest.getTarget());
-        deposit.setMinDeposit(depositRequest.getMinDeposit());
+        Deposit deposit = Deposit.builder()
+                .depositName(depositRequest.getDepositName())
+                .depositInfo(depositRequest.getDepositInfo())
+                .depositDesc(depositRequest.getDepositDesc())
+                .depositType(depositRequest.getDepositType())
+                .interestRate(depositRequest.getInterestRate())
+                .period(depositRequest.getPeriod())
+                .target(depositRequest.getTarget())
+                .minDeposit(depositRequest.getMinDeposit())
+                .build();
 
         return depositRepository.save(deposit);
     }
+
+    @Override
+    public void deleteFund(Long id) {
+        fundRepository.deleteById(id);
+
+
 }
+
+    @Override
+    public void deleteDeposit(Long id) {
+        depositRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteSavings(Long id) {
+        savingsRepository.deleteById(id);
+
+    }
+
+
+
+
+
+    }
+

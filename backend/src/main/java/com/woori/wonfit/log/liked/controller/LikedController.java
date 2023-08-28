@@ -1,13 +1,9 @@
 package com.woori.wonfit.log.liked.controller;
 
-import com.woori.wonfit.log.liked.dto.LikedResponse;
-import com.woori.wonfit.log.liked.service.LikedService;
 import com.woori.wonfit.log.liked.domain.Liked;
+import com.woori.wonfit.log.liked.service.LikedService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-
 
 import java.util.List;
 
