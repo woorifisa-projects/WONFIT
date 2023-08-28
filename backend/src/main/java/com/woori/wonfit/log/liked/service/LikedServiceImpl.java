@@ -17,8 +17,13 @@ public class LikedServiceImpl implements LikedService {
     }
 
     @Override
-    public List<Liked> findByAllMemberId(Long memberId){
+    public List<Liked> findByAllMemberId(Long memberId) {
         return likedRepository.findAllByMemberId(memberId);
     }
 
+    @Override
+    public String deleteById (Long id) {
+        likedRepository.deleteById(id);
+        return "삭제가 완료되었습니다.";
+    }
 }

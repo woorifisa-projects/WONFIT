@@ -11,4 +11,7 @@ public interface LikedService {
 
     List<Liked> findByAllMemberId(Long memberId);
 
+    String deleteById(Long id);
+
+
 }
