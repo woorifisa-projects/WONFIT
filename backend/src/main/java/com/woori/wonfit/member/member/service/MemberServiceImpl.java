@@ -2,7 +2,7 @@ package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
-import com.woori.wonfit.member.member.domain.JwtUtil;
+import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
@@ -33,7 +33,6 @@ public class MemberServiceImpl implements MemberService{
     @Value("${jwt.token.secret}")
     private String secretkey;
     private final long expireTimeMs = 1000 * 60 * 60 * 24; // 토큰 하루
-
     @Override
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByLoginId(request.getLoginId())
@@ -69,7 +68,7 @@ public class MemberServiceImpl implements MemberService{
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            return JwtUtil.createToken(loginId, expireTimeMs);
+            return JwtUtil.createToken(loginId, expireTimeMs, secretkey);
         }
     }
     private String extractBrowser(String userAgent) {
