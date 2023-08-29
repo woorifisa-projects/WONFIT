@@ -1,0 +1,60 @@
+<template>
+  <div class="logo-text mx-auto py-2" color="#eeeeee">
+    <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
+      <div class="product-info">
+        <v-card-item>
+          <v-card-title style="font-size: 25px">{{ fundName }}</v-card-title>
+          <v-card-subtitle style="font-size: 17px">{{ fundInfo }}</v-card-subtitle>
+        </v-card-item>
+        <v-card-text>
+          1개월 금리: {{ returnRate1 }}%<br />
+          6개월 금리: {{ returnRate2 }}%<br />
+          기준가: {{ fundPrice }}원<br />
+          상품 타입: {{ fundType }}<br />
+        </v-card-text>
+      </div>
+      <v-card-actions class="flex-row-reverse">
+        <v-btn class="order-last" text>가입하기</v-btn>
+        <v-btn text>전화가입</v-btn>
+        <v-btn class="order-first" text>관심상품</v-btn>
+      </v-card-actions>
+    </v-card>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  fundName: String,
+  fundInfo: String,
+  returnRate1: Number,
+  returnRate2: Number,
+  fundPrice: Number,
+  fundType: String,
+});
+</script>
+
+<style lang="scss" scoped>
+.product-info {
+  flex-basis: 50%;
+}
+.v-card-actions {
+  flex-basis: 50%;
+  justify-self: end;
+}
+
+.v-card-actions .v-btn {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  font-family: "WooridaumB", sans-serif;
+}
+
+.v-card-text {
+  font-size: 17px;
+}
+
+.box-color {
+  border-radius: 15px;
+}
+</style>

@@ -18,7 +18,7 @@
       <div>
         <v-btn
           variant="tonal"
-          class="mr-3 logo-text"
+          class="mx-4 logo-text"
           style="
             padding: 90px 15px;
             background-color: rgb(59, 126, 227);
@@ -32,7 +32,7 @@
 
         <v-btn
           variant="tonal"
-          class="mr-3 logo-text"
+          class="mx-4 logo-text"
           style="
             padding: 90px 20px;
             background-color: rgb(59, 126, 227);
@@ -46,7 +46,7 @@
 
         <v-btn
           variant="tonal"
-          class="mr-3 logo-text"
+          class="mx-4 logo-text"
           style="
             padding: 90px 20px;
             background-color: rgb(59, 126, 227);
@@ -60,7 +60,7 @@
 
         <v-btn
           variant="tonal"
-          class="mr-3 logo-text"
+          class="mx-4 logo-text"
           style="
             padding: 90px 30px;
             background-color: rgb(59, 126, 227);
@@ -86,22 +86,22 @@ export default {
 
     navigateToFundTestPage() {
       // FundTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "fundtest" });
+      this.$router.push({ name: "FundTest" });
     },
 
     navigateToLoanTestPage() {
       // LoanTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "loantest" });
+      this.$router.push({ name: "LoanTest" });
     },
 
     navigateToDepositTestPage() {
       // DepositTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "deposittest" });
+      this.$router.push({ name: "DeposiTtest" });
     },
 
     navigateToSavingsTestPage() {
       // SavingsTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "savingstest" });
+      this.$router.push({ name: "SavingsTest" });
     },
   },
 };

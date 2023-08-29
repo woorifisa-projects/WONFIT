@@ -11,7 +11,6 @@
     <!-- <v-spacer></v-spacer> -->
     <v-tabs v-model="tab" background-color="transparent" color="black">
       <v-tab class="tab-text" @click="navigateToProductSearchPage">상품검색</v-tab>
-      <v-tab class="tab-text" @click="navigateToInvestmentResultPage">투자성향 결과보기</v-tab>
     </v-tabs>
     <v-spacer></v-spacer>
     <v-chip-group class="right-aligned" style="margin-right: 10px">
@@ -32,11 +31,7 @@ const navigateToMainPage = () => {
 };
 
 const navigateToProductSearchPage = () => {
-  router.push({ name: "ProductSearchPage" });
-};
-
-const navigateToInvestmentResultPage = () => {
-  router.push({ name: "InvestmentResultPage" });
+  router.push({ name: "SearchDefault" });
 };
 
 const navigateToLoginPage = () => {
