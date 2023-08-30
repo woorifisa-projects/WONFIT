@@ -35,7 +35,9 @@
         @click:append-inner="visible = !visible"
       ></v-text-field>
 
-      <v-btn block class="mb-8" color="blue" size="large" variant="tonal" @click="login"> Log In </v-btn>
+      <v-btn block class="mb-8" color="blue" size="large" variant="tonal" @click="login">
+        Log In
+      </v-btn>
 
       <v-card-text class="text-center">
         <a
@@ -50,37 +52,32 @@
     </v-card>
   </div>
 </template>
-<script>
-import axios from 'axios';
 
-export default {
-  data: () => ({
-    visible: false,
-    loginId: '',
-    password: '',
-  }),
+<script setup>
+import axios from "axios";
+import { ref } from "vue";
 
-  methods: {
-    async login() {
-      try {
-        axios.defaults.withCredentials = true;
+const visible = ref(false);
+const loginId = ref("");
+const password = ref("");
 
-        const requestBody = {
-          loginId: this.loginId,
-          password: this.password,
-        };
+const login = async () => {
+  try {
+    axios.defaults.withCredentials = true;
 
-        console.log(this.loginId);
-        console.log(this.password);
+    const requestBody = {
+      loginId: loginId.value,
+      password: password.value,
+    };
 
-        const response = await axios.post('http://localhost:8080/member/login', requestBody);
-        console.log("로그인 성공");
-        console.log(response.data);
+    console.log(loginId.value);
+    console.log(password.value);
 
-      } catch (error) {
-        console.error('An error occurred:', error);
-      }
-    },
-  },
+    const response = await axios.post("http://localhost:8080/member/login", requestBody);
+    console.log("로그인 성공");
+    console.log(response.data);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 };
 </script>

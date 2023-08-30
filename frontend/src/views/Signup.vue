@@ -98,7 +98,7 @@
     </v-dialog>
   </v-card>
 </template>
-<script>
+<!-- <script>
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
@@ -149,5 +149,54 @@ export default {
         });
     },
   },
+};
+</script> -->
+<script setup>
+import axios from "axios";
+import { ref } from "vue";
+
+axios.defaults.withCredentials = true;
+
+const name = ref(undefined);
+const agreement = ref(false);
+const bio = ref(
+  "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts"
+);
+const dialog = ref(false);
+const email = ref(undefined);
+const isValid = ref(false);
+const isLoading = ref(false);
+const password = ref(undefined);
+const phone = ref(undefined);
+
+const rules = {
+  email: (v) => !!(v || "").match(/@/) || "Please enter a valid email",
+  length: (len) => (v) => (v || "").length >= len || `Invalid character length, required ${len}`,
+  password: (v) =>
+    !!(v || "").match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
+    "Password must contain an upper case letter, a numeric character, and a special character",
+  required: (v) => !!v || "This field is required",
+};
+
+const submitForm = () => {
+  const request_data = {
+    memberEmail: email.value,
+    memberPw: password.value,
+    memberName: name.value,
+    memberId: "1111",
+    Status: true,
+  };
+
+  console.log(request_data);
+
+  axios
+    .post("http://localhost:8080/member/register", request_data)
+    .then(() => {
+      console.log("######### success");
+      location.href = "./mainPage.html"; // 나중에 로그인 페이지로 넘겨라
+    })
+    .catch((error) => {
+      console.error("Error submitting form:", error);
+    });
 };
 </script>
