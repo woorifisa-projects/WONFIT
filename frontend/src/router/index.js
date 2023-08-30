@@ -27,41 +27,41 @@ const routes = [
       {
         path: "recommend",
         name: "Recommend",
-        component: () => import(/* webpackChunkName: "recommend" */ "@/views/Recommend.vue"),
+        component: () => import(/* webpackChunkName: "Recommend" */ "@/views/Recommend.vue"),
       },
 
       {
-        path: "fundtest",
-        name: "fundtest",
+        path: "fund-test",
+        name: "FundTest",
         component: () => import(/* webpackChunkName: "fundtest" */ "@/views/FundTest.vue"),
       },
 
       {
-        path: "loantest",
-        name: "loantest",
+        path: "loan-test",
+        name: "LoanTest",
         component: () => import(/* webpackChunkName: "loantest" */ "@/views/LoanTest.vue"),
       },
 
       {
-        path: "deposittest",
-        name: "deposittest",
+        path: "deposit-test",
+        name: "DepositTest",
         component: () => import(/* webpackChunkName: "deposittest" */ "@/views/DepositTest.vue"),
       },
 
       {
-        path: "savingstest",
-        name: "savingstest",
+        path: "savings-test",
+        name: "SavingsTest",
         component: () => import(/* webpackChunkName: "savingstest" */ "@/views/SavingsTest.vue"),
       },
 
       {
-        path: "managerpage",
-        name: "Managerpage",
+        path: "manager-page",
+        name: "ManagerPage",
         component: () => import(/* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"),
       },
 
       {
-        path: "Income",
+        path: "income",
         name: "Income",
         component: () => import(/* webpackChunkName: "managerpage" */ "@/views/Income.vue"),
       },
@@ -78,9 +78,41 @@ const routes = [
       },
       {
         path: "InvestmentResult",
-        name: "InvestmentResultPage",
+        name: "InvestmentResult",
         component: () =>
-          import(/* webpackChunkName: "investmentresult" */ "@/views/InvestmentResult.vue"),
+          import(/* webpackChunkName: "InvestmentResult" */ "@/views/InvestmentResult.vue"),
+      },
+
+      {
+        path: "bank-select",
+        name: "BankSelect",
+        component: () => import(/* webpackChunkName: "bankselectpage" */ "@/views/BankSelect.vue"),
+      },
+
+      {
+        path: "myinfo",
+        name: "MyInfo",
+        component: () => import(/* webpackChunkName: "MyInfo" */ "@/views/MyInfo.vue"),
+      },
+
+      {
+        path: "my-liked-product",
+        name: "MyLikedProduct",
+        component: () =>
+          import(/* webpackChunkName: "MyLikedProduct" */ "@/views/MyLikedProduct.vue"),
+      },
+
+      {
+        path: "my-subscribe-product",
+        name: "MySubscribeProduct",
+        component: () =>
+          import(/* webpackChunkName: "MySubscribeProduct" */ "@/views/MySubscribeProduct.vue"),
+      },
+
+      {
+        path: "withdraw",
+        name: "Withdraw",
+        component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/Withdraw.vue"),
       },
     ],
   },
