@@ -72,17 +72,26 @@ const routes = [
         name: "MyPage",
         component: () => import(/* webpackChunkName: "mypage" */ "@/views/MyPage.vue"),
       },
+<<<<<<< Updated upstream
+=======
+      {
+        path: "search-default",
+        name: "SearchDefault",
+        component: () =>
+          import(/* webpackChunkName: "searchdefault" */ "@/views/SearchDefault.vue"),
+      },
+      {
+        path: "InvestmentResult",
+        name: "InvestmentResult",
+        component: () =>
+          import(/* webpackChunkName: "InvestmentResult" */ "@/views/InvestmentResult.vue"),
+      },
+>>>>>>> Stashed changes
 
       {
         path: "bank-select",
         name: "BankSelect",
         component: () => import(/* webpackChunkName: "bankselectpage" */ "@/views/BankSelect.vue"),
-      },
-
-      {
-        path: "myinfo",
-        name: "MyInfo",
-        component: () => import(/* webpackChunkName: "MyInfo" */ "@/views/MyInfo.vue"),
       },
 
       {
@@ -104,7 +113,10 @@ const routes = [
         name: "Withdraw",
         component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/Withdraw.vue"),
       },
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
       {
         path: "search-savings",
         name: "SearchSavings",
@@ -128,6 +140,7 @@ const routes = [
       {
         path: "search-loan",
         name: "SearchLoan",
+<<<<<<< Updated upstream
         component: () => import(/* webpackChunkName: "searchloan" */ "@/views/search/Loan.vue"),
       },
 
@@ -155,6 +168,9 @@ const routes = [
         path: "loan-detail",
         name: "LoanDetailPage",
         component: () => import(/* webpackChunkName: "loandetail" */ "@/views/detail/Loan.vue"),
+=======
+        component: () => import(/* webpackChunkName: "searchloan" */ "@/views/SearchLoan.vue"),
+>>>>>>> Stashed changes
       },
     ],
   },
