@@ -5,9 +5,7 @@ import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,6 +13,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "liked")
+@Builder
+@AllArgsConstructor
 public class Liked {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
