@@ -31,37 +31,37 @@ const routes = [
       },
 
       {
-        path: "fundtest",
-        name: "fundtest",
+        path: "fund-test",
+        name: "FundTest",
         component: () => import(/* webpackChunkName: "fundtest" */ "@/views/FundTest.vue"),
       },
 
       {
-        path: "loantest",
-        name: "loantest",
+        path: "loan-test",
+        name: "LoanTest",
         component: () => import(/* webpackChunkName: "loantest" */ "@/views/LoanTest.vue"),
       },
 
       {
-        path: "deposittest",
-        name: "deposittest",
+        path: "deposit-test",
+        name: "DepositTest",
         component: () => import(/* webpackChunkName: "deposittest" */ "@/views/DepositTest.vue"),
       },
 
       {
-        path: "savingstest",
-        name: "savingstest",
+        path: "savings-test",
+        name: "SavingsTest",
         component: () => import(/* webpackChunkName: "savingstest" */ "@/views/SavingsTest.vue"),
       },
 
       {
-        path: "managerpage",
-        name: "Managerpage",
+        path: "manager-page",
+        name: "ManagerPage",
         component: () => import(/* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"),
       },
 
       {
-        path: "Income",
+        path: "income",
         name: "Income",
         component: () => import(/* webpackChunkName: "managerpage" */ "@/views/Income.vue"),
       },
@@ -71,16 +71,26 @@ const routes = [
         component: () => import(/* webpackChunkName: "mypage" */ "@/views/MyPage.vue"),
       },
       {
-        path: "productsearch",
-        name: "ProductSearchPage",
+        path: "search-default",
+        name: "SearchDefault",
         component: () =>
-          import(/* webpackChunkName: "productsearch" */ "@/views/ProductSearch.vue"),
+          import(/* webpackChunkName: "searchdefault" */ "@/views/SearchDefault.vue"),
       },
       {
-        path: "InvestmentResult",
-        name: "InvestmentResultPage",
+        path: "search-savings",
+        name: "SearchSavings",
         component: () =>
-          import(/* webpackChunkName: "investmentresult" */ "@/views/InvestmentResult.vue"),
+          import(/* webpackChunkName: "searchsavings" */ "@/views/SearchSavings.vue"),
+      },
+      {
+        path: "search-fund",
+        name: "SearchFund",
+        component: () => import(/* webpackChunkName: "searchfund" */ "@/views/SearchFund.vue"),
+      },
+      {
+        path: "search-loan",
+        name: "SearchLoan",
+        component: () => import(/* webpackChunkName: "searchloan" */ "@/views/SearchLoan.vue"),
       },
     ],
   },

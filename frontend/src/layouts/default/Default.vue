@@ -2,6 +2,7 @@
   <v-app>
     <default-bar />
 
+    <!-- <default-view class="mx-auto" flat width="1500px" /> -->
     <default-view />
 
     <default-footer />
