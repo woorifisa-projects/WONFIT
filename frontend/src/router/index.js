@@ -27,7 +27,7 @@ const routes = [
       {
         path: "recommend",
         name: "Recommend",
-        component: () => import(/* webpackChunkName: "recommend" */ "@/views/Recommend.vue"),
+        component: () => import(/* webpackChunkName: "Recommend" */ "@/views/Recommend.vue"),
       },
 
       {
@@ -77,6 +77,44 @@ const routes = [
           import(/* webpackChunkName: "searchdefault" */ "@/views/SearchDefault.vue"),
       },
       {
+
+        path: "InvestmentResult",
+        name: "InvestmentResult",
+        component: () =>
+          import(/* webpackChunkName: "InvestmentResult" */ "@/views/InvestmentResult.vue"),
+      },
+
+      {
+        path: "bank-select",
+        name: "BankSelect",
+        component: () => import(/* webpackChunkName: "bankselectpage" */ "@/views/BankSelect.vue"),
+      },
+
+      {
+        path: "myinfo",
+        name: "MyInfo",
+        component: () => import(/* webpackChunkName: "MyInfo" */ "@/views/MyInfo.vue"),
+      },
+
+      {
+        path: "my-liked-product",
+        name: "MyLikedProduct",
+        component: () =>
+          import(/* webpackChunkName: "MyLikedProduct" */ "@/views/MyLikedProduct.vue"),
+      },
+
+      {
+        path: "my-subscribe-product",
+        name: "MySubscribeProduct",
+        component: () =>
+          import(/* webpackChunkName: "MySubscribeProduct" */ "@/views/MySubscribeProduct.vue"),
+      },
+
+      {
+        path: "withdraw",
+        name: "Withdraw",
+        component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/Withdraw.vue"),
+
         path: "search-savings",
         name: "SearchSavings",
         component: () =>
@@ -91,6 +129,7 @@ const routes = [
         path: "search-loan",
         name: "SearchLoan",
         component: () => import(/* webpackChunkName: "searchloan" */ "@/views/SearchLoan.vue"),
+
       },
     ],
   },
