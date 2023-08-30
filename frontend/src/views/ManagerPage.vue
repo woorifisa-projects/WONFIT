@@ -76,9 +76,8 @@
     'Profile',
     'Updates',
   ]
-</script>
 
-<script>
+
   export default {
     data: () => ({
       links: [
@@ -90,3 +89,4 @@
     }),
   }
 </script>
+
