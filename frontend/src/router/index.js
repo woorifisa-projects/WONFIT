@@ -71,12 +71,13 @@ const routes = [
         component: () => import(/* webpackChunkName: "mypage" */ "@/views/MyPage.vue"),
       },
       {
-        path: "productsearch",
-        name: "ProductSearchPage",
+        path: "search-default",
+        name: "SearchDefault",
         component: () =>
-          import(/* webpackChunkName: "productsearch" */ "@/views/ProductSearch.vue"),
+          import(/* webpackChunkName: "searchdefault" */ "@/views/SearchDefault.vue"),
       },
       {
+
         path: "InvestmentResult",
         name: "InvestmentResult",
         component: () =>
@@ -113,6 +114,22 @@ const routes = [
         path: "withdraw",
         name: "Withdraw",
         component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/Withdraw.vue"),
+
+        path: "search-savings",
+        name: "SearchSavings",
+        component: () =>
+          import(/* webpackChunkName: "searchsavings" */ "@/views/SearchSavings.vue"),
+      },
+      {
+        path: "search-fund",
+        name: "SearchFund",
+        component: () => import(/* webpackChunkName: "searchfund" */ "@/views/SearchFund.vue"),
+      },
+      {
+        path: "search-loan",
+        name: "SearchLoan",
+        component: () => import(/* webpackChunkName: "searchloan" */ "@/views/SearchLoan.vue"),
+
       },
     ],
   },

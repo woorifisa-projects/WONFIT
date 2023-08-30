@@ -10,8 +10,10 @@
     </v-app-bar-title>
     <v-tabs v-model="tab" color="black" >
       <v-tab class="tab-text" @click="navigateToProductSearchPage">상품검색</v-tab>
+
       <v-tab class="tab-text" @click="navigateToRecommend">결과보기</v-tab>
      
+
     </v-tabs>
     <v-spacer></v-spacer>
     
@@ -52,11 +54,7 @@ const navigateToRecommend = () => {
 
 
 const navigateToProductSearchPage = () => {
-  router.push({ name: "ProductSearchPage" });
-};
-
-const navigateToInvestmentResultPage = () => {
-  router.push({ name: "InvestmentResultPage" });
+  router.push({ name: "SearchDefault" });
 };
 
 const navigateToLoginPage = () => {

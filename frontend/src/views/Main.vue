@@ -15,11 +15,13 @@
         </v-btn>
       </div>
 
+
       <div >
         <custom-button content="투자하고 싶어요"/>
         <custom-button content="빌리고 싶어요"/>
         <custom-button content="모으고 싶어요"/>
         <custom-button content="쌓고 싶어요"/>
+
       </div>
     </v-main>
   </v-layout>
@@ -39,22 +41,22 @@ export default {
 
     navigateToFundTestPage() {
       // FundTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "fundtest" });
+      this.$router.push({ name: "FundTest" });
     },
 
     navigateToLoanTestPage() {
       // LoanTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "loantest" });
+      this.$router.push({ name: "LoanTest" });
     },
 
     navigateToDepositTestPage() {
       // DepositTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "deposittest" });
+      this.$router.push({ name: "DeposiTtest" });
     },
 
     navigateToSavingsTestPage() {
       // SavingsTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "savingstest" });
+      this.$router.push({ name: "SavingsTest" });
     },
   },
   components: { CustomButton }
