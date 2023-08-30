@@ -1,133 +1,92 @@
 <template>
-  <!-- <v-card> -->
-  <!-- v-card를 사용하면 레이아웃이 깨짐 -->
-  <v-layout>
-    <v-navigation-drawer floating permanent>
-      <v-list density="compact" nav>
-        <v-list-item
-          prepend-icon="mdi-account"
-          title="사용자 관리"
-          value="사용자 관리"
-        ></v-list-item>
-        <v-list-item
-          prepend-icon="mdi-view-dashboard"
-          title="상품관리"
-          value="상품 관리"
-        ></v-list-item>
-        <v-list-item
-          prepend-icon="mdi-forum"
-          title="알림톡 보내기"
-          value="알림톡 보내기"
-        ></v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-main style="height: 250px; display: flex; justify-content: center; align-items: center">
-      <v-sheet :height="200" :width="800" color="grey-lighten-3">
-        <v-table fixed-header height="300px">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="text-left">번호</th>
-              <th class="text-left">아이디</th>
-              <th class="text-left">이름</th>
-              <th class="text-left">등급</th>
-              <th class="text-left">상태</th>
-              <th class="text-left">접속수</th>
-              <th class="text-left">가입일</th>
-            </tr>
-          </thead>
-          <template v-slot:column.name="{ column }">
-            {{ column.title.toUpperCase() }}
-          </template>
-          <tbody>
-            <tr v-for="item in users" :key="item.id">
-              <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
-              <td>{{ item.idx }}</td>
-              <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.grade }}</td>
-              <td>{{ item.status }}</td>
-              <td>{{ item.loginCount }}</td>
-              <td>{{ item.regDate }}</td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-sheet>
+  <v-app id="inspire">
+    <v-app-bar flat>
+      <v-container class="mx-auto d-flex align-center justify-center">
+        <!-- <v-avatar
+          class="me-4 "
+          color="grey-darken-1"
+          size="32"
+        ></v-avatar> -->
+
+        <!-- <v-btn
+          v-for="link in links"
+          :key="link"
+          :text="link"
+          variant="text"
+        ></v-btn> -->
+
+        <v-spacer></v-spacer>
+
+        <v-responsive max-width="200">
+        
+        </v-responsive>
+      </v-container>
+    </v-app-bar>
+
+    <v-main class="bg-grey-lighten-3">
+      <v-container>
+        <v-row>
+          <v-col cols="3">
+            <v-sheet rounded="lg">
+              <v-list rounded="lg">
+                <!-- <v-list-item
+                  v-for="n in 5"
+                  :key="n"
+                  link
+                  :title="`내 정보 보기 ${n}`"
+                ></v-list-item> -->
+
+                <v-list-item>내 정보 보기</v-list-item>
+                <v-list-item>내 가입상품 확인하기</v-list-item>
+                <v-list-item>내 관심상품 확인하기</v-list-item>
+                <v-list-item>나의 투자성향 보기</v-list-item>
+              
+                 
+                
+
+                <v-divider class="my-2"></v-divider>
+
+                <v-list-item
+                  color="grey-lighten-4"
+                  link
+                  title="회원 탈퇴"
+                ></v-list-item>
+              </v-list>
+            </v-sheet>
+          </v-col>
+
+          <v-col>
+            <v-sheet
+              min-height="70vh"
+              rounded="lg"
+            >
+              <!--  -->
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
-  </v-layout>
-  <!-- </v-card> -->
+  </v-app>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      users: [
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
+<script setup>
+  const links = [
+    'Dashboard',
+    'Messages',
+    'Profile',
+    'Updates',
+  ]
+
+
+  export default {
+    data: () => ({
+      links: [
+        'Dashboard',
+        'Messages',
+        'Profile',
+        'Updates',
       ],
-    };
-  },
-};
+    }),
+  }
 </script>
+

@@ -1,26 +1,43 @@
 <template>
   <v-app-bar flat>
-    <v-app-bar-title class="d-flex align-center">
+    <v-app-bar-title class="d-flex align-left">
       <div class="logo" @click="navigateToMainPage">
         <div class="d-flex align-center">
-          <img src="@/assets/wonfit.png" style="width: 70px; margin-top: 8px; margin-right: 5px" />
+          <img src="@/assets/wonfit.png" style="width: 70px; margin-top: 8px" />
           <span class="logo-text" style="font-size: 25px">우리WONFIT</span>
         </div>
       </div>
     </v-app-bar-title>
-    <!-- <v-spacer></v-spacer> -->
-    <v-tabs v-model="tab" background-color="transparent" color="black">
+    <v-tabs v-model="tab" color="black" >
       <v-tab class="tab-text" @click="navigateToProductSearchPage">상품검색</v-tab>
-      <v-tab class="tab-text" @click="navigateToInvestmentResultPage">투자성향 결과보기</v-tab>
+
+      <v-tab class="tab-text" @click="navigateToRecommend">결과보기</v-tab>
+     
+
     </v-tabs>
     <v-spacer></v-spacer>
-    <v-chip-group class="right-aligned" style="margin-right: 10px">
+    
+    <v-text-field
+            density="compact"
+            flat
+            hide-details
+            label="Search"
+            rounded="lg"
+            single-line
+            variant="solo-filled"
+          ></v-text-field>
+          <!-- <div class="logo-text" styl\e="margin-left:40px;margin-right:55px" @click="navigateToMyPage">로그인</div> -->
+          <div class="logo-text" style="margin-left:40px;margin-right:55px" @click="navigateToMyPage">유재원님 안녕하세요!</div>
+          <!-- <div class="logo-text" style="margin-left:20px; margin-right:20px" @click="navigateToLoginPage">마이페이지</div> -->
+    <!-- <v-chip-group class="right-aligned" style="margin-left:20px; margin-right:10px">
       <v-chip class="logo-text" @click="navigateToLoginPage">로그인</v-chip>
       <v-chip class="logo-text" @click="navigateToSignUpPage">회원가입</v-chip>
       <v-chip class="logo-text" @click="navigateToMyPage">마이페이지</v-chip>
-    </v-chip-group>
+    </v-chip-group> -->
+    
   </v-app-bar>
 </template>
+
 
 <script setup>
 import { useRouter } from "vue-router";
@@ -31,12 +48,13 @@ const navigateToMainPage = () => {
   router.push({ name: "MainPage" });
 };
 
-const navigateToProductSearchPage = () => {
-  router.push({ name: "ProductSearchPage" });
+const navigateToRecommend = () => {
+  router.push({ name: "Recommend" });
 };
 
-const navigateToInvestmentResultPage = () => {
-  router.push({ name: "InvestmentResultPage" });
+
+const navigateToProductSearchPage = () => {
+  router.push({ name: "SearchDefault" });
 };
 
 const navigateToLoginPage = () => {
@@ -67,7 +85,7 @@ const navigateToMyPage = () => {
 }
 
 .logo-text {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
 }

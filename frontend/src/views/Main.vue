@@ -15,68 +15,23 @@
         </v-btn>
       </div>
 
-      <div>
-        <v-btn
-          variant="tonal"
-          class="mr-3 logo-text"
-          style="
-            padding: 90px 15px;
-            background-color: rgb(59, 126, 227);
-            color: white;
-            font-weight: bold;
-          "
-          @click="navigateToFundTestPage"
-        >
-          투자하고 싶어요
-        </v-btn>
 
-        <v-btn
-          variant="tonal"
-          class="mr-3 logo-text"
-          style="
-            padding: 90px 20px;
-            background-color: rgb(59, 126, 227);
-            color: white;
-            font-weight: bold;
-          "
-          @click="navigateToLoanTestPage"
-        >
-          빌리고 싶어요
-        </v-btn>
+      <div >
+        <custom-button content="투자하고 싶어요"/>
+        <custom-button content="빌리고 싶어요"/>
+        <custom-button content="모으고 싶어요"/>
+        <custom-button content="쌓고 싶어요"/>
 
-        <v-btn
-          variant="tonal"
-          class="mr-3 logo-text"
-          style="
-            padding: 90px 20px;
-            background-color: rgb(59, 126, 227);
-            color: white;
-            font-weight: bold;
-          "
-          @click="navigateToDepositTestPage"
-        >
-          모으고 싶어요
-        </v-btn>
-
-        <v-btn
-          variant="tonal"
-          class="mr-3 logo-text"
-          style="
-            padding: 90px 30px;
-            background-color: rgb(59, 126, 227);
-            color: white;
-            font-weight: bold;
-          "
-          @click="navigateToSavingsTestPage"
-        >
-          쌓고 싶어요
-        </v-btn>
       </div>
     </v-main>
   </v-layout>
 </template>
 
 <script>
+
+import CustomButton from '@/components/button/CustomButton.vue';
+
+
 export default {
   methods: {
     navigateToIncomeAnalysisPage() {
@@ -86,24 +41,25 @@ export default {
 
     navigateToFundTestPage() {
       // FundTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "fundtest" });
+      this.$router.push({ name: "FundTest" });
     },
 
     navigateToLoanTestPage() {
       // LoanTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "loantest" });
+      this.$router.push({ name: "LoanTest" });
     },
 
     navigateToDepositTestPage() {
       // DepositTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "deposittest" });
+      this.$router.push({ name: "DeposiTtest" });
     },
 
     navigateToSavingsTestPage() {
       // SavingsTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "savingstest" });
+      this.$router.push({ name: "SavingsTest" });
     },
   },
+  components: { CustomButton }
 };
 </script>
 

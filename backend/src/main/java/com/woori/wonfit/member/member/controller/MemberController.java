@@ -5,15 +5,20 @@ import com.woori.wonfit.member.member.dto.*;
 import com.woori.wonfit.member.member.service.MemberServiceImpl;
 import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
     private final MemberServiceImpl memberService;
     private final MemberInfoService memberInfoService;
@@ -26,8 +31,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String result = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
+    public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletRequest request) {
+        String result = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
         return new ResponseEntity<>(new MemberLoginResponse(result), HttpStatus.OK);
     }
 
@@ -45,8 +50,9 @@ public class MemberController {
     }
 
     @PostMapping("/leave")
-    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest){
+    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest, Authentication authentication){
         String message = memberService.leaveMember(memberLoginRequest.getLoginId(),memberLoginRequest.getPassword());
+
 
         return new ResponseEntity<>(message, HttpStatus.OK);
 
