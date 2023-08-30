@@ -15,22 +15,18 @@
         </v-btn>
       </div>
 
-
-      <div >
-        <custom-button content="투자하고 싶어요"/>
-        <custom-button content="빌리고 싶어요"/>
-        <custom-button content="모으고 싶어요"/>
-        <custom-button content="쌓고 싶어요"/>
-
+      <div>
+        <custom-button content="투자하고 싶어요" />
+        <custom-button content="빌리고 싶어요" />
+        <custom-button content="모으고 싶어요" />
+        <custom-button content="쌓고 싶어요" />
       </div>
     </v-main>
   </v-layout>
 </template>
 
 <script>
-
-import CustomButton from '@/components/button/CustomButton.vue';
-
+import CustomButton from "@/components/button/CustomButton.vue";
 
 export default {
   methods: {
@@ -59,7 +55,7 @@ export default {
       this.$router.push({ name: "SavingsTest" });
     },
   },
-  components: { CustomButton }
+  components: { CustomButton },
 };
 </script>
 

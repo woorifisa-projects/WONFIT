@@ -81,43 +81,73 @@
   </div>
 </template>
 
-<script>
+<script setup>
+// import CustomButton from "@/components/button/TypeButton.vue";
+// import DepositCard from "@/components/card/product/DepositCard.vue";
+
+// export default {
+//   data: () => ({
+//     loaded: false,
+//     loading: false,
+//   }),
+
+//   methods: {
+//     onClick() {
+//       this.loading = true;
+
+//       setTimeout(() => {
+//         this.loading = false;
+//         this.loaded = true;
+//       }, 1000);
+//     },
+//   },
+//   components: {
+//     CustomButton,
+//     DepositCard,
+//   },
+//   methods: {
+//     navigateToSearchSavings() {
+//       this.$router.push({ name: "SearchSavings" });
+//     },
+
+//     navigateToSearchFund() {
+//       this.$router.push({ name: "SearchFund" });
+//     },
+
+//     navigateToSearchLoan() {
+//       this.$router.push({ name: "SearchLoan" });
+//     },
+//   },
+// };
+
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import CustomButton from "@/components/button/TypeButton.vue";
 import DepositCard from "@/components/card/product/DepositCard.vue";
 
-export default {
-  data: () => ({
-    loaded: false,
-    loading: false,
-  }),
+const loaded = ref(false);
+const loading = ref(false);
+const router = useRouter();
 
-  methods: {
-    onClick() {
-      this.loading = true;
+const onClick = () => {
+  loading.value = true;
 
-      setTimeout(() => {
-        this.loading = false;
-        this.loaded = true;
-      }, 1000);
-    },
-  },
-  components: {
-    CustomButton,
-    DepositCard,
-  },
-  methods: {
-    navigateToSearchSavings() {
-      this.$router.push({ name: "SearchSavings" });
-    },
+  setTimeout(() => {
+    loading.value = false;
+    loaded.value = true;
+  }, 1000);
+};
 
-    navigateToSearchFund() {
-      this.$router.push({ name: "SearchFund" });
-    },
+const navigateToSearchSavings = () => {
+  router.push({ name: "SearchSavings" });
+};
 
-    navigateToSearchLoan() {
-      this.$router.push({ name: "SearchLoan" });
-    },
-  },
+const navigateToSearchFund = () => {
+  router.push({ name: "SearchFund" });
+};
+
+const navigateToSearchLoan = () => {
+  router.push({ name: "SearchLoan" });
 };
 </script>
 
