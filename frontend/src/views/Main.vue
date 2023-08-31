@@ -9,13 +9,6 @@
 
       </div>
 
-<<<<<<< Updated upstream
-      <div>
-        <custom-button content="투자하고 싶어요" />
-        <custom-button content="빌리고 싶어요" />
-        <custom-button content="모으고 싶어요" />
-        <custom-button content="쌓고 싶어요" />
-=======
 
       <div class = "button-container">
         <custom-button content="투자하고 싶어요" @Click="navigateToFundTestPage" />
@@ -23,16 +16,12 @@
         <custom-button content="모으고 싶어요" width="165px" @Click="navigateToDepositTestPage" />
         <custom-button content="쌓고 싶어요" width="170px" @Click="navigateToSavingsTestPage" />
 
->>>>>>> Stashed changes
+
       </div>
     </v-main>
   </v-layout>
 </template>
 
-<<<<<<< Updated upstream
-<script>
-import CustomButton from "@/components/button/CustomButton.vue";
-=======
 <script setup>
 
 import CustomButton from '@/components/button/CustomButton.vue';
@@ -40,7 +29,7 @@ import GreyButton from '@/components/button/GreyButton.vue';
 
 import { useRouter } from "vue-router";
 const router = useRouter();
->>>>>>> Stashed changes
+
 
 const navigateToIncomeAnalysisPage = () => {
   router.push({ name: "Income" });
@@ -58,21 +47,14 @@ const navigateToDepositTestPage = () => {
   router.push({ name: "DepositTest" });
 };
 
-<<<<<<< Updated upstream
-    navigateToSavingsTestPage() {
-      // SavingsTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "SavingsTest" });
-    },
-  },
-  components: { CustomButton },
-=======
+
 const navigateToSavingsTestPage = () => {
   router.push({ name: "SavingsTest" });
 };
 
 const components = {
   CustomButton, GreyButton
->>>>>>> Stashed changes
+
 };
 </script>
 
