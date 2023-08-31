@@ -80,12 +80,6 @@ const routes = [
       },
 
       {
-        path: "myinfo",
-        name: "MyInfo",
-        component: () => import(/* webpackChunkName: "MyInfo" */ "@/views/MyInfo.vue"),
-      },
-
-      {
         path: "my-liked-product",
         name: "MyLikedProduct",
         component: () =>

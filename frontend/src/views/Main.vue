@@ -4,66 +4,64 @@
       <div class="mb-5 logo-text" style="margin: 40px; font-size: 1.5em">
         우리WONFIT에서 자신에게 딱 맞는 금융상품을 알아보세요!
       </div>
-      <div class="mb-15">
-        <v-btn
-          variant="tonal"
-          class="d-flex justify-center align-center logo-text-button"
-          style="padding: 30px; font-size: 1.1em; border-radius: 10px"
-          @click="navigateToIncomeAnalysisPage"
-        >
-          소득정보 알아보기
-        </v-btn>
+      <div class="mb-8">
+        <grey-button content="소득정보 알아보기" @Click="navigateToIncomeAnalysisPage" />
+
       </div>
 
-      <div>
-        <custom-button content="투자하고 싶어요" />
-        <custom-button content="빌리고 싶어요" />
-        <custom-button content="모으고 싶어요" />
-        <custom-button content="쌓고 싶어요" />
+
+      <div class = "button-container">
+        <custom-button content="투자하고 싶어요" @Click="navigateToFundTestPage" />
+        <custom-button content="빌리고 싶어요" width="165px"  @Click="navigateToLoanTestPage" />
+        <custom-button content="모으고 싶어요" width="165px" @Click="navigateToDepositTestPage" />
+        <custom-button content="쌓고 싶어요" width="170px" @Click="navigateToSavingsTestPage" />
+
+
       </div>
     </v-main>
   </v-layout>
 </template>
 
-<script>
-import CustomButton from "@/components/button/CustomButton.vue";
+<script setup>
 
-export default {
-  methods: {
-    navigateToIncomeAnalysisPage() {
-      // IncomeAnalysis 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "Income" });
-    },
+import CustomButton from '@/components/button/CustomButton.vue';
+import GreyButton from '@/components/button/GreyButton.vue';
 
-    navigateToFundTestPage() {
-      // FundTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "FundTest" });
-    },
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-    navigateToLoanTestPage() {
-      // LoanTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "LoanTest" });
-    },
 
-    navigateToDepositTestPage() {
-      // DepositTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "DeposiTtest" });
-    },
+const navigateToIncomeAnalysisPage = () => {
+  router.push({ name: "Income" });
+};
 
-    navigateToSavingsTestPage() {
-      // SavingsTest 페이지로 이동하는 코드 작성
-      this.$router.push({ name: "SavingsTest" });
-    },
-  },
-  components: { CustomButton },
+const navigateToFundTestPage = () => {
+  router.push({ name: "FundTest" });
+};
+
+const navigateToLoanTestPage = () => {
+  router.push({ name: "LoanTest" });
+};
+
+const navigateToDepositTestPage = () => {
+  router.push({ name: "DepositTest" });
+};
+
+
+const navigateToSavingsTestPage = () => {
+  router.push({ name: "SavingsTest" });
+};
+
+const components = {
+  CustomButton, GreyButton
+
 };
 </script>
 
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -84,5 +82,12 @@ export default {
   padding: 30px;
   font-size: 1.1em;
   border-radius: 10px;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px; /* 원하는 간격으로 조절하세요 */
+  justify-content: center; /* 가운데 정렬 */
+  
 }
 </style>

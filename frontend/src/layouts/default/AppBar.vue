@@ -11,7 +11,7 @@
     <v-tabs v-model="tab" color="black" >
       <v-tab class="tab-text" @click="navigateToProductSearchPage">상품검색</v-tab>
 
-      <v-tab class="tab-text" @click="navigateToRecommend">결과보기</v-tab>
+      <v-tab class="tab-text" @click="navigateToRecommend">투자성향 결과보기</v-tab>
      
 
     </v-tabs>
@@ -26,14 +26,9 @@
             single-line
             variant="solo-filled"
           ></v-text-field>
-          <!-- <div class="logo-text" styl\e="margin-left:40px;margin-right:55px" @click="navigateToMyPage">로그인</div> -->
-          <div class="logo-text" style="margin-left:40px;margin-right:55px" @click="navigateToMyPage">유재원님 안녕하세요!</div>
-          <!-- <div class="logo-text" style="margin-left:20px; margin-right:20px" @click="navigateToLoginPage">마이페이지</div> -->
-    <!-- <v-chip-group class="right-aligned" style="margin-left:20px; margin-right:10px">
-      <v-chip class="logo-text" @click="navigateToLoginPage">로그인</v-chip>
-      <v-chip class="logo-text" @click="navigateToSignUpPage">회원가입</v-chip>
-      <v-chip class="logo-text" @click="navigateToMyPage">마이페이지</v-chip>
-    </v-chip-group> -->
+          <div class="logo-text" style="margin-left:40px;margin-right:65px" @click="navigateToLoginPage">로그인</div>
+          <!-- <div class="logo-text" style="margin-left:40px;margin-right:55px" @click="navigateToMyPage">유재원님 안녕하세요!</div> -->
+        
     
   </v-app-bar>
 </template>
