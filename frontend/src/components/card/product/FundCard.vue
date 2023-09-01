@@ -9,7 +9,6 @@
             @click="navigateToFundDetail"
             >{{ fundName }}</v-card-title
           >
-          <v-card-title style="font-size: 25px">{{ fundName }}</v-card-title>
           <v-card-subtitle style="font-size: 17px">{{ fundInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
