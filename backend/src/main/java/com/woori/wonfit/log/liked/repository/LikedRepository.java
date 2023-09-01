@@ -2,14 +2,16 @@ package com.woori.wonfit.log.liked.repository;
 
 import com.woori.wonfit.log.liked.domain.Liked;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-public interface LikedRepository extends JpaRepository<Liked, Long> {
-
-
+@Repository
+public
+interface LikedRepository extends JpaRepository<Liked, Long> {
     List<Liked> findAllByMemberId(Long memberId);
 
-    void deleteById (Long id);
+    Liked save(Liked liked);
+
+    void deleteById(Long id);
 }

@@ -6,6 +6,8 @@ import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -14,6 +16,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Table(name = "subscribe_log")
+@Builder
+@AllArgsConstructor
 public class SubscribeLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +28,7 @@ public class SubscribeLog {
     private Member member;
 
     @Column(name = "subscribe_date")
-    private LocalDateTime subDate; // 가입 날짜
+    private String subDate; // 가입 날짜
 
     @Column(name = "expire_date")
     private LocalDateTime expireDate; // 만료 날짜

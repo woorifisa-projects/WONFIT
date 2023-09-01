@@ -1,136 +1,186 @@
 <template>
-  <!-- <v-card> -->
-  <!-- v-card를 사용하면 레이아웃이 깨짐 -->
-  <v-layout>
-    <v-navigation-drawer floating permanent>
-      <v-list density="compact" nav>
+  <v-app id="inspire" style="margin-top:20px">
+
+    <v-main class="bg-grey-lighten-3">
+      <v-container>
+        <v-row>
+          <v-col cols="3">
+            <v-sheet rounded="lg">
+              <v-list rounded="lg">
+        
+
+                <v-list-item class="logo-text" @click="navigateToMyPage" >내 정보 보기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
+              
+              
+                <v-divider class="my-2"></v-divider>
+
+                <v-list-item
+                  class="logo-text"
+                  color="grey-lighten-4"
+                  link
+                  @click="navigateToWithdraw">
+                  회원 탈퇴
+                </v-list-item>
+              </v-list>
+            </v-sheet>
+          </v-col>
+
+          <v-col>
+            <v-sheet class="logo-text" style="padding:40px" min-height="70vh" rounded="lg">
+              <div >주소
+                
+                <div class="text-center">
+    <v-select
+      v-model="location"
+      :items="locations"
+      label="Location"
+    ></v-select>
+    <v-menu :location="location">
+      <template v-slot:activator="{ props }">
+       
+      </template>
+
+      <v-list>
         <v-list-item
-          prepend-icon="mdi-account"
-          title="사용자 관리"
-          value="사용자 관리"
-        ></v-list-item>
-        <v-list-item
-          prepend-icon="mdi-view-dashboard"
-          title="상품관리"
-          value="상품 관리"
-        ></v-list-item>
-        <v-list-item
-          prepend-icon="mdi-forum"
-          title="알림톡 보내기"
-          value="알림톡 보내기"
-        ></v-list-item>
+          v-for="(item, index) in items"
+          :key="index"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
       </v-list>
-    </v-navigation-drawer>
-    <v-main style="height: 250px; display: flex; justify-content: center; align-items: center">
-      <v-sheet :height="200" :width="800" color="grey-lighten-3">
-        <v-table fixed-header height="300px">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="text-left">번호</th>
-              <th class="text-left">아이디</th>
-              <th class="text-left">이름</th>
-              <th class="text-left">등급</th>
-              <th class="text-left">상태</th>
-              <th class="text-left">접속수</th>
-              <th class="text-left">가입일</th>
-            </tr>
-          </thead>
-          <template v-slot:column.name="{ column }">
-            {{ column.title.toUpperCase() }}
-          </template>
-          <tbody>
-            <tr v-for="item in users" :key="item.id">
-              <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
-              <td>{{ item.idx }}</td>
-              <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.grade }}</td>
-              <td>{{ item.status }}</td>
-              <td>{{ item.loginCount }}</td>
-              <td>{{ item.regDate }}</td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-sheet>
+    </v-menu>
+  </div>
+                
+              </div>
+              <div class=my-10>
+                결혼여부
+                <v-radio-group inline style="margin:10px">
+                <v-radio label="결혼" value="1"></v-radio>
+  <v-radio label="미혼" value="2"></v-radio>
+  </v-radio-group>
+              </div>
+              <div class=my-10>
+                자녀수
+                <v-radio-group inline style="margin:10px">
+          <v-radio label="0명" value="1"></v-radio>
+  <v-radio label="1명" value="2"></v-radio>
+  <v-radio label="2명" value="3"></v-radio>
+  <v-radio label="3명" value="4"></v-radio>
+  <v-radio label="4명 이상" value="5"></v-radio>
+</v-radio-group>
+              </div>
+              <div class=my-10>
+                세대주 여부
+                <v-radio-group inline style="margin:10px">
+                <v-radio label="예" value="1"></v-radio>
+  <v-radio label="아니요" value="2"></v-radio>
+  </v-radio-group>
+              </div>
+              <div class=my-10>
+                연금 소득 여부
+                <v-radio-group inline style="margin:10px">
+                <v-radio label="있음" value="1"></v-radio>
+  <v-radio label="없음" value="2"></v-radio>
+  </v-radio-group>
+              </div>
+              <div class=my-10 style="margin-bottom:30px">
+                직업
+                <v-radio-group inline style="margin:10px">
+                <v-radio label="직장인" value="1"></v-radio>
+  <v-radio label="개인사업자" value="2"></v-radio>
+  <v-radio label="프리랜서" value="3"></v-radio>
+  <v-radio label="학생" value="4"></v-radio>
+  <v-radio label="주부" value="5"></v-radio>
+  <v-radio label="은퇴생활자" value="6"></v-radio>
+  <v-radio label="무직" value="7"></v-radio>
+  </v-radio-group>
+              
+              </div>
+              <v-btn
+          variant="tonal"
+          class="d-flex justify-end align-center logo-text-button"
+          style="padding: 25px; font-size: 1.1em; border-radius: 5px;margin-left: auto"
+
+        >
+          저장
+        </v-btn>
+            </v-sheet>
+          
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
-  </v-layout>
-  <!-- </v-card> -->
+  </v-app>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      users: [
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-        {
-          idx: 1,
-          id: "bjj1234",
-          name: "김원핏",
-          grade: "일반",
-          status: "정상",
-          loginCount: 1,
-          regDate: "2020-01-01",
-        },
-      ],
-    };
-  },
+<script setup>
+import { useRouter } from 'vue-router';
+
+  const locations = [
+      '서울특별시',
+      '인천광역시',
+      '대전광역시',
+      '울산광역시',
+      '대구광역시',
+      '광주광역시',
+      '부산광역시',
+      '세종특별자치시',
+      '경기도',
+      '강원특별자치도',
+      '전라남도',
+      '전라북도',
+      '전라남도',
+      '전라북도',
+      '충청북도',
+      '충청남도',
+      '경상남도',
+      '경상북도',
+      '제주특별자치도',
+    ];
+    const location = '주소를 선택해주세요';
+    const router = useRouter();
+
+  const navigateToMyPage = () => {
+  router.push({ name: "MyPage" });
+  };
+
+  const navigateToMySubscribeProduct = () => {
+  router.push({ name: "MySubscribeProduct" });
 };
+
+const navigateToMyLikedProduct = () => {
+  router.push({ name: "MyLikedProduct" });
+};
+
+const navigateToRecommend = () => {
+  router.push({ name: "Recommend" });
+};
+
+const navigateToWithdraw = () => {
+  router.push({ name: "Withdraw" });
+};
+   
+   
+
+ 
 </script>
 
-<style scoped></style>
-```
+
+<style scoped>
+@font-face {
+  font-family: "WooridaumB";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
+    format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+.logo-text {
+  font-size: 15px;
+  font-family: "WooridaumB", sans-serif;
+}
+
+</style>

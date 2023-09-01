@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class SubscribeLogResponse {
     private Long id;
     private Member member;
-    private LocalDateTime subDate;
+    private String subDate;
     private LocalDateTime expireDate;
     private int subDeposit;
     private int monthlyCharge;
@@ -28,11 +28,11 @@ public class SubscribeLogResponse {
     private Fund fund;
     private Loan loan;
 
-    public static SubscribeLogResponse From_sub_log(SubscribeLog subscribeLog) {
+    public static SubscribeLogResponse From_sub_log(SubscribeLog subscribeLog, String time) {
         return SubscribeLogResponse.builder()
                 .id(subscribeLog.getId())
                 .member(subscribeLog.getMember())
-                .subDate(subscribeLog.getSubDate())
+                .subDate(time)
                 .expireDate(subscribeLog.getExpireDate())
                 .subDeposit(subscribeLog.getSubDeposit())
                 .monthlyCharge(subscribeLog.getMonthlyCharge())
