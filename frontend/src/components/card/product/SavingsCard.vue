@@ -6,7 +6,11 @@
           <v-card-title
             class="clickable-title"
             style="font-size: 25px"
+<<<<<<< Updated upstream
             @click="navigateToSavingsDetail"
+=======
+            @click="navigateToFundDetail"
+>>>>>>> Stashed changes
             >{{ savingsName }}</v-card-title
           >
           <v-card-subtitle style="font-size: 17px">{{ savingsInfo }}</v-card-subtitle>
@@ -33,8 +37,13 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+<<<<<<< Updated upstream
 const navigateToSavingsDetail = () => {
   router.push("/deposit-detail");
+=======
+const navigateToFundDetail = () => {
+  router.push("/savings-detail");
+>>>>>>> Stashed changes
 };
 
 defineProps({
