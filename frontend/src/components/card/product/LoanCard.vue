@@ -3,7 +3,12 @@
     <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
       <div class="product-info">
         <v-card-item>
-          <v-card-title style="font-size: 25px">{{ loanName }}</v-card-title>
+          <v-card-title
+            class="clickable-title"
+            style="font-size: 25px"
+            @click="navigateToLoanDetail"
+            >{{ loanName }}</v-card-title
+          >
           <v-card-subtitle style="font-size: 17px">{{ loanInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
@@ -24,6 +29,14 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const navigateToLoanDetail = () => {
+  router.push("/loan-detail");
+};
+
 defineProps({
   loanName: String,
   loanInfo: String,
@@ -39,9 +52,20 @@ defineProps({
 .product-info {
   flex-basis: 50%;
 }
+
+.clickable-title:hover {
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
 .v-card-actions {
   flex-basis: 50%;
   justify-self: end;
+}
+
+.clickable-title:hover {
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .v-card-actions .v-btn {
