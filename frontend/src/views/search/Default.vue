@@ -36,35 +36,20 @@
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
-            <!-- <v-sheet class="box-color"> -->
-            <LoanCard
-              loanName="대출"
-              loanInfo="상품 간단 설명"
-              interestRate="1.5"
-              target="개인"
-              period="1"
-              loanLimit="1000000"
-              loanType="안정형"
-            />
-            <LoanCard
-              loanName="대출"
-              loanInfo="상품 간단 설명"
-              interestRate="1.5"
-              target="개인"
-              period="1"
-              loanLimit="1000000"
-              loanType="안정형"
-            />
-            <LoanCard
-              loanName="대출"
-              loanInfo="상품 간단 설명"
-              interestRate="1.5"
-              target="개인"
-              period="1"
-              loanLimit="1000000"
-              loanType="안정형"
-            />
-            <!-- </v-sheet> -->
+            <v-sheet class="box-color">
+              <!-- DepositCard 컴포넌트에 데이터 전달 -->
+              <deposit-card
+                v-for="productDetail in depositData"
+                :key="productDetail.id"
+                :depositName="productDetail.depositName"
+                :depositInfo="productDetail.depositInfo"
+                :interestRate="productDetail.interestRate"
+                :target="productDetail.target"
+                :period="productDetail.period"
+                :minDeposit="productDetail.minDeposit"
+                :depositType="productDetail.depositType"
+              />
+            </v-sheet>
           </v-col>
         </v-row>
       </v-container>
@@ -72,46 +57,49 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+import { getApi } from "@/api/modules";
 import CustomButton from "@/components/button/TypeButton.vue";
-import LoanCard from "@/components/card/product/LoanCard.vue";
+import DepositCard from "@/components/card/product/DepositCard.vue";
 
-export default {
-  data: () => ({
-    loaded: false,
-    loading: false,
-  }),
+const loaded = ref(false);
+const loading = ref(false);
+const router = useRouter();
+const depositData = ref([]);
 
-  methods: {
-    onClick() {
-      this.loading = true;
+// 상품 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: "/product/deposit",
+  });
+  depositData.value = data;
+});
 
-      setTimeout(() => {
-        this.loading = false;
-        this.loaded = true;
-      }, 1000);
-    },
-  },
-  components: {
-    CustomButton,
-    LoanCard,
-  },
-  methods: {
-    navigateToSearchDefault() {
-      this.$router.push({ name: "SearchDefault" });
-    },
-    navigateToSearchSavings() {
-      this.$router.push({ name: "SearchSavings" });
-    },
+const onClick = () => {
+  loading.value = true;
 
-    navigateToSearchFund() {
-      this.$router.push({ name: "SearchFund" });
-    },
+  setTimeout(() => {
+    loading.value = false;
+    loaded.value = true;
+  }, 1000);
+};
 
-    navigateToSearchLoan() {
-      this.$router.push({ name: "SearchLoan" });
-    },
-  },
+const navigateToSearchDefault = () => {
+  router.push({ name: "SearchDefault" });
+};
+
+const navigateToSearchSavings = () => {
+  router.push({ name: "SearchSavings" });
+};
+
+const navigateToSearchFund = () => {
+  router.push({ name: "SearchFund" });
+};
+
+const navigateToSearchLoan = () => {
+  router.push({ name: "SearchLoan" });
 };
 </script>
 
@@ -123,7 +111,6 @@ export default {
   font-weight: 700;
   font-style: normal;
 }
-
 .logo-text {
   font-size: 18px;
   font-weight: bold;

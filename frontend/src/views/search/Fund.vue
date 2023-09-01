@@ -36,35 +36,19 @@
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
-            <!-- <v-sheet class="box-color"> -->
-            <SavingsCard
-              savingsName="적금이요"
-              savingsInfo="상품 간단 설명"
-              interestRate="1.5"
-              target="개인, 기업"
-              period="1"
-              maxDeposit="1000000"
-              savingsType="안정형"
-            />
-            <SavingsCard
-              savingsName="적금이요"
-              savingsInfo="상품 간단 설명"
-              interestRate="1.5"
-              target="개인, 기업"
-              period="1"
-              maxDeposit="1000000"
-              savingsType="안정형"
-            />
-            <SavingsCard
-              savingsName="적금이요"
-              savingsInfo="상품 간단 설명"
-              interestRate="1.5"
-              target="개인, 기업"
-              period="1"
-              maxDeposit="1000000"
-              savingsType="안정형"
-            />
-            <!-- </v-sheet> -->
+            <v-sheet class="box-color">
+              <!-- FundCard 컴포넌트에 데이터 전달 -->
+              <fund-card
+                v-for="productDetail in fundData"
+                :key="productDetail.id"
+                :fundName="productDetail.fundName"
+                :fundInfo="productDetail.fundInfo"
+                :returnRate1="productDetail.returnRate1"
+                :returnRate2="productDetail.returnRate2"
+                :fundPrice="productDetail.fundPrice"
+                :fundType="productDetail.fundType"
+              />
+            </v-sheet>
           </v-col>
         </v-row>
       </v-container>
@@ -72,46 +56,48 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+import { getApi } from "@/api/modules";
 import CustomButton from "@/components/button/TypeButton.vue";
-import SavingsCard from "@/components/card/product/SavingsCard.vue";
+import FundCard from "@/components/card/product/FundCard.vue";
 
-export default {
-  data: () => ({
-    loaded: false,
-    loading: false,
-  }),
+const loaded = ref(false);
+const loading = ref(false);
+const router = useRouter();
+const fundData = ref([]);
 
-  methods: {
-    onClick() {
-      this.loading = true;
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: "/product/fund",
+  });
+  fundData.value = data;
+});
 
-      setTimeout(() => {
-        this.loading = false;
-        this.loaded = true;
-      }, 1000);
-    },
-  },
-  components: {
-    CustomButton,
-    SavingsCard,
-  },
-  methods: {
-    navigateToSearchDefault() {
-      this.$router.push({ name: "SearchDefault" });
-    },
-    navigateToSearchSavings() {
-      this.$router.push({ name: "SearchSavings" });
-    },
+const onClick = () => {
+  loading.value = true;
 
-    navigateToSearchFund() {
-      this.$router.push({ name: "SearchFund" });
-    },
+  setTimeout(() => {
+    loading.value = false;
+    loaded.value = true;
+  }, 1000);
+};
 
-    navigateToSearchLoan() {
-      this.$router.push({ name: "SearchLoan" });
-    },
-  },
+const navigateToSearchDefault = () => {
+  router.push({ name: "SearchDefault" });
+};
+
+const navigateToSearchSavings = () => {
+  router.push({ name: "SearchSavings" });
+};
+
+const navigateToSearchFund = () => {
+  router.push({ name: "SearchFund" });
+};
+
+const navigateToSearchLoan = () => {
+  router.push({ name: "SearchLoan" });
 };
 </script>
 
