@@ -7,7 +7,7 @@
 
       <v-container>
         <v-row justify="center">
-          <custom-button content="예금" />
+          <custom-button content="예금" @click="navigateToSearchDefault" />
           <custom-button content="적금" @click="navigateToSearchSavings" />
           <custom-button content="펀드" @click="navigateToSearchFund" />
           <custom-button content="대출" @click="navigateToSearchLoan" />
@@ -32,7 +32,7 @@
       ></v-text-field>
     </v-responsive>
 
-    <div class="box-color py-10">
+    <!-- <div class="box-color py-10">
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
@@ -46,32 +46,28 @@
                 minDeposit="1000000"
                 depositType="안정형"
               />
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div> -->
+
+    <div class="box-color py-10">
+      <v-container>
+        <v-row class="flex-child text-subtitle-2">
+          <v-col class="mx-auto" width="900">
+            <v-sheet class="box-color">
+              <!-- DepositCard 컴포넌트에 데이터 전달 -->
               <DepositCard
-                depositName="스무살 우리 정기예금"
-                depositInfo="상품 간단 설명"
-                interestRate="1.5"
-                target="개인"
-                period="1"
-                minDeposit="1000000"
-                depositType="안정형"
-              />
-              <DepositCard
-                depositName="스무살 우리 정기예금"
-                depositInfo="상품 간단 설명"
-                interestRate="1.5"
-                target="개인"
-                period="1"
-                minDeposit="1000000"
-                depositType="안정형"
-              />
-              <DepositCard
-                depositName="스무살 우리 정기예금"
-                depositInfo="상품 간단 설명"
-                interestRate="1.5"
-                target="개인"
-                period="1"
-                minDeposit="1000000"
-                depositType="안정형"
+                v-for="productDetail in depositData"
+                :key="productDetail.id"
+                :depositName="productDetail.depositName"
+                :depositInfo="productDetail.depositInfo"
+                :interestRate="productDetail.interestRate"
+                :target="productDetail.target"
+                :period="productDetail.period"
+                :minDeposit="productDetail.minDeposit"
+                :depositType="productDetail.depositType"
               />
             </v-sheet>
           </v-col>
@@ -82,52 +78,56 @@
 </template>
 
 <script setup>
-// import CustomButton from "@/components/button/TypeButton.vue";
-// import DepositCard from "@/components/card/product/DepositCard.vue";
-
-// export default {
-//   data: () => ({
-//     loaded: false,
-//     loading: false,
-//   }),
-
-//   methods: {
-//     onClick() {
-//       this.loading = true;
-
-//       setTimeout(() => {
-//         this.loading = false;
-//         this.loaded = true;
-//       }, 1000);
-//     },
-//   },
-//   components: {
-//     CustomButton,
-//     DepositCard,
-//   },
-//   methods: {
-//     navigateToSearchSavings() {
-//       this.$router.push({ name: "SearchSavings" });
-//     },
-
-//     navigateToSearchFund() {
-//       this.$router.push({ name: "SearchFund" });
-//     },
-
-//     navigateToSearchLoan() {
-//       this.$router.push({ name: "SearchLoan" });
-//     },
-//   },
-// };
-
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import CustomButton from "@/components/button/TypeButton.vue";
 import DepositCard from "@/components/card/product/DepositCard.vue";
+// import { findDeposit } from "@/api/modules/getApi.js";
+import { getApi } from "@/api/modules";
 
 const loaded = ref(false);
 const loading = ref(false);
 const router = useRouter();
+const depositData = ref([]);
+
+// // depositData 데이터를 저장할 ref
+// const productDetail = ref([
+//   {
+//     depositName: "",
+//     depositInfo: "",
+//     interestRate: 0,
+//     target: "",
+//     period: 0,
+//     minDeposit: 0,
+//     depositType: "",
+//   },
+// ]);
+
+// // API 호출 함수를 사용하여 productDetail 데이터 받아오기
+// const fetchDeposit = async () => {
+//   try {
+//     const response = await findDeposit();
+//     console.log(response);
+//     depositData.value = response.data;
+//     // 받아온 데이터를 productDetail ref에 저장
+//     Object.assign(depositData, response);
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// };
+//
+// // 컴포넌트가 마운트되면 자동으로 데이터 호출
+// onMounted(() => {
+//   fetchDeposit();
+// });
+
+// 상품 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: "/product/deposit",
+  });
+  depositData.value = data;
+});
 
 const onClick = () => {
   loading.value = true;
@@ -136,6 +136,10 @@ const onClick = () => {
     loading.value = false;
     loaded.value = true;
   }, 1000);
+};
+
+const navigateToSearchDefault = () => {
+  router.push({ name: "SearchDefault" });
 };
 
 const navigateToSearchSavings = () => {
@@ -158,24 +162,6 @@ const navigateToSearchLoan = () => {
     format("woff2");
   font-weight: 700;
   font-style: normal;
-}
-.product-info {
-  flex-basis: 50%;
-}
-.v-card-actions {
-  flex-basis: 50%;
-  justify-self: end;
-}
-
-.v-card-actions .v-btn {
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: 17px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif;
-}
-.v-card-text {
-  font-size: 17px;
 }
 .logo-text {
   font-size: 18px;
