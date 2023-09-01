@@ -12,6 +12,8 @@
     "@mdi/font": "7.0.96",
     "axios": "^1.5.0",
     "core-js": "^3.29.0",
+    "crypto-js": "^4.1.1",
+    "http-proxy-middleware": "^2.0.6",
     "roboto-fontface": "*",
     "tailwindcss": "^3.3.3",
     "vue": "^3.2.0",
@@ -26,5 +28,6 @@
     "sass": "^1.60.0",
     "vite": "^4.2.0",
     "vite-plugin-vuetify": "^1.0.0"
-  }
+  },
+  "proxy": "https://sens.apigw.ntruss.com"
 }

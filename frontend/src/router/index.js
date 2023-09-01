@@ -144,6 +144,12 @@ const routes = [
         name: "LoanDetailPage",
         component: () => import(/* webpackChunkName: "loandetail" */ "@/views/detail/Loan.vue"),
       },
+
+      {
+          path: "talk",
+          name: "SendTalkPage",
+          component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+      },
     ],
   },
 ];
