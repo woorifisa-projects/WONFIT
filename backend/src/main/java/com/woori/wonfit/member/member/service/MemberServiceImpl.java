@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Value("${jwt.token.secret}")
     private String secretkey;
-    private final long expireTimeMs = 1000 * 60 * 60 * 24; // 토큰 하루
+    private final long expireTimeMs = 1000 * 60 * 60; // 토큰 1시간(3600초)
     @Override
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByLoginId(request.getLoginId())

@@ -3,11 +3,10 @@ package com.woori.wonfit.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
-import java.security.Key;
 import java.util.Date;
-
+@Slf4j
 public class JwtUtil {
     public static String getLoginId(String token, String secretKey){
         return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("loginId", String.class);
@@ -21,10 +20,16 @@ public class JwtUtil {
         Claims claims = Jwts.claims();
         claims.put("loginId", loginId);
 
+        Date now = new Date();
+        Date validaty = new Date(expireTimeMs);
+
+        log.info("Date now =" + now.getTime());
+        log.info("now + validaty =" + validaty.getTime());
+
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
+                .setIssuedAt(now)
+                .setExpiration(validaty)
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
