@@ -34,7 +34,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const navigateToSavingsDetail = () => {
-  router.push("/deposit-detail");
+  router.push("/savings-detail");
 };
 
 defineProps({
