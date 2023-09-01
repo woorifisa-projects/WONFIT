@@ -8,31 +8,32 @@
         </div>
       </div>
     </v-app-bar-title>
-    <v-tabs v-model="tab" color="black" >
+    <v-tabs v-model="tab" color="black">
       <v-tab class="tab-text" @click="navigateToProductSearchPage">상품검색</v-tab>
 
       <v-tab class="tab-text" @click="navigateToRecommend">투자성향 결과보기</v-tab>
-     
-
     </v-tabs>
     <v-spacer></v-spacer>
-    
+
     <v-text-field
-            density="compact"
-            flat
-            hide-details
-            label="Search"
-            rounded="lg"
-            single-line
-            variant="solo-filled"
-          ></v-text-field>
-          <div class="logo-text" style="margin-left:40px;margin-right:65px" @click="navigateToLoginPage">로그인</div>
-          <!-- <div class="logo-text" style="margin-left:40px;margin-right:55px" @click="navigateToMyPage">유재원님 안녕하세요!</div> -->
-        
-    
+      density="compact"
+      flat
+      hide-details
+      label="Search"
+      rounded="lg"
+      single-line
+      variant="solo-filled"
+    ></v-text-field>
+    <div
+      class="logo-text"
+      style="margin-left: 40px; margin-right: 65px"
+      @click="navigateToLoginPage"
+    >
+      로그인
+    </div>
+    <!-- <div class="logo-text" style="margin-left:40px;margin-right:55px" @click="navigateToMyPage">유재원님 안녕하세요!</div> -->
   </v-app-bar>
 </template>
-
 
 <script setup>
 import { useRouter } from "vue-router";
@@ -46,7 +47,6 @@ const navigateToMainPage = () => {
 const navigateToRecommend = () => {
   router.push({ name: "Recommend" });
 };
-
 
 const navigateToProductSearchPage = () => {
   router.push({ name: "SearchDefault" });
