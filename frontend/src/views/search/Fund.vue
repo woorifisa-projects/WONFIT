@@ -36,32 +36,19 @@
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
-            <!-- <v-sheet class="box-color"> -->
-            <FundCard
-              fundName="펀드"
-              fundInfo="상품 간단 설명"
-              returnRate1="1.5"
-              returnRate2="2.6"
-              fundPrice="1000000"
-              fundType="안정형"
-            />
-            <FundCard
-              fundName="펀드"
-              fundInfo="상품 간단 설명"
-              returnRate1="1.5"
-              returnRate2="2.6"
-              fundPrice="1000000"
-              fundType="안정형"
-            />
-            <FundCard
-              fundName="펀드"
-              fundInfo="상품 간단 설명"
-              returnRate1="1.5"
-              returnRate2="2.6"
-              fundPrice="1000000"
-              fundType="안정형"
-            />
-            <!-- </v-sheet> -->
+            <v-sheet class="box-color">
+              <!-- DepositCard 컴포넌트에 데이터 전달 -->
+              <FundCard
+                v-for="productDetail in productsDetail"
+                :key="productDetail.id"
+                :fundName="productDetail.fundName"
+                :fundInfo="productDetail.fundInfo"
+                :returnRate1="productDetail.returnRate1"
+                :returnRate2="productDetail.returnRate2"
+                :fundPrice="productDetail.fundPrice"
+                :fundType="productDetail.fundType"
+              />
+            </v-sheet>
           </v-col>
         </v-row>
       </v-container>
@@ -69,46 +56,70 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import CustomButton from "@/components/button/TypeButton.vue";
 import FundCard from "@/components/card/product/FundCard.vue";
+import { findFund } from "@/api/modules/getApi.js";
 
-export default {
-  data: () => ({
-    loaded: false,
-    loading: false,
-  }),
+const loaded = ref(false);
+const loading = ref(false);
+const router = useRouter();
 
-  methods: {
-    onClick() {
-      this.loading = true;
-
-      setTimeout(() => {
-        this.loading = false;
-        this.loaded = true;
-      }, 1000);
-    },
+// productsDetail 데이터를 저장할 ref
+const productsDetail = ref([
+  {
+    fundName: "",
+    fundInfo: "",
+    returnRate1: 0,
+    returnRate2: 0,
+    fundPrice: 0,
+    fundType: "",
   },
-  components: {
-    CustomButton,
-    FundCard,
-  },
-  methods: {
-    navigateToSearchDefault() {
-      this.$router.push({ name: "SearchDefault" });
-    },
-    navigateToSearchSavings() {
-      this.$router.push({ name: "SearchSavings" });
-    },
+]);
 
-    navigateToSearchFund() {
-      this.$router.push({ name: "SearchFund" });
-    },
+// API 호출 함수를 사용하여 productDetail 데이터 받아오기
+const fetchFund = async () => {
+  try {
+    const response = await findFund();
+    console.log(response);
+    productsDetail.value = response.data;
+    // 받아온 데이터를 productDetail ref에 저장
+    Object.assign(productsDetail, response);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
-    navigateToSearchLoan() {
-      this.$router.push({ name: "SearchLoan" });
-    },
-  },
+// 컴포넌트가 마운트되면 자동으로 데이터 호출
+onMounted(() => {
+  fetchFund();
+});
+
+const onClick = () => {
+  loading.value = true;
+
+  setTimeout(() => {
+    loading.value = false;
+    loaded.value = true;
+  }, 1000);
+};
+
+const navigateToSearchDefault = () => {
+  router.push({ name: "SearchDefault" });
+};
+
+const navigateToSearchSavings = () => {
+  router.push({ name: "SearchSavings" });
+};
+
+const navigateToSearchFund = () => {
+  router.push({ name: "SearchFund" });
+};
+
+const navigateToSearchLoan = () => {
+  router.push({ name: "SearchLoan" });
 };
 </script>
 
