@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,23 +36,20 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    public ResponseEntity<List<Member>> getAllMembers(){
+    public ResponseEntity<List<Member>> getAllMembers() {
         List<Member> member = memberService.getAllMembers();
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDetails> getMemberDetails(@PathVariable Long id){
+    public ResponseEntity<MemberDetails> getMemberDetails(@PathVariable Long id) {
         MemberDetails memberDetails = memberService.findById(id);
-
         return new ResponseEntity<>(memberDetails, HttpStatus.OK);
     }
 
     @PostMapping("/leave")
-    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest, Authentication authentication){
-        String message = memberService.leaveMember(memberLoginRequest.getLoginId(),memberLoginRequest.getPassword());
-
-
+    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest) {
+        String message = memberService.leaveMember(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
         return new ResponseEntity<>(message, HttpStatus.OK);
 
     }
