@@ -3,12 +3,7 @@
     <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
       <div class="product-info">
         <v-card-item>
-          <v-card-title
-            class="clickable-title"
-            style="font-size: 25px"
-            @click="navigateToDepositDetail"
-            >{{ depositName }}</v-card-title
-          >
+          <v-card-title style="font-size: 25px">{{ depositName }}</v-card-title>
           <v-card-subtitle style="font-size: 17px">{{ depositInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
@@ -57,6 +52,7 @@ defineProps({
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
+
 .v-card-actions {
   flex-basis: 50%;
   justify-self: end;
