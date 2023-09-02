@@ -94,17 +94,17 @@ const routes = [
       },
 
       {
-        path: "search-default",
-        name: "SearchDefault",
-        component: () =>
-          import(/* webpackChunkName: "searchdefault" */ "@/views/search/Default.vue"),
-      },
-
-      {
         path: "search-savings",
         name: "SearchSavings",
         component: () =>
           import(/* webpackChunkName: "searchsavings" */ "@/views/search/Savings.vue"),
+      },
+
+      {
+        path: "search-default",
+        name: "SearchDefault",
+        component: () =>
+          import(/* webpackChunkName: "searchdefault" */ "@/views/search/Default.vue"),
       },
 
       {
@@ -146,9 +146,9 @@ const routes = [
       },
 
       {
-        path: "talk",
-        name: "SendTalkPage",
-        component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+          path: "talk",
+          name: "SendTalkPage",
+          component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
       },
     ],
   },
