@@ -32,33 +32,13 @@
       ></v-text-field>
     </v-responsive>
 
-    <!-- <div class="box-color py-10">
-      <v-container>
-        <v-row class="flex-child text-subtitle-2">
-          <v-col class="mx-auto" width="900">
-            <v-sheet class="box-color">
-              <DepositCard
-                depositName="스무살 우리 정기예금"
-                depositInfo="상품 간단 설명"
-                interestRate="1.5"
-                target="개인"
-                period="1"
-                minDeposit="1000000"
-                depositType="안정형"
-              />
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div> -->
-
     <div class="box-color py-10">
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
             <v-sheet class="box-color">
               <!-- DepositCard 컴포넌트에 데이터 전달 -->
-              <DepositCard
+              <deposit-card
                 v-for="productDetail in depositData"
                 :key="productDetail.id"
                 :depositName="productDetail.depositName"
@@ -80,46 +60,14 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
+import { getApi } from "@/api/modules";
 import CustomButton from "@/components/button/TypeButton.vue";
 import DepositCard from "@/components/card/product/DepositCard.vue";
-// import { findDeposit } from "@/api/modules/getApi.js";
-import { getApi } from "@/api/modules";
 
 const loaded = ref(false);
 const loading = ref(false);
 const router = useRouter();
 const depositData = ref([]);
-
-// // depositData 데이터를 저장할 ref
-// const productDetail = ref([
-//   {
-//     depositName: "",
-//     depositInfo: "",
-//     interestRate: 0,
-//     target: "",
-//     period: 0,
-//     minDeposit: 0,
-//     depositType: "",
-//   },
-// ]);
-
-// // API 호출 함수를 사용하여 productDetail 데이터 받아오기
-// const fetchDeposit = async () => {
-//   try {
-//     const response = await findDeposit();
-//     console.log(response);
-//     depositData.value = response.data;
-//     // 받아온 데이터를 productDetail ref에 저장
-//     Object.assign(depositData, response);
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// };
-//
-// // 컴포넌트가 마운트되면 자동으로 데이터 호출
-// onMounted(() => {
-//   fetchDeposit();
-// });
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
