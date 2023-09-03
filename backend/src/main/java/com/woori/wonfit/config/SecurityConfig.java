@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Value("${jwt.token.access}")
-    private String secretkey;
+    private String accessKey;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,12 +26,12 @@ public class SecurityConfig {
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
                 .authorizeRequests(auth -> auth.antMatchers("/member/login", "/member/register").permitAll()
-                        .antMatchers("/member/leave").hasAnyRole("USER").antMatchers("/manager/").hasAnyRole("ADMIN")
+                        .antMatchers("/member/**").hasAnyRole("USER")
                         .anyRequest().authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtFilter(secretkey), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(accessKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
