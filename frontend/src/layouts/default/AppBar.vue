@@ -1,10 +1,11 @@
 <template>
   <v-app-bar flat>
     <v-app-bar-title class="d-flex align-left" style="margin-top:5px">
-      <div class="logo" style="margin-left:100px" @click="navigateToMainPage">
-        <div class="d-flex align-center">
-          <img src="@/assets/wonfit.png" style="width:55px; margin-top: 8px" />
-          <span class="logo-text" style="font-size: 23px">우리WONFIT</span>
+      <div class="logo" style="margin-left:100px" >
+        <div class="d-flex align-center clickable-title">
+          <img src="@/assets/wonfit.png" @click="navigateToMainPage" style="width:55px; margin-top: 6px" />
+          <span class="logo-text" style="font-size: 23px" @click="navigateToMainPage">우리WONFIT</span>
+       
           <div class="logo-text"  style="margin:30px" @click="navigateToProductSearchPage">상품 검색</div> 
           <div class="logo-text"  style="margin:10px" @click="navigateToRecommend">FIT 결과보기</div>
         </div>
@@ -40,10 +41,6 @@ const navigateToLoginPage = () => {
   router.push({ name: "LoginPage" });
 };
 
-const navigateToSignUpPage = () => {
-  router.push({ name: "SignupPage" });
-};
-
 const navigateToMyPage = () => {
   router.push({ name: "MyPage" });
 };
@@ -70,6 +67,11 @@ const navigateToMyPage = () => {
 }
 
 .logo-text:hover {
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.clickable-title:hover {
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
