@@ -6,7 +6,7 @@
           <v-card-title
             class="clickable-title"
             style="font-size: 25px"
-            @click="navigateToFundDetail"
+            @click="navigateToSavingsDetail(2)"
             >{{ savingsName }}</v-card-title
           >
           <v-card-subtitle style="font-size: 17px">{{ savingsInfo }}</v-card-subtitle>
@@ -14,7 +14,7 @@
         <v-card-text>
           상품 금리: {{ interestRate }}%<br />
           가입 대상: {{ target }}<br />
-          가입 기간: {{ period }}년<br />
+          가입 기간: {{ period }}개월<br />
           적립 금액: {{ maxDeposit }}원<br />
           상품 타입: {{ savingsType }}<br />
         </v-card-text>
@@ -33,10 +33,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const navigateToFundDetail = () => {
-  router.push("/savings-detail");
-};
-
 defineProps({
   savingsName: String,
   savingsInfo: String,
@@ -46,6 +42,15 @@ defineProps({
   maxDeposit: Number,
   savingsType: String,
 });
+
+// 이전 페이지에서
+// 선택된 상품의 ID를 전달하는 함수
+const navigateToSavingsDetail = (productId) => {
+  // productId는 선택된 상품의 ID입니다.
+  // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
+  console.log(productId);
+  router.push({ name: "SavingsDetailId", params: { id: productId } });
+};
 </script>
 
 <style lang="scss" scoped>

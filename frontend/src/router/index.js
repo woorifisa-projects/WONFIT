@@ -145,10 +145,73 @@ const routes = [
         component: () => import(/* webpackChunkName: "loandetail" */ "@/views/detail/Loan.vue"),
       },
 
+      // {
+      //   path: "talk",
+      //   name: "SendTalkPage",
+      //   component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+      // },
+
       {
-        path: "talk",
-        name: "SendTalkPage",
-        component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+        path: "manager-page",
+        name: "ManagerPage",
+        component: () =>
+          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
+      },
+      {
+        path: "manager-page",
+        name: "ManagerPage",
+        component: () =>
+          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
+      },
+
+      {
+        path: "manage-product",
+        name: "ManageProduct",
+        component: () =>
+          import(/* webpackChunkName: "ManageProduct" */ "@/views/manager/ManageProduct.vue"),
+      },
+
+      {
+        path: "send-talk",
+        name: "SendTalk",
+        component: () => import(/* webpackChunkName: "SendTalk" */ "@/views/manager/SendTalk.vue"),
+      },
+
+      {
+        path: "member-sign",
+        name: "MemberSign",
+        component: () =>
+          import(/* webpackChunkName: "MemberSign" */ "@/views/manager/MemberSign.vue"),
+      },
+
+      {
+        path: "deposit-detail/:id",
+        name: "DepositDetailId",
+        component: () =>
+          import(/* webpackChunkName: "DepositDetail" */ "@/views/detail/Deposit.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
+      },
+
+      {
+        path: "savings-detail/:id",
+        name: "SavingsDetailId",
+        component: () =>
+          import(/* webpackChunkName: "SavingsDetail" */ "@/views/detail/Savings.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
+      },
+
+      {
+        path: "fund-detail/:id",
+        name: "FundDetailId",
+        component: () => import(/* webpackChunkName: "FundDetail" */ "@/views/detail/Fund.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
+      },
+
+      {
+        path: "loan-detail/:id",
+        name: "LoanDetailId",
+        component: () => import(/* webpackChunkName: "LoanDetail" */ "@/views/detail/Loan.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
     ],
   },
