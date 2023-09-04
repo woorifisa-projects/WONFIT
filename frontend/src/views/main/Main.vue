@@ -18,22 +18,22 @@
       </div>
 
       <v-row class="d-flex justify-center">
-        <div class="image-with-text-container">
+
+        <div class="image-with-text-container clickable-title" @click="navigateToDepositTestPage">
       <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <!-- 글씨 내용 -->
-       <div class="text logo-text" @click="navigateToDepositTestPage">예금<br> 퍼즐찾기</div></div>
-       <div class="image-with-text-container">
-      <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <!-- 글씨 내용 -->
+       <div class="text logo-text" >예금<br> 퍼즐찾기</div></div>
+
+       <div class="image-with-text-container clickable-title" @click="navigateToSavingsTestPage">
+      <img src="@/assets/piece.png"  class="puzzle-image image"/>
        <div class="text logo-text" @click="navigateToSavingsTestPage">적금<br> 퍼즐찾기</div></div>
-       <div class="image-with-text-container">
+
+       <div class="image-with-text-container clickable-title" @click="navigateToFundTestPage">
       <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <!-- 글씨 내용 -->
-       <div class="text logo-text" @click="navigateToFundTestPage">펀드<br> 퍼즐찾기</div></div>
-       <div class="image-with-text-container">
+       <div class="text logo-text" >펀드<br> 퍼즐찾기</div></div>
+
+       <div class="image-with-text-container clickable-title" @click="navigateToLoanTestPage">
       <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <!-- 글씨 내용 -->
-       <div class="text logo-text" @click="navigateToLoanTestPage">대출<br> 퍼즐찾기</div></div>
+       <div class="text logo-text" >대출<br> 퍼즐찾기</div></div>
        </v-row>
 
  
@@ -44,7 +44,7 @@
       <h1 style="margin:100px 200px">모든 금융내역을<br>
     한 곳에서 관리하세요 <br>
     <v-btn class = "logo-text" style="margin-top:30px; font-weight: bold;" @click="navigateToIncomeAnalysisPage">마이데이터 보러가기</v-btn></h1>
-      <img src="@/assets/incomes.png" class="banner-image"/>
+      <img src="@/assets/receipt.png" class="banner-image"/>
     
       </div>
 
@@ -194,4 +194,8 @@ const navigateToSavingsTestPage = () => {
   padding: 5px 10px;
 }
 
+.clickable-title:hover {
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
 </style>
