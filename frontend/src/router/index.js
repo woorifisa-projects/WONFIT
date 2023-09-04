@@ -85,7 +85,9 @@ const routes = [
         path: "my-subscribe-product",
         name: "MySubscribeProduct",
         component: () =>
-          import(/* webpackChunkName: "MySubscribeProduct" */ "@/views/MySubscribeProduct.vue"),
+          import(
+            /* webpackChunkName: "MySubscribeProduct" */ "@/views/member/MySubscribeProduct.vue"
+          ),
       },
 
       {
