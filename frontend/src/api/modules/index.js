@@ -1,2 +1,2 @@
 export { getApi } from "./getApi.js";
-// export { postApi } from "./postApi.js";
+export { postApi } from "./postApi.js";

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/sublogs")
@@ -22,9 +24,16 @@ public class SubscribeLogController {
     String time = date.format(formatter).substring(0, 19);
 
     @GetMapping("/member/{memberId}")
-    public SubscribeLogResponse findByMemberId(@PathVariable Long memberId) {
-        SubscribeLog subscribeLog = subscribeLogService.findByMemberId(memberId);
-        return SubscribeLogResponse.From_sub_log(subscribeLog, time);
+    public List<SubscribeLogResponse> findByMemberId(@PathVariable Long memberId) {
+        List<SubscribeLog> subscribeLogs = subscribeLogService.findByMemberId(memberId);
+        List<SubscribeLogResponse> responseList = new ArrayList<>();
+
+        for (SubscribeLog subscribeLog : subscribeLogs) {
+            SubscribeLogResponse response = SubscribeLogResponse.From_sub_log(subscribeLog, time);
+            responseList.add(response);
+        }
+
+        return responseList;
     }
 
     @PostMapping("/wonfit/subscribe")
