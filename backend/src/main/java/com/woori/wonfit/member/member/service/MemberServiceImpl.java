@@ -38,7 +38,8 @@ public class MemberServiceImpl implements MemberService {
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
-    private final long expireTimeMs = 1000 * 60 * 60L; // 토큰 1시간(3600초)
+    private final long accessExpireTimeMs = 1000 * 60 * 30; // 엑세스 토큰
+    private final long refreshExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰
     private LocalDateTime dateTime = LocalDateTime.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -74,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            Token token = JwtUtil.createToken(loginId, expireTimeMs, accessKey, refreshKey, "USER");
+            Token token = JwtUtil.createToken(loginId, accessExpireTimeMs, refreshExpireTimeMs,"USER", accessKey, refreshKey);
 
             member.setRefreshToken(token.getRefreshToken());
 
