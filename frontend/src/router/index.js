@@ -93,7 +93,7 @@ const routes = [
       {
         path: "withdraw",
         name: "Withdraw",
-        component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/Withdraw.vue"),
+        component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/member/Withdraw.vue"),
       },
 
       {
