@@ -1,21 +1,19 @@
 <template>
-  <div >
-   
+  <div>
     <!-- 배너 영역 -->
     <div class="banner-container logo-text d-flex justify-center">
       <!-- 배너 이미지 추가 -->
-      <h1 style="margin:120px 210px">우리WONFIT에서<br>
-    나에게 딱 맞게</h1>
-      <img src="@/assets/puzzler.png" class="banner-image"/>
-    
-      </div>
+      <h1 style="margin: 120px 210px">
+        우리WONFIT에서<br />
+        나에게 딱 맞게
+      </h1>
+      <img src="@/assets/puzzler.png" class="banner-image" />
+    </div>
 
-
-     
-      <div class="banner-content logo-text">
-        <h2>목적에 맞는 금융상품을</h2>
-        <p>성향분석 검사를 통해 편리하게 추천 받으세요</p>
-      </div>
+    <div class="banner-content logo-text">
+      <h2>목적에 맞는 금융상품을</h2>
+      <p>성향분석 검사를 통해 편리하게 추천 받으세요</p>
+    </div>
 
       <v-row class="d-flex justify-center">
 
@@ -36,10 +34,8 @@
        <div class="text logo-text" >대출<br> 퍼즐찾기</div></div>
        </v-row>
 
- 
-
-   <!-- 배너 영역 -->
-   <div class="banner-container2 logo-text d-flex justify-center">
+    <!-- 배너 영역 -->
+    <div class="banner-container2 logo-text d-flex justify-center">
       <!-- 배너 이미지 추가 -->
       <h1 style="margin:100px 200px">모든 금융내역을<br>
     한 곳에서 관리하세요 <br>
@@ -53,8 +49,6 @@
 </template>
 
 <script setup>
-
-
 import { useRouter } from "vue-router";
 const router = useRouter();
 
@@ -77,9 +71,6 @@ const navigateToDepositTestPage = () => {
 const navigateToSavingsTestPage = () => {
   router.push({ name: "SavingsTest" });
 };
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -97,14 +88,13 @@ const navigateToSavingsTestPage = () => {
   font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
 }
 
-
 .banner-container {
   background-color: #f6f7ff; /* 배경색 설정 */
   padding: 20px; /* 내부 여백 추가 */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .banner-container2 {
@@ -114,14 +104,14 @@ const navigateToSavingsTestPage = () => {
   align-items: center;
   justify-content: space-between;
 
-  margin-bottom:50px;
+  margin-bottom: 50px;
 }
 
 /* 배너 이미지 스타일 */
 .banner-image {
   width: 210px; /* 이미지를 부모 요소의 너비에 맞춤 */
   max-height: 300px; /* 이미지의 최대 높이 설정 */
-  margin-right:250px;
+  margin-right: 250px;
   object-fit: cover; /* 이미지를 부모 요소에 맞추고 가로/세로 비율 유지 */
 }
 
@@ -130,14 +120,13 @@ const navigateToSavingsTestPage = () => {
   align-items: center;
   width: 200px; /* 이미지를 부모 요소의 너비에 맞춤 */
   max-height: 300px; /* 이미지의 최대 높이 설정 */
-  margin-right:20px;
-
+  margin-right: 20px;
 }
 
 /* 배너 내용 스타일 */
 .banner-content {
-  margin-top:60px;
-  margin-bottom:70px;
+  margin-top: 60px;
+  margin-bottom: 70px;
   text-align: center;
 }
 
@@ -174,7 +163,7 @@ const navigateToSavingsTestPage = () => {
 .image-with-text-container {
   position: relative;
   display: inline-block; /* 컨테이너가 이미지와 텍스트의 크기에 맞게 조절되도록 설정 */
-  margin-bottom:100px;
+  margin-bottom: 100px;
 }
 
 /* 이미지 스타일 */
@@ -189,8 +178,8 @@ const navigateToSavingsTestPage = () => {
   top: 81px; /* 텍스트를 이미지 상단에 배치하려면 필요한 위치 조절 */
   left: 55px; /* 텍스트를 이미지 왼쪽에 배치하려면 필요한 위치 조절 */
   font-size: 15px;
-  color:white;
-  background-color:#00acea; /* 텍스트 배경색과 투명도 설정 */
+  color: white;
+  background-color: #00acea; /* 텍스트 배경색과 투명도 설정 */
   padding: 5px 10px;
 }
 
