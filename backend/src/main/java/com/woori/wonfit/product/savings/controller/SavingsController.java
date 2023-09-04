@@ -4,9 +4,7 @@ import com.woori.wonfit.product.savings.dto.SavingsResponse;
 import com.woori.wonfit.product.savings.service.SavingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,11 +25,5 @@ public class SavingsController {
         return list;
     }
 
-    // id 값으로 조회하는 api
-    @GetMapping("/{id}")
-    public ResponseEntity<SavingsResponse> findById(@PathVariable Long id) {
-        SavingsResponse savingsResponse = savingsService.findById(id);
-        System.out.println("done");
-        return ResponseEntity.ok(savingsResponse);
-    }
+
 }

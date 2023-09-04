@@ -39,7 +39,6 @@ public class Loan {
     @Column(name = "loan_type")
     private String loanType; // 안정형, 중립형, 공격형
 
-    @Column(name = "status")
-    private String status; // 상품 상태
+
 
 }

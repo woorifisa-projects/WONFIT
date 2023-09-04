@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,23 +44,6 @@ public class DepositServiceImpl implements DepositService {
 
 
         depositRepository.save(newDeposit); // 수정된 내용을 저장
-    }
-
-    @Override
-    public DepositResponse findById(Long id) {
-        Optional<Deposit> deposit = depositRepository.findById(id);
-
-        return DepositResponse.builder()
-                .id(deposit.map(Deposit::getId).orElse(0L))
-                .depositName(deposit.map(Deposit::getDepositName).orElse("기본값"))
-                .interestRate(deposit.map(Deposit::getInterestRate).orElse(0.0))
-                .period(deposit.map(Deposit::getPeriod).orElse(0))
-                .target(deposit.map(Deposit::getTarget).orElse("기본값"))
-                .minDeposit(deposit.map(Deposit::getMinDeposit).orElse(0))
-                .depositInfo(deposit.map(Deposit::getDepositInfo).orElse("기본값"))
-                .depositDesc(deposit.map(Deposit::getDepositDesc).orElse("기본값"))
-                .depositType(deposit.map(Deposit::getDepositType).orElse("기본값"))
-                .build();
     }
 
 }

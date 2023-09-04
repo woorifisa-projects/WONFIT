@@ -4,9 +4,7 @@ import com.woori.wonfit.product.deposit.dto.DepositResponse;
 import com.woori.wonfit.product.deposit.service.DepositService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,14 +37,6 @@ public class DepositController {
             list = new ArrayList<>(); // Initialize an empty list or handle the situation in an appropriate way
         }
         return list;
-    }
-
-    // id 값으로 조회하는 api
-    @GetMapping("/{id}")
-    public ResponseEntity<DepositResponse> findById(@PathVariable Long id) {
-        DepositResponse depositResponse = depositService.findById(id);
-        System.out.println("done");
-        return ResponseEntity.ok(depositResponse);
     }
 
 }
