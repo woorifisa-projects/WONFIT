@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface SubscribeLogRepository extends JpaRepository<SubscribeLog, Long> {
-    SubscribeLog findByMemberId(Long memberId);
+    List<SubscribeLog> findAllByMemberId(Long memberId);
 
     SubscribeLog save(SubscribeLog subscribeLog);
 }

@@ -8,8 +8,6 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
 
-
-
                 <v-list-item class="logo-text" @click="navigateToMyInfo">내 정보 보기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
@@ -29,11 +27,10 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th class="text-left">번호</th>
-                    <th class="text-left">상품명</th>
-                    <th class="text-left">분류</th>
-                    <th class="text-left">등록일</th>
-                    <th class="text-left">상태</th>
+                    <th class="text-left">번호</th> <!--id-->
+                    <th class="text-left">상품명</th> <!--deposit_name-->
+                    <th class="text-left">분류</th> <!--deposit_type-->
+                    <th class="text-left">금리</th> <!--interest_rate-->
 
                   </tr>
                 </thead>
@@ -46,8 +43,7 @@
                     <td>{{ item.idx }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.type }}</td>
-                    <td>{{ item.likedDate }}</td>
-                    <td>{{ item.status }}</td>
+                    <td>{{ item.irrate }}</td>
                   </tr>
                 </tbody>
               </v-table>
@@ -61,29 +57,32 @@
 </template>
   
 <script setup>
-const users = [
-  {
-    idx: 1,
-    name: "우리WON예금",
-    type: "예금",
-    likedDate: "2023-08-29",
-    status: "정상",
-  },
-  {
-    idx: 2,
-    name: "우리WON예금",
-    type: "예금",
-    likedDate: "2023-08-29",
-    status: "정상",
-  },
-  {
-    idx: 3,
-    name: "우리WON예금",
-    type: "예금",
-    likedDate: "2023-08-29",
-    status: "정상",
-  },
-];
+
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+
+const users = ref([]); // 초기에 빈 배열로 초기화
+
+onMounted(async () => {
+  try {
+    const memberId = 1; // 대상 멤버 ID를 설정
+    const response = await axios.get(`http://localhost:8080/member/mypage/liked/${memberId}`);
+    const data = response.data;
+
+    data.forEach((item) => {
+      products.value.push({
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        interestrate: item.interestrate,
+      });
+    });
+  } catch (error) {
+    console.error('데이터 가져오기 중 오류 발생:', error.message);
+  }
+});
+
+
 
 import { useRouter } from "vue-router";
 const router = useRouter();

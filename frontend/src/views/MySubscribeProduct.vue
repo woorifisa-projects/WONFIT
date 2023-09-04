@@ -1,105 +1,157 @@
 <template>
   <v-app id="inspire" style="margin-top:20px">
-
     <v-main class="bg-grey-lighten-3">
       <v-container>
         <v-row>
           <v-col cols="3">
             <v-sheet rounded="lg">
               <v-list rounded="lg">
-
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="test">내 가입상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
-
                 <v-divider class="my-2"></v-divider>
-
                 <v-list-item class="logo-text" color="grey-lighten-4" link @click="navigateToWithdraw">
                   회원 탈퇴
                 </v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
-
           <v-col>
-            <v-sheet min-height="70vh" rounded="lg"><v-table fixed-header height="500px">
+            <v-sheet min-height="70vh" rounded="lg">
+              <v-table fixed-header height="500px">
                 <thead>
                   <tr>
                     <th></th>
                     <th class="text-left">번호</th>
                     <th class="text-left">상품명</th>
                     <th class="text-left">분류</th>
-                    <th class="text-left">납입일자</th>
-                    <th class="text-left">만료일자</th>
-                    <th class="text-left">상태</th>
-                    <th class="text-left">가입일</th>
+                    <th class="text-left">금리</th>
                   </tr>
                 </thead>
                 <template v-slot:column.name="{ column }">
                   {{ column.title.toUpperCase() }}
                 </template>
                 <tbody>
-                  <tr v-for="item in users" :key="item.id">
+                  <tr v-for="item in users" :key="item.idx">
                     <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
                     <td>{{ item.idx }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.type }}</td>
-                    <td>{{ item.payDate }}</td>
-                    <td>{{ item.expireDate }}</td>
-                    <td>{{ item.status }}</td>
-                    <td>{{ item.regDate }}</td>
+                    <td>{{ item.irrate }}</td>
                   </tr>
                 </tbody>
               </v-table>
             </v-sheet>
-
           </v-col>
         </v-row>
       </v-container>
     </v-main>
   </v-app>
 </template>
-  
+
 <script setup>
-const users = [
-  {
-    idx: 1,
-    name: "우리WON예금",
-    type: "예금",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-  {
-    idx: 2,
-    name: "우리WON적금",
-    type: "적금",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-  {
-    idx: 3,
-    name: "WONFIT펀드",
-    type: "펀드",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-  {
-    idx: 4,
-    name: "WONFIT대출",
-    type: "대출",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-];
+
+import axios from 'axios';
+import { ref, onMounted } from 'vue'; // ref와 onMounted를 불러옵니다.
+
+const users = ref([]); // 초기에 빈 배열로 초기화
+
+// memberId 1번이 선택한 모든 상품을 보여주기
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/sublogs/member/1');
+    const data = response.data;
+
+    data.forEach(item => {
+      if (item.loan) {
+        users.value.push({
+          idx: item.loan.id,
+          name: item.loan.loanName,
+          type: item.loan.loanType,
+          irrate: item.loan.interestRate,
+        });
+      }
+      if (item.fund) {
+        users.value.push({
+          idx: item.fund.id,
+          name: item.fund.fundName,
+          type: item.fund.fundType,
+          irrate: item.fund.returnRate1,
+        });
+      }
+      if (item.deposit) {
+        users.value.push({
+          idx: item.deposit.id,
+          name: item.deposit.depositName,
+          type: item.deposit.depositType,
+          irrate: item.deposit.interestRate,
+        });
+      }
+      if (item.savings) {
+        users.value.push({
+          idx: item.savings.id,
+          name: item.savings.savingsName,
+          type: item.savings.savingsType,
+          irrate: item.savings.interestRate,
+        });
+      }
+    });
+  } catch (error) {
+    console.error('An error occurred while fetching data:', error.message);
+  }
+});
+
+// import { ref, onMounted } from 'vue';
+// import { getApi } from "@/api/modules/getApi.js";
+
+// const users = ref([]);
+
+// onMounted(async () => {
+//   try {
+//     const response = await getApi({
+//       url: 'http://localhost:8080/api/sublogs/member/1'
+//     });
+
+//     response.forEach(item => {
+//       if (item.loan) {
+//         users.value.push({
+//           idx: item.loan.id,
+//           name: item.loan.loanName,
+//           type: item.loan.loanType,
+//           irrate: item.loan.interestRate,
+//         });
+//       }
+//       if (item.fund) {
+//         users.value.push({
+//           idx: item.fund.id,
+//           name: item.fund.fundName,
+//           type: item.fund.fundType,
+//           irrate: item.fund.returnRate1,
+//         });
+//       }
+//       if (item.deposit) {
+//         users.value.push({
+//           idx: item.deposit.id,
+//           name: item.deposit.depositName,
+//           type: item.deposit.depositType,
+//           irrate: item.deposit.interestRate,
+//         });
+//       }
+//       if (item.savings) {
+//         users.value.push({
+//           idx: item.savings.id,
+//           name: item.savings.savingsName,
+//           type: item.savings.savingsType,
+//           irrate: item.savings.interestRate,
+//         });
+//       }
+//     });
+//   } catch (error) {
+//     console.error('An error occurred while fetching data:', error.message);
+//   }
+// });
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -123,12 +175,8 @@ const navigateToRecommend = () => {
 const navigateToWithdraw = () => {
   router.push({ name: "Withdraw" });
 };
-
-
 </script>
-  
-  
-  
+
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
@@ -142,3 +190,5 @@ const navigateToWithdraw = () => {
   font-family: "WooridaumB", sans-serif;
 }
 </style>
+
+

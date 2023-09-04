@@ -20,7 +20,7 @@ const routes = [
 
       {
         path: "signup",
-        name: "SignupPage",
+        name: "Signup",
         component: () => import(/* webpackChunkName: "signup" */ "@/views/Signup.vue"),
       },
 
@@ -149,6 +149,11 @@ const routes = [
           path: "talk",
           name: "SendTalkPage",
           component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+      },
+      {
+        path: "manager-page",
+        name: "ManagerPage",
+        component: () => import(/* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"),
       },
     ],
   },

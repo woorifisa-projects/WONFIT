@@ -98,59 +98,7 @@
     </v-dialog>
   </v-card>
 </template>
-<!-- <script>
-import axios from "axios";
 
-axios.defaults.withCredentials = true;
-
-export default {
-  data: () => ({
-    name: undefined,
-
-    agreement: false,
-    bio: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts",
-    dialog: false,
-    email: undefined,
-    isValid: false,
-    isLoading: false,
-    password: undefined,
-    phone: undefined,
-    rules: {
-      email: (v) => !!(v || "").match(/@/) || "Please enter a valid email",
-      length: (len) => (v) =>
-        (v || "").length >= len || `Invalid character length, required ${len}`,
-      password: (v) =>
-        !!(v || "").match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
-        "Password must contain an upper case letter, a numeric character, and a special character",
-      required: (v) => !!v || "This field is required",
-    },
-  }),
-
-  methods: {
-    submitForm() {
-      const request_data = {
-        memberEmail: this.email,
-        memberPw: this.password,
-        memberName: this.name,
-        memberId: "1111",
-        Status: true,
-      };
-
-      console.log(request_data);
-
-      axios
-        .post("http://localhost:8080/member/register", request_data)
-        .then(() => {
-          console.log("######### success");
-          location.href = "./mainPage.html"; //나중에 로그인 페이지로 넘겨라
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
-        });
-    },
-  },
-};
-</script> -->
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
