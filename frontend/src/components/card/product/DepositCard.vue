@@ -43,10 +43,6 @@ const props = defineProps({
   depositType: String,
 });
 
-// const navigateToDepositDetail = () => {
-//   router.push("/deposit-detail");
-// };
-
 // 이전 페이지에서
 // 선택된 상품의 ID를 전달하는 함수
 const navigateToDepositDetail = (productId) => {

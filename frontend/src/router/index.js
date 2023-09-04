@@ -153,6 +153,7 @@ const routes = [
       //   name: "SendTalkPage",
       //   component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
       // },
+
       {
         path: "manager-page",
         name: "ManagerPage",
