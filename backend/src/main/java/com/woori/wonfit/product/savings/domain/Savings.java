@@ -40,5 +40,7 @@ public class Savings {
     @Column(name = "savings_type")
     private String savingsType; // 안정형, 중립형, 공격형
 
+    @Column(name = "status")
+    private String status; // 상품 상태
 
 }

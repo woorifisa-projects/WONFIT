@@ -1,6 +1,8 @@
 package com.woori.wonfit.product.fund.service;
 
 import com.woori.wonfit.product.fund.domain.Fund;
+import com.woori.wonfit.product.fund.dto.FundResponse;
+import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.fund.dto.FundDTO;
 import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.fund.dto.FundResponse;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +35,7 @@ public class FundServiceImpl implements FundService {
 
 
     public void updateFund(Long id, FundDTO request) {
-        Fund fund = fundRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Deposit not found"));
+        Fund fund = fundRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Fund not found"));
 
         Fund newFund = Fund.builder()
                 .id(id)
@@ -46,6 +49,22 @@ public class FundServiceImpl implements FundService {
                 .build();
 
         fundRepository.save(newFund); // 수정된 내용을 저장
+    }
+
+    @Override
+    public FundResponse findById(Long id) {
+        Optional<Fund> fund = fundRepository.findById(id);
+
+        return FundResponse.builder()
+                .id(fund.map(Fund::getId).orElse(0L))
+                .fundName(fund.map(Fund::getFundName).orElse("기본값"))
+                .returnRate1(fund.map(Fund::getReturnRate1).orElse(0.0))
+                .returnRate2(fund.map(Fund::getReturnRate2).orElse(0.0))
+                .fundPrice(fund.map(Fund::getFundPrice).orElse(0.0))
+                .fundInfo(fund.map(Fund::getFundInfo).orElse("기본값"))
+                .fundDesc(fund.map(Fund::getFundDesc).orElse("기본값"))
+                .fundType(fund.map(Fund::getFundType).orElse("기본값"))
+                .build();
     }
 
 }
