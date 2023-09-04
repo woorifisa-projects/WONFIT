@@ -1,12 +1,14 @@
 package com.woori.wonfit.product.savings.dto;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 @Builder
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class SavingsResponse {
 
     private Long id;

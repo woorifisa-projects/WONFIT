@@ -30,7 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         log.info("Interceptors called");
         registry.addInterceptor(new InterceptorConfig(parser, memberRepository))
                 .addPathPatterns("/member/**", "/product/**")
-                .excludePathPatterns("/member/register", "/member/login")
+                .excludePathPatterns("/member/register", "/member/login", "/**")
                 .order(1);
     }
 }

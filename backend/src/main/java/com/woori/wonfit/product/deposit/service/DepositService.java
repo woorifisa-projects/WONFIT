@@ -13,4 +13,5 @@ public interface DepositService {
     void updateDeposit(Long id, DepositDTO depositDTO);
 
 
+    DepositResponse findById(Long id);
 }
