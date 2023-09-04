@@ -16,4 +16,5 @@ public interface LoanService {
 
     void updateLoan(Long id, LoanDTO loanDTO);
 
+    LoanResponse findById(Long id);
 }
