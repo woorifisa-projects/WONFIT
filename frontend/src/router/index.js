@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
+import DepositDetail from "../views/detail/Deposit.vue";
 
 const routes = [
   {
@@ -184,6 +185,13 @@ const routes = [
         name: "MemberSign",
         component: () =>
           import(/* webpackChunkName: "MemberSign" */ "@/views/manager/MemberSign.vue"),
+      },
+
+      {
+        path: "deposit-detail/:id",
+        name: "DepositDetailId",
+        component: DepositDetail,
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
     ],
   },

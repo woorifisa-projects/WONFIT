@@ -5,18 +5,16 @@
         <div class="d-flex align-center clickable-title">
           <img src="@/assets/wonfit.png" @click="navigateToMainPage" style="width:55px; margin-top: 6px" />
           <span class="logo-text" style="font-size: 23px" @click="navigateToMainPage">우리WONFIT</span>
-       
+
           <div class="logo-text"  style="margin:30px" @click="navigateToProductSearchPage">상품 검색</div> 
           <div class="logo-text"  style="margin:10px" @click="navigateToRecommend">FIT 결과보기</div>
         </div>
       </div>
     </v-app-bar-title>  
 
-          
-          <div class="logo-text"  style="margin:40px" @click="navigateToLoginPage">로그인</div> <!--로그인하면 로그아웃으로 변경-->
-          <div class="logo-text" style="margin-right:100px" @click="navigateToMyPage">마이페이지</div>
-
-
+    <div class="logo-text" style="margin: 40px" @click="navigateToLoginPage">로그인</div>
+    <!--로그인하면 로그아웃으로 변경-->
+    <div class="logo-text" style="margin-right: 100px" @click="navigateToMyPage">마이페이지</div>
   </v-app-bar>
 </template>
 

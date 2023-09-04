@@ -16,6 +16,7 @@ import { createApp } from "vue";
 
 // Plugins
 import { registerPlugins } from "@/plugins";
+import "./styles/global.style.css";
 
 const app = createApp(App);
 
