@@ -44,11 +44,12 @@ const router = useRouter();
 
 
 const setCookie = function (key, value, exp) {
-  const date = new Date();
-  //console.log("현재 시간 : " + date);
+  const date = new Date(); // ms
+  
   date.setTime(date.getTime() + exp * 1000);// UTC 타임스탬프를 밀리초로 변환하여 현재 시간에 더해주기
 
   document.cookie = key + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+  // document.cookie = key + '=' + value + ';expires=' + exp.toString() + ';path=/';
 }
 
 const parseJwt = (token) => {
@@ -82,9 +83,10 @@ const login = async () => {
     if (response.status == 200) { // 쿠키 저장 메소드
       const value = response.data.result;
       const jwt = parseJwt(response.data.result);
+      console.log(jwt);
       const key = "key";
 
-      setCookie(key, value, jwt.exp);
+      setCookie(key, value, 3600);
       router.push({ name: "MainPage" });;
     }
   } catch (error) {
