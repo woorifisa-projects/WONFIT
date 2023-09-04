@@ -7,7 +7,7 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="test">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
                 <v-divider class="my-2"></v-divider>
