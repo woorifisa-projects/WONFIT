@@ -9,25 +9,25 @@ const routes = [
       {
         path: "",
         name: "MainPage",
-        component: () => import(/* webpackChunkName: "main" */ "@/views/Main.vue"),
+        component: () => import(/* webpackChunkName: "main" */ "@/views/main/Main.vue"),
       },
 
       {
         path: "login",
         name: "LoginPage",
-        component: () => import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
+        component: () => import(/* webpackChunkName: "login" */ "@/views/main/Login.vue"),
       },
 
       {
         path: "signup",
         name: "Signup",
-        component: () => import(/* webpackChunkName: "signup" */ "@/views/Signup.vue"),
+        component: () => import(/* webpackChunkName: "signup" */ "@/views/main/Signup.vue"),
       },
 
       {
         path: "recommend",
         name: "Recommend",
-        component: () => import(/* webpackChunkName: "Recommend" */ "@/views/Recommend.vue"),
+        component: () => import(/* webpackChunkName: "Recommend" */ "@/views/main/Recommend.vue"),
       },
 
       {
@@ -59,25 +59,26 @@ const routes = [
       {
         path: "income",
         name: "Income",
-        component: () => import(/* webpackChunkName: "managerpage" */ "@/views/Income.vue"),
+        component: () => import(/* webpackChunkName: "managerpage" */ "@/views/main/Income.vue"),
       },
       {
         path: "mypage",
         name: "MyPage",
-        component: () => import(/* webpackChunkName: "mypage" */ "@/views/MyPage.vue"),
+        component: () => import(/* webpackChunkName: "mypage" */ "@/views/member/MyPage.vue"),
       },
 
       {
         path: "bank-select",
         name: "BankSelect",
-        component: () => import(/* webpackChunkName: "bankselectpage" */ "@/views/BankSelect.vue"),
+        component: () =>
+          import(/* webpackChunkName: "bankselectpage" */ "@/views/main/BankSelect.vue"),
       },
 
       {
         path: "my-liked-product",
         name: "MyLikedProduct",
         component: () =>
-          import(/* webpackChunkName: "MyLikedProduct" */ "@/views/MyLikedProduct.vue"),
+          import(/* webpackChunkName: "MyLikedProduct" */ "@/views/member/MyLikedProduct.vue"),
       },
 
       {
@@ -145,15 +146,42 @@ const routes = [
         component: () => import(/* webpackChunkName: "loandetail" */ "@/views/detail/Loan.vue"),
       },
 
+      // {
+      //   path: "talk",
+      //   name: "SendTalkPage",
+      //   component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+      // },
       {
-          path: "talk",
-          name: "SendTalkPage",
-          component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
+        path: "manager-page",
+        name: "ManagerPage",
+        component: () =>
+          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
       },
       {
         path: "manager-page",
         name: "ManagerPage",
-        component: () => import(/* webpackChunkName: "managerpage" */ "@/views/ManagerPage.vue"),
+        component: () =>
+          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
+      },
+
+      {
+        path: "manage-product",
+        name: "ManageProduct",
+        component: () =>
+          import(/* webpackChunkName: "ManageProduct" */ "@/views/manager/ManageProduct.vue"),
+      },
+
+      {
+        path: "send-talk",
+        name: "SendTalk",
+        component: () => import(/* webpackChunkName: "SendTalk" */ "@/views/manager/SendTalk.vue"),
+      },
+
+      {
+        path: "member-sign",
+        name: "MemberSign",
+        component: () =>
+          import(/* webpackChunkName: "MemberSign" */ "@/views/manager/MemberSign.vue"),
       },
     ],
   },

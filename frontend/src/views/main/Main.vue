@@ -2,9 +2,9 @@
   <div >
    
     <!-- 배너 영역 -->
-    <div class="banner-container logo-text">
+    <div class="banner-container logo-text d-flex justify-center">
       <!-- 배너 이미지 추가 -->
-      <h1 style="margin:100px 210px">우리WONFIT에서<br>
+      <h1 style="margin:120px 210px">우리WONFIT에서<br>
     나에게 딱 맞게</h1>
       <img src="@/assets/puzzler.png" class="banner-image"/>
     
@@ -14,7 +14,7 @@
      
       <div class="banner-content logo-text">
         <h2>목적에 맞는 금융상품을</h2>
-        <p>성향분석 검사를 통해 편리하게 추천 받으세요.</p>
+        <p>성향분석 검사를 통해 편리하게 추천 받으세요</p>
       </div>
 
       <v-row class="d-flex justify-center">
@@ -39,7 +39,7 @@
  
 
    <!-- 배너 영역 -->
-   <div class="banner-container2 logo-text">
+   <div class="banner-container2 logo-text d-flex justify-center">
       <!-- 배너 이미지 추가 -->
       <h1 style="margin:100px 200px">모든 금융내역을<br>
     한 곳에서 관리하세요 <br>
@@ -77,6 +77,8 @@ const navigateToDepositTestPage = () => {
 const navigateToSavingsTestPage = () => {
   router.push({ name: "SavingsTest" });
 };
+
+
 
 </script>
 
