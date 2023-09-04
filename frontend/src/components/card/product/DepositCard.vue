@@ -30,10 +30,10 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { defineProps } from "vue";
 
 const router = useRouter();
-
-defineProps({
+const props = defineProps({
   depositName: String,
   depositInfo: String,
   interestRate: Number,

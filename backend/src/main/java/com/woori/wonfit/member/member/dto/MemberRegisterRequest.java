@@ -29,6 +29,8 @@ public class MemberRegisterRequest {
     private boolean isMarried;
     private boolean marketingInfoAgree;
 
+    private String refreshToken;
+
     public Member toEntity(String password) {
         return Member.builder()
                 .loginId(loginId).password(password)

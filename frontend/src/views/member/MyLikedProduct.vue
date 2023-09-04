@@ -8,7 +8,7 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
 
-                <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMyInfo">내 정보 보기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
@@ -27,13 +27,11 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th class="text-left">번호</th>
-                    <th class="text-left">상품명</th>
-                    <th class="text-left">분류</th>
-                    <th class="text-left">납입일자</th>
-                    <th class="text-left">만료일자</th>
-                    <th class="text-left">상태</th>
-                    <th class="text-left">가입일</th>
+                    <th class="text-left">번호</th> <!--id-->
+                    <th class="text-left">상품명</th> <!--deposit_name-->
+                    <th class="text-left">분류</th> <!--deposit_type-->
+                    <th class="text-left">금리</th> <!--interest_rate-->
+
                   </tr>
                 </thead>
                 <template v-slot:column.name="{ column }">
@@ -45,10 +43,7 @@
                     <td>{{ item.idx }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.type }}</td>
-                    <td>{{ item.payDate }}</td>
-                    <td>{{ item.expireDate }}</td>
-                    <td>{{ item.status }}</td>
-                    <td>{{ item.regDate }}</td>
+                    <td>{{ item.irrate }}</td>
                   </tr>
                 </tbody>
               </v-table>
@@ -62,44 +57,32 @@
 </template>
   
 <script setup>
-const users = [
-  {
-    idx: 1,
-    name: "우리WON예금",
-    type: "예금",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-  {
-    idx: 2,
-    name: "우리WON적금",
-    type: "적금",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-  {
-    idx: 3,
-    name: "WONFIT펀드",
-    type: "펀드",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-  {
-    idx: 4,
-    name: "WONFIT대출",
-    type: "대출",
-    payDate: "28일",
-    expireDate: "2024-01-01",
-    status: "정상",
-    regDate: "2020-01-01",
-  },
-];
+
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+
+const users = ref([]); // 초기에 빈 배열로 초기화
+
+onMounted(async () => {
+  try {
+    const memberId = 1; // 대상 멤버 ID를 설정
+    const response = await axios.get(`http://localhost:8080/member/mypage/liked/${memberId}`);
+    const data = response.data;
+
+    data.forEach((item) => {
+      products.value.push({
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        interestrate: item.interestrate,
+      });
+    });
+  } catch (error) {
+    console.error('데이터 가져오기 중 오류 발생:', error.message);
+  }
+});
+
+
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -123,7 +106,6 @@ const navigateToRecommend = () => {
 const navigateToWithdraw = () => {
   router.push({ name: "Withdraw" });
 };
-
 
 </script>
   

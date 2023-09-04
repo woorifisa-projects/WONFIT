@@ -1,37 +1,20 @@
 <template>
   <v-app-bar flat>
-    <v-app-bar-title class="d-flex align-left">
-      <div class="logo" @click="navigateToMainPage">
-        <div class="d-flex align-center">
-          <img src="@/assets/wonfit.png" style="width: 70px; margin-top: 8px" />
-          <span class="logo-text" style="font-size: 25px">우리WONFIT</span>
+    <v-app-bar-title class="d-flex align-left" style="margin-top:5px">
+      <div class="logo" style="margin-left:100px" >
+        <div class="d-flex align-center clickable-title">
+          <img src="@/assets/wonfit.png" @click="navigateToMainPage" style="width:55px; margin-top: 6px" />
+          <span class="logo-text" style="font-size: 23px" @click="navigateToMainPage">우리WONFIT</span>
+
+          <div class="logo-text"  style="margin:30px" @click="navigateToProductSearchPage">상품 검색</div> 
+          <div class="logo-text"  style="margin:10px" @click="navigateToRecommend">FIT 결과보기</div>
         </div>
       </div>
-    </v-app-bar-title>
-    <v-tabs v-model="tab" color="black">
-      <v-tab class="tab-text" @click="navigateToProductSearchPage">상품검색</v-tab>
+    </v-app-bar-title>  
 
-      <v-tab class="tab-text" @click="navigateToRecommend">투자성향 결과보기</v-tab>
-    </v-tabs>
-    <v-spacer></v-spacer>
-
-    <v-text-field
-      density="compact"
-      flat
-      hide-details
-      label="Search"
-      rounded="lg"
-      single-line
-      variant="solo-filled"
-    ></v-text-field>
-    <div
-      class="logo-text"
-      style="margin-left: 40px; margin-right: 65px"
-      @click="navigateToLoginPage"
-    >
-      로그인
-    </div>
-    <!-- <div class="logo-text" style="margin-left:40px;margin-right:55px" @click="navigateToMyPage">유재원님 안녕하세요!</div> -->
+    <div class="logo-text" style="margin: 40px" @click="navigateToLoginPage">로그인</div>
+    <!--로그인하면 로그아웃으로 변경-->
+    <div class="logo-text" style="margin-right: 100px" @click="navigateToMyPage">마이페이지</div>
   </v-app-bar>
 </template>
 
@@ -56,10 +39,6 @@ const navigateToLoginPage = () => {
   router.push({ name: "LoginPage" });
 };
 
-const navigateToSignUpPage = () => {
-  router.push({ name: "SignupPage" });
-};
-
 const navigateToMyPage = () => {
   router.push({ name: "MyPage" });
 };
@@ -80,7 +59,7 @@ const navigateToMyPage = () => {
 }
 
 .logo-text {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
 }
@@ -90,9 +69,9 @@ const navigateToMyPage = () => {
   cursor: pointer;
 }
 
-.tab-text {
-  font-size: 14px;
-  font-family: "WooridaumB", sans-serif;
-  margin-right: 10px;
+.clickable-title:hover {
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
+
 </style>

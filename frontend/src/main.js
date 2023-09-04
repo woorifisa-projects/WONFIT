@@ -7,11 +7,16 @@
 // Components
 import App from "./App.vue";
 
+// pinia
+import { createPinia } from "pinia";
+
 // Composables
 import { createApp } from "vue";
+// app.use(createP  inia());
 
 // Plugins
 import { registerPlugins } from "@/plugins";
+import "./styles/global.style.css";
 
 const app = createApp(App);
 

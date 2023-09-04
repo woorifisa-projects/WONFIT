@@ -12,69 +12,27 @@
 <script setup>
 import { ref } from 'vue';
 import CryptoJS from "crypto-js";
+import axios from 'axios';
 
 const senderPhoneNumber = ref('');
 const receiverPhoneNumber = ref('');
 const messageContent = ref('');
 
 function sendMessage() {
-    var user_phone_number = receiverPhoneNumber.value;
-    var resultCode = 404;
-
-    const date = Date.now().toString();
-    const uri = "ncp:sms:kr:314756095679:wonfit-sms-service";
-    const secretKey = "PvqIcNh9p4lJpr6IGM2wXDUAxOpHVb7plnCAoids";
-    const accessKey = "nzsn8K2TrvZIx6Nl9C5I";
-    const method = "POST";
-    const space = " ";
-    const newLine = "\n";
-    const url2 = `/sms/v2/services/${uri}/messages`;
-
-    const hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
-
-    hmac.update(method);
-    hmac.update(space);
-    hmac.update(url2);
-    hmac.update(newLine);
-    hmac.update(date);
-    hmac.update(newLine);
-    hmac.update(accessKey);
-
-    const hashBytesArray = hmac.finalize();
-    const signature = hashBytesArray.toString(CryptoJS.enc.Base64);
-
-    const url = `https://sens.apigw.ntruss.com/sms/v2/services/${uri}/messages`;
     const body = {
-        type: 'SMS',
-        countryCode: '82',
-        from: senderPhoneNumber.value,
+        //from: senderPhoneNumber.value,
+        to: receiverPhoneNumber.value,
         content: messageContent.value,
-        messages: [
-            {
-                to: user_phone_number
-            }
-        ]
     };
 
-    fetch(url, {
-        //mode: 'no-cors',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'x-ncp-apigw-timestamp': date,
-            'x-ncp-iam-access-key': accessKey,
-            'x-ncp-apigw-signature-v2': signature,
-        },
-        body: JSON.stringify(body)
+    axios.post("http://localhost:8080/manager/send/sms/message", body, { withCredentials: true })
+    .then(data => {
+        console.log(data);
+        //resultCode = 200;
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            resultCode = 200;
-        })
-        .catch(err => {
-            console.error(err);
-        });
+    .catch(err => {
+        console.error(err);
+    });
 }
 
 </script>
