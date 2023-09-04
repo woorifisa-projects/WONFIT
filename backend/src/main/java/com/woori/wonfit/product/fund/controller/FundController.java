@@ -1,6 +1,7 @@
 package com.woori.wonfit.product.fund.controller;
 
 
+import com.woori.wonfit.product.deposit.dto.DepositResponse;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.fund.dto.FundResponse;
@@ -26,7 +27,13 @@ public class FundController {
             return list;
         }
 
-
+    // id 값으로 조회하는 api
+    @GetMapping("/{id}")
+    public ResponseEntity<FundResponse> findById(@PathVariable Long id) {
+        FundResponse fundResponse = fundService.findById(id);
+        System.out.println("done");
+        return ResponseEntity.ok(fundResponse);
+    }
 
 
 

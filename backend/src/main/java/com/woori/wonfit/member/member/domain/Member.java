@@ -1,10 +1,8 @@
 package com.woori.wonfit.member.member.domain;
 
 
-import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 
@@ -19,7 +17,8 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    // ID: 영문/숫자 15자 이하
+    // PW: 영문/숫자/특수문자 포함 8자 이상 최대 20자 이하
     @Column(name = "login_id", length = 15, nullable = false)
     private String loginId; // 회원 아이디 (영어 소문자, 숫자 포함 5자 이상, 15자 이하)
 
@@ -42,10 +41,6 @@ public class Member {
     @ColumnDefault("true")
     private boolean status; // 회원 상태(정상, 탈퇴)
 
-
-
-
-// ID: 영문/숫자 15자 이하
-// PW: 영문/숫자/특수문자 포함 8자 이상 최대 20자 이하
-
+    @Column(name = "refresh_Token", nullable = true)
+    private String refreshToken;
 }

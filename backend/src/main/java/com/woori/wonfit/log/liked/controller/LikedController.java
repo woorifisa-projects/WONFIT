@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/member/mypage")
+@RequestMapping("/member/mypage/liked")
 @RequiredArgsConstructor
 public class LikedController {
     private final LikedService likedService;
 
-    @GetMapping("/member/{memberId}")
+    @GetMapping("/{memberId}")
     public List<Liked> findByMemberId(@PathVariable Long memberId) {
         List<Liked> list = likedService.findByAllMemberId(memberId);
         return list;

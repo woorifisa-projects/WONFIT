@@ -1,6 +1,7 @@
 package com.woori.wonfit.product.fund.service;
 
 
+import com.woori.wonfit.product.deposit.dto.DepositResponse;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.fund.dto.FundDTO;
 import com.woori.wonfit.product.fund.dto.FundRequest;
@@ -16,4 +17,5 @@ public interface FundService {
     void updateFund(Long id, FundDTO fundDTO);
 
 
+    FundResponse findById(Long id);
 }

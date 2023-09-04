@@ -2,6 +2,7 @@
   <v-container class="mt-12">
     <div>
       <div>
+
         <Suspense>
           <detailTitle
             :name="depositData.depositName"
@@ -65,7 +66,6 @@
 3. 로그인 후 화면 하단 "추전상품" 클릭 후 예금상품에서 "WON플러스 예금" 가입
 
 
-
 · 유의사항
 
 계좌에 압류, 가압류 등이 등록될 경우 원금 및 이자의 지급이 제한될 수 있습니다.
@@ -79,8 +79,9 @@
     </div>
   </v-container>
 </template>
-
+l
 <script setup>
+
 import { ref, onBeforeMount, defineAsyncComponent } from "vue";
 import { getApi } from "@/api/modules";
 import { useRoute } from "vue-router";
@@ -99,10 +100,29 @@ onBeforeMount(async () => {
     url: `/product/deposit/${productId}`,
   });
 
-  detailTitle = defineAsyncComponent(() => import("@/components/card/carddetail/DetailTitle.vue"));
+detailTitle = defineAsyncComponent(() => import("@/components/card/carddetail/DetailTitle.vue"));
   console.log(data);
   depositData.value = data;
 });
 </script>
 
-<style></style>
+<style scoped>
+@font-face {
+  font-family: "WooridaumB";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "WooridaumB", sans-serif;
+}
+
+/* .custom-container {
+  background-color: #eeeeee;
+  margin: 0px;
+  padding: 120px;
+} */
+</style>

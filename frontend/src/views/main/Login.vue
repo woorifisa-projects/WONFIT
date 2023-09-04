@@ -23,7 +23,12 @@
       </v-btn>
 
       <v-card-text class="text-center">
-        <a class="text-blue text-decoration-none" href="#" rel="noopener noreferrer" target="_blank">
+        <a
+          class="text-blue text-decoration-none"
+          href="#"
+          rel="noopener noreferrer"
+          @click="goToSignup"
+        >
           Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
         </a>
       </v-card-text>
@@ -36,6 +41,7 @@ import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
 
 const setCookie = function (key, value, exp) {
   const date = new Date();
@@ -53,6 +59,11 @@ const parseJwt = (token) => {
   }).join(''));
   return JSON.parse(jsonPayload);
 };
+
+const goToSignup = () => {
+  router.push({ name: 'Signup' }); 
+};
+
 
 const visible = ref(false);
 const loginId = ref("");
