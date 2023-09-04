@@ -9,6 +9,7 @@ import com.woori.wonfit.product.savings.domain.Savings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Table(name = "subscribe_log")
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class SubscribeLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

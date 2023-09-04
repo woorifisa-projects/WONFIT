@@ -118,6 +118,13 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import axios from 'axios';
+
+const router = useRouter();
+const menuData = ref([]);
+
+
 
   const locations = [
       '서울특별시',
@@ -141,7 +148,6 @@ import { useRouter } from 'vue-router';
       '제주특별자치도',
     ];
     const location = '주소를 선택해주세요';
-    const router = useRouter();
 
   const navigateToMyPage = () => {
   router.push({ name: "MyPage" });
