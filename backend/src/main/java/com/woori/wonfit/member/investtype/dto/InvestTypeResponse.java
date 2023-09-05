@@ -1,7 +1,5 @@
 package com.woori.wonfit.member.investtype.dto;
 
-import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
-import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.*;
