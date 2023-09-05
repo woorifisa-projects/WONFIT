@@ -34,13 +34,31 @@ public class InvestType {
     @Column(name = "loan_type",nullable = true)
     private String loan_type;
 
-    public static InvestType toEntity(InvestTypeRequest investType, Member member){
+    @Column(name = "deposit_quiz_score", nullable = true)
+    private Integer depositQuizScore;
+
+    @Column(name = "savings_quiz_score", nullable = true)
+    private Integer savingsQuizScore;
+
+    @Column(name = "fund_quiz_score", nullable = true)
+    private Integer fundQuizScore;
+
+    @Column(name = "loan_quiz_score", nullable = true)
+    private Integer loanQuizScore;
+
+
+
+    public static InvestType toEntity(InvestType investType, Member member){
         return InvestType.builder()
                 .member(member)
-                .deposit_type(investType.getDepositType())
-                .savings_type(investType.getSavingsType())
-                .fund_type(investType.getFundType())
-                .loan_type(investType.getLoanType())
+                .deposit_type(investType.getDeposit_type())
+                .savings_type(investType.getSavings_type())
+                .fund_type(investType.getFund_type())
+                .loan_type(investType.getLoan_type())
+                .depositQuizScore(investType.getDepositQuizScore())
+                .savingsQuizScore(investType.getSavingsQuizScore())
+                .fundQuizScore(investType.getFundQuizScore())
+                .loanQuizScore(investType.getLoanQuizScore())
                 .build();
     }
 }

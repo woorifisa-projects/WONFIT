@@ -4,6 +4,8 @@ import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.config.Token;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
+import com.woori.wonfit.member.investtype.repository.InvestTypeRepository;
+import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
@@ -32,6 +34,7 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberInfoService memberInfoService;
     private final LoginLogRepository loginLogRepository;
+    private final InvestTypeService  investTypeService;
 
     @Value("${jwt.token.access}")
     private String accessKey;
@@ -51,6 +54,11 @@ public class MemberServiceImpl implements MemberService {
                 });
 
         Member saveMember = memberRepository.save(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())));
+
+        Member member = memberRepository.findById(saveMember.getId()).get();
+        investTypeService.registInvestment(member);
+
+
         return MemberDto.fromEntity(saveMember);
     }
 
