@@ -40,31 +40,8 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+
 const router = useRouter();
-
-
-const setCookie = function (key, value, exp) {
-  const date = new Date();
-  //console.log("현재 시간 : " + date);
-  date.setTime(date.getTime() + exp * 1000);// UTC 타임스탬프를 밀리초로 변환하여 현재 시간에 더해주기
-
-  document.cookie = key + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-}
-
-const parseJwt = (token) => {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-  return JSON.parse(jsonPayload);
-};
-
-const goToSignup = () => {
-  router.push({ name: 'Signup' }); 
-};
-
-
 const visible = ref(false);
 const loginId = ref("");
 const password = ref("");
@@ -78,13 +55,8 @@ const login = async () => {
       password: password.value,
     };
 
-    const response = await axios.post("http://localhost:8080/member/login", requestBody);
+    const response = await axios.post("http://localhost:8080/member/login", requestBody, { withCredentials: true });
     if (response.status == 200) { // 쿠키 저장 메소드
-      const value = response.data.result;
-      const jwt = parseJwt(response.data.result);
-      const key = "key";
-
-      setCookie(key, value, jwt.exp);
       router.push({ name: "MainPage" });;
     }
   } catch (error) {

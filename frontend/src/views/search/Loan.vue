@@ -7,10 +7,10 @@
 
       <v-container>
         <v-row justify="center">
-          <custom-button content="예금" @click="navigateToSearchDefault" />
-          <custom-button content="적금" @click="navigateToSearchSavings" />
-          <custom-button content="펀드" @click="navigateToSearchFund" />
-          <custom-button content="대출" @click="navigateToSearchLoan" />
+          <type-button content="예금" @click="navigateToSearchDefault" />
+          <type-button content="적금" @click="navigateToSearchSavings" />
+          <type-button content="펀드" @click="navigateToSearchFund" />
+          <type-button content="대출" @click="navigateToSearchLoan" />
         </v-row>
       </v-container>
     </div>
@@ -61,7 +61,7 @@
 import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api/modules";
-import CustomButton from "@/components/button/TypeButton.vue";
+import TypeButton from "@/components/button/TypeButton.vue";
 import LoanCard from "@/components/card/product/LoanCard.vue";
 
 const loaded = ref(false);

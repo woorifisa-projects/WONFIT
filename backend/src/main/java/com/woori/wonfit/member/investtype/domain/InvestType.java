@@ -1,8 +1,6 @@
 package com.woori.wonfit.member.investtype.domain;
 
-import com.woori.wonfit.member.investtype.dto.InvestTypeRequest;
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.dto.MemberDetails;
 import lombok.*;
 
 import javax.persistence.*;

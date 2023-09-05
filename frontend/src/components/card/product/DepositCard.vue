@@ -3,13 +3,18 @@
     <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
       <div class="product-info">
         <v-card-item>
-          <v-card-title style="font-size: 25px">{{ depositName }}</v-card-title>
+          <v-card-title
+            class="clickable-title"
+            style="font-size: 25px"
+            @click="navigateToDepositDetail(2)"
+            >{{ depositName }}</v-card-title
+          >
           <v-card-subtitle style="font-size: 17px">{{ depositInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
           상품 금리: {{ interestRate }}%<br />
           가입 대상: {{ target }}<br />
-          가입 기간: {{ period }}년<br />
+          가입 기간: {{ period }}개월<br />
           가입 금액: {{ minDeposit }}원<br />
           상품 타입: {{ depositType }}<br />
         </v-card-text>
@@ -25,14 +30,10 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { defineProps } from "vue";
 
 const router = useRouter();
-
-const navigateToDepositDetail = () => {
-  router.push("/deposit-detail");
-};
-
-defineProps({
+const props = defineProps({
   depositName: String,
   depositInfo: String,
   interestRate: Number,
@@ -41,6 +42,15 @@ defineProps({
   minDeposit: Number,
   depositType: String,
 });
+
+// 이전 페이지에서
+// 선택된 상품의 ID를 전달하는 함수
+const navigateToDepositDetail = (productId) => {
+  // productId는 선택된 상품의 ID입니다.
+  // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
+  console.log(productId);
+  router.push({ name: "DepositDetailId", params: { id: productId } });
+};
 </script>
 
 <style lang="scss" scoped>
