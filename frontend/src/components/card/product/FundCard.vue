@@ -6,7 +6,7 @@
           <v-card-title
             class="clickable-title"
             style="font-size: 25px"
-            @click="navigateToFundDetail"
+            @click="navigateToFundDetail(2)"
             >{{ fundName }}</v-card-title
           >
           <v-card-subtitle style="font-size: 17px">{{ fundInfo }}</v-card-subtitle>
@@ -31,12 +31,7 @@
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-const navigateToFundDetail = () => {
-  router.push("/fund-detail");
-};
-
-defineProps({
+const porps = defineProps({
   fundName: String,
   fundInfo: String,
   returnRate1: Number,
@@ -44,6 +39,15 @@ defineProps({
   fundPrice: Number,
   fundType: String,
 });
+
+// 이전 페이지에서
+// 선택된 상품의 ID를 전달하는 함수
+const navigateToFundDetail = (productId) => {
+  // productId는 선택된 상품의 ID입니다.
+  // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
+  console.log(productId);
+  router.push({ name: "FundDetailId", params: { id: productId } });
+};
 </script>
 
 <style lang="scss" scoped>

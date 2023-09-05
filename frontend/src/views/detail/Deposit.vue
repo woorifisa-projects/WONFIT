@@ -2,15 +2,19 @@
   <v-container class="mt-12">
     <div>
       <div>
-        <detail-title
-          :depositName="depositData.depositName"
-          :depositInfo="depositData.depositInfo"
-          :interestRate="depositData.interestRate"
-          :target="depositData.target"
-          :period="depositData.period"
-          :minDeposit="depositData.minDeposit"
-          :depositType="depositData.depositType"
-        />
+        <Suspense>
+          <detailTitle
+            :name="depositData.depositName"
+            :info="depositData.depositInfo"
+            :interestRate="'상품 금리: ' + depositData.interestRate + '%'"
+            :target="'가입 대상: ' + depositData.target"
+            :period="'가입 기간: ' + depositData.period + '개월'"
+            :minDeposit="'가입 금액: ' + depositData.minDeposit + '원'"
+            :type="'상품 타입: ' + depositData.depositType"
+            :button1="'가입하기'"
+            :button2="'전화가입'"
+          />
+        </Suspense>
       </div>
 
       <div>
@@ -27,9 +31,9 @@
 초과하는 나머지 금액은 보호하지 않습니다.'
           />
           <detail-text dataName="가입 대상" :dataContent="depositData.target" />
-          <detail-text dataName="적립 금액" :dataContent="depositData.minDeposit" />
-          <detail-text dataName="가입 기간" :dataContent="depositData.period" />
-          <detail-text dataName="기본 금리" :dataContent="depositData.interestRate" />
+          <detail-text dataName="적립 금액" :dataContent="depositData.minDeposit + '원'" />
+          <detail-text dataName="가입 기간" :dataContent="depositData.period + '개월'" />
+          <detail-text dataName="기본 금리" :dataContent="depositData.interestRate + '%'" />
           <detail-text
             dataName="우대 금리"
             dataContent="
@@ -60,8 +64,6 @@
 
 3. 로그인 후 화면 하단 "추전상품" 클릭 후 예금상품에서 "WON플러스 예금" 가입
 
-
-
 · 유의사항
 
 계좌에 압류, 가압류 등이 등록될 경우 원금 및 이자의 지급이 제한될 수 있습니다.
@@ -77,10 +79,9 @@
 </template>
 l
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, defineAsyncComponent } from "vue";
 import { getApi } from "@/api/modules";
 import { useRoute } from "vue-router";
-import DetailTitle from "@/components/card/carddetail/DetailTitle.vue";
 import DetailText from "@/components/card/carddetail/DetailText.vue";
 
 const depositData = ref([]);
@@ -88,11 +89,16 @@ const $route = useRoute();
 // URL에서 productId를 가져오기 위해 $route.params를 사용합니다.
 const productId = $route.params.id;
 
+let detailTitle;
+
 // 상품 정보 가져오기
 onBeforeMount(async () => {
   const data = await getApi({
     url: `/product/deposit/${productId}`,
   });
+
+  detailTitle = defineAsyncComponent(() => import("@/components/card/carddetail/DetailTitle.vue"));
+  console.log(data);
   depositData.value = data;
 });
 </script>

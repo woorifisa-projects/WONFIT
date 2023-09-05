@@ -1,6 +1,5 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
-import DepositDetail from "../views/detail/Deposit.vue";
 
 const routes = [
   {
@@ -154,6 +153,7 @@ const routes = [
       //   name: "SendTalkPage",
       //   component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
       // },
+
       {
         path: "manager-page",
         name: "ManagerPage",
@@ -190,7 +190,30 @@ const routes = [
       {
         path: "deposit-detail/:id",
         name: "DepositDetailId",
-        component: DepositDetail,
+        component: () =>
+          import(/* webpackChunkName: "DepositDetail" */ "@/views/detail/Deposit.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
+      },
+
+      {
+        path: "savings-detail/:id",
+        name: "SavingsDetailId",
+        component: () =>
+          import(/* webpackChunkName: "SavingsDetail" */ "@/views/detail/Savings.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
+      },
+
+      {
+        path: "fund-detail/:id",
+        name: "FundDetailId",
+        component: () => import(/* webpackChunkName: "FundDetail" */ "@/views/detail/Fund.vue"),
+        props: true, // URL 파라미터를 컴포넌트 props로 전달함
+      },
+
+      {
+        path: "loan-detail/:id",
+        name: "LoanDetailId",
+        component: () => import(/* webpackChunkName: "LoanDetail" */ "@/views/detail/Loan.vue"),
         props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
     ],

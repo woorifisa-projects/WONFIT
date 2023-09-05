@@ -46,7 +46,7 @@
                 :interestRate="productDetail.interestRate"
                 :target="productDetail.target"
                 :period="productDetail.period"
-                :minDeposit="productDetail.minDeposit"
+                :maxDeposit="productDetail.maxDeposit"
                 :savingsType="productDetail.savingsType"
               />
             </v-sheet>
