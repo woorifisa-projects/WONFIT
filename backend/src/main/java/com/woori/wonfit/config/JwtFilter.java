@@ -21,7 +21,7 @@ import java.util.List;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final String accessKey;
-    private String loginId;
+    private String id;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
@@ -50,12 +50,12 @@ public class JwtFilter extends OncePerRequestFilter {
 //                    //filterChain.doFilter(request, response);
 //                    filterChain.doFilter(request, response);
 //                }
-                loginId = JwtUtil.getLoginId(accessToken, accessKey);
-                log.info("loginId : {}", loginId);
+                id = JwtUtil.getId(accessToken, accessKey);
+                log.info("ID : {}", id);
             }
         }
         // 권한 부여
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginId, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
         // Detail
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
