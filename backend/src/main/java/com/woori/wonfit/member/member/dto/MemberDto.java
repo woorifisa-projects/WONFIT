@@ -5,10 +5,12 @@ import com.woori.wonfit.member.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Getter
 @Builder
+@NoArgsConstructor
 public class MemberDto {
 
     private Long id;

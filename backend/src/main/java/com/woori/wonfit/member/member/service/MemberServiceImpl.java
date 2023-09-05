@@ -4,6 +4,8 @@ import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.config.Token;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
+import com.woori.wonfit.member.investtype.repository.InvestTypeRepository;
+import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +35,7 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberInfoService memberInfoService;
     private final LoginLogRepository loginLogRepository;
+    private final InvestTypeService  investTypeService;
 
     @Value("${jwt.token.access}")
     private String accessKey;
@@ -51,11 +55,16 @@ public class MemberServiceImpl implements MemberService {
                 });
 
         Member saveMember = memberRepository.save(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())));
+
+        Member member = memberRepository.findById(saveMember.getId()).get();
+        investTypeService.registInvestment(member);
+
+
         return MemberDto.fromEntity(saveMember);
     }
 
     @Override
-    public String login(String loginId, String memberPw, HttpServletRequest request) {
+    public Cookie login(String loginId, String memberPw, HttpServletRequest request) {
         Member member = memberRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new RuntimeException("회원정보를 찾을 수 없습니다."));
 
@@ -75,13 +84,17 @@ public class MemberServiceImpl implements MemberService {
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            Token token = JwtUtil.createToken(loginId, accessExpireTimeMs, refreshExpireTimeMs,"USER", accessKey, refreshKey);
+            Token token = JwtUtil.createToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs,"USER", accessKey, refreshKey);
+
+            Cookie cookie = new Cookie("key", token.getAccessToken());
+            cookie.setMaxAge(7 * 24 * 60 * 60);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
 
             member.setRefreshToken(token.getRefreshToken());
-
             memberRepository.save(member);
 
-            return token.getAccessToken();
+            return cookie;
         }
     }
 
