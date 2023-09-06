@@ -62,4 +62,10 @@ public class MemberController {
         return new ResponseEntity<>(message, HttpStatus.OK);
 
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateMemberDetails(@PathVariable Long id, @RequestBody MemberDetails memberDetails) {
+        memberService.updateMemberDetails(id, memberDetails);
+        return ResponseEntity.ok("수정이 완료되었습니다.");
+    }
 }

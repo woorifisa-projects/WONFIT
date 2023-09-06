@@ -1,6 +1,7 @@
 package com.woori.wonfit.member.member.domain;
 
 
+import com.woori.wonfit.member.member.dto.MemberDetails;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -43,4 +44,18 @@ public class Member {
 
     @Column(name = "refresh_Token", nullable = true)
     private String refreshToken;
+
+    public static Member toEntity(Long id, MemberDetails memberDetails) {
+        return Member.builder()
+                .id(id)
+                .loginId(memberDetails.getLoginId())
+                .password(memberDetails.getPassword())
+                .name(memberDetails.getName())
+                .email(memberDetails.getEmail())
+                .registrationNumber(memberDetails.getRegistrationNumber())
+                .phoneNumber(memberDetails.getPhoneNumber())
+                .status(true)
+                .build();
+    }
+
 }

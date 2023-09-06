@@ -22,7 +22,27 @@
   
             <v-col>
               <v-sheet class="logo-text" style="padding:10px" min-height="70vh" rounded="lg">
+
+        
               
+  <v-sheet>
+  <v-card>
+    <v-tabs
+      bg-color="blue"
+      center-active
+      class="d-flex justify-center"
+    >
+    <v-tab style="margin-left:20px" @click="navigateToMemberInfo">회원 정보</v-tab>
+      <v-tab>검색 기록</v-tab>
+      <v-tab>상품 가입 기록</v-tab>
+      <v-tab>회원 탈퇴 관리</v-tab>
+      <v-tab>관심 상품 조회</v-tab>
+   
+      
+    </v-tabs>
+  </v-card>
+</v-sheet>
+
               </v-sheet>
             
             </v-col>
@@ -35,7 +55,11 @@
   <script setup>
   import { useRouter } from 'vue-router';
   
-      const router = useRouter();
+    const router = useRouter();
+
+    const navigateToMemberInfo = () => {
+    router.push({ name: "MemberInfo" });
+    };
   
     const navigateToManageMember = () => {
     router.push({ name: "ManageMember" });
