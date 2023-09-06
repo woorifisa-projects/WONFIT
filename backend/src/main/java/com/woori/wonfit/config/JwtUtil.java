@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -15,26 +14,33 @@ import java.util.Date;
 @Getter
 @Component
 public class JwtUtil {
-    @Value("${jwt.token.access}")
-    private String accessKey;
-
-    @Value("${jwt.token.refresh}")
-    private String refreshKey;
     public static String getId(String token, String secretKey) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .get("id", String.class);
-        } catch (ExpiredJwtException ex) {
-            return null;
+            log.info("called getid");
+            log.info("getid accessToken = {}", token);
+            log.info("getId accessKey = {}", secretKey);
+
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("id", String.class);
+        } catch (ExpiredJwtException e) {
+            // JWT가 만료되었을 때 발생하는 예외에서 Claims를 얻어옵니다.
+            Claims claims = e.getClaims();
+
+            log.info(claims.get("id", String.class));
+            // Claims에서 "id" 값을 반환합니다.
+            return claims.get("id", String.class);
         }
     }
+
+
     public static boolean isExpired(String token, String secretKey) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+        try {
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            // JWT 만료되었을 때 true를 반환
+            return true;
+        }
     }
+
 
     public static String createAccessToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String accessKey) {
         Claims claims = Jwts.claims();

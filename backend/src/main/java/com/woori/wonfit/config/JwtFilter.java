@@ -55,6 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                     String accessToken = cookie.getValue();
                     log.info("accessToken = {}", accessToken);
+                    log.info("accessKey = {}", accessKey);
 
                     // token 안보내면 block
                     if (accessToken == null) {
@@ -80,13 +81,16 @@ public class JwtFilter extends OncePerRequestFilter {
                     }
 
                     log.info("accessToken == refreshToken");
+
                     if (JwtUtil.isExpired(accessToken, accessKey)) {
+                        log.info("accessToken is expired");
                         // refreshToken 만료되면
                         if (JwtUtil.isExpired(refreshToken, refreshKey)) {
                             log.error("refreshToken이 만료되었습니다.");
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "refreshToken이 만료 되었습니다.");
                             filterChain.doFilter(request, response);
                         }
+
                         accessToken = JwtUtil.createAccessToken(accessId, 1000 * 60, 1000 * 60 * 60 * 24l, "USER", accessKey);
                         log.info("Regenerated accessToken");
                         Cookie responseCookie = createCookie.createCookie("key", accessToken);
