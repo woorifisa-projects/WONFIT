@@ -34,8 +34,14 @@ public class MemberController {
     public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
         response.addCookie(cookie);
-        log.info(cookie.getValue().toString());
         return new ResponseEntity<>(new MemberLoginResponse(memberLoginRequest.getLoginId()), HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Cookie> logout(HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = memberService.logout(request);
+        response.addCookie(cookie);
+        return new ResponseEntity<>(cookie, HttpStatus.OK);
     }
 
     @GetMapping("/members")
