@@ -1,6 +1,8 @@
 package com.woori.wonfit.member.investtype.controller;
 
 import com.woori.wonfit.member.investtype.domain.InvestType;
+import com.woori.wonfit.member.investtype.dto.InvestTypeRequest;
+import com.woori.wonfit.member.investtype.dto.InvestTypeResponse;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,7 @@ public class InvestTypeController {
         return responseList;
     }
     @PostMapping("/save/inv_type")
-    public ResponseEntity<String> createInvestType(@RequestBody InvestTypeRequest request1,HttpServletRequest request) {
+    public ResponseEntity<String> createInvestType(@RequestBody InvestTypeRequest request1, HttpServletRequest request) {
         InvestType createdInvestType = investTypeService.save(request,request1);
         return new ResponseEntity<>("저장 완료", HttpStatus.OK);
     }

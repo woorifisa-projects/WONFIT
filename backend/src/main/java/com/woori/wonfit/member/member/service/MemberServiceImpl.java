@@ -3,7 +3,6 @@ package com.woori.wonfit.member.member.service;
 import com.woori.wonfit.config.CreateCookie;
 import com.woori.wonfit.config.JwtFilter;
 import com.woori.wonfit.config.JwtUtil;
-import com.woori.wonfit.config.Token;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
@@ -40,6 +39,7 @@ public class MemberServiceImpl implements MemberService {
     private final InvestTypeService investTypeService;
     private final JwtFilter jwtFilter;
     private final CreateCookie createCookie;
+    private final MemberInfoRepository memberInfoRepository;
 
 
     @Value("${jwt.token.access}")
@@ -175,16 +175,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateMemberDetails(Long id, MemberDetails memberDetails) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Member not found with id: " + id));
-        MemberInfo memberInfo = memberInfoRepository.findById(id).orElseThrow(() -> new RuntimeException("Member not found with id: " + id));;
+        Member member = Member.toEntity(id, memberDetails);
+        memberRepository.save(member);
 
-        Member memberEntity = Member.toEntity(id, memberDetails);
-        memberRepository.save(memberEntity);
-
-        MemberInfo memberInfoEntity = MemberInfo.toEntity(memberEntity, memberDetails);
-        memberInfoRepository.save(memberInfoEntity);
-
+        MemberInfo memberInfo = MemberInfo.toEntity(member, memberDetails);
+        memberInfoRepository.save(memberInfo);
     }
-
 }
