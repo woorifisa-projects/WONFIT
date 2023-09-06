@@ -36,9 +36,11 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberInfoService memberInfoService;
     private final LoginLogRepository loginLogRepository;
+
     private final InvestTypeService investTypeService;
     private final JwtFilter jwtFilter;
     private final CreateCookie createCookie;
+
     private final MemberInfoRepository memberInfoRepository;
 
 
@@ -175,10 +177,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateMemberDetails(Long id, MemberDetails memberDetails) {
+
         Member member = Member.toEntity(id, memberDetails);
         memberRepository.save(member);
 
         MemberInfo memberInfo = MemberInfo.toEntity(member, memberDetails);
         memberInfoRepository.save(memberInfo);
     }
+
 }
