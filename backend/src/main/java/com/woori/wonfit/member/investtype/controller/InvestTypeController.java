@@ -1,6 +1,8 @@
 package com.woori.wonfit.member.investtype.controller;
 
 import com.woori.wonfit.member.investtype.domain.InvestType;
+import com.woori.wonfit.member.investtype.dto.InvestTypeRequest;
+import com.woori.wonfit.member.investtype.dto.InvestTypeResponse;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
