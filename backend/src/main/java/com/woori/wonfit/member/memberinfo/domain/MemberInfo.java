@@ -1,6 +1,7 @@
 package com.woori.wonfit.member.memberinfo.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
+import com.woori.wonfit.member.member.dto.MemberDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,4 +48,18 @@ public class MemberInfo {
     @Column(name="invest_type", nullable = true)
     private String investType; // 투자성향
 
+
+    public static MemberInfo toEntity(Member member, MemberDetails memberDetails){
+        return MemberInfo.builder()
+                .member(member)
+                .marketingInfoAgree(memberDetails.isMarketingInfoAgree())
+                .address(memberDetails.getAddress())
+                .isMarried(memberDetails.isMarried())
+                .childrenCount(memberDetails.getChildrenCount())
+                .isHouseholder(memberDetails.isHouseHolder())
+                .isAnnuity(memberDetails.isAnnuity())
+                .job(memberDetails.getJob())
+                .investType(memberDetails.getInvestType())
+                .build();
+    }
 }

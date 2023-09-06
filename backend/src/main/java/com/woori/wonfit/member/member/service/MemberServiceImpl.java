@@ -12,6 +12,7 @@ import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
+import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
 import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +37,15 @@ public class MemberServiceImpl implements MemberService {
     private final MemberInfoService memberInfoService;
     private final LoginLogRepository loginLogRepository;
     private final InvestTypeService  investTypeService;
+    private final MemberInfoRepository memberInfoRepository;
+
 
     @Value("${jwt.token.access}")
     private String accessKey;
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
-    private final long accessExpireTimeMs = 1000 * 60 * 30; // 엑세스 토큰
+    private final long accessExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰 (30분)
     private final long refreshExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰
     private LocalDateTime dateTime = LocalDateTime.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -137,4 +140,19 @@ public class MemberServiceImpl implements MemberService {
             return "회원 탈퇴가 완료되었습니다.";
         }
     }
+
+    @Override
+    public void updateMemberDetails(Long id, MemberDetails memberDetails) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Member not found with id: " + id));
+        MemberInfo memberInfo = memberInfoRepository.findById(id).orElseThrow(() -> new RuntimeException("Member not found with id: " + id));;
+
+        Member memberEntity = Member.toEntity(id, memberDetails);
+        memberRepository.save(memberEntity);
+
+        MemberInfo memberInfoEntity = MemberInfo.toEntity(memberEntity, memberDetails);
+        memberInfoRepository.save(memberInfoEntity);
+
+    }
+
 }

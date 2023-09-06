@@ -19,4 +19,8 @@ public interface MemberService {
     MemberDetails findById(Long id);
 
     String leaveMember(String loginId, String memberPw);
+
+
+    void updateMemberDetails(Long id, MemberDetails memberDetails);
+
 }
