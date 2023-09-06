@@ -1,10 +1,11 @@
 package com.woori.wonfit.member.member.service;
 
+import com.woori.wonfit.config.CreateCookie;
+import com.woori.wonfit.config.JwtFilter;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.config.Token;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
-import com.woori.wonfit.member.investtype.repository.InvestTypeRepository;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
@@ -36,8 +37,9 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberInfoService memberInfoService;
     private final LoginLogRepository loginLogRepository;
-    private final InvestTypeService  investTypeService;
-    private final MemberInfoRepository memberInfoRepository;
+    private final InvestTypeService investTypeService;
+    private final JwtFilter jwtFilter;
+    private final CreateCookie createCookie;
 
 
     @Value("${jwt.token.access}")
@@ -87,26 +89,56 @@ public class MemberServiceImpl implements MemberService {
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            Token token = JwtUtil.createToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs,"USER", accessKey, refreshKey);
+            String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs, "USER", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs,"USER", refreshKey);
 
-            Cookie cookie = new Cookie("key", token.getAccessToken());
-            cookie.setMaxAge(7 * 24 * 60 * 60);
-            cookie.setPath("/");
-            cookie.setHttpOnly(true);
+            Cookie cookie = createCookie.createCookie("key", accessToken);
 
-            member.setRefreshToken(token.getRefreshToken());
+            member.setRefreshToken(refreshToken);
             memberRepository.save(member);
+
+            jwtFilter.setFlag(true);
 
             return cookie;
         }
     }
+    @Override
+    public Cookie logout(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        String id = "";
+        if (cookies == null) {
+            log.info("쿠키를 찾을 수 없습니다");
+        }
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (!cookie.getName().equals("key")) {
+                    continue;
+                }
+                id = JwtUtil.getId(cookie.getValue(), accessKey);
 
-    private String extractBrowser(String userAgent) {
+                Member member = memberRepository.findById(new Long(id)).get();
+                member.setRefreshToken("");
+
+                memberRepository.save(member);
+
+                cookie.setMaxAge(0);
+
+                jwtFilter.setFlag(false);
+
+                return cookie;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String extractBrowser(String userAgent) {
         UserAgent ua = UserAgent.parseUserAgentString(userAgent);
         return ua.getBrowser().getName();
     }
 
-    private String extractDevice(String userAgent) {
+    @Override
+    public String extractDevice(String userAgent) {
         UserAgent ua = UserAgent.parseUserAgentString(userAgent);
         return ua.getOperatingSystem().getDeviceType().getName();
     }

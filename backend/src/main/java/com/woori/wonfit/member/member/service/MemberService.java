@@ -14,6 +14,12 @@ public interface MemberService {
 
     Cookie login(String loginId, String memberPw, HttpServletRequest request);
 
+    Cookie logout(HttpServletRequest request);
+
+    String extractBrowser(String userAgent);
+
+    String extractDevice(String userAgent);
+
     List<Member> getAllMembers();
 
     MemberDetails findById(Long id);
