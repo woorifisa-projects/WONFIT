@@ -40,13 +40,12 @@ public class MemberServiceImpl implements MemberService {
     private final JwtFilter jwtFilter;
     private final CreateCookie createCookie;
 
-
     @Value("${jwt.token.access}")
     private String accessKey;
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
-    private final long accessExpireTimeMs = 1000 * 60 * 60; // 엑세스 토큰
+    private final long accessExpireTimeMs = 1000 * 60 * 30; // 엑세스 토큰
     private final long refreshExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰
     private LocalDateTime dateTime = LocalDateTime.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -88,11 +87,12 @@ public class MemberServiceImpl implements MemberService {
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            Token token = JwtUtil.createToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs, "USER", accessKey, refreshKey);
+            String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs, "USER", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs,"USER", refreshKey);
 
-            Cookie cookie = createCookie.createCookie("key", token.getAccessToken());
+            Cookie cookie = createCookie.createCookie("key", accessToken);
 
-            member.setRefreshToken(token.getRefreshToken());
+            member.setRefreshToken(refreshToken);
             memberRepository.save(member);
 
             jwtFilter.setFlag(true);

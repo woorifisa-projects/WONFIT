@@ -1,6 +1,7 @@
 package com.woori.wonfit.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
@@ -20,25 +21,22 @@ public class JwtUtil {
     @Value("${jwt.token.refresh}")
     private String refreshKey;
     public static String getId(String token, String secretKey) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("id", String.class);
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("id", String.class);
+        } catch (ExpiredJwtException ex) {
+            return null;
+        }
     }
-
     public static boolean isExpired(String token, String secretKey) {
         return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
     }
 
-    public Claims getAccessClaims(String token){
-        log.info("getClaims called");
-        Claims claims = Jwts.parserBuilder().setSigningKey(accessKey).build().parseClaimsJws(token).getBody();
-        return claims;
-    }
-    public Claims getRefreshClaims(String token){
-        log.info("getRefreshClaims called");
-        Claims claims = Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(token).getBody();
-        return claims;
-    }
-
-    public static Token createToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String accessKey, String refreshKey) {
+    public static String createAccessToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String accessKey) {
         Claims claims = Jwts.claims();
         claims.put("roles", roles);
         claims.put("id", id);
@@ -56,6 +54,19 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, accessKey)
                 .compact();
 
+        return accessToken;
+    }
+    public static String createRefreshToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String refreshKey) {
+        Claims claims = Jwts.claims();
+        claims.put("roles", roles);
+        claims.put("id", id);
+
+        Date now = new Date();
+        Date accessTokenValidateTime = new Date(now.getTime() + accessExpireTime);
+        log.info("accessTokenExpireTime = {}", accessTokenValidateTime);
+        Date refreshTokenValidateTime = new Date(now.getTime() + refreshExpireTime);
+        log.info("refreshTokenExpireTime = {}", refreshTokenValidateTime);
+
         String refreshToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -63,8 +74,6 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, refreshKey)
                 .compact();
 
-        Token token = Token.builder().accessToken(accessToken).refreshToken(refreshToken).key(id).build();
-
-        return token;
+        return refreshToken;
     }
 }
