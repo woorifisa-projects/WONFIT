@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000") // 허용할 출처
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE") // 허용할 HTTP method
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE","OPTIONS") // 허용할 HTTP method
                 .allowCredentials(true) // 쿠키 인증 요청 허용
                 .maxAge(3000);
     }

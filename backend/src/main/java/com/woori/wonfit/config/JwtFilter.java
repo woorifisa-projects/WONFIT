@@ -26,34 +26,34 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
 
-        if (cookies == null) {
-            log.info("쿠키를 찾을 수 없습니다");
-        }
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (!cookie.getName().equals("key")) {
-                    continue;
-                }
-
-                String accessToken = cookie.getValue();
-                log.info("accessToken = {}", accessKey);
-
-            // token 안보내면 block
-            if(accessToken == null){
-                log.error("Token 값을 찾을 수 없습니다.");
-                filterChain.doFilter(request,response);
-            }
-                // token 만료되면
-//                if (JwtUtil.isExpired(accessToken, secretkey)) {
-//                    log.error("accessToken이 만료되었습니다.");
-//                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "accessToken이 만료 되었습니다.");
-//                    //filterChain.doFilter(request, response);
-//                    filterChain.doFilter(request, response);
+//        if (cookies == null) {
+//            log.info("쿠키를 찾을 수 없습니다");
+//        }
+//        if(cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if (!cookie.getName().equals("key")) {
+//                    continue;
 //                }
-                id = JwtUtil.getId(accessToken, accessKey);
-                log.info("ID : {}", id);
-            }
-        }
+//
+//                String accessToken = cookie.getValue();
+//                log.info("accessToken = {}", accessKey);
+//
+//            // token 안보내면 block
+//            if(accessToken == null){
+//                log.error("Token 값을 찾을 수 없습니다.");
+//                filterChain.doFilter(request,response);
+//            }
+//                // token 만료되면
+////                if (JwtUtil.isExpired(accessToken, secretkey)) {
+////                    log.error("accessToken이 만료되었습니다.");
+////                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "accessToken이 만료 되었습니다.");
+////                    //filterChain.doFilter(request, response);
+////                    filterChain.doFilter(request, response);
+////                }
+//                id = JwtUtil.getId(accessToken, accessKey);
+//                log.info("ID : {}", id);
+//            }
+//        }
         // 권한 부여
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
         // Detail
