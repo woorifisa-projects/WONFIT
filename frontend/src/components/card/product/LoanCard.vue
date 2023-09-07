@@ -21,7 +21,7 @@
       </div>
       <v-card-actions class="flex-row-reverse">
         <v-btn class="order-last" text>대출신청</v-btn>
-        <v-btn text>전화신청</v-btn>
+        <call-num btnName="전화신청" />
         <v-btn class="order-first" text>관심상품</v-btn>
       </v-card-actions>
     </v-card>
@@ -30,6 +30,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import CallNum from "@/components/modal/CallNum.vue";
 
 const router = useRouter();
 

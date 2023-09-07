@@ -1,6 +1,6 @@
 <template>
   <div class="logo-text mx-auto py-2" color="#eeeeee">
-    <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
+    <v-card class="d-flex box-border mx-auto flex-row justify-space-between py-2 px-5" width="800">
       <div class="product-info">
         <v-card-item>
           <v-card-title
@@ -20,9 +20,9 @@
         </v-card-text>
       </div>
       <v-card-actions class="flex-row-reverse">
-        <v-btn class="order-last" text>가입하기</v-btn>
-        <v-btn text>전화가입</v-btn>
-        <v-btn class="order-first" text>관심상품</v-btn>
+        <v-btn class="order-last" @click="navigateToSubscribe('deposit', 2)">가입하기</v-btn>
+        <call-num btnName="전화가입" />
+        <v-btn class="order-first">관심상품</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -31,6 +31,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { defineProps } from "vue";
+import CallNum from "@/components/modal/CallNum.vue";
 
 const router = useRouter();
 const props = defineProps({
@@ -50,6 +51,11 @@ const navigateToDepositDetail = (productId) => {
   // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
   console.log(productId);
   router.push({ name: "DepositDetailId", params: { id: productId } });
+};
+
+// subscribe.vue 페이지로 이동하는 코드(path: ip:port/subscribe/:productType/:id)
+const navigateToSubscribe = (productType, productId) => {
+  router.push({ name: "SubDeposit", params: { productType: productType, id: productId } });
 };
 </script>
 
@@ -80,7 +86,7 @@ const navigateToDepositDetail = (productId) => {
   font-size: 17px;
 }
 
-.box-color {
+.box-border {
   border-radius: 15px;
 }
 </style>
