@@ -43,11 +43,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if (flag == true) {
             log.info("flag == true");
 
-            Cookie cookie = cookieConfig.parseCookie(request);
-
-            String accessToken = cookie.getValue();
-            log.info("accessToken = {}", accessToken);
-            log.info("accessKey = {}", accessKey);
+            String accessToken = cookieConfig.parseCookie(request);
+            ;
 
             // token 안보내면 block
             if (accessToken == null) {
@@ -56,9 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             // accessToken에서 id값 추출
-            String accessId = JwtUtil.getId(accessToken, accessKey);
-            log.info("accessId = {}", accessId);
-            Long accessTokenMemberId = Long.parseLong(accessId);
+            Long accessTokenMemberId = cookieConfig.getIdFromToken(accessToken);
 
             // accessToken과 매칭되는 member의 refreshToken을 가져옴
             String refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();
@@ -67,7 +62,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String refreshTokenMemberId = JwtUtil.getId(refreshToken, refreshKey);
 
             // Refresh Token과 Access Token에 저장된 loginId 비교
-            if (!accessId.equals(refreshTokenMemberId)) {
+            if (!accessTokenMemberId.toString().equals(refreshTokenMemberId)) {
                 log.error("Invalid token signature");
                 throw new SignatureException("Invalid token signature");
             }
@@ -81,14 +76,14 @@ public class JwtFilter extends OncePerRequestFilter {
                     log.error("refreshToken이 만료되었습니다.");
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "refreshToken이 만료 되었습니다.");
                     filterChain.doFilter(request, response);
+                } else {
+                    accessToken = JwtUtil.createAccessToken(accessTokenMemberId.toString(), 1000 * 60 * 60l, "USER", accessKey);
+                    log.info("Regenerated accessToken");
+                    Cookie responseCookie = cookieConfig.createCookie(accessToken);
+                    response.addCookie(responseCookie);
                 }
-
-                accessToken = JwtUtil.createAccessToken(accessId, 1000 * 60, 1000 * 60 * 60 * 24l, "USER", accessKey);
-                log.info("Regenerated accessToken");
-                Cookie responseCookie = cookieConfig.createCookie(accessToken);
-                response.addCookie(responseCookie);
             }
-            id = accessId;
+            id = accessTokenMemberId.toString();
             log.info("ID : {}", id);
         }
         // 권한 부여
