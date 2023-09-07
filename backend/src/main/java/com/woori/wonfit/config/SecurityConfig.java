@@ -1,7 +1,6 @@
 package com.woori.wonfit.config;
 
 import com.woori.wonfit.member.member.repository.MemberRepository;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final MemberRepository memberRepository;
-    private final CreateCookie createCookie;
+    private final CookieConfig cookieConfig;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,7 +31,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtFilter(memberRepository, createCookie), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(memberRepository, cookieConfig), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

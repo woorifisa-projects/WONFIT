@@ -1,6 +1,6 @@
 package com.woori.wonfit.member.member.service;
 
-import com.woori.wonfit.config.CreateCookie;
+import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtFilter;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
@@ -39,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final InvestTypeService investTypeService;
     private final JwtFilter jwtFilter;
-    private final CreateCookie createCookie;
+    private final CookieConfig cookieConfig;
 
     private final MemberInfoRepository memberInfoRepository;
 
@@ -94,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
             String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs, "USER", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs,"USER", refreshKey);
 
-            Cookie cookie = createCookie.createCookie("key", accessToken);
+            Cookie cookie = cookieConfig.createCookie(accessToken);
 
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
