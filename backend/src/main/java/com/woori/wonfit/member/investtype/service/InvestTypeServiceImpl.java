@@ -28,7 +28,7 @@ public class InvestTypeServiceImpl implements InvestTypeService {
     @Value("${jwt.token.access}")
     private String secretKey;
     @Override
-    public InvestType save(HttpServletRequest request,InvestTypeRequest request1) {
+    public Cookie save(HttpServletRequest request,InvestTypeRequest request1) {
         Cookie[] cookies = request.getCookies();
         long memberId = 0;
         for (Cookie cookie : cookies) {
@@ -47,36 +47,40 @@ public class InvestTypeServiceImpl implements InvestTypeService {
         int score = request1.getScore();
 
         if (score >=10 && score <=16) {
-            deposit_type = "안정형";
+            deposit_type = "safe";
         } else if (score >=17 && score <=23) {
-            deposit_type = "중간형";
+            deposit_type = "middle";
         } else if (score >=24 && score <=30) {
-            deposit_type = "공격형";
+            deposit_type = "attack";
         }
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Invalid memberId"));
 
         InvestType investType = investTypeRepository.findByMemberId(memberId);
 
         log.info(productType);
-        if(productType.equals("예금")){
+        if(productType.equals("deposit")){
             investType.setDeposit_type(deposit_type);
             investType.setDepositQuizScore(score);
         }
-        else if (productType.equals("적금")){
+        else if (productType.equals("savings")){
             investType.setSavings_type(deposit_type);
             investType.setSavingsQuizScore(score);
         }
-        else if(productType.equals("펀드")){
+        else if(productType.equals("fund")){
             investType.setFund_type(deposit_type);
             investType.setFundQuizScore(score);
         }
-        else if(productType.equals("대출")){
+        else if(productType.equals("loan")){
             investType.setLoan_type(deposit_type);
             investType.setLoanQuizScore(score);
         }
         investTypeRepository.save(investType);
 
-        return investType;
+        Cookie cookie = new Cookie(productType, deposit_type);
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setPath("/");
+
+        return cookie;
     }
 
     @Override

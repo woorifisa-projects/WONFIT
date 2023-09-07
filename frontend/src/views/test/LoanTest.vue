@@ -2,6 +2,7 @@
   <div id="main" style="font-family: 'WooridaumB';">
     <div class="quiz__wrap">
       <div class="quiz">
+        <h1>맞춤 대출 테스트</h1>
         <h2 class="quiz__question">{{ quizInfo[quizCount].answerAsk }}</h2>
         <p v-if="warningMessage" style="color: red;">답을 골라주세요</p>
         <div class="quiz__view"></div>
@@ -142,10 +143,9 @@ export default {
     async navigateToRecommendPage() {
       // correctAnswersCount 값을 쿠키에 저장
       this.$cookies.set('Score', this.correctAnswersCount);
-      // await axios.get('http://localhost:8080/recommended/product/')
       // 서버에 POST 요청을 보냅니다.
       await axios.post('http://localhost:8080/recommended/product/save/inv_type', {
-        productType: "대출",
+        productType: "loan",
         score: this.correctAnswersCount,
       }, {
         withCredentials: true,
