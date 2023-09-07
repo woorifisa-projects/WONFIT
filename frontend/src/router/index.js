@@ -6,10 +6,18 @@ const routes = [
     path: "/",
     component: () => import("@/layouts/default/Default.vue"),
     children: [
+      // views/main
       {
         path: "",
         name: "MainPage",
         component: () => import(/* webpackChunkName: "main" */ "@/views/main/Main.vue"),
+      },
+
+      {
+        path: "bank-select",
+        name: "BankSelect",
+        component: () =>
+          import(/* webpackChunkName: "bankselectpage" */ "@/views/main/BankSelect.vue"),
       },
 
       {
@@ -31,129 +39,12 @@ const routes = [
       },
 
       {
-        path: "fund-test",
-        name: "FundTest",
-        component: () => import(/* webpackChunkName: "fundtest" */ "@/views/test/FundTest.vue"),
-      },
-
-      {
-        path: "loan-test",
-        name: "LoanTest",
-        component: () => import(/* webpackChunkName: "loantest" */ "@/views/test/LoanTest.vue"),
-      },
-
-      {
-        path: "deposit-test",
-        name: "DepositTest",
-        component: () =>
-          import(/* webpackChunkName: "deposittest" */ "@/views/test/DepositTest.vue"),
-      },
-
-      {
-        path: "savings-test",
-        name: "SavingsTest",
-        component: () =>
-          import(/* webpackChunkName: "savingstest" */ "@/views/test/SavingsTest.vue"),
-      },
-
-      {
         path: "income",
         name: "Income",
         component: () => import(/* webpackChunkName: "managerpage" */ "@/views/main/Income.vue"),
       },
-      {
-        path: "mypage",
-        name: "MyPage",
-        component: () => import(/* webpackChunkName: "mypage" */ "@/views/member/MyPage.vue"),
-      },
 
-      {
-        path: "bank-select",
-        name: "BankSelect",
-        component: () =>
-          import(/* webpackChunkName: "bankselectpage" */ "@/views/main/BankSelect.vue"),
-      },
-
-      {
-        path: "my-liked-product",
-        name: "MyLikedProduct",
-        component: () =>
-          import(/* webpackChunkName: "MyLikedProduct" */ "@/views/member/MyLikedProduct.vue"),
-      },
-
-      {
-        path: "my-subscribe-product",
-        name: "MySubscribeProduct",
-        component: () =>
-          import(
-            /* webpackChunkName: "MySubscribeProduct" */ "@/views/member/MySubscribeProduct.vue"
-          ),
-      },
-
-      {
-        path: "withdraw",
-        name: "Withdraw",
-        component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/member/Withdraw.vue"),
-      },
-
-      {
-        path: "search-savings",
-        name: "SearchSavings",
-        component: () =>
-          import(/* webpackChunkName: "searchsavings" */ "@/views/search/Savings.vue"),
-      },
-
-      {
-        path: "search-default",
-        name: "SearchDefault",
-        component: () =>
-          import(/* webpackChunkName: "searchdefault" */ "@/views/search/Default.vue"),
-      },
-
-      {
-        path: "search-fund",
-        name: "SearchFund",
-        component: () => import(/* webpackChunkName: "searchfund" */ "@/views/search/Fund.vue"),
-      },
-
-      {
-        path: "search-loan",
-        name: "SearchLoan",
-        component: () => import(/* webpackChunkName: "searchloan" */ "@/views/search/Loan.vue"),
-      },
-
-      {
-        path: "deposit-detail",
-        name: "DepositDetail",
-        component: () =>
-          import(/* webpackChunkName: "depositdetail" */ "@/views/detail/Deposit.vue"),
-      },
-
-      {
-        path: "savings-detail",
-        name: "SavingsDetail",
-        component: () =>
-          import(/* webpackChunkName: "savingsdetail" */ "@/views/detail/Savings.vue"),
-      },
-
-      {
-        path: "fund-detail",
-        name: "FundDetail",
-        component: () => import(/* webpackChunkName: "funddetail" */ "@/views/detail/Fund.vue"),
-      },
-
-      {
-        path: "loan-detail",
-        name: "LoanDetailPage",
-        component: () => import(/* webpackChunkName: "loandetail" */ "@/views/detail/Loan.vue"),
-      },
-
-      // {
-      //   path: "talk",
-      //   name: "SendTalkPage",
-      //   component: () => import(/* webpackChunkName: "SendTalkPage" */ "@/views/talk.vue"),
-      // },
-
+      // views/manager
       {
         path: "manager-page",
         name: "ManagerPage",
@@ -187,11 +78,42 @@ const routes = [
           import(/* webpackChunkName: "MemberSign" */ "@/views/manager/MemberSign.vue"),
       },
 
+      // views/member
+      {
+        path: "mypage",
+        name: "MyPage",
+        component: () => import(/* webpackChunkName: "mypage" */ "@/views/member/MyPage.vue"),
+      },
+
+      {
+        path: "my-liked-product",
+        name: "MyLikedProduct",
+        component: () =>
+          import(/* webpackChunkName: "MyLikedProduct" */ "@/views/member/MyLikedProduct.vue"),
+      },
+
+      {
+        path: "my-subscribe-product",
+        name: "MySubscribeProduct",
+        component: () =>
+          import(
+            /* webpackChunkName: "MySubscribeProduct" */ "@/views/member/MySubscribeProduct.vue"
+          ),
+      },
+
+      {
+        path: "withdraw",
+        name: "Withdraw",
+        component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/member/Withdraw.vue"),
+      },
+
+      // views/product
+
       {
         path: "deposit-detail/:id",
         name: "DepositDetailId",
         component: () =>
-          import(/* webpackChunkName: "DepositDetail" */ "@/views/detail/Deposit.vue"),
+          import(/* webpackChunkName: "DepositDetail" */ "@/views/product/detail/Deposit.vue"),
         props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
 
@@ -199,25 +121,89 @@ const routes = [
         path: "savings-detail/:id",
         name: "SavingsDetailId",
         component: () =>
-          import(/* webpackChunkName: "SavingsDetail" */ "@/views/detail/Savings.vue"),
+          import(/* webpackChunkName: "SavingsDetail" */ "@/views/product/detail/Savings.vue"),
         props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
 
       {
         path: "fund-detail/:id",
         name: "FundDetailId",
-        component: () => import(/* webpackChunkName: "FundDetail" */ "@/views/detail/Fund.vue"),
+        component: () =>
+          import(/* webpackChunkName: "FundDetail" */ "@/views/product/detail/Fund.vue"),
         props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
 
       {
         path: "loan-detail/:id",
         name: "LoanDetailId",
-        component: () => import(/* webpackChunkName: "LoanDetail" */ "@/views/detail/Loan.vue"),
+        component: () =>
+          import(/* webpackChunkName: "LoanDetail" */ "@/views/product/detail/Loan.vue"),
         props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
 
-      
+      {
+        path: "search-savings",
+        name: "SearchSavings",
+        component: () =>
+          import(/* webpackChunkName: "searchsavings" */ "@/views/product/search/Savings.vue"),
+      },
+
+      {
+        path: "search-default",
+        name: "SearchDefault",
+        component: () =>
+          import(/* webpackChunkName: "searchdefault" */ "@/views/product/search/Default.vue"),
+      },
+
+      {
+        path: "search-fund",
+        name: "SearchFund",
+        component: () =>
+          import(/* webpackChunkName: "searchfund" */ "@/views/product/search/Fund.vue"),
+      },
+
+      {
+        path: "search-loan",
+        name: "SearchLoan",
+        component: () =>
+          import(/* webpackChunkName: "searchloan" */ "@/views/product/search/Loan.vue"),
+      },
+
+      {
+        path: "subscribe/:productType/:id",
+        name: "SubDeposit",
+        component: () =>
+          import(/* webpackChunkName: "subdeposit" */ "@/views/product/sub/SubDeposit.vue"),
+        props: true,
+      },
+
+      {
+        path: "fund-test",
+        name: "FundTest",
+        component: () =>
+          import(/* webpackChunkName: "fundtest" */ "@/views/product/test/FundTest.vue"),
+      },
+
+      {
+        path: "loan-test",
+        name: "LoanTest",
+        component: () =>
+          import(/* webpackChunkName: "loantest" */ "@/views/product/test/LoanTest.vue"),
+      },
+
+      {
+        path: "deposit-test",
+        name: "DepositTest",
+        component: () =>
+          import(/* webpackChunkName: "deposittest" */ "@/views/product/test/DepositTest.vue"),
+      },
+
+      {
+        path: "savings-test",
+        name: "SavingsTest",
+        component: () =>
+          import(/* webpackChunkName: "savingstest" */ "@/views/product/test/SavingsTest.vue"),
+      },
     ],
   },
 ];
