@@ -44,10 +44,9 @@ public class JwtFilter extends OncePerRequestFilter {
             log.info("flag == true");
 
             String accessToken = cookieConfig.parseCookie(request);
-            ;
 
             // token 안보내면 block
-            if (accessToken == null) {
+            if (accessToken == null) 
                 log.error("Token 값을 찾을 수 없습니다.");
                 filterChain.doFilter(request, response);
             }
