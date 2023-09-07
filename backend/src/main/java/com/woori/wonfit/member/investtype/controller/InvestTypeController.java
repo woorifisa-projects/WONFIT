@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/recommended/product")
+@RequestMapping("/member/recommend/product")
 @RequiredArgsConstructor
 @Slf4j
 public class InvestTypeController {
@@ -36,7 +36,7 @@ public class InvestTypeController {
         }
         return responseList;
     }
-    @PostMapping("/save/inv_type")
+    @PostMapping
     public ResponseEntity<Cookie> createInvestType(@RequestBody InvestTypeRequest request1, HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = investTypeService.save(request,request1);
         response.addCookie(cookie);

@@ -21,7 +21,7 @@
     <v-responsive class="mx-auto" max-width="600px" style="margin-top: -75px">
       <v-text-field
         :loading="loading"
-        density="comfortable"
+        density="compact"
         variant="solo"
         label="상품명을 입력해주세요."
         append-inner-icon="mdi-magnify"
@@ -37,17 +37,17 @@
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
             <v-sheet class="box-color">
-              <!-- savingsCard 컴포넌트에 데이터 전달 -->
-              <savings-card
-                v-for="productDetail in savingsData"
+              <!-- LoanCard 컴포넌트에 데이터 전달 -->
+              <loan-card
+                v-for="productDetail in loanData"
                 :key="productDetail.id"
-                :savingsName="productDetail.savingsName"
-                :savingsInfo="productDetail.savingsInfo"
+                :loanName="productDetail.loanName"
+                :loanInfo="productDetail.loanInfo"
                 :interestRate="productDetail.interestRate"
                 :target="productDetail.target"
                 :period="productDetail.period"
-                :maxDeposit="productDetail.maxDeposit"
-                :savingsType="productDetail.savingsType"
+                :loanLimit="productDetail.loanLimit"
+                :loanType="productDetail.loanType"
               />
             </v-sheet>
           </v-col>
@@ -62,19 +62,19 @@ import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api/modules";
 import TypeButton from "@/components/button/TypeButton.vue";
-import SavingsCard from "@/components/card/product/SavingsCard.vue";
+import LoanCard from "@/components/card/product/LoanCard.vue";
 
 const loaded = ref(false);
 const loading = ref(false);
 const router = useRouter();
-const savingsData = ref([]);
+const loanData = ref([]);
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
   const data = await getApi({
-    url: "/product/savings",
+    url: "/product/loan",
   });
-  savingsData.value = data;
+  loanData.value = data;
 });
 
 const onClick = () => {
@@ -111,7 +111,6 @@ const navigateToSearchLoan = () => {
   font-weight: 700;
   font-style: normal;
 }
-
 .logo-text {
   font-size: 18px;
   font-weight: bold;

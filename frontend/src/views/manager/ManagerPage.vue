@@ -22,7 +22,7 @@
 
           <v-col>
             <v-sheet class="logo-text" style="padding:10px" min-height="70vh" rounded="lg">
-              <v-table fixed-header height="500px">
+              <!-- <v-table fixed-header height="500px">
                 <thead>
                   <tr>
                     <th></th>
@@ -46,7 +46,25 @@
                     <td>{{ item.rgDate }}</td>
                   </tr>
                 </tbody>
-              </v-table>
+              </v-table> -->
+
+              <v-sheet>
+  <v-card>
+    <v-tabs
+      bg-color="blue"
+      center-active
+      class="d-flex justify-center"
+    >
+    <v-tab style="margin-left:30px">회원 정보</v-tab>
+      <v-tab @click="navigateToSearchLog">검색 기록</v-tab>
+      <v-tab>상품 가입 기록</v-tab>
+      <v-tab>회원 탈퇴 관리</v-tab>
+      <v-tab>관심 상품 조회</v-tab>
+   
+      
+    </v-tabs>
+  </v-card>
+</v-sheet>
             </v-sheet>
           
           </v-col>
@@ -61,7 +79,11 @@ import { useRouter } from 'vue-router';
 
     const router = useRouter();
 
-  const navigateToManagePage = () => {
+    const navigateToSearchLog = () => {
+  router.push({ name: "SearchLog" });
+  };
+
+  const navigateToManagerPage = () => {
   router.push({ name: "ManagePage" });
   };
 

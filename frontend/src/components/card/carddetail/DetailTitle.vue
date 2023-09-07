@@ -31,10 +31,12 @@
                 width="160"
                 height="45"
                 style="font-size: large; color: white"
+                @click="handleButtonClick"
               >
                 {{ button1 }}
               </v-btn>
             </div>
+
             <div class="pa-2">
               <v-btn
                 color="#3C7FE3"
@@ -65,13 +67,14 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps } from "vue";
+import { ref, watch, defineProps, defineEmits } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiPuzzleHeart } from "@mdi/js";
 
 // ref를 사용하여 초기값이 false인 loading 데이터를 정의합니다.
 const loading = ref(false);
 const path = ref(mdiPuzzleHeart);
+const emits = defineEmits(["button-click"]);
 
 // loading 데이터가 변경될 때 실행될 함수를 정의합니다.
 watch(loading, (val) => {
@@ -102,6 +105,12 @@ const props = defineProps([
 const name = props.name;
 const info = props.info;
 const type = props.type;
+
+// 버튼 클릭 핸들러를 정의합니다.
+const handleButtonClick = () => {
+  // 버튼이 클릭되었을 때 이벤트를 발생시킵니다.
+  emits("button-click", "button1");
+};
 </script>
 
 <style></style>

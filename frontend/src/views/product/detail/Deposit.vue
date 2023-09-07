@@ -3,7 +3,7 @@
     <div>
       <div>
         <Suspense>
-          <detailTitle
+          <detail-title
             :name="depositData.depositName"
             :info="depositData.depositInfo"
             :interestRate="'상품 금리: ' + depositData.interestRate + '%'"
@@ -12,12 +12,13 @@
             :minDeposit="'가입 금액: ' + depositData.minDeposit + '원'"
             :type="'상품 타입: ' + depositData.depositType"
             :button1="'가입하기'"
+            @button-click="navigateToSubscribe('deposit', 2)"
             :button2="'전화가입'"
           />
         </Suspense>
       </div>
 
-      <div>
+      <div class="mb-10">
         <v-sheet elevation="4" max-width="900" rounded="lg" width="100%" class="pa-6 mt-10 mx-auto">
           <h2 class="logo-text text-h6 mb-5">상품 설명</h2>
 
@@ -77,17 +78,19 @@
     </div>
   </v-container>
 </template>
-l
+
 <script setup>
-import { ref, onBeforeMount, defineAsyncComponent } from "vue";
+import { ref, onBeforeMount, defineAsyncComponent, defineEmits } from "vue";
 import { getApi } from "@/api/modules";
 import { useRoute } from "vue-router";
 import DetailText from "@/components/card/carddetail/DetailText.vue";
 
 const depositData = ref([]);
-const $route = useRoute();
+const router = useRoute();
 // URL에서 productId를 가져오기 위해 $route.params를 사용합니다.
-const productId = $route.params.id;
+const productId = router.params.id;
+
+const emits = defineEmits(["button-click"]);
 
 let detailTitle;
 
@@ -96,11 +99,17 @@ onBeforeMount(async () => {
   const data = await getApi({
     url: `/product/deposit/${productId}`,
   });
-
   detailTitle = defineAsyncComponent(() => import("@/components/card/carddetail/DetailTitle.vue"));
   console.log(data);
   depositData.value = data;
 });
+
+// DepositSavings.vue 페이지로 이동하는 코드(path: ip:port/subscribe/:productType/:id)
+const navigateToSubscribe = (productType, productId) => {
+  router.push({ name: "SubDeposit", params: { productType: productType, id: productId } });
+  console.log("가입하기 버튼이 클릭되었습니다.");
+  emits("button-click");
+};
 </script>
 
 <style scoped>

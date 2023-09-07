@@ -20,7 +20,7 @@ public class DepositController {
 
     private final DepositService depositService;
 
-
+    // 예금 상품 전체 조회
     @GetMapping
     public List<DepositResponse> findAll() {
         List<DepositResponse> list;
@@ -41,7 +41,7 @@ public class DepositController {
         return list;
     }
 
-    // id 값으로 조회하는 api
+    // 예금 상품 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity<DepositResponse> findById(@PathVariable Long id) {
         DepositResponse depositResponse = depositService.findById(id);

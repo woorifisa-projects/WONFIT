@@ -1,27 +1,73 @@
 <template>
   <v-app-bar flat>
-    <v-app-bar-title class="d-flex align-left" style="margin-top:5px">
-      <div class="logo" style="margin-left:100px" >
-        <div class="d-flex align-center clickable-title">
-          <img src="@/assets/wonfit.png" @click="navigateToMainPage" style="width:55px; margin-top: 6px" />
-          <span class="logo-text" style="font-size: 23px" @click="navigateToMainPage">우리WONFIT</span>
+    <v-app-bar-title class="d-flex align-left" style="margin-top: 5px">
+      <div class="logo" style="margin-left: 150px">
+        <div class="d-flex align-center">
+          <img
+            class="clickable-title"
+            src="@/assets/wonfit.png"
+            @click="navigateToMainPage"
+            style="width: 55px; margin-top: 6px"
+          />
+          <span
+            class="logo-text clickable-title"
+            style="font-size: 23px"
+            @click="navigateToMainPage"
+            >우리WONFIT</span
+          >
 
-          <div class="logo-text"  style="margin:30px" @click="navigateToProductSearchPage">상품 검색</div> 
-          <div class="logo-text"  style="margin:10px" @click="navigateToRecommend">FIT 결과보기</div>
+          <div
+            class="logo-text clickable-title"
+            style="margin: 25px"
+            @click="navigateToProductSearchPage"
+          >
+            상품 검색
+          </div>
+          <div class="logo-text clickable-title" @click="navigateToRecommend">FIT 결과보기</div>
         </div>
       </div>
-    </v-app-bar-title>  
+    </v-app-bar-title>
 
-    <div class="logo-text" style="margin: 40px" @click="navigateToLoginPage">로그인</div>
     <!--로그인하면 로그아웃으로 변경-->
-    <div class="logo-text" style="margin-right: 100px" @click="navigateToMyPage">마이페이지</div>
+    <template v-if="isLogin">
+      <div class="logo-text mt-2" style="margin-right: 30px" @click="navigateToMyPage">
+        마이페이지
+      </div>
+      <div>
+        <div class="logout-btn mt-2" style="margin-right: 200px" @click="logout">로그아웃</div>
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="logo-text mt-2" style="margin-right: 200px" @click="navigateToLoginPage">
+        로그인
+      </div>
+    </template>
   </v-app-bar>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
+import { postApi } from "@/api/modules";
+import { useAuthStore } from "@/store/useAuthStore";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
+
+const auth = useAuthStore();
+const { isLogin } = storeToRefs(auth);
+
+const logout = async () => {
+  try {
+    await postApi({
+      url: "/member/logout",
+    });
+    auth.setIsLogin(false);
+    router.push({ name: "MainPage" });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const navigateToMainPage = () => {
   router.push({ name: "MainPage" });
@@ -58,13 +104,10 @@ const navigateToMyPage = () => {
   align-items: center;
 }
 
-.logo-text {
+.logo-text:hover {
   font-size: 16px;
   font-weight: bold;
   font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
-}
-
-.logo-text:hover {
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
@@ -74,4 +117,9 @@ const navigateToMyPage = () => {
   cursor: pointer;
 }
 
+.logout-btn:hover {
+  margin-right: 15px;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
 </style>

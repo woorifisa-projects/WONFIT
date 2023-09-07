@@ -21,7 +21,7 @@
     <v-responsive class="mx-auto" max-width="600px" style="margin-top: -75px">
       <v-text-field
         :loading="loading"
-        density="comfortable"
+        density="compact"
         variant="solo"
         label="상품명을 입력해주세요."
         append-inner-icon="mdi-magnify"
@@ -37,16 +37,17 @@
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
             <v-sheet class="box-color">
-              <!-- FundCard 컴포넌트에 데이터 전달 -->
-              <fund-card
-                v-for="productDetail in fundData"
+              <!-- DepositCard 컴포넌트에 데이터 전달 -->
+              <deposit-card
+                v-for="productDetail in depositData"
                 :key="productDetail.id"
-                :fundName="productDetail.fundName"
-                :fundInfo="productDetail.fundInfo"
-                :returnRate1="productDetail.returnRate1"
-                :returnRate2="productDetail.returnRate2"
-                :fundPrice="productDetail.fundPrice"
-                :fundType="productDetail.fundType"
+                :depositName="productDetail.depositName"
+                :depositInfo="productDetail.depositInfo"
+                :interestRate="productDetail.interestRate"
+                :target="productDetail.target"
+                :period="productDetail.period"
+                :minDeposit="productDetail.minDeposit"
+                :depositType="productDetail.depositType"
               />
             </v-sheet>
           </v-col>
@@ -61,18 +62,20 @@ import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api/modules";
 import TypeButton from "@/components/button/TypeButton.vue";
-import FundCard from "@/components/card/product/FundCard.vue";
+import DepositCard from "@/components/card/product/DepositCard.vue";
 
 const loaded = ref(false);
 const loading = ref(false);
 const router = useRouter();
-const fundData = ref([]);
+const depositData = ref([]);
 
+// 상품 정보 가져오기
 onBeforeMount(async () => {
   const data = await getApi({
-    url: "/product/fund",
+    url: "/product/deposit",
   });
-  fundData.value = data;
+  depositData.value = data;
+  // console.log(depositData.value);
 });
 
 const onClick = () => {
@@ -109,7 +112,6 @@ const navigateToSearchLoan = () => {
   font-weight: 700;
   font-style: normal;
 }
-
 .logo-text {
   font-size: 18px;
   font-weight: bold;
