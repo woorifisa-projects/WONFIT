@@ -216,6 +216,8 @@ const routes = [
         component: () => import(/* webpackChunkName: "LoanDetail" */ "@/views/detail/Loan.vue"),
         props: true, // URL 파라미터를 컴포넌트 props로 전달함
       },
+
+      
     ],
   },
 ];

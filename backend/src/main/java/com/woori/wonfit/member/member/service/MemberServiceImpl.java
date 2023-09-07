@@ -1,9 +1,8 @@
 package com.woori.wonfit.member.member.service;
 
-import com.woori.wonfit.config.CreateCookie;
+import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtFilter;
 import com.woori.wonfit.config.JwtUtil;
-import com.woori.wonfit.config.Token;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
@@ -13,6 +12,7 @@ import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
+import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
 import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
@@ -36,19 +36,25 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberInfoService memberInfoService;
     private final LoginLogRepository loginLogRepository;
+
     private final InvestTypeService investTypeService;
     private final JwtFilter jwtFilter;
-    private final CreateCookie createCookie;
+    private final CookieConfig cookieConfig;
+
+    private final MemberInfoRepository memberInfoRepository;
+
 
     @Value("${jwt.token.access}")
     private String accessKey;
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
-    private final long accessExpireTimeMs = 1000 * 60 * 30; // 엑세스 토큰
-    private final long refreshExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰
     private LocalDateTime dateTime = LocalDateTime.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    private Long accessTokenExpireTime = 1000 * 60 * 60l;
+    private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
+
 
     @Override
     public MemberDto register(MemberRegisterRequest request) {
@@ -87,10 +93,10 @@ public class MemberServiceImpl implements MemberService {
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessExpireTimeMs, "USER", accessKey);
-            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), accessExpireTimeMs,"USER", refreshKey);
+            String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime,"USER", refreshKey);
 
-            Cookie cookie = createCookie.createCookie("key", accessToken);
+            Cookie cookie = cookieConfig.createCookie(accessToken);
 
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
@@ -170,4 +176,15 @@ public class MemberServiceImpl implements MemberService {
             return "회원 탈퇴가 완료되었습니다.";
         }
     }
+
+    @Override
+    public void updateMemberDetails(Long id, MemberDetails memberDetails) {
+
+        Member member = Member.toEntity(id, memberDetails);
+        memberRepository.save(member);
+
+        MemberInfo memberInfo = MemberInfo.toEntity(member, memberDetails);
+        memberInfoRepository.save(memberInfo);
+    }
+
 }
