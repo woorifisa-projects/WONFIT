@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +37,9 @@ public class InvestTypeController {
         return responseList;
     }
     @PostMapping("/save/inv_type")
-    public ResponseEntity<String> createInvestType(@RequestBody InvestTypeRequest request1, HttpServletRequest request) {
-        InvestType createdInvestType = investTypeService.save(request,request1);
-        return new ResponseEntity<>("저장 완료", HttpStatus.OK);
+    public ResponseEntity<Cookie> createInvestType(@RequestBody InvestTypeRequest request1, HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = investTypeService.save(request,request1);
+        response.addCookie(cookie);
+        return new ResponseEntity<>(cookie, HttpStatus.OK);
     }
 }
