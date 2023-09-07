@@ -94,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
             loginLogRepository.save(loginLog);
 
             String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
-            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime,"USER", refreshKey);
+            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
 
             Cookie cookie = cookieConfig.createCookie(accessToken);
 
@@ -106,33 +106,21 @@ public class MemberServiceImpl implements MemberService {
             return cookie;
         }
     }
+
     @Override
-    public Cookie logout(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        String id = "";
-        if (cookies == null) {
-            log.info("쿠키를 찾을 수 없습니다");
-        }
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (!cookie.getName().equals("key")) {
-                    continue;
-                }
-                id = JwtUtil.getId(cookie.getValue(), accessKey);
+    public String logout(HttpServletRequest request) {
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
 
-                Member member = memberRepository.findById(new Long(id)).get();
-                member.setRefreshToken("");
+        Member member = memberRepository.findById(id).get();
 
-                memberRepository.save(member);
+        member.setRefreshToken("");
 
-                cookie.setMaxAge(0);
+        memberRepository.save(member);
 
-                jwtFilter.setFlag(false);
+        jwtFilter.setFlag(false);
 
-                return cookie;
-            }
-        }
-        return null;
+        return "로그아웃이 완료되었습니다.";
     }
 
     @Override
