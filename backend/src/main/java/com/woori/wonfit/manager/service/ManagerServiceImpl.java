@@ -53,6 +53,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         return savingsRepository.save(savings);
     }
+
     @Override
     public Deposit createDeposit(DepositRequest depositRequest) {
         Deposit deposit = Deposit.builder()
@@ -74,7 +75,7 @@ public class ManagerServiceImpl implements ManagerService {
         fundRepository.deleteById(id);
 
 
-}
+    }
 
     @Override
     public void deleteDeposit(Long id) {
@@ -86,10 +87,5 @@ public class ManagerServiceImpl implements ManagerService {
         savingsRepository.deleteById(id);
 
     }
-
-
-
-
-
-    }
+}
 

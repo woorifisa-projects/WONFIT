@@ -18,8 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SavingsController {
 
-    private final SavingsService savingsService;  // final로 선언하여 의존성 주입
+    private final SavingsService savingsService;
 
+    // 적금 상품 전체 조회
     @GetMapping
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> list = savingsService.findAll();
@@ -27,7 +28,7 @@ public class SavingsController {
         return list;
     }
 
-    // id 값으로 조회하는 api
+    // 적금 상품 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity<SavingsResponse> findById(@PathVariable Long id) {
         SavingsResponse savingsResponse = savingsService.findById(id);
