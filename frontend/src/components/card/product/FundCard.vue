@@ -19,9 +19,9 @@
         </v-card-text>
       </div>
       <v-card-actions class="flex-row-reverse">
-        <v-btn class="order-last" text>가입하기</v-btn>
-        <v-btn text>전화가입</v-btn>
-        <v-btn class="order-first" text>관심상품</v-btn>
+        <v-btn class="order-last">가입하기</v-btn>
+        <call-num btnName="전화가입" />
+        <v-btn class="order-first">관심상품</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -29,6 +29,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import CallNum from "@/components/modal/CallNum.vue";
 
 const router = useRouter();
 const porps = defineProps({
