@@ -108,19 +108,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String logout(HttpServletRequest request) {
+    public Cookie logout(HttpServletRequest request) {
         String token = cookieConfig.parseCookie(request);
         Long id = cookieConfig.getIdFromToken(token);
 
         Member member = memberRepository.findById(id).get();
 
         member.setRefreshToken("");
-
         memberRepository.save(member);
+
+        Cookie cookie = cookieConfig.createCookie("");
 
         jwtFilter.setFlag(false);
 
-        return "로그아웃이 완료되었습니다.";
+        return cookie;
     }
 
     @Override
