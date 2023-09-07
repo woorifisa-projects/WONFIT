@@ -89,7 +89,7 @@ export default {
         }
 
       } else {
-        this.depositText = "우리WON예금";
+        this.depositText = "검사를 진행 해주세요";
       }
     },
 
@@ -118,7 +118,9 @@ export default {
         }
 
       } else {
-        this.savingsText = "우리WON적금";
+        this.savingsText = "검사를 진행 해주세요";
+        this.$router.push({ name: "SavingsTest" });
+
       }
     },
     async checkFundCookie() {
@@ -146,7 +148,7 @@ export default {
         }
 
       } else {
-        this.savingsText = "우리WON펀드";
+        this.fundText = "검사를 진행 해주세요";
       }
     },
     async checkLoanCookie() {
@@ -174,7 +176,7 @@ export default {
         }
 
       } else {
-        this.loanText = "우리WON대출";
+        this.loanText = "검사를 진행 해주세요";
       }
     },
 

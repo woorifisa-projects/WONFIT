@@ -25,6 +25,9 @@ public class InvestTypeServiceImpl implements InvestTypeService {
     private final MemberRepository memberRepository;
     private final JwtUtil jwtUtil;
 
+    @Value("${cookey.jwt.key}")
+    private String key;
+
     @Value("${jwt.token.access}")
     private String secretKey;
     @Override
@@ -32,7 +35,7 @@ public class InvestTypeServiceImpl implements InvestTypeService {
         Cookie[] cookies = request.getCookies();
         long memberId = 0;
         for (Cookie cookie : cookies) {
-            if (!cookie.getName().equals("key")) {
+            if (!cookie.getName().equals(key)) {
                 continue;
             }
 
@@ -95,7 +98,7 @@ public class InvestTypeServiceImpl implements InvestTypeService {
         Cookie[] cookies = request.getCookies();
         long memberId = 0;
         for (Cookie cookie : cookies) {
-            if (!cookie.getName().equals("key")) {
+            if (!cookie.getName().equals(key)) {
                 continue;
             }
 

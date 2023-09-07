@@ -144,7 +144,7 @@ export default {
       // correctAnswersCount 값을 쿠키에 저장
       this.$cookies.set('Score', this.correctAnswersCount);
       // 서버에 POST 요청을 보냅니다.
-      await axios.post('http://localhost:8080/recommended/product/save/inv_type', {
+      await axios.post('http://localhost:8080/member/recommend/product', {
         productType: "loan",
         score: this.correctAnswersCount,
       }, {
