@@ -17,8 +17,8 @@ public class JwtUtil {
     public static String getId(String token, String secretKey) {
         try {
             log.info("called getid");
-            log.info("getid accessToken = {}", token);
-            log.info("getId accessKey = {}", secretKey);
+            log.info("getid Token = {}", token);
+            log.info("getId Key = {}", secretKey);
 
             return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("id", String.class);
         } catch (ExpiredJwtException e) {
@@ -40,7 +40,7 @@ public class JwtUtil {
     }
 
 
-    public static String createAccessToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String accessKey) {
+    public static String createAccessToken(String id, long accessExpireTime, String roles, String accessKey) {
         Claims claims = Jwts.claims();
         claims.put("roles", roles);
         claims.put("id", id);
@@ -48,8 +48,6 @@ public class JwtUtil {
         Date now = new Date();
         Date accessTokenValidateTime = new Date(now.getTime() + accessExpireTime);
         log.info("accessTokenExpireTime = {}", accessTokenValidateTime);
-        Date refreshTokenValidateTime = new Date(now.getTime() + refreshExpireTime);
-        log.info("refreshTokenExpireTime = {}", refreshTokenValidateTime);
 
         String accessToken = Jwts.builder()
                 .setClaims(claims)
@@ -60,14 +58,12 @@ public class JwtUtil {
 
         return accessToken;
     }
-    public static String createRefreshToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String refreshKey) {
+    public static String createRefreshToken(String id, long refreshExpireTime, String roles, String refreshKey) {
         Claims claims = Jwts.claims();
         claims.put("roles", roles);
         claims.put("id", id);
 
         Date now = new Date();
-        Date accessTokenValidateTime = new Date(now.getTime() + accessExpireTime);
-        log.info("accessTokenExpireTime = {}", accessTokenValidateTime);
         Date refreshTokenValidateTime = new Date(now.getTime() + refreshExpireTime);
         log.info("refreshTokenExpireTime = {}", refreshTokenValidateTime);
 

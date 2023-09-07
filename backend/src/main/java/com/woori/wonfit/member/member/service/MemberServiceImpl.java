@@ -49,10 +49,12 @@ public class MemberServiceImpl implements MemberService {
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
-    private final long accessExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰 (30분)
-    private final long refreshExpireTimeMs = 1000 * 60 * 60 * 24l; // 엑세스 토큰
     private LocalDateTime dateTime = LocalDateTime.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    private Long accessTokenExpireTime = 1000 * 60 * 60l;
+    private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
+
 
     @Override
     public MemberDto register(MemberRegisterRequest request) {
@@ -91,8 +93,8 @@ public class MemberServiceImpl implements MemberService {
             LoginLog loginLog = LoginLog.toEntity(member, loginTime, loginIp, loginBrowser, loginDevice);
             loginLogRepository.save(loginLog);
 
-            String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs, "USER", accessKey);
-            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), accessExpireTimeMs, refreshExpireTimeMs,"USER", refreshKey);
+            String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime,"USER", refreshKey);
 
             Cookie cookie = cookieConfig.createCookie(accessToken);
 
