@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/recommended/product")
+@RequestMapping("/member/recommend/product")
 @RequiredArgsConstructor
 @Slf4j
 public class InvestTypeController {
@@ -34,7 +34,7 @@ public class InvestTypeController {
         }
         return responseList;
     }
-    @PostMapping("/save/inv_type")
+    @PostMapping
     public ResponseEntity<String> createInvestType(@RequestBody InvestTypeRequest request1, HttpServletRequest request) {
         InvestType createdInvestType = investTypeService.save(request,request1);
         return new ResponseEntity<>("저장 완료", HttpStatus.OK);
