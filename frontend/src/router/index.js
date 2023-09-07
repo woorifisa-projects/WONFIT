@@ -181,28 +181,28 @@ const routes = [
         path: "fund-test",
         name: "FundTest",
         component: () =>
-          import(/* webpackChunkName: "fundtest" */ "@/views/product/test/FundTest.vue"),
+          import(/* webpackChunkName: "fundtest" */ "@/views/test/FundTest.vue"),
       },
 
       {
         path: "loan-test",
         name: "LoanTest",
         component: () =>
-          import(/* webpackChunkName: "loantest" */ "@/views/product/test/LoanTest.vue"),
+          import(/* webpackChunkName: "loantest" */ "@/views/test/LoanTest.vue"),
       },
 
       {
         path: "deposit-test",
         name: "DepositTest",
         component: () =>
-          import(/* webpackChunkName: "deposittest" */ "@/views/product/test/DepositTest.vue"),
+          import(/* webpackChunkName: "deposittest" */ "@/views/test/DepositTest.vue"),
       },
 
       {
         path: "savings-test",
         name: "SavingsTest",
         component: () =>
-          import(/* webpackChunkName: "savingstest" */ "@/views/product/test/SavingsTest.vue"),
+          import(/* webpackChunkName: "savingstest" */ "@/views/test/SavingsTest.vue"),
       },
     ],
   },
