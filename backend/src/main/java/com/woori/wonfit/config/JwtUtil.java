@@ -1,11 +1,11 @@
 package com.woori.wonfit.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,31 +14,33 @@ import java.util.Date;
 @Getter
 @Component
 public class JwtUtil {
-    @Value("${jwt.token.access}")
-    private String accessKey;
-
-    @Value("${jwt.token.refresh}")
-    private String refreshKey;
     public static String getId(String token, String secretKey) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("id", String.class);
+        try {
+            log.info("called getid");
+            log.info("getid Token = {}", token);
+            log.info("getId Key = {}", secretKey);
+
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("id", String.class);
+        } catch (ExpiredJwtException e) {
+            Claims claims = e.getClaims();
+            log.info(claims.get("id", String.class));
+
+            return claims.get("id", String.class);
+        }
     }
+
 
     public static boolean isExpired(String token, String secretKey) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+        try {
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            // JWT 만료되었을 때 true
+            return true;
+        }
     }
 
-    public Claims getAccessClaims(String token){
-        log.info("getClaims called");
-        Claims claims = Jwts.parserBuilder().setSigningKey(accessKey).build().parseClaimsJws(token).getBody();
-        return claims;
-    }
-    public Claims getRefreshClaims(String token){
-        log.info("getRefreshClaims called");
-        Claims claims = Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(token).getBody();
-        return claims;
-    }
 
-    public static Token createToken(String id, long accessExpireTime, long refreshExpireTime, String roles, String accessKey, String refreshKey) {
+    public static String createAccessToken(String id, long accessExpireTime, String roles, String accessKey) {
         Claims claims = Jwts.claims();
         claims.put("roles", roles);
         claims.put("id", id);
@@ -46,8 +48,6 @@ public class JwtUtil {
         Date now = new Date();
         Date accessTokenValidateTime = new Date(now.getTime() + accessExpireTime);
         log.info("accessTokenExpireTime = {}", accessTokenValidateTime);
-        Date refreshTokenValidateTime = new Date(now.getTime() + refreshExpireTime);
-        log.info("refreshTokenExpireTime = {}", refreshTokenValidateTime);
 
         String accessToken = Jwts.builder()
                 .setClaims(claims)
@@ -56,6 +56,17 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, accessKey)
                 .compact();
 
+        return accessToken;
+    }
+    public static String createRefreshToken(String id, long refreshExpireTime, String roles, String refreshKey) {
+        Claims claims = Jwts.claims();
+        claims.put("roles", roles);
+        claims.put("id", id);
+
+        Date now = new Date();
+        Date refreshTokenValidateTime = new Date(now.getTime() + refreshExpireTime);
+        log.info("refreshTokenExpireTime = {}", refreshTokenValidateTime);
+
         String refreshToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -63,8 +74,6 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, refreshKey)
                 .compact();
 
-        Token token = Token.builder().accessToken(accessToken).refreshToken(refreshToken).key(id).build();
-
-        return token;
+        return refreshToken;
     }
 }

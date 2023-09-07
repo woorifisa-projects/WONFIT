@@ -87,7 +87,7 @@ public class JwtFilter extends OncePerRequestFilter {
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "refreshToken이 만료 되었습니다.");
                             filterChain.doFilter(request, response);
                         }
-                        accessToken = JwtUtil.createAccessToken(accessId, 1000 * 60, 1000 * 60 * 60 * 24l, "USER", accessKey);
+                        accessToken = JwtUtil.createAccessToken(accessId, 1000 * 60 * 60 * 24l, "USER", accessKey);
                         log.info("Regenerated accessToken");
                         Cookie responseCookie = createCookie.createCookie("key", accessToken);
                         response.addCookie(responseCookie);
