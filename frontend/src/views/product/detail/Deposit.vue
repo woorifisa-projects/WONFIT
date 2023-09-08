@@ -2,7 +2,7 @@
   <v-container class="mt-12">
     <div>
       <div>
-        <Suspense>
+        <suspense>
           <detail-title
             :name="depositData.depositName"
             :info="depositData.depositInfo"
@@ -12,10 +12,10 @@
             :minDeposit="'가입 금액: ' + depositData.minDeposit + '원'"
             :type="'상품 타입: ' + depositData.depositType"
             :button1="'가입하기'"
-            @button-click="navigateToSubscribe('deposit', 2)"
             :button2="'전화가입'"
+            :url="'deposit'"
           />
-        </Suspense>
+        </suspense>
       </div>
 
       <div class="mb-10">
@@ -80,17 +80,15 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, defineAsyncComponent, defineEmits } from "vue";
+import { ref, onBeforeMount, defineAsyncComponent } from "vue";
 import { getApi } from "@/api/modules";
 import { useRoute } from "vue-router";
 import DetailText from "@/components/card/carddetail/DetailText.vue";
 
 const depositData = ref([]);
-const router = useRoute();
-// URL에서 productId를 가져오기 위해 $route.params를 사용합니다.
-const productId = router.params.id;
-
-const emits = defineEmits(["button-click"]);
+const route = useRoute();
+// URL에서 productId를 가져오기 위해 route.params를 사용합니다.
+const productId = route.params.id;
 
 let detailTitle;
 
@@ -103,13 +101,6 @@ onBeforeMount(async () => {
   console.log(data);
   depositData.value = data;
 });
-
-// DepositSavings.vue 페이지로 이동하는 코드(path: ip:port/subscribe/:productType/:id)
-const navigateToSubscribe = (productType, productId) => {
-  router.push({ name: "SubDeposit", params: { productType: productType, id: productId } });
-  console.log("가입하기 버튼이 클릭되었습니다.");
-  emits("button-click");
-};
 </script>
 
 <style scoped>

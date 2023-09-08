@@ -13,6 +13,7 @@
             :type="'상품 타입: ' + savingsData.savingsType"
             :button1="'가입하기'"
             :button2="'전화가입'"
+            :url="'savings'"
           />
         </Suspense>
       </div>
@@ -87,9 +88,9 @@ import { useRoute } from "vue-router";
 import DetailText from "@/components/card/carddetail/DetailText.vue";
 
 const savingsData = ref([]);
-const $route = useRoute();
-// URL에서 productId를 가져오기 위해 $route.params를 사용합니다.
-const productId = $route.params.id;
+const route = useRoute();
+// URL에서 productId를 가져오기 위해 route.params를 사용합니다.
+const productId = route.params.id;
 
 let detailTitle;
 
