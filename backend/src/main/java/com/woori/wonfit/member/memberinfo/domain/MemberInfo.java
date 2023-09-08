@@ -20,7 +20,7 @@ public class MemberInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = "member_id") // 외래 키를 사용하는 주인인 Member에 대한 참조
     private Member member;
 
