@@ -78,4 +78,10 @@ public class SmsServiceImpl implements SmsService {
 
         return response;
     }
+
+    @Override
+    public List<Sms> getAllSms(){
+        List<Sms> smsList = smsRepository.findAll();
+        return smsList;
+    }
 }
