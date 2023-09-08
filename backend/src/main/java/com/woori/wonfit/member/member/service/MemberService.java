@@ -26,7 +26,6 @@ public interface MemberService {
 
     String leaveMember(String loginId, String memberPw);
 
-
     void updateMemberDetails(Long id, MemberDetails memberDetails);
 
 }

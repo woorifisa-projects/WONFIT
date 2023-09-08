@@ -1,5 +1,7 @@
 package com.woori.wonfit.manager.service;
 
+import com.woori.wonfit.config.CookieConfig;
+import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
 import com.woori.wonfit.product.deposit.repository.DepositRepository;
@@ -12,6 +14,7 @@ import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,6 +25,8 @@ public class ManagerServiceImpl implements ManagerService {
     private final FundRepository fundRepository;
     private final SavingsRepository savingsRepository;
     private final DepositRepository depositRepository;
+    private final MemberRepository memberRepository;
+    private final CookieConfig cookieConfig;
 
     @Override
     public Fund createFund(FundRequest fundRequest) {
@@ -73,8 +78,6 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void deleteFund(Long id) {
         fundRepository.deleteById(id);
-
-
     }
 
     @Override
@@ -85,7 +88,14 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void deleteSavings(Long id) {
         savingsRepository.deleteById(id);
+    }
 
+    @Override
+    public String deleteMember(HttpServletRequest request){
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
+        memberRepository.deleteById(id);
+        return "회원 정보 삭제가 왼료되었습니다.";
     }
 }
 

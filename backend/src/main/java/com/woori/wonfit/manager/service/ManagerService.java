@@ -10,6 +10,7 @@ import com.woori.wonfit.product.savings.domain.Savings;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
 import com.woori.wonfit.product.savings.dto.SavingsResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +27,6 @@ public interface ManagerService {
     void deleteDeposit(Long id);
 
     void deleteSavings(Long id);
+
+    String deleteMember(HttpServletRequest request);
 }

@@ -1,11 +1,16 @@
 package com.woori.wonfit.member.member.domain;
 
 
+import com.woori.wonfit.log.liked.domain.Liked;
+import com.woori.wonfit.log.loginlog.domain.LoginLog;
+import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.member.dto.MemberDetails;
+import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -50,6 +55,18 @@ public class Member {
 
     @Column(name = "refresh_Token", nullable = true)
     private String refreshToken;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<InvestType> investTypes;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private MemberInfo memberInfo;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<LoginLog> loginLog;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Liked> liked;
 
     public static Member toEntity(Long id, MemberDetails memberDetails) {
         return Member.builder()
