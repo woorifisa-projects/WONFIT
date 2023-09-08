@@ -14,6 +14,8 @@ public class MemberDetails {
     private String name;
     private String address;
     private String phoneNumber;
+    private String bankAccountNumber;
+    private String bankAccountPassword;
     private String email;
     private String registrationNumber;
     private String job;
@@ -32,6 +34,8 @@ public class MemberDetails {
                 .name(member.getName())
                 .address(memberInfo.getAddress())
                 .phoneNumber(member.getPhoneNumber())
+                .bankAccountNumber(member.getBankAccountNumber())
+                .bankAccountPassword(member.getBankAccountPassword())
                 .email(member.getEmail())
                 .registrationNumber(member.getRegistrationNumber())
                 .job(memberInfo.getJob())
