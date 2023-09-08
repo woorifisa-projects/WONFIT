@@ -1,5 +1,6 @@
 package com.woori.wonfit.member.investtype.service;
 
+import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.investtype.dto.InvestTypeRequest;
@@ -24,6 +25,7 @@ public class InvestTypeServiceImpl implements InvestTypeService {
     private final InvestTypeRepository investTypeRepository;
     private final MemberRepository memberRepository;
     private final JwtUtil jwtUtil;
+    private final CookieConfig cookieConfig;
 
     @Value("${cookey.jwt.key}")
     private String key;
@@ -31,23 +33,26 @@ public class InvestTypeServiceImpl implements InvestTypeService {
     @Value("${jwt.token.access}")
     private String secretKey;
     @Override
-    public Cookie save(HttpServletRequest request,InvestTypeRequest request1) {
-        Cookie[] cookies = request.getCookies();
-        long memberId = 0;
-        for (Cookie cookie : cookies) {
-            if (!cookie.getName().equals(key)) {
-                continue;
-            }
+    public Cookie save(InvestTypeRequest investTypeRequest, HttpServletRequest request) {
+//        Cookie[] cookies = request.getCookies();
+//        long memberId = 0;
+//        for (Cookie cookie : cookies) {
+//            if (!cookie.getName().equals(key)) {
+//                continue;
+//            }
+//
+//            String accessToken = cookie.getValue();
+//
+//            String id = jwtUtil.getId(accessToken, secretKey);
+//            memberId = Long.parseLong(id);
+//        }
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
 
-            String accessToken = cookie.getValue();
-
-            String id = jwtUtil.getId(accessToken, secretKey);
-            memberId = Long.parseLong(id);
-        }
         String deposit_type = "검사를 진행 해주세요";
-        String productType = request1.getProductType();
 
-        int score = request1.getScore();
+        int score = investTypeRequest.getScore();
+        String productType = investTypeRequest.getProductType();
 
         if (score >=10 && score <=16) {
             deposit_type = "safe";
@@ -56,9 +61,8 @@ public class InvestTypeServiceImpl implements InvestTypeService {
         } else if (score >=24 && score <=30) {
             deposit_type = "attack";
         }
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Invalid memberId"));
 
-        InvestType investType = investTypeRepository.findByMemberId(memberId);
+        InvestType investType = investTypeRepository.findByMemberId(id);
 
         log.info(productType);
         if(productType.equals("deposit")){

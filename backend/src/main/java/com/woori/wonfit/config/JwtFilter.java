@@ -40,8 +40,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info("Filter called!");
         if (flag == true) {
             log.info("flag == true");
+            // HTTP OPTIONS 메서드인 경우 필터를 통과시키지 않고 다음 필터로 진행
+            if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                log.info("OPTIONS CALLED    HTTP METHOD = {}", request.getMethod().toString());
+                filterChain.doFilter(request, response);
+                return;
+            }
 
             String accessToken = cookieConfig.parseCookie(request);
             
