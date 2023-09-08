@@ -20,6 +20,7 @@ public class MemberRegisterRequest {
     private Boolean status;
     private String registrationNumber;
     private String phoneNumber;
+    private String bankAccountNumber; // 계좌번호
 
     private String address;
     private String job;
@@ -33,12 +34,14 @@ public class MemberRegisterRequest {
 
     public Member toEntity(String password) {
         return Member.builder()
-                .loginId(loginId).password(password)
+                .loginId(loginId)
+                .password(password)
                 .email(email)
                 .name(name)
                 .status(status)
                 .registrationNumber(registrationNumber)
                 .phoneNumber(phoneNumber)
+                .bankAccountNumber(bankAccountNumber)
                 .build();
     }
 
