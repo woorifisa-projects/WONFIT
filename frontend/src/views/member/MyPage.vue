@@ -1,27 +1,28 @@
 <template>
-  <v-app id="inspire" style="margin-top:20px">
-
+  <v-app id="inspire" style="margin-top: 20px">
     <v-main class="bg-grey-lighten-3">
       <v-container>
         <v-row>
           <v-col cols="3">
             <v-sheet rounded="lg">
               <v-list rounded="lg">
-        
-
-                <v-list-item class="logo-text" @click="navigateToMyPage" >내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
-              
-              
+                <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
+                  >내 가입상품 확인하기</v-list-item
+                >
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct"
+                  >내 관심상품 확인하기</v-list-item
+                >
+                <v-list-item class="logo-text" @click="navigateToRecommend"
+                  >나의 투자성향 보기</v-list-item
+                >
                 <v-divider class="my-2"></v-divider>
-
                 <v-list-item
                   class="logo-text"
                   color="grey-lighten-4"
                   link
-                  @click="navigateToWithdraw">
+                  @click="navigateToWithdraw"
+                >
                   회원 탈퇴
                 </v-list-item>
               </v-list>
@@ -29,86 +30,80 @@
           </v-col>
 
           <v-col>
-            <v-sheet class="logo-text" style="padding:40px" min-height="70vh" rounded="lg">
-              <div >주소
-                
-                <div class="text-center">
-    <v-select
-      v-model="location"
-      :items="locations"
-      label="Location"
-    ></v-select>
-    <v-menu :location="location">
-      <template v-slot:activator="{ props }">
-       
-      </template>
+            <v-sheet class="logo-text" style="padding: 40px" min-height="70vh" rounded="lg">
+              <div>
+                <v-form @submit.prevent="saveChanges">
+                  <h4>이름</h4>
+                  <v-text-field
+                    disabled
+                    :value="memberData.name"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+                  <h4>주민등록번호</h4>
+                  <v-text-field
+                    disabled
+                    :value="memberData.registrationNumber"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
 
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in items"
-          :key="index"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-  </div>
-                
-              </div>
-              <div class=my-10>
-                결혼여부
-                <v-radio-group inline style="margin:10px">
-                <v-radio label="결혼" value="1"></v-radio>
-  <v-radio label="미혼" value="2"></v-radio>
-  </v-radio-group>
-              </div>
-              <div class=my-10>
-                자녀수
-                <v-radio-group inline style="margin:10px">
-          <v-radio label="0명" value="1"></v-radio>
-  <v-radio label="1명" value="2"></v-radio>
-  <v-radio label="2명" value="3"></v-radio>
-  <v-radio label="3명" value="4"></v-radio>
-  <v-radio label="4명 이상" value="5"></v-radio>
-</v-radio-group>
-              </div>
-              <div class=my-10>
-                세대주 여부
-                <v-radio-group inline style="margin:10px">
-                <v-radio label="예" value="1"></v-radio>
-  <v-radio label="아니요" value="2"></v-radio>
-  </v-radio-group>
-              </div>
-              <div class=my-10>
-                연금 소득 여부
-                <v-radio-group inline style="margin:10px">
-                <v-radio label="있음" value="1"></v-radio>
-  <v-radio label="없음" value="2"></v-radio>
-  </v-radio-group>
-              </div>
-              <div class=my-10 style="margin-bottom:30px">
-                직업
-                <v-radio-group inline style="margin:10px">
-                <v-radio label="직장인" value="1"></v-radio>
-  <v-radio label="개인사업자" value="2"></v-radio>
-  <v-radio label="프리랜서" value="3"></v-radio>
-  <v-radio label="학생" value="4"></v-radio>
-  <v-radio label="주부" value="5"></v-radio>
-  <v-radio label="은퇴생활자" value="6"></v-radio>
-  <v-radio label="무직" value="7"></v-radio>
-  </v-radio-group>
-              
-              </div>
-              <v-btn
-          variant="tonal"
-          class="d-flex justify-end align-center logo-text-button"
-          style="padding: 25px; font-size: 1.1em; border-radius: 5px;margin-left: auto"
+                  <h4>계좌번호</h4>
+                  <v-text-field
+                    disabled
+                    :value="memberData.bankAccountNumber"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
 
-        >
-          저장
-        </v-btn>
+                  <h4>아이디</h4>
+                  <v-text-field
+                    disabled
+                    :value="memberData.loginId"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+
+                  <h4>비밀번호</h4>
+
+                  <v-text-field
+                    :disabled="!isEditMode"
+                    v-model="memberData.password"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+
+                  <h4>이메일</h4>
+                  <v-text-field
+                    :disabled="!isEditMode"
+                    v-model="memberData.email"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+
+                  <h4>전화번호</h4>
+                  <v-text-field
+                    :disabled="!isEditMode"
+                    v-model="memberData.phoneNumber"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+
+                  <h4>주소</h4>
+
+                  <v-text-field
+                    :disabled="!isEditMode"
+                    v-model="memberData.address"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+                  <div class="d-flex justify-center">
+                    <v-btn text class="mx-2" @click="toggleEditMode">수정하기</v-btn>
+                    <v-btn type="submit" text>저장하기</v-btn>
+                  </div>
+                </v-form>
+              </div>
             </v-sheet>
-          
           </v-col>
         </v-row>
       </v-container>
@@ -117,43 +112,68 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-import axios from 'axios';
+import { useRouter } from "vue-router";
+import { ref, onBeforeMount } from "vue";
+import { getApi } from "@/api/modules";
+import { patchApi } from "@/api/modules";
+
+const isEditMode = ref(false);
+const memberData = ref({
+  name: "",
+  registrationNumber: "",
+  loginId: "",
+  password: "",
+  email: "",
+  phoneNumber: "",
+  bankAccountNumber: "",
+  address: "",
+});
+
+const toggleEditMode = () => {
+  isEditMode.value = !isEditMode.value;
+};
+
+const saveChanges = async () => {
+  try {
+    const updatedData = {
+      name: memberData.value.name,
+      registrationNumber: memberData.value.registrationNumber,
+      loginId: memberData.value.loginId,
+      password: memberData.value.password,
+      email: memberData.value.email,
+      phoneNumber: memberData.value.phoneNumber,
+      bankAccountNumber: memberData.value.bankAccountNumber,
+      address: memberData.value.address,
+    };
+
+    // 서버에 데이터 업데이트를 요청합니다.
+    const response = await patchApi({
+      url: `/member/detail`,
+      data: updatedData,
+    });
+
+    // 요청이 성공하면 적절한 처리를 수행합니다.
+    console.log("데이터 업데이트 성공:", response);
+  } catch (error) {
+    // 요청이 실패하면 오류 처리를 수행합니다.
+    console.error("데이터 업데이트 오류:", error);
+  }
+};
+
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: `/member/detail`,
+  });
+  memberData.value = data;
+});
 
 const router = useRouter();
-const menuData = ref([]);
 
-
-
-  const locations = [
-      '서울특별시',
-      '인천광역시',
-      '대전광역시',
-      '울산광역시',
-      '대구광역시',
-      '광주광역시',
-      '부산광역시',
-      '세종특별자치시',
-      '경기도',
-      '강원특별자치도',
-      '전라남도',
-      '전라북도',
-      '전라남도',
-      '전라북도',
-      '충청북도',
-      '충청남도',
-      '경상남도',
-      '경상북도',
-      '제주특별자치도',
-    ];
-    const location = '주소를 선택해주세요';
-
-  const navigateToMyPage = () => {
+const navigateToMyPage = () => {
   router.push({ name: "MyPage" });
-  };
+};
 
-  const navigateToMySubscribeProduct = () => {
+const navigateToMySubscribeProduct = () => {
   router.push({ name: "MySubscribeProduct" });
 };
 
@@ -168,12 +188,7 @@ const navigateToRecommend = () => {
 const navigateToWithdraw = () => {
   router.push({ name: "Withdraw" });
 };
-   
-   
-
- 
 </script>
-
 
 <style scoped>
 @font-face {
@@ -188,5 +203,4 @@ const navigateToWithdraw = () => {
   font-size: 15px;
   font-family: "WooridaumB", sans-serif;
 }
-
 </style>

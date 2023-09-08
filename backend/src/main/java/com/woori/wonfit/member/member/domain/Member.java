@@ -38,6 +38,12 @@ public class Member {
     @Column(name = "phone_number", length = 15, nullable = false)
     private String phoneNumber; // 회원 전화번호
 
+    @Column(name = "bank_account_number")
+    private String bankAccountNumber; // 계좌번호
+
+    @Column(name = "bank_account_password")
+    private String bankAccountPassword; // 계좌 비밀번호
+
     @Column(name = "status")
     @ColumnDefault("true")
     private boolean status; // 회원 상태(정상, 탈퇴)

@@ -15,13 +15,3 @@ export const patchApi = async (param) => {
     throw error; // 오류를 다시 던짐
   }
 };
-
-// import { patchApi } from "@/api/patchApi.js";
-
-// // PATCH 요청 보내기
-// const result = await patchApi({
-//   url: "/update", // 요청할 URL 지정
-//   data: { id: 123, name: "Updated Name" }, // 전달할 데이터 지정
-// });
-
-// console.log("PATCH 요청 결과:", result);

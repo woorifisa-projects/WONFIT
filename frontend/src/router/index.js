@@ -52,10 +52,10 @@ const routes = [
           import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
       },
       {
-        path: "manager-page",
-        name: "ManagerPage",
+        path: "manage-log",
+        name: "ManageLog",
         component: () =>
-          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
+          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManageLog.vue"),
       },
 
       {
@@ -69,13 +69,6 @@ const routes = [
         path: "send-talk",
         name: "SendTalk",
         component: () => import(/* webpackChunkName: "SendTalk" */ "@/views/manager/SendTalk.vue"),
-      },
-
-      {
-        path: "member-sign",
-        name: "MemberSign",
-        component: () =>
-          import(/* webpackChunkName: "MemberSign" */ "@/views/manager/MemberSign.vue"),
       },
 
       // views/member
@@ -180,15 +173,13 @@ const routes = [
       {
         path: "fund-test",
         name: "FundTest",
-        component: () =>
-          import(/* webpackChunkName: "fundtest" */ "@/views/test/FundTest.vue"),
+        component: () => import(/* webpackChunkName: "fundtest" */ "@/views/test/FundTest.vue"),
       },
 
       {
         path: "loan-test",
         name: "LoanTest",
-        component: () =>
-          import(/* webpackChunkName: "loantest" */ "@/views/test/LoanTest.vue"),
+        component: () => import(/* webpackChunkName: "loantest" */ "@/views/test/LoanTest.vue"),
       },
 
       {

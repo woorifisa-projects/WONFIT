@@ -1,5 +1,6 @@
 package com.woori.wonfit.member.member.controller;
 
+import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
 import com.woori.wonfit.member.member.service.MemberServiceImpl;
@@ -22,6 +23,7 @@ import java.util.List;
 public class MemberController {
     private final MemberServiceImpl memberService;
     private final MemberInfoService memberInfoService;
+    private final CookieConfig cookieConfig;
 
     // 회원 가입
     @PostMapping("wonfit/register")
@@ -63,15 +65,19 @@ public class MemberController {
     }
 
     // 사용자 마이페이지 내 상세정보 조회
-    @GetMapping("/member/detail")
-    public ResponseEntity<MemberDetails> getMemberDetails(@PathVariable Long id) {
+    @GetMapping("member/detail")
+    public ResponseEntity<MemberDetails> getMemberDetails(HttpServletRequest request) {
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
         MemberDetails memberDetails = memberService.findById(id);
         return new ResponseEntity<>(memberDetails, HttpStatus.OK);
     }
 
     // 사용자 마이페이지 상세정보 수정
-    @PatchMapping("/member/detail")
-    public ResponseEntity<String> updateMemberDetails(@PathVariable Long id, @RequestBody MemberDetails memberDetails) {
+    @PatchMapping("member/detail")
+    public ResponseEntity<String> updateMemberDetails(@RequestBody MemberDetails memberDetails, HttpServletRequest request) {
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
         memberService.updateMemberDetails(id, memberDetails);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
