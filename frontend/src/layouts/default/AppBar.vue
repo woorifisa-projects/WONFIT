@@ -18,7 +18,7 @@
 
           <div
             class="logo-text clickable-title"
-            style="margin: 25px"
+            style="margin: 23px"
             @click="navigateToProductSearchPage"
           >
             상품 검색
@@ -30,7 +30,7 @@
 
     <!--로그인하면 로그아웃으로 변경-->
     <template v-if="isLogin">
-      <div class="logo-text mt-2" style="margin-right: 30px" @click="navigateToMyPage">
+      <div class="logo-text mt-2" style="margin-right: 23px" @click="navigateToMyPage">
         마이페이지
       </div>
       <div>
@@ -39,6 +39,9 @@
     </template>
 
     <template v-else>
+      <div class="logo-text mt-2" style="margin-right: 23px" @click="navigateToSignup">
+        가입하기
+      </div>
       <div class="logo-text mt-2" style="margin-right: 200px" @click="navigateToLoginPage">
         로그인
       </div>
@@ -87,6 +90,10 @@ const navigateToLoginPage = () => {
 
 const navigateToMyPage = () => {
   router.push({ name: "MyPage" });
+};
+
+const navigateToSignup = () => {
+  router.push({ name: "Signup" });
 };
 </script>
 

@@ -5,6 +5,7 @@ export const getApi = async (param) => {
     method: "get",
     url: param.url,
     data: param.data,
-  });
+  },
+    { withCredentials: true });
   return data;
 };

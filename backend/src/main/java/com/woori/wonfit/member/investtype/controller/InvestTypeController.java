@@ -37,8 +37,8 @@ public class InvestTypeController {
         return responseList;
     }
     @PostMapping
-    public ResponseEntity<Cookie> createInvestType(@RequestBody InvestTypeRequest request1, HttpServletRequest request, HttpServletResponse response) {
-        Cookie cookie = investTypeService.save(request,request1);
+    public ResponseEntity<Cookie> createInvestType(@RequestBody InvestTypeRequest investTypeRequest, HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = investTypeService.save(investTypeRequest, request);
         response.addCookie(cookie);
         return new ResponseEntity<>(cookie, HttpStatus.OK);
     }

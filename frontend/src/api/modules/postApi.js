@@ -5,6 +5,7 @@ export const postApi = async (param) => {
     method: "post",
     url: param.url,
     data: param.data,
-  });
+  },
+    { withCredentials: true });
   return data;
 };

@@ -11,7 +11,7 @@ import java.util.List;
 public interface InvestTypeService {
     List<InvestType> findByMemberId(HttpServletRequest request);
 
-    Cookie save(HttpServletRequest request, InvestTypeRequest investType);
+    Cookie save(InvestTypeRequest investType, HttpServletRequest request);
 
     void registInvestment(Member member);
 

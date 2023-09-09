@@ -1,5 +1,13 @@
 package com.woori.wonfit.manager.service;
 
+import com.woori.wonfit.config.CookieConfig;
+import com.woori.wonfit.config.JwtUtil;
+import com.woori.wonfit.manager.domain.Manager;
+import com.woori.wonfit.manager.dto.ManagerLoginRequest;
+import com.woori.wonfit.manager.dto.DeleteMemberRequest;
+import com.woori.wonfit.manager.dto.ManagerRegisterRequest;
+import com.woori.wonfit.manager.repository.ManagerRepository;
+import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
 import com.woori.wonfit.product.deposit.repository.DepositRepository;
@@ -10,10 +18,11 @@ import com.woori.wonfit.product.savings.domain.Savings;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
 import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Optional;
+import javax.servlet.http.Cookie;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +31,45 @@ public class ManagerServiceImpl implements ManagerService {
     private final FundRepository fundRepository;
     private final SavingsRepository savingsRepository;
     private final DepositRepository depositRepository;
+    private final MemberRepository memberRepository;
+    private final ManagerRepository managerRepository;
 
+    private final CookieConfig cookieConfig;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${jwt.token.access}")
+    private String accessKey;
+    @Value("${jwt.token.refresh}")
+    private String refreshKey;
+    private Long accessTokenExpireTime = 1000 * 60 * 60l;
+    private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
+
+    @Override
+    public String managerRegister(ManagerRegisterRequest request){
+        String encodePassword = bCryptPasswordEncoder.encode(request.getPassword());
+        Manager manager = Manager.builder().loginId(request.getLoginId()).password(encodePassword).build();
+        managerRepository.save(manager);
+        return "매니저 회원가입이 왼료되었습니다.";
+    }
+
+    @Override
+    public Cookie managerLogin(ManagerLoginRequest request){
+        Manager manager = managerRepository.findByLoginId(request.getLoginId()).orElseThrow(() -> new RuntimeException("매니저 정보를 찾을 수 없습니다."));;
+
+        if (!bCryptPasswordEncoder.matches(request.getPassword(), manager.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }else {
+            String accessToken = JwtUtil.createAccessToken(manager.getId().toString(), accessTokenExpireTime, "ADMIN", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(manager.getId().toString(), refreshTokenExpireTime, "ADMIN", refreshKey);
+
+            Cookie cookie = cookieConfig.createCookie(accessToken);
+
+            manager.setRefreshToken(refreshToken);
+            managerRepository.save(manager);
+
+            return cookie;
+        }
+    }
     @Override
     public Fund createFund(FundRequest fundRequest) {
         Fund fund = Fund.builder()
@@ -73,8 +120,6 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void deleteFund(Long id) {
         fundRepository.deleteById(id);
-
-
     }
 
     @Override
@@ -85,7 +130,12 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void deleteSavings(Long id) {
         savingsRepository.deleteById(id);
+    }
 
+    @Override
+    public String deleteMember(DeleteMemberRequest request){
+        memberRepository.deleteById(request.getId());
+        return "회원 정보 삭제가 왼료되었습니다.";
     }
 }
 

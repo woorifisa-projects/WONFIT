@@ -2,7 +2,7 @@
   <div class="mt-5">
     <!-- 선택한 상품정보 CARD -->
     <div>
-      <v-card class="mx-auto mt-12 mb-10" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-12" max-width="900" elevation="4">
         <v-card-title style="background-color: #e2eeff"> 선택한 상품정보 </v-card-title>
         <v-divider></v-divider>
 
@@ -16,7 +16,7 @@
 
             <v-col>
               <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2"
-                >{{ depositData.depositName }}
+                >{{ savingsData.savingsName }}
               </v-card-text>
             </v-col>
           </v-row>
@@ -29,7 +29,7 @@
 
             <v-col class="mt-n10">
               <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
-                {{ depositData.interestRate }}%
+                {{ savingsData.interestRate }}%
               </v-card-text>
             </v-col>
           </v-row>
@@ -46,29 +46,29 @@
         <v-card-item class="card-scroll" style="color: #4c4b4b">
           <div class="ma-10 mt-16 pt-16">
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <h3>예금 상품 가입 약관</h3>
+            <h3>적금 상품 가입 약관</h3>
             <br />
             <h3>제 1 조 (목적)</h3>
             <p>
-              본 약관은 예금 상품에 관한 이용 조건 및 기타 필요한 사항을 규정함을 목적으로 합니다.
+              본 약관은 적금 상품에 관한 이용 조건 및 기타 필요한 사항을 규정함을 목적으로 합니다.
             </p>
             <br />
             <h3>제 2 조 (용어의 정의)</h3>
             <p>
-              1. "은행"이라 함은 가입자에게 예금 상품을 제공하는 은행을 의미합니다.<br />
-              2. "가입자"라 함은 예금 상품을 가입한 개인 또는 법인을 의미합니다.<br />
-              3. "예금 상품"이라 함은 은행이 제공하는 예금 관련 상품을 의미합니다.
+              1. "은행"이라 함은 가입자에게 적금 상품을 제공하는 은행을 의미합니다.<br />
+              2. "가입자"라 함은 적금 상품을 가입한 개인 또는 법인을 의미합니다.<br />
+              3. "적금 상품"이라 함은 은행이 제공하는 적금 관련 상품을 의미합니다.
             </p>
             <br />
-            <h3>제 3 조 (예금 상품 가입)</h3>
+            <h3>제 3 조 (적금 상품 가입)</h3>
             <p>
-              가입자는 은행에서 제공하는 예금 상품을 가입할 수 있으며, 가입 시 해당 예금 상품의 약관
+              가입자는 은행에서 제공하는 적금 상품을 가입할 수 있으며, 가입 시 해당 적금 상품의 약관
               및 조건을 따라야 합니다.
             </p>
             <br />
-            <h3>제 4 조 (예금 상품 이용)</h3>
+            <h3>제 4 조 (적금 상품 이용)</h3>
             <p>
-              가입자는 예금 상품을 은행이 정한 조건과 방법에 따라 이용해야 하며, 이용 시 발생하는
+              가입자는 적금 상품을 은행이 정한 조건과 방법에 따라 이용해야 하며, 이용 시 발생하는
               수수료 및 이자율 등에 대한 정보를 확인해야 합니다.
             </p>
             <br />
@@ -152,7 +152,7 @@
                 <v-text-field
                   placeholder="입금하고자하는 금액을 입력해주세요."
                   :rules="[rules.minDeposit]"
-                  :hint="getHint()"
+                  hint="최소 입금 금액은 1만원 입니다."
                   style="width: 300px; margin-left: 22px"
                   variant="outlined"
                 >
@@ -171,6 +171,41 @@
                   <v-radio label="6개월" value="6" style="color: black"></v-radio>
                   <v-radio label="12개월" value="12" style="color: black"></v-radio>
                 </v-radio-group>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="2" class="pt-7">
+                <span>월 납입 금액</span>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  placeholder="입금하고자하는 금액을 입력해주세요."
+                  :rules="[rules.maxDeposit]"
+                  :hint="getHint()"
+                  style="width: 300px; margin-left: 22px"
+                  single-line
+                  variant="outlined"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col> </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="2" class="pt-6">
+                <span>납입일 지정</span>
+              </v-col>
+              <v-col>
+                <v-select
+                  clearable
+                  :items="items"
+                  density="comfortable"
+                  placeholder="매월 납입일을 선택해주세요."
+                  style="width: 300px; margin-left: 22px"
+                  variant="outlined"
+                >
+                </v-select>
               </v-col>
             </v-row>
 
@@ -216,9 +251,8 @@
 import { ref, onBeforeMount } from "vue";
 import { getApi } from "@/api/modules";
 import { useRoute } from "vue-router";
-import DetailText from "@/components/card/carddetail/DetailText.vue";
 
-const depositData = ref([]);
+const savingsData = ref([]);
 const route = useRoute();
 // URL에서 productId를 가져오기 위해 route.params를 사용합니다.
 const productId = route.params.id;
@@ -227,7 +261,7 @@ const selected = ref([]);
 // 출금계좌번호
 let accountNumbers = ref([]);
 // 최소 입금 금액
-let minDeposit = ref(0);
+let maxDeposit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
@@ -235,17 +269,20 @@ const value = ref(""); // v-model로 입력값을 받아올 변수
 
 const rules = {
   minLength: (v) => v.length <= 4,
-  minDeposit: (v) => v >= minDeposit.value,
+  minDeposit: (v) => v >= 10000,
+  maxDeposit: (v) => v >= maxDeposit.value,
 };
 
 const getHint = () => {
-  if (!value || value < minDeposit.value) {
-    return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
+  if (!value || value < maxDeposit.value) {
+    return `최소 입금 금액은 ${maxDeposit.value}원 입니다.`;
   }
-  return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
+  return `최소 입금 금액은 ${maxDeposit.value}원 입니다.`;
 };
 
-// 이전 페이지로 이동
+const items = ref(Array.from({ length: 28 }, (_, i) => `${i + 1}일`));
+
+// 이전 페이지로 이동하는 코드
 const goBack = () => {
   history.back();
 };
@@ -253,12 +290,12 @@ const goBack = () => {
 // 상품 정보 가져오기
 onBeforeMount(async () => {
   const data = await getApi({
-    url: `/product/deposit/${productId}`,
+    url: `/product/savings/${productId}`,
   });
-  depositData.value = data;
+  savingsData.value = data;
   console.log(data);
-  accountNumbers.value = [depositData.value.depositName];
-  minDeposit.value = depositData.value.minDeposit;
+  accountNumbers.value = [savingsData.value.savingsName];
+  maxDeposit.value = savingsData.value.maxDeposit;
 });
 </script>
 
@@ -278,9 +315,5 @@ span {
 
 .v-radio-group {
   margin-left: 13px;
-}
-
-.detail-text {
-  font-size: 15px;
 }
 </style>

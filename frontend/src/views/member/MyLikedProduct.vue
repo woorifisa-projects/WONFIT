@@ -7,6 +7,7 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
+
                 <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
                   >내 가입상품 확인하기</v-list-item
                 >
@@ -76,8 +77,7 @@ const users = ref([]); // 초기에 빈 배열로 초기화
 
 onMounted(async () => {
   try {
-    const memberId = 1; // 대상 멤버 ID를 설정
-    const response = await axios.get(`http://localhost:8080/member/mypage/liked/${memberId}`);
+    const response = await axios.get(`http://localhost:8080/member/mypage/liked`, { withCredentials: true });
     const data = response.data;
 
     data.forEach((item) => {

@@ -3,12 +3,14 @@ package com.woori.wonfit.log.smslog.domain;
 import com.woori.wonfit.log.smslog.dto.SmsRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sms {

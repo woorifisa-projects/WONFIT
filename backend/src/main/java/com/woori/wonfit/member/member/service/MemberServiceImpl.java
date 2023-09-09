@@ -13,7 +13,7 @@ import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
-import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
+import com.woori.wonfit.member.memberinfo.service.MemberInfoServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -33,15 +34,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final MemberInfoService memberInfoService;
+    private final MemberInfoRepository memberInfoRepository;
     private final LoginLogRepository loginLogRepository;
 
     private final InvestTypeService investTypeService;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final JwtFilter jwtFilter;
     private final CookieConfig cookieConfig;
-
-    private final MemberInfoRepository memberInfoRepository;
 
 
     @Value("${jwt.token.access}")
@@ -57,6 +58,7 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
+    @Transactional
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByLoginId(request.getLoginId())
                 .ifPresent(member -> {
@@ -68,6 +70,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(saveMember.getId()).get();
         investTypeService.registInvestment(member);
 
+        MemberInfo memberInfo = MemberInfo.builder().member(member).build();
+        memberInfoRepository.save(memberInfo);
 
         return MemberDto.fromEntity(saveMember);
     }
@@ -101,8 +105,6 @@ public class MemberServiceImpl implements MemberService {
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
 
-            jwtFilter.setFlag(true);
-
             return cookie;
         }
     }
@@ -118,8 +120,6 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         Cookie cookie = cookieConfig.createCookie("");
-
-        jwtFilter.setFlag(false);
 
         return cookie;
     }
@@ -144,11 +144,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDetails findById(Long id) {
-        Optional<Member> member = memberRepository.findById(id);
+        Member member = memberRepository.findById(id).get();
 
-        MemberInfo memberInfo = memberInfoService.findByMemberId(id);
+        MemberInfo memberInfo = memberInfoRepository.findByMemberId(id).get();
 
-        MemberDetails memberDetails = MemberDetails.fromEntity(member.get(), memberInfo);
+        MemberDetails memberDetails = MemberDetails.fromEntity(member, memberInfo);
 
         return memberDetails;
     }

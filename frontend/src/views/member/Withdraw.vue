@@ -25,6 +25,7 @@
           </v-col>
 
           <v-col>
+
             <v-sheet min-height="50vh" rounded="lg">
               <v-form @submit.prevent="withdraw">
                 <v-responsive>
@@ -57,6 +58,7 @@
                   />
                 </div>
               </v-form>
+
             </v-sheet>
           </v-col>
         </v-row>
@@ -123,6 +125,7 @@ const withdraw = async () => {
     console.error("데이터 업데이트 오류:", error);
   }
 };
+
 </script>
 
 <style scoped>

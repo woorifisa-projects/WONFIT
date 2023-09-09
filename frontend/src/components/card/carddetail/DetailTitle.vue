@@ -31,7 +31,7 @@
                 width="160"
                 height="45"
                 style="font-size: large; color: white"
-                @click="handleButtonClick"
+                @click="navigateToSubscribe"
               >
                 {{ button1 }}
               </v-btn>
@@ -44,10 +44,23 @@
                 width="160"
                 height="45"
                 style="font-size: large; color: white"
+                @click="dialog = true"
               >
                 {{ button2 }}
               </v-btn>
             </div>
+
+            <v-dialog v-model="dialog" max-width="250">
+              <v-card class="text-center" style="border-radius: 15px">
+                <v-card-text class="pt-7 pb-0"> 고객상담 02-123-4567 </v-card-text>
+                <v-card-actions class="d-flex justify-center">
+                  <v-btn color="primary" style="border-radius: 16px" @click="dialog = false"
+                    >닫기</v-btn
+                  >
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
             <div class="pa-2 mt-1">
               <v-btn rounded="xl" width="160" height="45" style="font-size: medium">
                 <svg-icon
@@ -67,23 +80,17 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from "vue";
+import { ref, defineProps } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiPuzzleHeart } from "@mdi/js";
+import { useRouter, useRoute } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
 
 // ref를 사용하여 초기값이 false인 loading 데이터를 정의합니다.
-const loading = ref(false);
 const path = ref(mdiPuzzleHeart);
-const emits = defineEmits(["button-click"]);
-
-// loading 데이터가 변경될 때 실행될 함수를 정의합니다.
-watch(loading, (val) => {
-  if (!val) return;
-
-  setTimeout(() => {
-    loading.value = false;
-  }, 2000);
-});
+const dialog = ref(false);
 
 const props = defineProps([
   "name",
@@ -99,6 +106,7 @@ const props = defineProps([
   "type",
   "button1",
   "button2",
+  "url",
 ]);
 
 // 상품에 상관없이 불러올 수 있는 값
@@ -106,10 +114,8 @@ const name = props.name;
 const info = props.info;
 const type = props.type;
 
-// 버튼 클릭 핸들러를 정의합니다.
-const handleButtonClick = () => {
-  // 버튼이 클릭되었을 때 이벤트를 발생시킵니다.
-  emits("button-click", "button1");
+const navigateToSubscribe = () => {
+  router.push(`/subscribe/${props.url}/${route.params.id}`);
 };
 </script>
 

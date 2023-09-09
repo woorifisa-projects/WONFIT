@@ -7,7 +7,8 @@ export const patchApi = async (param) => {
       method: "patch", // PATCH 메서드 선택
       url: param.url, // 요청할 URL 지정
       data: param.data, // 전달할 데이터 지정
-    });
+    },
+      { withCredentials: true });
     return data; // 응답 데이터 반환
   } catch (error) {
     // 요청 실패 시 오류 처리

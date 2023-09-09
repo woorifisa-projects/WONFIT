@@ -93,6 +93,7 @@ const router = useRouter();
 import { postApi } from "@/api/modules";
 import { ref } from "vue";
 
+
 const visible = ref(false);
 
 const name = ref();
@@ -127,7 +128,7 @@ const signup = async () => {
 
     if (response.status == 200) {
       // 쿠키 저장 메소드
-      router.push({ name: "MainPage" }); // 성공하면 메인페이지로 이동
+      router.push({ name: "MainPage" });
 
       // 요청이 성공하면 적절한 처리를 수행합니다.
       console.log("데이터 업데이트 성공:", response);

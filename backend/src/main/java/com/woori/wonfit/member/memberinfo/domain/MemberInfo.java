@@ -2,15 +2,12 @@ package com.woori.wonfit.member.memberinfo.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "member_info")
 @Builder
 @NoArgsConstructor
@@ -45,7 +42,7 @@ public class MemberInfo {
     @Column(name = "job")
     private String job;
 
-    @Column(name="invest_type", nullable = true)
+    @Column(name="invest_type")
     private String investType; // 투자성향
 
 

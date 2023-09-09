@@ -17,6 +17,7 @@ public class CookieConfig {
     private String accessKey;
 
     public String parseCookie(HttpServletRequest request){
+        log.info("parseCookie called!");
         Cookie[] cookies = request.getCookies();
         log.info("Cookey key = {}", key);
         for (Cookie cookie : cookies) {
