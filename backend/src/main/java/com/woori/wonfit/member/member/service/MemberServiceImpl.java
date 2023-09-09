@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -33,15 +34,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final MemberInfoService memberInfoService;
+    private final MemberInfoRepository memberInfoRepository;
     private final LoginLogRepository loginLogRepository;
 
     private final InvestTypeService investTypeService;
+    private final MemberInfoService memberInfoService;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final JwtFilter jwtFilter;
     private final CookieConfig cookieConfig;
-
-    private final MemberInfoRepository memberInfoRepository;
 
 
     @Value("${jwt.token.access}")
@@ -57,6 +59,7 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
+    @Transactional
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByLoginId(request.getLoginId())
                 .ifPresent(member -> {
@@ -68,6 +71,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(saveMember.getId()).get();
         investTypeService.registInvestment(member);
 
+        MemberInfo memberInfo = MemberInfo.builder().member(member).build();
+        memberInfoRepository.save(memberInfo);
 
         return MemberDto.fromEntity(saveMember);
     }

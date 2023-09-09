@@ -1,6 +1,7 @@
 package com.woori.wonfit.manager.service;
 
 import com.woori.wonfit.config.CookieConfig;
+import com.woori.wonfit.manager.dto.DeleteMemberRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
@@ -13,10 +14,6 @@ import com.woori.wonfit.product.savings.dto.SavingsRequest;
 import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -91,10 +88,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public String deleteMember(HttpServletRequest request){
-        String token = cookieConfig.parseCookie(request);
-        Long id = cookieConfig.getIdFromToken(token);
-        memberRepository.deleteById(id);
+    public String deleteMember(DeleteMemberRequest request){
+        memberRepository.deleteById(request.getId());
         return "회원 정보 삭제가 왼료되었습니다.";
     }
 }

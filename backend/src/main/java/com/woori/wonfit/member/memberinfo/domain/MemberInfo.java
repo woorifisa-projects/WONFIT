@@ -2,15 +2,12 @@ package com.woori.wonfit.member.memberinfo.domain;
 
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "member_info")
 @Builder
 @NoArgsConstructor
@@ -20,7 +17,7 @@ public class MemberInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne
     @JoinColumn(name = "member_id") // 외래 키를 사용하는 주인인 Member에 대한 참조
     private Member member;
 
@@ -45,7 +42,7 @@ public class MemberInfo {
     @Column(name = "job")
     private String job;
 
-    @Column(name="invest_type", nullable = true)
+    @Column(name="invest_type")
     private String investType; // 투자성향
 
 

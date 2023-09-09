@@ -1,18 +1,12 @@
 package com.woori.wonfit.manager.service;
 
-import com.woori.wonfit.member.member.domain.Member;
+import com.woori.wonfit.manager.dto.DeleteMemberRequest;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.fund.dto.FundRequest;
-import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
-import com.woori.wonfit.product.savings.dto.SavingsResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 public interface ManagerService {
 
@@ -28,5 +22,5 @@ public interface ManagerService {
 
     void deleteSavings(Long id);
 
-    String deleteMember(HttpServletRequest request);
+    String deleteMember(DeleteMemberRequest request);
 }

@@ -13,11 +13,6 @@ import java.util.Optional;
 public class MemberInfoService {
     private final MemberInfoRepository memberInfoRepository;
 
-    public void saveMemberInfo(MemberRegisterRequest memberRegisterRequest){
-        MemberInfo memberInfo = memberRegisterRequest.toInfoEntity(memberRegisterRequest);
-        memberInfoRepository.save(memberInfo);
-    }
-
     public MemberInfo findByMemberId(Long id){
         Optional<MemberInfo> memberInfo = memberInfoRepository.findById(id);
         return memberInfo.get();
