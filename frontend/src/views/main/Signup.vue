@@ -35,6 +35,9 @@
           v-model="password"
           color="primary"
           label="비밀번호"
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          @click:append-inner="visible = !visible"
           hint="8자 이상 20자 이하로 입력해 주세요."
           maxLength="20"
           variant="underlined"
@@ -89,6 +92,8 @@ const router = useRouter();
 
 import { postApi } from "@/api/modules";
 import { ref } from "vue";
+
+const visible = ref(false);
 
 const name = ref();
 const registrationNumber = ref();
