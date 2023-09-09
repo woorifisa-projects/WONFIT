@@ -162,23 +162,6 @@
             </v-row>
 
             <v-row>
-              <v-col cols="2" class="pt-7">
-                <span>월 납입 금액</span>
-              </v-col>
-              <v-col cols="8">
-                <v-text-field
-                  placeholder="입금하고자하는 금액을 입력해주세요."
-                  :rules="[rules.maxDeposit]"
-                  :hint="getHint()"
-                  style="width: 300px; margin-left: 22px"
-                  variant="outlined"
-                >
-                </v-text-field>
-              </v-col>
-              <v-col> </v-col>
-            </v-row>
-
-            <v-row>
               <v-col cols="2" class="pt-5">
                 <span>가입 기간</span>
               </v-col>
@@ -188,6 +171,41 @@
                   <v-radio label="6개월" value="6" style="color: black"></v-radio>
                   <v-radio label="12개월" value="12" style="color: black"></v-radio>
                 </v-radio-group>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="2" class="pt-7">
+                <span>월 납입 금액</span>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  placeholder="입금하고자하는 금액을 입력해주세요."
+                  :rules="[rules.maxDeposit]"
+                  :hint="getHint()"
+                  style="width: 300px; margin-left: 22px"
+                  single-line
+                  variant="outlined"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col> </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="2" class="pt-6">
+                <span>납입일 지정</span>
+              </v-col>
+              <v-col>
+                <v-select
+                  clearable
+                  :items="items"
+                  density="comfortable"
+                  placeholder="매월 납입일을 선택해주세요."
+                  style="width: 300px; margin-left: 22px"
+                  variant="outlined"
+                >
+                </v-select>
               </v-col>
             </v-row>
 
@@ -247,6 +265,7 @@ let maxDeposit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
+const value = ref(""); // v-model로 입력값을 받아올 변수
 
 const rules = {
   minLength: (v) => v.length <= 4,
@@ -260,7 +279,8 @@ const getHint = () => {
   }
   return `최소 입금 금액은 ${maxDeposit.value}원 입니다.`;
 };
-const value = ref(""); // v-model로 입력값을 받아올 변수
+
+const items = ref(Array.from({ length: 28 }, (_, i) => `${i + 1}일`));
 
 // 이전 페이지로 이동하는 코드
 const goBack = () => {

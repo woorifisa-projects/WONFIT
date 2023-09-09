@@ -173,17 +173,11 @@
                   variant="outlined"
                 >
                 </v-text-field>
-              </v-col>
-              <v-col> </v-col>
-            </v-row>
-
-            <v-row>
-              <v-col cols="2"> </v-col>
-              <v-col>
-                <p class="mt-n8 mx-6" style="color: #4c4b4b">
+                <p class="mx-5" style="color: #4c4b4b">
                   기준가는 {{ fundData.fundPrice }}원 입니다.
                 </p>
               </v-col>
+              <v-col> </v-col>
             </v-row>
 
             <div class="mt-9 mb-10">
@@ -221,6 +215,7 @@ let minDeposit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
+const value = ref(""); // v-model로 입력값을 받아올 변수
 
 const rules = {
   minLength: (v) => v.length <= 4,
@@ -233,7 +228,6 @@ const getHint = () => {
   }
   return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
 };
-const value = ref(""); // v-model로 입력값을 받아올 변수
 
 // 이전 페이지로 이동하는 코드
 const goBack = () => {

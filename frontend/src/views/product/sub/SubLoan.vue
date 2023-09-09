@@ -177,16 +177,18 @@
             </v-row>
 
             <v-row>
-              <v-col cols="2" class="pt-7">
+              <v-col cols="2" class="pt-6">
                 <span>이자납입일</span>
               </v-col>
               <v-col cols="8">
-                <v-text-field
-                  placeholder="이자 납입할 날짜를 입력해주세요."
+                <v-select
+                  clearable
+                  :items="items"
+                  density="comfortable"
+                  placeholder="매월 납입일을 선택해주세요."
                   style="width: 300px; margin-left: 22px"
                   variant="outlined"
-                >
-                </v-text-field>
+                ></v-select>
               </v-col>
             </v-row>
 
@@ -238,7 +240,7 @@ const rules = {
   loanLimit: (v) => v <= loanLimit.value,
 };
 
-const value = ref(""); // v-model로 입력값을 받아올 변수
+const items = ref(Array.from({ length: 28 }, (_, i) => `${i + 1}일`));
 
 // 이전 페이지로 이동하는 코드
 const goBack = () => {
