@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+    private final JwtFilter jwtFilter;
     private final MemberRepository memberRepository;
     private final CookieConfig cookieConfig;
 
@@ -26,13 +26,14 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
-                .authorizeRequests(auth -> auth.antMatchers("/member/login", "/member/register").permitAll()
-                        .antMatchers("/**").hasAnyRole("USER")
+                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**").permitAll()
+                        .antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers("/manager/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtFilter(memberRepository, cookieConfig), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

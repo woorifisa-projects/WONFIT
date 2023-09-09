@@ -13,7 +13,7 @@ import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
-import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
+import com.woori.wonfit.member.memberinfo.service.MemberInfoServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,6 @@ public class MemberServiceImpl implements MemberService {
     private final LoginLogRepository loginLogRepository;
 
     private final InvestTypeService investTypeService;
-    private final MemberInfoService memberInfoService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -106,8 +105,6 @@ public class MemberServiceImpl implements MemberService {
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
 
-            jwtFilter.setFlag(true);
-
             return cookie;
         }
     }
@@ -123,8 +120,6 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         Cookie cookie = cookieConfig.createCookie("");
-
-        jwtFilter.setFlag(false);
 
         return cookie;
     }
@@ -149,11 +144,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDetails findById(Long id) {
-        Optional<Member> member = memberRepository.findById(id);
+        Member member = memberRepository.findById(id).get();
 
-        MemberInfo memberInfo = memberInfoService.findByMemberId(id);
+        MemberInfo memberInfo = memberInfoRepository.findByMemberId(id).get();
 
-        MemberDetails memberDetails = MemberDetails.fromEntity(member.get(), memberInfo);
+        MemberDetails memberDetails = MemberDetails.fromEntity(member, memberInfo);
 
         return memberDetails;
     }

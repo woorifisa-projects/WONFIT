@@ -1,7 +1,11 @@
 package com.woori.wonfit.manager.service;
 
 import com.woori.wonfit.config.CookieConfig;
+import com.woori.wonfit.config.JwtUtil;
+import com.woori.wonfit.manager.domain.Manager;
+import com.woori.wonfit.manager.domain.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
+import com.woori.wonfit.manager.repository.ManagerRepository;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
@@ -13,7 +17,11 @@ import com.woori.wonfit.product.savings.domain.Savings;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
 import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +31,36 @@ public class ManagerServiceImpl implements ManagerService {
     private final SavingsRepository savingsRepository;
     private final DepositRepository depositRepository;
     private final MemberRepository memberRepository;
-    private final CookieConfig cookieConfig;
+    private final ManagerRepository managerRepository;
 
+    private final CookieConfig cookieConfig;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${jwt.token.access}")
+    private String accessKey;
+    @Value("${jwt.token.refresh}")
+    private String refreshKey;
+    private Long accessTokenExpireTime = 1000 * 60 * 60l;
+    private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
+
+    @Override
+    public String managerLogin(ManagerLoginRequest request){
+        Manager manager = managerRepository.findByLoginId(request.getLoginId()).orElseThrow(() -> new RuntimeException("매니저 정보를 찾을 수 없습니다."));;
+
+        if (!bCryptPasswordEncoder.matches(request.getPassword(), manager.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }else {
+            String accessToken = JwtUtil.createAccessToken(manager.getId().toString(), accessTokenExpireTime, "USER", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(manager.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
+
+            Cookie cookie = cookieConfig.createCookie(accessToken);
+
+            manager.setRefreshToken(refreshToken);
+            managerRepository.save(manager);
+
+            return "매니저 로그인이 완료되었습니다.";
+        }
+    }
     @Override
     public Fund createFund(FundRequest fundRequest) {
         Fund fund = Fund.builder()

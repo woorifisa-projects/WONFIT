@@ -1,6 +1,7 @@
 package com.woori.wonfit.manager.controller;
 
 
+import com.woori.wonfit.manager.domain.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
 import com.woori.wonfit.manager.dto.LoanRequest;
 import com.woori.wonfit.manager.dto.LoanResponse;
@@ -35,6 +36,12 @@ public class ManagerController {
     private final DepositService depositService;
     private final SavingsService savingsService;
     private final FundService fundService;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> managerLogin(@RequestBody ManagerLoginRequest request){
+        String result = managerService.managerLogin(request);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     // 펀드 상품 1개 추가
     @PostMapping("/product/fund")

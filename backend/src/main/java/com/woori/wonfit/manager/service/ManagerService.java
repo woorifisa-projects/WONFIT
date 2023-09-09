@@ -1,5 +1,6 @@
 package com.woori.wonfit.manager.service;
 
+import com.woori.wonfit.manager.domain.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
@@ -9,6 +10,8 @@ import com.woori.wonfit.product.savings.domain.Savings;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
 
 public interface ManagerService {
+
+    String managerLogin(ManagerLoginRequest request);
 
     Fund createFund(FundRequest fundRequest);
 

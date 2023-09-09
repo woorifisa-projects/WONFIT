@@ -1,11 +1,12 @@
 package com.woori.wonfit.manager.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name ="manager")
 public class Manager {
 
@@ -14,12 +15,13 @@ public class Manager {
     private Long id;
 
     @Column(name = "login_id")
-    private Long lgoinId;
+    private String loginId;
 
     @Column(name = "password")
     private String password;
 
-
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
 }
 
