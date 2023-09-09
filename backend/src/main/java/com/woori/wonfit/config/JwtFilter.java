@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final CookieConfig cookieConfig;
 
     private String id;
-
+    private String role;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Filter called!");
@@ -47,8 +47,8 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
         String path = request.getRequestURI();
-        if (path.startsWith("/wonfit/") || path.startsWith("/product/")) {
-            log.info("request url is wonfit or product");
+        if (path.startsWith("/wonfit/") || path.startsWith("/product/") || path.startsWith("/manager/login") || path.startsWith("/manager/register")) {
+            log.info("request url is /wonfit/ or /product/ or manager/login");
             filterChain.doFilter(request, response);
             return;
         }
@@ -61,8 +61,16 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
 
-        // accessToken에서 id값 추출
+        // accessToken에서 id 및 role 추출
         Long accessTokenMemberId = cookieConfig.getIdFromToken(accessToken);
+//        String accessTokenMemberRole = JwtUtil.getRole(accessToken, accessKey);
+//
+//        if(accessTokenMemberRole.equals("USER")){
+//            role = "ROLE_USER";
+//        }else if(accessTokenMemberRole.equals("ADMIN")){
+//            role = "ROLE_ADMIN";
+//        }
+//        log.info(accessTokenMemberRole);
 
         // accessToken과 매칭되는 member의 refreshToken을 가져옴
         String refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();

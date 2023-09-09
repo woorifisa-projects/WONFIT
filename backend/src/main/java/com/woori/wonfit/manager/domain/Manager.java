@@ -1,12 +1,14 @@
 package com.woori.wonfit.manager.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name ="manager")
 public class Manager {
 

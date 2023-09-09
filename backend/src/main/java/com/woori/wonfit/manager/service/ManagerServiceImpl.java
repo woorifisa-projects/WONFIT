@@ -3,8 +3,9 @@ package com.woori.wonfit.manager.service;
 import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.manager.domain.Manager;
-import com.woori.wonfit.manager.domain.ManagerLoginRequest;
+import com.woori.wonfit.manager.dto.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
+import com.woori.wonfit.manager.dto.ManagerRegisterRequest;
 import com.woori.wonfit.manager.repository.ManagerRepository;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.product.deposit.domain.Deposit;
@@ -44,21 +45,28 @@ public class ManagerServiceImpl implements ManagerService {
     private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
 
     @Override
-    public String managerLogin(ManagerLoginRequest request){
+    public String managerRegister(ManagerRegisterRequest request){
+        Manager manager = Manager.builder().loginId(request.getLoginId()).password(request.getPassword()).build();
+        managerRepository.save(manager);
+        return "매니저 회원가입이 왼료되었습니다.";
+    }
+
+    @Override
+    public Cookie managerLogin(ManagerLoginRequest request){
         Manager manager = managerRepository.findByLoginId(request.getLoginId()).orElseThrow(() -> new RuntimeException("매니저 정보를 찾을 수 없습니다."));;
 
         if (!bCryptPasswordEncoder.matches(request.getPassword(), manager.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }else {
-            String accessToken = JwtUtil.createAccessToken(manager.getId().toString(), accessTokenExpireTime, "USER", accessKey);
-            String refreshToken = JwtUtil.createRefreshToken(manager.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
+            String accessToken = JwtUtil.createAccessToken(manager.getId().toString(), accessTokenExpireTime, "ADMIN", accessKey);
+            String refreshToken = JwtUtil.createRefreshToken(manager.getId().toString(), refreshTokenExpireTime, "ADMIN", refreshKey);
 
             Cookie cookie = cookieConfig.createCookie(accessToken);
 
             manager.setRefreshToken(refreshToken);
             managerRepository.save(manager);
 
-            return "매니저 로그인이 완료되었습니다.";
+            return cookie;
         }
     }
     @Override

@@ -1,7 +1,6 @@
 package com.woori.wonfit.config;
 
 import com.woori.wonfit.member.member.repository.MemberRepository;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +25,7 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
-                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**").permitAll()
+                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register").permitAll()
                         .antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers("/manager/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())

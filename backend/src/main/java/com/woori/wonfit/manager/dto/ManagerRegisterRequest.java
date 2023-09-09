@@ -1,9 +1,9 @@
-package com.woori.wonfit.manager.domain;
+package com.woori.wonfit.manager.dto;
 
 import lombok.Getter;
 
 @Getter
-public class ManagerLoginRequest {
+public class ManagerRegisterRequest {
     private String loginId;
     private String password;
 }

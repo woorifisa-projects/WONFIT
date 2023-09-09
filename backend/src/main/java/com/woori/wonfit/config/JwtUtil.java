@@ -28,6 +28,20 @@ public class JwtUtil {
             return claims.get("id", String.class);
         }
     }
+    public static String getRole(String token, String secretKey) {
+        try {
+            log.info("called getRole");
+            log.info("getid Token = {}", token);
+            log.info("getId Key = {}", secretKey);
+
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("role", String.class);
+        } catch (ExpiredJwtException e) {
+            Claims claims = e.getClaims();
+            log.info(claims.get("role", String.class));
+
+            return claims.get("role", String.class);
+        }
+    }
 
 
     public static boolean isExpired(String token, String secretKey) {
