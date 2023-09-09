@@ -67,7 +67,7 @@
 
 <script setup>
 import GreyButton from "@/components/button/GreyButton.vue";
-// import WithdrawAlert from "@/componen/ts/modal/WithdrawAlert.vue";
+// import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
 
 import { useRouter } from "vue-router";
 const router = useRouter();

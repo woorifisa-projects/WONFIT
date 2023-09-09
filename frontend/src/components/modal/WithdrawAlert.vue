@@ -24,7 +24,7 @@ const props = defineProps({
 // "닫기" 버튼을 누를 때 호출되는 함수
 function closeDialog() {
   dialog.value = false; // 다이얼로그 닫기
-  router.push("/"); // 메인 페이지로 이동
+  router.push("/"); // 메인 페이지
 }
 </script>
 
