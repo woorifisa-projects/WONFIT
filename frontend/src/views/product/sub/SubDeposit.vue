@@ -231,6 +231,7 @@ let minDeposit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
+const value = ref(""); // v-model로 입력값을 받아올 변수
 
 const rules = {
   minLength: (v) => v.length <= 4,
@@ -243,7 +244,6 @@ const getHint = () => {
   }
   return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
 };
-const value = ref(""); // v-model로 입력값을 받아올 변수
 
 // 이전 페이지로 이동
 const goBack = () => {

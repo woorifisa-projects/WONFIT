@@ -36,6 +36,7 @@
               </v-card-text>
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="3" class="mt-n10 mx-2">
               <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
@@ -46,6 +47,20 @@
             <v-col class="mt-n10 px-0">
               <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
                 {{ fundData.returnRate2 }}%
+              </v-card-text>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="3" class="mt-n10 mx-2">
+              <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
+                기준가
+              </v-card-text>
+            </v-col>
+
+            <v-col class="mt-n10 px-0">
+              <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
+                {{ fundData.fundPrice }}원
               </v-card-text>
             </v-col>
           </v-row>
@@ -162,28 +177,20 @@
 
             <v-row>
               <v-col cols="2" class="pt-7">
-                <span>매수 개수</span>
+                <span>매수 수량</span>
               </v-col>
               <v-col cols="8">
                 <v-text-field
+                  class="mx-5"
                   placeholder="매수하고자하는 개수를 입력해주세요."
                   :rules="[rules.minDeposit]"
                   hint="1개 이상 입력해주세요."
-                  style="width: 300px; margin-left: 22px"
+                  style="width: 300px; smargin-left: 22px"
                   variant="outlined"
                 >
                 </v-text-field>
               </v-col>
               <v-col> </v-col>
-            </v-row>
-
-            <v-row>
-              <v-col cols="2"> </v-col>
-              <v-col>
-                <p class="mt-n8 mx-6" style="color: #4c4b4b">
-                  기준가는 {{ fundData.fundPrice }}원 입니다.
-                </p>
-              </v-col>
             </v-row>
 
             <div class="mt-9 mb-10">
@@ -221,6 +228,7 @@ let minDeposit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
+const value = ref(""); // v-model로 입력값을 받아올 변수
 
 const rules = {
   minLength: (v) => v.length <= 4,
@@ -233,7 +241,6 @@ const getHint = () => {
   }
   return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
 };
-const value = ref(""); // v-model로 입력값을 받아올 변수
 
 // 이전 페이지로 이동하는 코드
 const goBack = () => {
