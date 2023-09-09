@@ -61,8 +61,8 @@ const users = ref([]); // 초기에 빈 배열로 초기화
 
 onMounted(async () => {
   try {
-    
-    const response = await axios.get('http://localhost:8080/api/sublogs/member/1');
+
+    const response = await axios.get('http://localhost:8080/member/mypage/sublog', { withCredentials: true });
     const data = response.data;
 
     data.forEach(item => {

@@ -36,71 +36,77 @@ public class JwtFilter extends OncePerRequestFilter {
     private final CookieConfig cookieConfig;
 
     private String id;
-    private boolean flag = false;
-
+    private String role;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Filter called!");
-        if (flag == true) {
-            log.info("flag == true");
-            // HTTP OPTIONS 메서드인 경우 필터를 통과시키지 않고 다음 필터로 진행
-            if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-                log.info("OPTIONS CALLED    HTTP METHOD = {}", request.getMethod().toString());
-                filterChain.doFilter(request, response);
-                return;
-            }
-
-            String accessToken = cookieConfig.parseCookie(request);
-            
-
-            // token 안보내면 block
-            if (accessToken == null) {
-                log.error("Token 값을 찾을 수 없습니다.");
-                filterChain.doFilter(request, response);
-            }
-
-            // accessToken에서 id값 추출
-            Long accessTokenMemberId = cookieConfig.getIdFromToken(accessToken);
-
-            // accessToken과 매칭되는 member의 refreshToken을 가져옴
-            String refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();
-            log.info("refreshToken = {}", refreshToken);
-
-            String refreshTokenMemberId = JwtUtil.getId(refreshToken, refreshKey);
-
-            // Refresh Token과 Access Token에 저장된 loginId 비교
-            if (!accessTokenMemberId.toString().equals(refreshTokenMemberId)) {
-                log.error("Invalid token signature");
-                throw new SignatureException("Invalid token signature");
-            }
-
-            log.info("accessToken == refreshToken");
-
-            if (JwtUtil.isExpired(accessToken, accessKey)) {
-                log.info("accessToken is expired");
-                // refreshToken 만료되면
-                if (JwtUtil.isExpired(refreshToken, refreshKey)) {
-                    log.error("refreshToken이 만료되었습니다.");
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "refreshToken이 만료 되었습니다.");
-                    filterChain.doFilter(request, response);
-                } else {
-                    accessToken = JwtUtil.createAccessToken(accessTokenMemberId.toString(), 1000 * 60 * 60l, "USER", accessKey);
-                    log.info("Regenerated accessToken");
-                    Cookie responseCookie = cookieConfig.createCookie(accessToken);
-                    response.addCookie(responseCookie);
-                }
-            }
-            id = accessTokenMemberId.toString();
-            log.info("ID : {}", id);
+        // HTTP OPTIONS 메서드인 경우 필터를 통과시키지 않고 다음 필터로 진행
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            log.info("OPTIONS CALLED    HTTP METHOD = {}", request.getMethod().toString());
+            filterChain.doFilter(request, response);
+            return;
         }
+        String path = request.getRequestURI();
+        if (path.startsWith("/wonfit/") || path.startsWith("/product/") || path.startsWith("/manager/login") || path.startsWith("/manager/register")) {
+            log.info("request url is /wonfit/ or /product/ or manager/login");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String accessToken = cookieConfig.parseCookie(request);
+
+        // token 안보내면 block
+        if (accessToken == null) {
+            log.error("Token 값을 찾을 수 없습니다.");
+            filterChain.doFilter(request, response);
+        }
+
+        // accessToken에서 id 및 role 추출
+        Long accessTokenMemberId = cookieConfig.getIdFromToken(accessToken);
+//        String accessTokenMemberRole = JwtUtil.getRole(accessToken, accessKey);
+//
+//        if(accessTokenMemberRole.equals("USER")){
+//            role = "ROLE_USER";
+//        }else if(accessTokenMemberRole.equals("ADMIN")){
+//            role = "ROLE_ADMIN";
+//        }
+//        log.info(accessTokenMemberRole);
+
+        // accessToken과 매칭되는 member의 refreshToken을 가져옴
+        String refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();
+        log.info("refreshToken = {}", refreshToken);
+        log.info("refreshKey = {}", refreshKey);
+        String refreshTokenMemberId = JwtUtil.getId(refreshToken, refreshKey);
+
+        // Refresh Token과 Access Token에 저장된 loginId 비교
+        if (!accessTokenMemberId.toString().equals(refreshTokenMemberId)) {
+            log.error("Invalid token signature");
+            throw new SignatureException("Invalid token signature");
+        }
+
+        log.info("accessToken == refreshToken");
+
+        if (JwtUtil.isExpired(accessToken, accessKey)) {
+            log.info("accessToken is expired");
+            // refreshToken 만료되면
+            if (JwtUtil.isExpired(refreshToken, refreshKey)) {
+                log.error("refreshToken이 만료되었습니다.");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "refreshToken이 만료 되었습니다.");
+                filterChain.doFilter(request, response);
+            } else {
+                accessToken = JwtUtil.createAccessToken(accessTokenMemberId.toString(), 1000 * 60 * 60l, "USER", accessKey);
+                log.info("Regenerated accessToken");
+                Cookie responseCookie = cookieConfig.createCookie(accessToken);
+                response.addCookie(responseCookie);
+            }
+        }
+        id = accessTokenMemberId.toString();
+
         // 권한 부여
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
         // Detail
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
-
-        System.out.println(flag);
     }
-
 }

@@ -1,9 +1,11 @@
 package com.woori.wonfit.manager.controller;
 
 
+import com.woori.wonfit.manager.dto.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
 import com.woori.wonfit.manager.dto.LoanRequest;
 import com.woori.wonfit.manager.dto.LoanResponse;
+import com.woori.wonfit.manager.dto.ManagerRegisterRequest;
 import com.woori.wonfit.manager.service.ManagerService;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositDTO;
@@ -25,6 +27,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/manager")
 @RequiredArgsConstructor
@@ -35,6 +40,18 @@ public class ManagerController {
     private final DepositService depositService;
     private final SavingsService savingsService;
     private final FundService fundService;
+
+    @PostMapping("/register")
+    public ResponseEntity<String > managerRegister(@RequestBody ManagerRegisterRequest request){
+        String result = managerService.managerRegister(request);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<String> managerLogin(@RequestBody ManagerLoginRequest request, HttpServletResponse response){
+        Cookie cookie = managerService.managerLogin(request);
+        response.addCookie(cookie);
+        return new ResponseEntity<>("매니저 로그인이 완료되었습니다.", HttpStatus.OK);
+    }
 
     // 펀드 상품 1개 추가
     @PostMapping("/product/fund")
