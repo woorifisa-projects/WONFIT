@@ -36,6 +36,7 @@
               </v-card-text>
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="3" class="mt-n10 mx-2">
               <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
@@ -46,6 +47,20 @@
             <v-col class="mt-n10 px-0">
               <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
                 {{ fundData.returnRate2 }}%
+              </v-card-text>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="3" class="mt-n10 mx-2">
+              <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
+                기준가
+              </v-card-text>
+            </v-col>
+
+            <v-col class="mt-n10 px-0">
+              <v-card-text style="font-size: large; letter-spacing: 1px; line-height: 2">
+                {{ fundData.fundPrice }}원
               </v-card-text>
             </v-col>
           </v-row>
@@ -162,20 +177,18 @@
 
             <v-row>
               <v-col cols="2" class="pt-7">
-                <span>매수 개수</span>
+                <span>매수 수량</span>
               </v-col>
               <v-col cols="8">
                 <v-text-field
+                  class="mx-5"
                   placeholder="매수하고자하는 개수를 입력해주세요."
                   :rules="[rules.minDeposit]"
                   hint="1개 이상 입력해주세요."
-                  style="width: 300px; margin-left: 22px"
+                  style="width: 300px; smargin-left: 22px"
                   variant="outlined"
                 >
                 </v-text-field>
-                <p class="mx-5" style="color: #4c4b4b">
-                  기준가는 {{ fundData.fundPrice }}원 입니다.
-                </p>
               </v-col>
               <v-col> </v-col>
             </v-row>

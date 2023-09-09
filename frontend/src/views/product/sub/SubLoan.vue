@@ -185,7 +185,7 @@
                   clearable
                   :items="items"
                   density="comfortable"
-                  placeholder="매월 납입일을 선택해주세요."
+                  placeholder="매월 이자납입일을 선택해주세요."
                   style="width: 300px; margin-left: 22px"
                   variant="outlined"
                 ></v-select>
