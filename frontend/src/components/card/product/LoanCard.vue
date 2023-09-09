@@ -1,5 +1,5 @@
 <template>
-  <div class="logo-text mx-auto py-2" color="#eeeeee">
+  <div class="logo-text mx-auto py-2">
     <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
       <div class="product-info">
         <v-card-item>
@@ -20,7 +20,7 @@
         </v-card-text>
       </div>
       <v-card-actions class="flex-row-reverse">
-        <v-btn class="order-last" text>대출신청</v-btn>
+        <v-btn class="order-last" text @click="navigateToSubscribe(2)">대출신청</v-btn>
         <call-num btnName="전화신청" />
         <v-btn class="order-first" text>관심상품</v-btn>
       </v-card-actions>
@@ -51,6 +51,11 @@ const navigateToLoanDetail = (productId) => {
   // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
   console.log(productId);
   router.push({ name: "LoanDetailId", params: { id: productId } });
+};
+
+// subscribe 페이지로 이동하는 코드
+const navigateToSubscribe = (productId) => {
+  router.push({ name: "SubLoan", params: { id: productId } });
 };
 </script>
 

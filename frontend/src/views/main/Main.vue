@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 배너 영역 -->
-    <div class="banner-container logo-text d-flex justify-center">
+    <div class="banner-container d-flex justify-center">
       <!-- 배너 이미지 추가 -->
       <h1 style="margin: 120px 210px">
         우리WONFIT에서<br />
@@ -10,41 +10,60 @@
       <img src="@/assets/puzzler.png" class="banner-image" />
     </div>
 
-    <div class="banner-content logo-text">
+    <div class="banner-content">
       <h2>목적에 맞는 금융상품을</h2>
       <p>성향분석 검사를 통해 편리하게 추천 받으세요</p>
     </div>
 
-      <v-row class="d-flex justify-center">
-
-        <div class="image-with-text-container clickable-title" @click="navigateToDepositTestPage">
-      <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <div class="text logo-text" >예금<br> 퍼즐찾기</div></div>
-
-       <div class="image-with-text-container clickable-title" @click="navigateToSavingsTestPage">
-      <img src="@/assets/piece.png"  class="puzzle-image image"/>
-       <div class="text logo-text" @click="navigateToSavingsTestPage">적금<br> 퍼즐찾기</div></div>
-
-       <div class="image-with-text-container clickable-title" @click="navigateToFundTestPage">
-      <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <div class="text logo-text" >펀드<br> 퍼즐찾기</div></div>
-
-       <div class="image-with-text-container clickable-title" @click="navigateToLoanTestPage">
-      <img src="@/assets/piece.png" class="puzzle-image image"/>
-       <div class="text logo-text" >대출<br> 퍼즐찾기</div></div>
-       </v-row>
-
-    <!-- 배너 영역 -->
-    <div class="banner-container2 logo-text d-flex justify-center">
-      <!-- 배너 이미지 추가 -->
-      <h1 style="margin:100px 200px">모든 금융내역을<br>
-    한 곳에서 관리하세요 <br>
-    <v-btn class = "logo-text" style="margin-top:30px; font-weight: bold;" @click="navigateToIncomeAnalysisPage">마이데이터 보러가기</v-btn></h1>
-      <img src="@/assets/receipt.png" class="banner-image"/>
-    
+    <v-row class="d-flex justify-center">
+      <div class="image-with-text-container clickable-title" @click="navigateToDepositTestPage">
+        <img src="@/assets/piece.png" class="puzzle-image image" />
+        <div class="text mt-n2" style="font-size: 18px">
+          예금<br />
+          퍼즐찾기
+        </div>
       </div>
 
-      
+      <div class="image-with-text-container clickable-title" @click="navigateToSavingsTestPage">
+        <img src="@/assets/piece.png" class="puzzle-image image" />
+        <div class="text mt-n2" style="font-size: 18px">
+          적금<br />
+          퍼즐찾기
+        </div>
+      </div>
+
+      <div class="image-with-text-container clickable-title" @click="navigateToFundTestPage">
+        <img src="@/assets/piece.png" class="puzzle-image image" />
+        <div class="text mt-n2" style="font-size: 18px">
+          펀드<br />
+          퍼즐찾기
+        </div>
+      </div>
+
+      <div class="image-with-text-container clickable-title" @click="navigateToLoanTestPage">
+        <img src="@/assets/piece.png" class="puzzle-image image" />
+        <div class="text mt-n2" style="font-size: 18px">
+          대출<br />
+          퍼즐찾기
+        </div>
+      </div>
+    </v-row>
+
+    <!-- 배너 영역 -->
+    <div class="banner-container2 d-flex justify-center">
+      <!-- 배너 이미지 추가 -->
+      <h1 style="margin: 100px 200px">
+        모든 금융내역을<br />
+        한 곳에서 관리하세요 <br />
+        <v-btn
+          class=""
+          style="margin-top: 30px; font-weight: bold"
+          @click="navigateToIncomeAnalysisPage"
+          >마이데이터 보러가기</v-btn
+        >
+      </h1>
+      <img src="@/assets/receipt.png" class="banner-image" />
+    </div>
   </div>
 </template>
 
@@ -74,20 +93,6 @@ const navigateToSavingsTestPage = () => {
 </script>
 
 <style lang="scss" scoped>
-@font-face {
-  font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
-  font-weight: 700;
-  font-style: normal;
-}
-
-.logo-text {
-  font-size: 16px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
-}
-
 .banner-container {
   background-color: #f6f7ff; /* 배경색 설정 */
   padding: 20px; /* 내부 여백 추가 */

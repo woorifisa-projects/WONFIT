@@ -163,10 +163,34 @@ const routes = [
       },
 
       {
-        path: "subscribe/:productType/:id",
+        path: "subscribe/deposit/:id",
         name: "SubDeposit",
         component: () =>
           import(/* webpackChunkName: "subdeposit" */ "@/views/product/sub/SubDeposit.vue"),
+        props: true,
+      },
+
+      {
+        path: "subscribe/fund/:id",
+        name: "SubFund",
+        component: () =>
+          import(/* webpackChunkName: "subFund" */ "@/views/product/sub/SubFund.vue"),
+        props: true,
+      },
+
+      {
+        path: "subscribe/loan/:id",
+        name: "SubLoan",
+        component: () =>
+          import(/* webpackChunkName: "subLoan" */ "@/views/product/sub/SubLoan.vue"),
+        props: true,
+      },
+
+      {
+        path: "subscribe/savings/:id",
+        name: "SubSavings",
+        component: () =>
+          import(/* webpackChunkName: "subSavings" */ "@/views/product/sub/SubSavings.vue"),
         props: true,
       },
 
