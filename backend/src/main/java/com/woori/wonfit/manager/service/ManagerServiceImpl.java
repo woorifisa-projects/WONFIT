@@ -46,7 +46,8 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public String managerRegister(ManagerRegisterRequest request){
-        Manager manager = Manager.builder().loginId(request.getLoginId()).password(request.getPassword()).build();
+        String encodePassword = bCryptPasswordEncoder.encode(request.getPassword());
+        Manager manager = Manager.builder().loginId(request.getLoginId()).password(encodePassword).build();
         managerRepository.save(manager);
         return "매니저 회원가입이 왼료되었습니다.";
     }
