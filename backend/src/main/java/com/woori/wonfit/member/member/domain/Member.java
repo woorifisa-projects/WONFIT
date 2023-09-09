@@ -3,6 +3,7 @@ package com.woori.wonfit.member.member.domain;
 
 import com.woori.wonfit.log.liked.domain.Liked;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
+import com.woori.wonfit.log.searchlog.domain.SearchLog;
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
@@ -67,6 +68,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Liked> liked;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<SearchLog> searchLogs;
 
     public static Member toEntity(Long id, MemberDetails memberDetails) {
         return Member.builder()

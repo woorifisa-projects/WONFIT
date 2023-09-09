@@ -4,7 +4,6 @@ import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
 import com.woori.wonfit.member.member.service.MemberServiceImpl;
-import com.woori.wonfit.member.memberinfo.service.MemberInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,12 @@ import java.util.List;
 @Slf4j
 public class MemberController {
     private final MemberServiceImpl memberService;
-    private final MemberInfoService memberInfoService;
     private final CookieConfig cookieConfig;
 
     // 회원 가입
     @PostMapping("wonfit/register")
     public ResponseEntity<MemberRegisterResponse> register(@RequestBody MemberRegisterRequest memeberRegisterRequest) {
         MemberDto memberDto = memberService.register(memeberRegisterRequest);
-        memberInfoService.saveMemberInfo(memeberRegisterRequest);
         return new ResponseEntity<>(new MemberRegisterResponse(memberDto.getLoginId()), HttpStatus.OK);
     }
 

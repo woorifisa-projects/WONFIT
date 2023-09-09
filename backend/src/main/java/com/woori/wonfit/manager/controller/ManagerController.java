@@ -1,11 +1,10 @@
 package com.woori.wonfit.manager.controller;
 
 
+import com.woori.wonfit.manager.dto.DeleteMemberRequest;
 import com.woori.wonfit.manager.dto.LoanRequest;
 import com.woori.wonfit.manager.dto.LoanResponse;
 import com.woori.wonfit.manager.service.ManagerService;
-import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.service.MemberService;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositDTO;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;
@@ -25,9 +24,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequestMapping("/manager")
@@ -133,7 +129,7 @@ public class ManagerController {
 
     // 멤버 1명 삭제
     @DeleteMapping("/delete/member")
-    public ResponseEntity<String> deleteMember(HttpServletRequest request){
+    public ResponseEntity<String> deleteMember(@RequestBody DeleteMemberRequest request){
         String result = managerService.deleteMember(request);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
