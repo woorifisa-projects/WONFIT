@@ -40,7 +40,7 @@
 
     <template v-else>
       <div class="logo-text mt-2" style="margin-right: 23px" @click="navigateToSignup">
-        가입하기
+        회원가입
       </div>
       <div class="logo-text mt-2" style="margin-right: 200px" @click="navigateToLoginPage">
         로그인

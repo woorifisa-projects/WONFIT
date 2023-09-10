@@ -56,8 +56,10 @@
         모든 금융내역을<br />
         한 곳에서 관리하세요 <br />
         <v-btn
-          class=""
-          style="margin-top: 30px; font-weight: bold"
+          color="#2965ED"
+          height="42px"
+          rounded="lg"
+          style="margin-top: 30px; font-weight: bold; color: white"
           @click="navigateToIncomeAnalysisPage"
           >마이데이터 보러가기</v-btn
         >
@@ -191,5 +193,10 @@ const navigateToSavingsTestPage = () => {
 .clickable-title:hover {
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.image-with-text-container:hover {
+  transform: scale(1.05);
+  transition: transform 0.5s;
 }
 </style>
