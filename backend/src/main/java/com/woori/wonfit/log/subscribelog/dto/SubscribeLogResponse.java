@@ -21,7 +21,13 @@ public class SubscribeLogResponse {
     private String subDate;
     private LocalDateTime expireDate;
     private int subDeposit;
+    private int subSavings;
     private int monthlyCharge;
+    private LocalDateTime monthlyChargeDate;
+    private String taxDeduction;
+    private int fundQuantity;
+    private int loanAmount;
+    private String repaymentMethod;
     private boolean subscribeStatus;
     private Deposit deposit;
     private Savings savings;
@@ -35,7 +41,13 @@ public class SubscribeLogResponse {
                 .subDate(time)
                 .expireDate(subscribeLog.getExpireDate())
                 .subDeposit(subscribeLog.getSubDeposit())
+                .subSavings(subscribeLog.getSubSavings())
                 .monthlyCharge(subscribeLog.getMonthlyCharge())
+                .monthlyChargeDate(subscribeLog.getMonthlyChargeDate())
+                .taxDeduction(subscribeLog.getTaxDeduction())
+                .fundQuantity(subscribeLog.getFundQuantity())
+                .loanAmount(subscribeLog.getLoanAmount())
+                .repaymentMethod(subscribeLog.getRepaymentMethod())
                 .subscribeStatus(subscribeLog.isSubscribeStatus())
                 .deposit(subscribeLog.getDeposit())
                 .savings(subscribeLog.getSavings())
