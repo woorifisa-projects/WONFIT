@@ -119,7 +119,7 @@
                   clearable
                   placeholder="출금 계좌번호를 선택해주세요."
                   single-line
-                  :items="accountNumbers"
+                  :items="bankAccountNumber"
                   variant="outlined"
                   style="width: 500px; margin-left: 22px"
                 ></v-select>
@@ -180,13 +180,13 @@
               </v-col>
               <v-col>
                 <v-radio-group>
-                  <v-radio label="일반세율" value="1" style="color: black"></v-radio>
+                  <v-radio label="일반세율" value="일반세율" style="color: black"></v-radio>
                   <v-radio
                     label="세금우대(1년 이상 가입 시 가능)"
-                    value="2"
+                    value="세금우대"
                     style="color: black"
                   ></v-radio>
-                  <v-radio label="비과세(생계형)" value="3" style="color: black"></v-radio>
+                  <v-radio label="비과세(생계형)" value="비과세" style="color: black"></v-radio>
                 </v-radio-group>
               </v-col>
             </v-row>
@@ -206,32 +206,39 @@
     </div>
 
     <div class="d-flex justify-center my-10">
-      <v-btn class="mx-3" color="primary" size="large" rounded> 가입하기 </v-btn>
-      <v-btn class="mx-3" size="large" rounded @click="goBack"> 취소하기 </v-btn>
+      <v-btn class="mx-3" color="#E2EEFF" size="large" rounded="lg" @click="requestSubscribe">
+        <!-- style="color: #0025c9" -->
+        가입하기
+      </v-btn>
+      <v-btn class="mx-3" size="large" rounded="lg" @click="goBack"> 취소하기 </v-btn>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onBeforeMount } from "vue";
-import { getApi } from "@/api/modules";
+import { getApi, postApi } from "@/api/modules";
 import { useRoute } from "vue-router";
-import DetailText from "@/components/card/carddetail/DetailText.vue";
 
 const depositData = ref([]);
+const accountData = ref([]);
 const route = useRoute();
 // URL에서 productId를 가져오기 위해 route.params를 사용합니다.
 const productId = route.params.id;
 // 약관 동의 체크박스
 const selected = ref([]);
 // 출금계좌번호
-let accountNumbers = ref([]);
+let bankAccountNumber = ref([]);
 // 최소 입금 금액
 let minDeposit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
 const value = ref(""); // v-model로 입력값을 받아올 변수
+
+const subDeposit = ref(0);
+const expireDate = ref();
+const taxDeduction = ref();
 
 const rules = {
   minLength: (v) => v.length <= 4,
@@ -257,9 +264,39 @@ onBeforeMount(async () => {
   });
   depositData.value = data;
   console.log(data);
-  accountNumbers.value = [depositData.value.depositName];
   minDeposit.value = depositData.value.minDeposit;
 });
+
+// 계좌 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: `/member/detail`,
+  });
+  accountData.value = data;
+  console.log(data);
+  bankAccountNumber.value = [accountData.value.bankAccountNumber];
+});
+
+// 상품 가입 post 요청
+const requestSubscribe = async () => {
+  try {
+    await postApi({
+      url: `/member/mypage/sublog`,
+      data: {
+        subDeposit: subDeposit.value,
+        expireDate: expireDate.value,
+        taxDeduction: taxDeduction.value,
+      },
+    });
+    if (requestSubscribe.status == 200) {
+      console.log("상품 가입 성공");
+    } else {
+      console.error("상품 가입 실패:", response.data); // 실패 시 에러 메시지를 출력
+    }
+  } catch (error) {
+    console.error("상품 가입 실패:", error);
+  }
+};
 </script>
 
 <style scoped>

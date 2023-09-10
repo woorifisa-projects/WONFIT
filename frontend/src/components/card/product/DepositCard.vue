@@ -1,28 +1,28 @@
 <template>
-  <div class="logo-text mx-auto py-2">
-    <v-card class="d-flex box-border mx-auto flex-row justify-space-between py-2 px-5" width="800">
-      <div class="product-info">
+  <div class="logo-text mx-auto py-3">
+    <v-card
+      class="d-flex box-border mx-auto flex-row justify-space-between py-2 px-5"
+      variant="outlined"
+      width="800"
+    >
+      <div class="product-info" @click="navigateToDepositDetail(2)">
         <v-card-item>
           <v-card-title
-            class="clickable-title"
-            style="font-size: 25px"
+            style="font-size: 25px; color: rgb(0, 86, 199)"
             @click="navigateToDepositDetail(2)"
             >{{ depositName }}</v-card-title
           >
           <v-card-subtitle style="font-size: 17px">{{ depositInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
-          상품 금리: {{ interestRate }}%<br />
-          가입 대상: {{ target }}<br />
-          가입 기간: {{ period }}개월<br />
-          가입 금액: {{ minDeposit }}원<br />
-          상품 타입: {{ depositType }}<br />
+          <p class="py-3">{{ interestRate }}</p>
+          <p>{{ depositType }}</p>
         </v-card-text>
       </div>
-      <v-card-actions class="flex-row-reverse">
-        <v-btn class="order-last" @click="navigateToSubscribe(2)">가입하기</v-btn>
-        <call-num btnName="전화가입" />
-        <v-btn class="order-first">관심상품</v-btn>
+      <v-card-actions class="flex-row-reverse" @click="navigateToDepositDetail(2)">
+        <v-btn class="order-last" @click.stop="navigateToSubscribe(2)">가입하기</v-btn>
+        <call-num btnName="전화가입" @click.stop />
+        <v-btn class="order-first" @click.stop>관심상품</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -62,24 +62,19 @@ const navigateToSubscribe = (productId) => {
 <style lang="scss" scoped>
 .product-info {
   flex-basis: 50%;
-}
-
-.clickable-title:hover {
-  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
 .v-card-actions {
   flex-basis: 50%;
   justify-self: end;
+  cursor: pointer;
 }
 
 .v-card-actions .v-btn {
   margin-left: 10px;
   margin-right: 10px;
   font-size: 17px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif;
 }
 
 .v-card-text {
@@ -87,6 +82,10 @@ const navigateToSubscribe = (productId) => {
 }
 
 .box-border {
+  border: 1px solid #e6e8e9;
   border-radius: 15px;
+}
+.box-border:hover {
+  box-shadow: 3px 3px 15px #dae6f6;
 }
 </style>

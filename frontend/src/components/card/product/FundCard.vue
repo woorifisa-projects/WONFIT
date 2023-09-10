@@ -1,27 +1,30 @@
 <template>
-  <div class="logo-text mx-auto py-2">
-    <v-card class="d-flex box-color mx-auto flex-row justify-space-between py-2 px-5" width="800">
-      <div class="product-info">
+  <div class="logo-text mx-auto py-3">
+    <v-card
+      class="d-flex box-border mx-auto flex-row justify-space-between py-2 px-5"
+      variant="outlined"
+      width="800"
+    >
+      <div class="product-info" @click="navigateToFundDetail(2)">
         <v-card-item>
           <v-card-title
-            class="clickable-title"
-            style="font-size: 25px"
+            style="font-size: 25px; color: rgb(0, 86, 199)"
             @click="navigateToFundDetail(2)"
             >{{ fundName }}</v-card-title
           >
           <v-card-subtitle style="font-size: 17px">{{ fundInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
-          1개월 금리: {{ returnRate1 }}%<br />
-          6개월 금리: {{ returnRate2 }}%<br />
-          기준가: {{ fundPrice }}원<br />
-          상품 타입: {{ fundType }}<br />
+          <p class="py-3">{{ returnRate1 }}</p>
+          <p class="pb-3">{{ returnRate2 }}</p>
+          <p class="pb-3">{{ fundPrice }}</p>
+          <p>{{ fundType }}</p>
         </v-card-text>
       </div>
-      <v-card-actions class="flex-row-reverse">
-        <v-btn class="order-last" @click="navigateToSubscribe(2)">가입하기</v-btn>
-        <call-num btnName="전화가입" />
-        <v-btn class="order-first">관심상품</v-btn>
+      <v-card-actions class="flex-row-reverse" @click="navigateToFundDetail(2)">
+        <v-btn class="order-last" @click.stop="navigateToSubscribe(2)">가입하기</v-btn>
+        <call-num btnName="전화가입" @click.stop />
+        <v-btn class="order-first" @click.stop>관심상품</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -59,31 +62,30 @@ const navigateToSubscribe = (productId) => {
 <style lang="scss" scoped>
 .product-info {
   flex-basis: 50%;
-}
-
-.clickable-title:hover {
-  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
 .v-card-actions {
   flex-basis: 50%;
   justify-self: end;
+  cursor: pointer;
 }
 
 .v-card-actions .v-btn {
   margin-left: 10px;
   margin-right: 10px;
   font-size: 17px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif;
 }
 
 .v-card-text {
   font-size: 17px;
 }
 
-.box-color {
+.box-border {
+  border: 1px solid #e6e8e9;
   border-radius: 15px;
+}
+.box-border:hover {
+  box-shadow: 3px 3px 15px #dae6f6;
 }
 </style>
