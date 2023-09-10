@@ -25,29 +25,40 @@
           </v-col>
 
           <v-col>
-            <v-sheet min-height="70vh" rounded="lg">
-              <div class="d-flex align-center" max-width="30px">
-                <v-responsive class="mx-auto" max-width="600px" style="margin-top: -75px">
+
+            <v-sheet min-height="50vh" rounded="lg">
+              <v-form @submit.prevent="withdraw">
+                <v-responsive>
+                  <v-text-field
+                    v-model="id"
+                    color="primary"
+                    placeholder="Enter your id"
+                    maxLength="15"
+                    variant="outlined"
+                    :style="{ width: '300px', margin: '30px auto' }"
+                  ></v-text-field>
+
                   <v-text-field
                     :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="visible ? 'text' : 'password'"
-                    density="compact"
                     placeholder="Enter your password"
-                    prepend-inner-icon="mdi-lock-outline"
+                    v-model="password"
                     variant="outlined"
-                    style="margin-top: 130px"
                     @click:append-inner="visible = !visible"
+                    :style="{ width: '300px', margin: '10px auto' }"
                   ></v-text-field
                 ></v-responsive>
-              </div>
-              <div class="d-flex flex-column align-center justify-center">
-                <grey-button
-                  content="탈퇴하기"
-                  class="logo-text center-button"
-                  style="margin: 30px; padding: 25px"
-                  @click="navigateToBankSelect"
-                />
-              </div>
+
+                <div class="d-flex flex-column align-center justify-center">
+                  <grey-button
+                    type="submit"
+                    content="탈퇴하기"
+                    class="logo-text center-button"
+                    style="margin: 30px; padding: 25px"
+                  />
+                </div>
+              </v-form>
+
             </v-sheet>
           </v-col>
         </v-row>
@@ -58,6 +69,7 @@
 
 <script setup>
 import GreyButton from "@/components/button/GreyButton.vue";
+// import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -81,6 +93,39 @@ const navigateToRecommend = () => {
 const navigateToWithdraw = () => {
   router.push({ name: "Withdraw" });
 };
+
+import { postApi } from "@/api/modules";
+import { ref } from "vue";
+
+const visible = ref(false);
+const id = ref();
+const password = ref();
+
+const withdraw = async () => {
+  try {
+    const requestBody = {
+      loginId: id.value,
+      password: password.value,
+    };
+
+    const response = await postApi({
+      url: `/member/leave`,
+      data: requestBody,
+    });
+
+    if (response.status == 200) {
+      // 쿠키 저장 메소드
+      router.push({ name: "MainPage" });
+
+      // 요청이 성공하면 적절한 처리를 수행합니다.
+      console.log("데이터 업데이트 성공:", response);
+    }
+  } catch (error) {
+    // 요청이 실패하면 오류 처리를 수행합니다.
+    console.error("데이터 업데이트 오류:", error);
+  }
+};
+
 </script>
 
 <style scoped>
