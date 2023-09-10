@@ -1,7 +1,6 @@
 package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.config.CookieConfig;
-import com.woori.wonfit.config.JwtFilter;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
@@ -13,7 +12,6 @@ import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
-import com.woori.wonfit.member.memberinfo.service.MemberInfoServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +25,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,8 +37,6 @@ public class MemberServiceImpl implements MemberService {
     private final InvestTypeService investTypeService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private final JwtFilter jwtFilter;
     private final CookieConfig cookieConfig;
 
 
@@ -154,17 +149,21 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String leaveMember(String loginId, String password) {
-        Member member = memberRepository.findByLoginId(loginId).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+    public Cookie leaveMember(String loginId, String password, HttpServletRequest request) {
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
+        Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
 
         if (!bCryptPasswordEncoder.matches(password, member.getPassword())) {
-            return "비밀번호가 일치하지 않습니다.";
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         } else {
+            Cookie cookie = logout(request);
             member.setStatus(false);
             memberRepository.save(member);
-            return "회원 탈퇴가 완료되었습니다.";
+            return cookie;
         }
     }
+
 
     @Override
     public void updateMemberDetails(Long id, MemberDetails memberDetails) {

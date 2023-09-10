@@ -48,10 +48,10 @@ public class MemberController {
 
     // 회원 탈퇴
     @PostMapping("member/leave")
-    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String message = memberService.leaveMember(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
-        return new ResponseEntity<>(message, HttpStatus.OK);
-
+    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = memberService.leaveMember(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
+        response.addCookie(cookie);
+        return new ResponseEntity<>("회원 탈퇴가 왼료되었습니다.", HttpStatus.OK);
     }
 
     // 사용자 전체 조회
