@@ -43,7 +43,7 @@ public class SubscribeLogController {
         return responseList;
     }
 
-    @PostMapping("/wonfit/subscribe")
+    @PostMapping
     public ResponseEntity<SubscribeLogResponse> createSubscribeLog(@RequestBody SubscribeLogRequest subscribeLogRequest) {
 
         SubscribeLog subscribeLog = SubscribeLogRequest.To_sub_log(subscribeLogRequest, time);
