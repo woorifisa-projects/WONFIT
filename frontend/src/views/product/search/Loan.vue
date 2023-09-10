@@ -1,10 +1,6 @@
 <template>
   <div style="white-space: nowrap" class="logo-text">
-    <div class="d-flex flex-column align-center justify-center">
-      <div style="margin: 20px">
-        <p class="title-text">상품 유형</p>
-      </div>
-
+    <div class="d-flex flex-column align-center justify-center mt-10">
       <v-container>
         <v-row justify="center">
           <type-button content="예금" @click="navigateToSearchDefault" />
@@ -15,40 +11,33 @@
       </v-container>
     </div>
 
-    <v-card class="mx-auto" flat>
-      <v-toolbar color="primary" dark extended flat></v-toolbar>
-    </v-card>
-    <v-responsive class="mx-auto" max-width="600px" style="margin-top: -75px">
-      <v-text-field
-        :loading="loading"
-        density="compact"
-        variant="solo"
-        label="상품명을 입력해주세요."
-        append-inner-icon="mdi-magnify"
-        single-line
-        hide-details
-        @click:append-inner="onClick"
-        rounded="xl"
-      ></v-text-field>
-    </v-responsive>
+    <v-text-field
+      class="mx-auto mt-10 mb-n5 centered-text-field"
+      v-model="searchQuery"
+      variant="tonal"
+      rounded
+      label="상품명을 입력해주세요."
+      prepend-inner-icon="mdi-magnify"
+      single-line
+      @click="search"
+    ></v-text-field>
 
-    <div class="box-color py-10">
+    <div class="py-10">
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
-            <v-sheet class="box-color">
+            <v-sheet>
               <!-- LoanCard 컴포넌트에 데이터 전달 -->
               <loan-card
-                v-for="productDetail in loanData"
+                v-for="productDetail in displayedData"
                 :key="productDetail.id"
                 :loanName="productDetail.loanName"
                 :loanInfo="productDetail.loanInfo"
-                :interestRate="productDetail.interestRate"
-                :target="productDetail.target"
-                :period="productDetail.period"
-                :loanLimit="productDetail.loanLimit"
-                :loanType="productDetail.loanType"
+                :interestRate="'기본 금리: ' + productDetail.interestRate + '%'"
+                :loanLimit="'대출 한도: ' + productDetail.loanLimit + '원'"
+                :loanType="'상품 타입: ' + productDetail.loanType"
               />
+              <div v-if="displayedData.length === 0">검색 결과가 없습니다.</div>
             </v-sheet>
           </v-col>
         </v-row>
@@ -58,16 +47,16 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api/modules";
 import TypeButton from "@/components/button/TypeButton.vue";
 import LoanCard from "@/components/card/product/LoanCard.vue";
 
-const loaded = ref(false);
-const loading = ref(false);
 const router = useRouter();
 const loanData = ref([]);
+const searchQuery = ref("");
+const displayedData = ref([]);
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
@@ -75,16 +64,24 @@ onBeforeMount(async () => {
     url: "/product/loan",
   });
   loanData.value = data;
+  displayedData.value = data;
 });
 
-const onClick = () => {
-  loading.value = true;
-
-  setTimeout(() => {
-    loading.value = false;
-    loaded.value = true;
-  }, 1000);
+// 검색 기능
+const search = () => {
+  const query = searchQuery.value.toLowerCase() || "";
+  displayedData.value = loanData.value.filter((product) => {
+    if (product.loanName) {
+      return product.loanName.toLowerCase().includes(query);
+    }
+    return false;
+  });
+  console.log(displayedData);
 };
+
+watch(searchQuery, () => {
+  search();
+});
 
 const navigateToSearchDefault = () => {
   router.push({ name: "SearchDefault" });
@@ -104,25 +101,10 @@ const navigateToSearchLoan = () => {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
-  font-weight: 700;
-  font-style: normal;
-}
-.logo-text {
-  font-size: 18px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif;
-}
-
-.title-text {
-  font-size: 30px;
-  font-family: "WooridaumB", sans-serif;
-}
-
-.box-color {
-  background-color: #eeeeee;
+.centered-text-field {
+  border: 1px solid #e0e0e0;
+  border-radius: 50px;
+  height: 55px;
+  width: 530px;
 }
 </style>
