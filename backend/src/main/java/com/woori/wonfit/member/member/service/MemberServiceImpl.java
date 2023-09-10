@@ -9,6 +9,7 @@ import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
+import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
@@ -166,13 +167,19 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public void updateMemberDetails(Long id, MemberDetails memberDetails) {
+    public void updateMemberDetails(HttpServletRequest request, MemberDetails memberDetails) {
+        String token = cookieConfig.parseCookie(request);
+        Long id = cookieConfig.getIdFromToken(token);
+        String password = bCryptPasswordEncoder.encode(memberDetails.getPassword());
 
-        Member member = Member.toEntity(id, memberDetails);
-        memberRepository.save(member);
+        MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.toEntity(memberDetails, password);
 
-        MemberInfo memberInfo = MemberInfo.toEntity(member, memberDetails);
-        memberInfoRepository.save(memberInfo);
+        Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+        Member updateMember = member.toEntity(id, memberUpdateRequest, password, member.getRefreshToken());
+        memberRepository.save(updateMember);
+
+        MemberInfo memberInfo = memberInfoRepository.findByMemberId(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+        MemberInfo updateMemberInfo = memberInfo.toEntity(memberInfo.getId(), member, memberDetails);
+        memberInfoRepository.save(updateMemberInfo);
     }
-
 }

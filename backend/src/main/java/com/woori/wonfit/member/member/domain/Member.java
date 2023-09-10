@@ -6,6 +6,7 @@ import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.searchlog.domain.SearchLog;
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.member.dto.MemberDetails;
+import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
 import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -72,17 +73,17 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<SearchLog> searchLogs;
 
-    public static Member toEntity(Long id, MemberDetails memberDetails) {
+    public static Member toEntity(Long id, MemberUpdateRequest memberUpdateRequest, String password, String refreshToken) {
         return Member.builder()
                 .id(id)
-                .loginId(memberDetails.getLoginId())
-                .password(memberDetails.getPassword())
-                .name(memberDetails.getName())
-                .email(memberDetails.getEmail())
-                .registrationNumber(memberDetails.getRegistrationNumber())
-                .phoneNumber(memberDetails.getPhoneNumber())
+                .loginId(memberUpdateRequest.getLoginId())
+                .password(password)
+                .name(memberUpdateRequest.getName())
+                .email(memberUpdateRequest.getEmail())
+                .registrationNumber(memberUpdateRequest.getRegistrationNumber())
+                .phoneNumber(memberUpdateRequest.getPhoneNumber())
                 .status(true)
+                .refreshToken(refreshToken)
                 .build();
     }
-
 }

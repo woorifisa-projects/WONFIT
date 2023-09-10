@@ -73,9 +73,8 @@ public class MemberController {
     // 사용자 마이페이지 상세정보 수정
     @PatchMapping("member/detail")
     public ResponseEntity<String> updateMemberDetails(@RequestBody MemberDetails memberDetails, HttpServletRequest request) {
-        String token = cookieConfig.parseCookie(request);
-        Long id = cookieConfig.getIdFromToken(token);
-        memberService.updateMemberDetails(id, memberDetails);
+        log.info("updateMemberDetails called");
+        memberService.updateMemberDetails(request, memberDetails);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
 }

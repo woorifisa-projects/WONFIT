@@ -46,8 +46,9 @@ public class MemberInfo {
     private String investType; // 투자성향
 
 
-    public static MemberInfo toEntity(Member member, MemberDetails memberDetails){
+    public static MemberInfo toEntity(Long id,Member member, MemberDetails memberDetails){
         return MemberInfo.builder()
+                .id(id)
                 .member(member)
                 .marketingInfoAgree(memberDetails.isMarketingInfoAgree())
                 .address(memberDetails.getAddress())
