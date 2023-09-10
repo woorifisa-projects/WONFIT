@@ -63,14 +63,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // accessToken에서 id 및 role 추출
         Long accessTokenMemberId = cookieConfig.getIdFromToken(accessToken);
-//        String accessTokenMemberRole = JwtUtil.getRole(accessToken, accessKey);
-//
-//        if(accessTokenMemberRole.equals("USER")){
-//            role = "ROLE_USER";
-//        }else if(accessTokenMemberRole.equals("ADMIN")){
-//            role = "ROLE_ADMIN";
-//        }
-//        log.info(accessTokenMemberRole);
+        String accessTokenMemberRole = JwtUtil.getRole(accessToken, accessKey);
+        log.info("accessToken MemberRole = {}", accessTokenMemberRole);
+
+        if(accessTokenMemberRole.equals("USER")){
+            role = "ROLE_USER";
+        }else if(accessTokenMemberRole.equals("ADMIN")){
+            role = "ROLE_ADMIN";
+        }
+        log.info(role);
 
         // accessToken과 매칭되는 member의 refreshToken을 가져옴
         String refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();
@@ -94,7 +95,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "refreshToken이 만료 되었습니다.");
                 filterChain.doFilter(request, response);
             } else {
-                accessToken = JwtUtil.createAccessToken(accessTokenMemberId.toString(), 1000 * 60 * 60l, "USER", accessKey);
+                accessToken = JwtUtil.createAccessToken(accessTokenMemberId.toString(), 1000 * 60 * 60l, role, accessKey);
                 log.info("Regenerated accessToken");
                 Cookie responseCookie = cookieConfig.createCookie(accessToken);
                 response.addCookie(responseCookie);
@@ -103,7 +104,7 @@ public class JwtFilter extends OncePerRequestFilter {
         id = accessTokenMemberId.toString();
 
         // 권한 부여
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, List.of(new SimpleGrantedAuthority(role)));
         // Detail
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);

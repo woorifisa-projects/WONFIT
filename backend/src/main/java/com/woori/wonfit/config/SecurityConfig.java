@@ -16,8 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtFilter jwtFilter;
-    private final MemberRepository memberRepository;
-    private final CookieConfig cookieConfig;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -25,8 +23,8 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
-                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register", "/member/detail").permitAll()
-                        .antMatchers("/member/**").hasAnyRole("USER")
+                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register").permitAll()
+                        .antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers("/manager/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement()
