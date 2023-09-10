@@ -34,12 +34,12 @@ public class JwtUtil {
             log.info("getid Token = {}", token);
             log.info("getId Key = {}", secretKey);
 
-            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("role", String.class);
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("roles", String.class);
         } catch (ExpiredJwtException e) {
             Claims claims = e.getClaims();
-            log.info(claims.get("role", String.class));
+            log.info(claims.get("roles", String.class));
 
-            return claims.get("role", String.class);
+            return claims.get("roles", String.class);
         }
     }
 

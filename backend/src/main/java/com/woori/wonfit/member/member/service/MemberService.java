@@ -24,8 +24,8 @@ public interface MemberService {
 
     MemberDetails findById(Long id);
 
-    String leaveMember(String loginId, String memberPw);
+    Cookie leaveMember(String loginId, String memberPw, HttpServletRequest request) throws Exception;
 
-    void updateMemberDetails(Long id, MemberDetails memberDetails);
+    void updateMemberDetails(HttpServletRequest request, MemberDetails memberDetails);
 
 }

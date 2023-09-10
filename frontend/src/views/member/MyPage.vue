@@ -7,22 +7,11 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
-                  >내 가입상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToMyLikedProduct"
-                  >내 관심상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToRecommend"
-                  >나의 투자성향 보기</v-list-item
-                >
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
                 <v-divider class="my-2"></v-divider>
-                <v-list-item
-                  class="logo-text"
-                  color="grey-lighten-4"
-                  link
-                  @click="navigateToWithdraw"
-                >
+                <v-list-item class="logo-text" color="grey-lighten-4" link @click="navigateToWithdraw">
                   회원 탈퇴
                 </v-list-item>
               </v-list>
@@ -34,69 +23,33 @@
               <div>
                 <v-form @submit.prevent="saveChanges">
                   <h4>이름</h4>
-                  <v-text-field
-                    disabled
-                    :value="memberData.name"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field disabled :value="memberData.name" variant="underlined"></v-text-field><br />
                   <h4>주민등록번호</h4>
-                  <v-text-field
-                    disabled
-                    :value="memberData.registrationNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field disabled :value="memberData.registrationNumber" variant="underlined"></v-text-field><br />
 
                   <h4>계좌번호</h4>
-                  <v-text-field
-                    disabled
-                    :value="memberData.bankAccountNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field disabled :value="memberData.bankAccountNumber" variant="underlined"></v-text-field><br />
 
                   <h4>아이디</h4>
-                  <v-text-field
-                    disabled
-                    :value="memberData.loginId"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field disabled :value="memberData.loginId" variant="underlined"></v-text-field><br />
 
                   <h4>비밀번호</h4>
 
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.password"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.password"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>이메일</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.email"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.email"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>전화번호</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.phoneNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.phoneNumber"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>주소</h4>
 
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.address"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.address"
+                    variant="underlined"></v-text-field><br />
                   <div class="d-flex justify-center">
                     <v-btn text class="mx-2" @click="toggleEditMode">수정하기</v-btn>
                     <v-btn type="submit" text>저장하기</v-btn>
@@ -116,6 +69,10 @@ import { useRouter } from "vue-router";
 import { ref, onBeforeMount } from "vue";
 import { getApi } from "@/api/modules";
 import { patchApi } from "@/api/modules";
+
+import axios from 'axios';
+
+//axios.defaults.withCredentials = true;
 
 const isEditMode = ref(false);
 const memberData = ref({
@@ -143,19 +100,13 @@ const saveChanges = async () => {
       email: memberData.value.email,
       phoneNumber: memberData.value.phoneNumber,
       bankAccountNumber: memberData.value.bankAccountNumber,
-      address: memberData.value.address,
+      address: memberData.value.address
     };
 
-    // 서버에 데이터 업데이트를 요청합니다.
-    const response = await patchApi({
-      url: `/member/detail`,
-      data: updatedData,
-    });
+    const response = await axios.patch('http://localhost:8080/member/detail', updatedData, { withCredentials: true });
 
-    // 요청이 성공하면 적절한 처리를 수행합니다.
     console.log("데이터 업데이트 성공:", response);
   } catch (error) {
-    // 요청이 실패하면 오류 처리를 수행합니다.
     console.error("데이터 업데이트 오류:", error);
   }
 };
@@ -193,8 +144,7 @@ const navigateToWithdraw = () => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
 }

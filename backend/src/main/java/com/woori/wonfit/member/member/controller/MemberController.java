@@ -48,10 +48,10 @@ public class MemberController {
 
     // 회원 탈퇴
     @PostMapping("member/leave")
-    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String message = memberService.leaveMember(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword());
-        return new ResponseEntity<>(message, HttpStatus.OK);
-
+    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = memberService.leaveMember(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
+        response.addCookie(cookie);
+        return new ResponseEntity<>("회원 탈퇴가 왼료되었습니다.", HttpStatus.OK);
     }
 
     // 사용자 전체 조회
@@ -73,9 +73,8 @@ public class MemberController {
     // 사용자 마이페이지 상세정보 수정
     @PatchMapping("member/detail")
     public ResponseEntity<String> updateMemberDetails(@RequestBody MemberDetails memberDetails, HttpServletRequest request) {
-        String token = cookieConfig.parseCookie(request);
-        Long id = cookieConfig.getIdFromToken(token);
-        memberService.updateMemberDetails(id, memberDetails);
+        log.info("updateMemberDetails called");
+        memberService.updateMemberDetails(request, memberDetails);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
 }
