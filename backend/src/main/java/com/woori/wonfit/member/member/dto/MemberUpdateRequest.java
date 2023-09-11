@@ -16,7 +16,6 @@ public class MemberUpdateRequest {
     private String phoneNumber; // 회원 전화번호
     private String address; // 회원 주소
 
-
     public static MemberUpdateRequest toEntity(Member member, String password){
         return MemberUpdateRequest.builder()
                 .name(member.getName())

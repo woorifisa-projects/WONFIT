@@ -22,7 +22,6 @@ public class MemberDto {
     private String bankAccountPassword;
     private String registrationNumber;
     private String address;
-    private boolean marketingInfoAgree;
 
     public static MemberDto fromEntity(Member member)  {
         MemberDto memberDto = MemberDto.builder()
@@ -31,7 +30,6 @@ public class MemberDto {
                 .email(member.getEmail())
                 .name(member.getName())
                 .address(member.getAddress())
-                .marketingInfoAgree(member.isMarketingInfoAgree())
                 .bankAccountNumber(member.getBankAccountNumber())
                 .phoneNumber(member.getPhoneNumber())
                 .bankAccountPassword(member.getBankAccountPassword())
