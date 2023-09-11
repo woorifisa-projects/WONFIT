@@ -5,9 +5,7 @@ import com.woori.wonfit.log.liked.domain.Liked;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.searchlog.domain.SearchLog;
 import com.woori.wonfit.member.investtype.domain.InvestType;
-import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
-import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -55,14 +53,18 @@ public class Member {
     @ColumnDefault("true")
     private boolean status; // 회원 상태(정상, 탈퇴)
 
+    @Column(name = "marketing_info_agree")
+    @ColumnDefault("true")
+    private boolean marketingInfoAgree;
+
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "refresh_Token", nullable = true)
     private String refreshToken;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<InvestType> investTypes;
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private MemberInfo memberInfo;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<LoginLog> loginLog;
@@ -82,8 +84,10 @@ public class Member {
                 .email(memberUpdateRequest.getEmail())
                 .registrationNumber(memberUpdateRequest.getRegistrationNumber())
                 .phoneNumber(memberUpdateRequest.getPhoneNumber())
+                .bankAccountNumber(memberUpdateRequest.getBankAccountNumber())
                 .status(true)
+                .address(memberUpdateRequest.getAddress())
                 .refreshToken(refreshToken)
-                .build();
+                .marketingInfoAgree(true).build();
     }
 }
