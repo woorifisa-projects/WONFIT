@@ -9,6 +9,7 @@ import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
+import com.woori.wonfit.member.member.dto.MembersResponse;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -126,8 +128,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> getAllMembers() {
-        List<Member> member = memberRepository.findAll();
+    public List<MembersResponse> getAllMembers() {
+        List<MembersResponse> member = memberRepository.selectMembersData();
         return member;
     }
 
