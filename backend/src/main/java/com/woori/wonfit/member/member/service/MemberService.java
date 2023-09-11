@@ -22,10 +22,10 @@ public interface MemberService {
 
     List<Member> getAllMembers();
 
-    MemberDetails findById(Long id);
+    Member findById(Long id);
 
     Cookie leaveMember(String loginId, String memberPw, HttpServletRequest request) throws Exception;
 
-    void updateMemberDetails(HttpServletRequest request, MemberDetails memberDetails);
+    void updateMemberDetails(HttpServletRequest request, Member member);
 
 }

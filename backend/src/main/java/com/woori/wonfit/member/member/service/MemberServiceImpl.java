@@ -6,13 +6,10 @@ import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
 import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
 import com.woori.wonfit.member.member.repository.MemberRepository;
-import com.woori.wonfit.member.memberinfo.domain.MemberInfo;
-import com.woori.wonfit.member.memberinfo.repository.MemberInfoRepository;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +29,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
-    private final MemberInfoRepository memberInfoRepository;
     private final LoginLogRepository loginLogRepository;
 
     private final InvestTypeService investTypeService;
@@ -65,9 +61,6 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = memberRepository.findById(saveMember.getId()).get();
         investTypeService.registInvestment(member);
-
-        MemberInfo memberInfo = MemberInfo.builder().member(member).build();
-        memberInfoRepository.save(memberInfo);
 
         return MemberDto.fromEntity(saveMember);
     }
@@ -139,14 +132,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDetails findById(Long id) {
+    public Member findById(Long id) {
         Member member = memberRepository.findById(id).get();
 
-        MemberInfo memberInfo = memberInfoRepository.findByMemberId(id).get();
-
-        MemberDetails memberDetails = MemberDetails.fromEntity(member, memberInfo);
-
-        return memberDetails;
+        return member;
     }
 
     @Override
@@ -167,19 +156,15 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public void updateMemberDetails(HttpServletRequest request, MemberDetails memberDetails) {
+    public void updateMemberDetails(HttpServletRequest request, Member member) {
         String token = cookieConfig.parseCookie(request);
         Long id = cookieConfig.getIdFromToken(token);
-        String password = bCryptPasswordEncoder.encode(memberDetails.getPassword());
+        String password = bCryptPasswordEncoder.encode(member.getPassword());
 
-        MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.toEntity(memberDetails, password);
+        MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.toEntity(member, password);
 
-        Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
-        Member updateMember = member.toEntity(id, memberUpdateRequest, password, member.getRefreshToken());
+        Member basicMember = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+        Member updateMember = basicMember.toEntity(id, memberUpdateRequest, password, member.getRefreshToken());
         memberRepository.save(updateMember);
-
-        MemberInfo memberInfo = memberInfoRepository.findByMemberId(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
-        MemberInfo updateMemberInfo = memberInfo.toEntity(memberInfo.getId(), member, memberDetails);
-        memberInfoRepository.save(updateMemberInfo);
     }
 }

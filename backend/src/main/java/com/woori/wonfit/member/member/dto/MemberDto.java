@@ -1,6 +1,5 @@
 package com.woori.wonfit.member.member.dto;
 
-
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +18,11 @@ public class MemberDto {
     private String email; // 회원 이메일
     private String name; // 회원 이름
     private String phoneNumber; // 회원 전화번호
-    private String bankAccountNumber; // 계좌번호
-    private String bankAccountPassword; // 계좌 비밀번호
+    private String bankAccountNumber;
+    private String bankAccountPassword;
+    private String registrationNumber;
+    private String address;
+    private boolean marketingInfoAgree;
 
     public static MemberDto fromEntity(Member member)  {
         MemberDto memberDto = MemberDto.builder()
@@ -28,9 +30,12 @@ public class MemberDto {
                 .password(member.getPassword())
                 .email(member.getEmail())
                 .name(member.getName())
+                .address(member.getAddress())
+                .marketingInfoAgree(member.isMarketingInfoAgree())
                 .bankAccountNumber(member.getBankAccountNumber())
-                .bankAccountPassword(member.getBankAccountPassword())
                 .phoneNumber(member.getPhoneNumber())
+                .bankAccountPassword(member.getBankAccountPassword())
+                .registrationNumber(member.getRegistrationNumber())
                 .build();
         return memberDto;
     }
