@@ -4,6 +4,7 @@ import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.MemberDetails;
 import com.woori.wonfit.member.member.dto.MemberDto;
 import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
+import com.woori.wonfit.member.member.dto.MembersResponse;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public interface MemberService {
 
     String extractDevice(String userAgent);
 
-    List<Member> getAllMembers();
+    List<MembersResponse> getAllMembers();
 
     Member findById(Long id);
 
