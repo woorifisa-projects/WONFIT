@@ -10,14 +10,4 @@ public class MembersResponse {
     private String loginId;
     private String phoneNumber;
     private boolean status;
-
-    public static MembersResponse fromEntity(Member member){
-        return MembersResponse.builder()
-                .id(member.getId())
-                .name(member.getName())
-                .loginId(member.getLoginId())
-                .phoneNumber(member.getPhoneNumber())
-                .status(member.isStatus())
-                .build();
-    }
 }
