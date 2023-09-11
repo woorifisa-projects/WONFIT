@@ -21,6 +21,7 @@ public class MemberRegisterRequest {
     private String registrationNumber;
     private String phoneNumber;
     private String bankAccountNumber; // 계좌번호
+    private String bankAccountPassword; // 계좌 비밀번호
 
     private String address;
     private String job;
@@ -42,6 +43,7 @@ public class MemberRegisterRequest {
                 .registrationNumber(registrationNumber)
                 .phoneNumber(phoneNumber)
                 .bankAccountNumber(bankAccountNumber)
+                .bankAccountPassword(bankAccountPassword)
                 .build();
     }
 

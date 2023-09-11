@@ -7,7 +7,6 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-
                 <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
                   >내 가입상품 확인하기</v-list-item
                 >
@@ -40,12 +39,11 @@
                     <th></th>
                     <th class="text-left">번호</th>
                     <!--id-->
-                    <th class="text-left">상품명</th>
-                    <!--deposit_name-->
                     <th class="text-left">분류</th>
                     <!--deposit_type-->
-                    <th class="text-left">금리</th>
-                    <!--interest_rate-->
+                    <th class="text-left">상품명</th>
+                    <!--deposit_name-->
+                    <th class="text-left">상품타입</th>
                   </tr>
                 </thead>
                 <template v-slot:column.name="{ column }">
@@ -55,9 +53,10 @@
                   <tr v-for="item in users" :key="item.id">
                     <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
                     <td>{{ item.idx }}</td>
-                    <td>{{ item.name }}</td>
                     <td>{{ item.type }}</td>
-                    <td>{{ item.irrate }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.ivtype }}</td>
+                    <!--투자성향-->
                   </tr>
                 </tbody>
               </v-table>
@@ -73,23 +72,53 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 
-const users = ref([]); // 초기에 빈 배열로 초기화
+const users = ref([]);
+let autoIncrement = 1; // 바깥에서 auto-increment 값을 초기화
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/member/mypage/liked`, { withCredentials: true });
+    const response = await axios.get(`http://localhost:8080/member/mypage/liked`);
     const data = response.data;
 
     data.forEach((item) => {
-      products.value.push({
-        id: item.id,
-        name: item.name,
-        type: item.type,
-        interestrate: item.interestrate,
-      });
+      if (item.deposit || item.savings || item.fund || item.loan) {
+        // Check if any of the product types is not null
+        if (item.deposit) {
+          users.value.push({
+            idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+            type: "예금",
+            name: item.deposit.depositName,
+            ivtype: item.investmentType,
+          });
+        }
+        if (item.savings) {
+          users.value.push({
+            idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+            type: "적금",
+            name: item.savings.savingsName,
+            ivtype: item.investmentType,
+          });
+        }
+        if (item.fund) {
+          users.value.push({
+            idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+            type: "펀드",
+            name: item.fund.fundName,
+            ivtype: item.investmentType,
+          });
+        }
+        if (item.loan) {
+          users.value.push({
+            idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+            type: "대출",
+            name: item.loan.loanName,
+            ivtype: item.investmentType,
+          });
+        }
+      }
     });
   } catch (error) {
-    console.error("데이터 가져오기 중 오류 발생:", error.message);
+    console.error("An error occurred while fetching data:", error.message);
   }
 });
 

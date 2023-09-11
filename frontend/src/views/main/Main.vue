@@ -56,12 +56,12 @@
         모든 금융내역을<br />
         한 곳에서 관리하세요 <br />
         <v-btn
-          color="#2965ED"
-          height="42px"
-          rounded="lg"
-          style="margin-top: 30px; font-weight: bold; color: white"
-          @click="navigateToIncomeAnalysisPage"
-          >마이데이터 보러가기</v-btn
+            color="#2965ED"
+            height="42px"
+            rounded="lg"
+            style="margin-top: 30px; font-weight: bold; color: white"
+            @click="navigateToIncomeAnalysisPage"
+        >마이데이터 보러가기</v-btn
         >
       </h1>
       <img src="@/assets/receipt.png" class="banner-image" />

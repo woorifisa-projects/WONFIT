@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" style="margin-top:20px">
+  <v-app id="inspire" style="margin-top: 20px">
     <v-main class="bg-grey-lighten-3">
       <v-container>
         <v-row>
@@ -7,38 +7,57 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
+                  >내 가입상품 확인하기</v-list-item
+                >
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct"
+                  >내 관심상품 확인하기</v-list-item
+                >
+                <v-list-item class="logo-text" @click="navigateToRecommend"
+                  >나의 투자성향 보기</v-list-item
+                >
+
                 <v-divider class="my-2"></v-divider>
-                <v-list-item class="logo-text" color="grey-lighten-4" link @click="navigateToWithdraw">
+
+                <v-list-item
+                  class="logo-text"
+                  color="grey-lighten-4"
+                  link
+                  @click="navigateToWithdraw"
+                >
                   회원 탈퇴
                 </v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
+
           <v-col>
-            <v-sheet min-height="70vh" rounded="lg">
-              <v-table fixed-header height="500px">
+            <v-sheet min-height="70vh" rounded="lg"
+              ><v-table fixed-header height="500px">
                 <thead>
                   <tr>
                     <th></th>
                     <th class="text-left">번호</th>
-                    <th class="text-left">상품명</th>
+                    <!--id-->
+
                     <th class="text-left">분류</th>
-                    <th class="text-left">금리</th>
+                    <!--deposit_name-->
+                    <th class="text-left">상품명</th>
+                    <!--deposit_type-->
+                    <th class="text-left">가입일자</th>
+                    <!--interest_rate-->
                   </tr>
                 </thead>
                 <template v-slot:column.name="{ column }">
                   {{ column.title.toUpperCase() }}
                 </template>
                 <tbody>
-                  <tr v-for="item in users" :key="item.idx">
+                  <tr v-for="item in users" :key="item.id">
                     <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
                     <td>{{ item.idx }}</td>
-                    <td>{{ item.name }}</td>
                     <td>{{ item.type }}</td>
-                    <td>{{ item.irrate }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.subdate }}</td>
                   </tr>
                 </tbody>
               </v-table>
@@ -51,108 +70,56 @@
 </template>
 
 <script setup>
-
-import axios from 'axios';
-import { ref, onMounted } from 'vue'; // ref와 onMounted를 불러옵니다.
+import axios from "axios";
+import { ref, onMounted } from "vue";
 
 const users = ref([]); // 초기에 빈 배열로 초기화
-
-// memberId 1번이 선택한 모든 상품을 보여주기
+let autoIncrement = 1; // 바깥에서 auto-increment 값을 초기화
 
 onMounted(async () => {
   try {
-
-    const response = await axios.get('http://localhost:8080/member/mypage/sublog', { withCredentials: true });
+    const response = await axios.get("http://localhost:8080/member/mypage/sublog");
     const data = response.data;
 
-    data.forEach(item => {
+    data.forEach((item) => {
       if (item.loan) {
+        // console.log(item);
         users.value.push({
-          idx: item.loan.id,
+          idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+          type: "대출",
           name: item.loan.loanName,
-          type: item.loan.loanType,
-          irrate: item.loan.interestRate,
+          subdate: item.subDate,
         });
       }
       if (item.fund) {
         users.value.push({
-          idx: item.fund.id,
+          idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+          type: "펀드",
           name: item.fund.fundName,
-          type: item.fund.fundType,
-          irrate: item.fund.returnRate1,
+          subdate: item.subDate,
         });
       }
       if (item.deposit) {
         users.value.push({
-          idx: item.deposit.id,
+          idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+          type: "예금",
           name: item.deposit.depositName,
-          type: item.deposit.depositType,
-          irrate: item.deposit.interestRate,
+          subdate: item.subDate,
         });
       }
       if (item.savings) {
         users.value.push({
-          idx: item.savings.id,
+          idx: autoIncrement++, // auto-increment 값을 사용하여 idx 증가
+          type: "적금",
           name: item.savings.savingsName,
-          type: item.savings.savingsType,
-          irrate: item.savings.interestRate,
+          subdate: item.subDate,
         });
       }
     });
   } catch (error) {
-    console.error('An error occurred while fetching data:', error.message);
+    console.error("An error occurred while fetching data:", error.message);
   }
 });
-
-// import { ref, onMounted } from 'vue';
-// import { getApi } from "@/api/modules/getApi.js";
-
-// const users = ref([]);
-
-// onMounted(async () => {
-//   try {
-//     const response = await getApi({
-//       url: 'http://localhost:8080/api/sublogs/member/1'
-//     });
-
-//     response.forEach(item => {
-//       if (item.loan) {
-//         users.value.push({
-//           idx: item.loan.id,
-//           name: item.loan.loanName,
-//           type: item.loan.loanType,
-//           irrate: item.loan.interestRate,
-//         });
-//       }
-//       if (item.fund) {
-//         users.value.push({
-//           idx: item.fund.id,
-//           name: item.fund.fundName,
-//           type: item.fund.fundType,
-//           irrate: item.fund.returnRate1,
-//         });
-//       }
-//       if (item.deposit) {
-//         users.value.push({
-//           idx: item.deposit.id,
-//           name: item.deposit.depositName,
-//           type: item.deposit.depositType,
-//           irrate: item.deposit.interestRate,
-//         });
-//       }
-//       if (item.savings) {
-//         users.value.push({
-//           idx: item.savings.id,
-//           name: item.savings.savingsName,
-//           type: item.savings.savingsType,
-//           irrate: item.savings.interestRate,
-//         });
-//       }
-//     });
-//   } catch (error) {
-//     console.error('An error occurred while fetching data:', error.message);
-//   }
-// });
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -181,7 +148,8 @@ const navigateToWithdraw = () => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
+    format("woff2");
   font-weight: 300;
   font-style: normal;
 }
@@ -191,5 +159,3 @@ const navigateToWithdraw = () => {
   font-family: "WooridaumB", sans-serif;
 }
 </style>
-
-

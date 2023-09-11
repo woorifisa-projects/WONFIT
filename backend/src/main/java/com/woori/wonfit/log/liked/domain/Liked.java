@@ -1,5 +1,6 @@
 package com.woori.wonfit.log.liked.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.fund.domain.Fund;
@@ -20,6 +21,7 @@ public class Liked {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "member_id")
     private Member member;

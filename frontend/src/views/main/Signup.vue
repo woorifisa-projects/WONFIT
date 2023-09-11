@@ -23,6 +23,18 @@
         ></v-text-field>
 
         <v-text-field
+          v-model="bankAccountPassword"
+          color="primary"
+          label="계좌 비밀번호"
+          maxLength="4"
+          hint="비밀번호 4자리를 입력해 주세요."
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          @click:append-inner="visible = !visible"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
           v-model="id"
           color="primary"
           label="아이디"
@@ -99,6 +111,7 @@ const visible = ref(false);
 const name = ref();
 const registrationNumber = ref();
 const bankAccountNumber = ref();
+const bankAccountPassword = ref();
 const id = ref();
 const password = ref();
 const address = ref();
@@ -112,13 +125,14 @@ const signup = async () => {
       name: name.value,
       registrationNumber: registrationNumber.value,
       bankAccountNumber: bankAccountNumber.value,
+      bankAccountPassword: bankAccountPassword.value,
       loginId: id.value,
       password: password.value,
       status: true,
       address: address.value,
       email: email.value,
       phoneNumber: phoneNumber.value,
-      terms: terms.value,
+      marketingInfoAgree: terms.value,
     };
 
     const response = await postApi({
