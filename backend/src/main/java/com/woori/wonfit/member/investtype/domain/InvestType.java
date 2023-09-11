@@ -1,5 +1,6 @@
 package com.woori.wonfit.member.investtype.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.*;
 
@@ -15,7 +16,7 @@ public class InvestType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "member_id")
     private Member member;

@@ -1,5 +1,6 @@
 package com.woori.wonfit.log.loginlog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class LoginLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "member_id")
     private Member member;

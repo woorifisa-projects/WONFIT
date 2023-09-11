@@ -19,12 +19,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.cors();
         return http
                 .httpBasic().disable()
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
                 .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register").permitAll()
-                        .antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers("/member/**").hasAnyRole("USER")
                         .antMatchers("/manager/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement()

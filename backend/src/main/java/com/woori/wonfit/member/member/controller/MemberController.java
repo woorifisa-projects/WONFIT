@@ -63,18 +63,18 @@ public class MemberController {
 
     // 사용자 마이페이지 내 상세정보 조회
     @GetMapping("member/detail")
-    public ResponseEntity<MemberDetails> getMemberDetails(HttpServletRequest request) {
+    public ResponseEntity<Member> getMemberDetails(HttpServletRequest request) {
         String token = cookieConfig.parseCookie(request);
         Long id = cookieConfig.getIdFromToken(token);
-        MemberDetails memberDetails = memberService.findById(id);
-        return new ResponseEntity<>(memberDetails, HttpStatus.OK);
+        Member member = memberService.findById(id);
+        return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
     // 사용자 마이페이지 상세정보 수정
     @PatchMapping("member/detail")
-    public ResponseEntity<String> updateMemberDetails(@RequestBody MemberDetails memberDetails, HttpServletRequest request) {
+    public ResponseEntity<String> updateMemberDetails(@RequestBody Member member, HttpServletRequest request) {
         log.info("updateMemberDetails called");
-        memberService.updateMemberDetails(request, memberDetails);
+        memberService.updateMemberDetails(request, member);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
 }
