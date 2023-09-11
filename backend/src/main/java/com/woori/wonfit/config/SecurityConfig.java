@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
-                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register").permitAll()
+                .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register", "/manager/sms").permitAll()
                         .antMatchers("/member/**").hasAnyRole("USER")
                         .antMatchers("/manager/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
