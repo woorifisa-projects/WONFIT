@@ -21,7 +21,7 @@ public class MemberRegisterRequest {
     private String bankAccountNumber; // 계좌번호
     private String bankAccountPassword;
     private String address;
-    private boolean marketingInfoAgree;
+//    private boolean marketingInfoAgree;
     private String refreshToken;
 
     public Member toEntity(String password) {

@@ -134,10 +134,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findById(Long id) {
+    public MemberUpdateRequest findById(Long id) {
         Member member = memberRepository.findById(id).get();
 
-        return member;
+        return MemberUpdateRequest.toNewDetail(member);
     }
 
     @Override
@@ -161,6 +161,7 @@ public class MemberServiceImpl implements MemberService {
     public void updateMemberDetails(HttpServletRequest request, Member member) {
         String token = cookieConfig.parseCookie(request);
         Long id = cookieConfig.getIdFromToken(token);
+        log.info(member.getPassword());
         String password = bCryptPasswordEncoder.encode(member.getPassword());
 
         MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.toEntity(member, password);

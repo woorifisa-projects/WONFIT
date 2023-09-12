@@ -19,7 +19,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("select m.refreshToken from Member m where m.loginId = :loginId")
     Optional<String> findRefreshTokenByLoginId(@Param("loginId") String loginId);
 
-    @Query("SELECT m.id, m.loginId, m.name, m.status, m.phoneNumber FROM Member m")
+    @Query("SELECT new com.woori.wonfit.member.member.dto.MembersResponse(m.name, m.loginId, m.phoneNumber, m.status) FROM Member m")
     List<MembersResponse> selectMembersData();
 
 }

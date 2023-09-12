@@ -63,10 +63,10 @@ public class MemberController {
 
     // 사용자 마이페이지 내 상세정보 조회
     @GetMapping("member/detail")
-    public ResponseEntity<Member> getMemberDetails(HttpServletRequest request) {
+    public ResponseEntity<MemberUpdateRequest> getMemberDetails(HttpServletRequest request) {
         String token = cookieConfig.parseCookie(request);
         Long id = cookieConfig.getIdFromToken(token);
-        Member member = memberService.findById(id);
+        MemberUpdateRequest member = memberService.findById(id);
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 

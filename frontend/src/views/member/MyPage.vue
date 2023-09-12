@@ -32,17 +32,28 @@
           <v-col>
             <v-sheet class="logo-text" style="padding: 40px" min-height="70vh" rounded="lg">
               <div>
-                <v-form @submit.prevent="saveChanges">
+                <h4>비밀번호를 입력해 주세요.</h4>
+                <v-text-field
+                  :disabled="!isEditMode"
+                  :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                  :type="visible ? 'text' : 'password'"
+                  @click:append-inner="visible = !visible"
+                  variant="underlined"
+                  v-model="memberData.password"
+                ></v-text-field
+                ><br />
+
+                <v-form>
                   <h4>이름</h4>
                   <v-text-field
-                    disabled
+                    :disabled="!isEditMode"
                     :value="memberData.name"
                     variant="underlined"
                   ></v-text-field
                   ><br />
                   <h4>주민등록번호</h4>
                   <v-text-field
-                    disabled
+                    :disabled="!isEditMode"
                     :value="memberData.registrationNumber"
                     variant="underlined"
                   ></v-text-field
@@ -50,7 +61,7 @@
 
                   <h4>계좌번호</h4>
                   <v-text-field
-                    disabled
+                    :disabled="!isEditMode"
                     :value="memberData.bankAccountNumber"
                     variant="underlined"
                   ></v-text-field
@@ -58,17 +69,8 @@
 
                   <h4>아이디</h4>
                   <v-text-field
-                    disabled
-                    :value="memberData.loginId"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
-
-                  <h4>비밀번호</h4>
-
-                  <v-text-field
                     :disabled="!isEditMode"
-                    v-model="memberData.password"
+                    :value="memberData.loginId"
                     variant="underlined"
                   ></v-text-field
                   ><br />
@@ -98,8 +100,9 @@
                   ></v-text-field
                   ><br />
                   <div class="d-flex justify-center">
-                    <v-btn text class="mx-2" @click="toggleEditMode">수정하기</v-btn>
-                    <v-btn type="submit" text>저장하기</v-btn>
+                    <v-btn text class="mx-2" @click="toggleEditMode">{{
+                      isEditMode ? "저장하기" : "수정하기"
+                    }}</v-btn>
                   </div>
                 </v-form>
               </div>
@@ -119,8 +122,6 @@ import { getApi } from "@/api/modules";
 
 import axios from "axios";
 
-//axios.defaults.withCredentials = true;
-
 const isEditMode = ref(false);
 const memberData = ref({
   name: "",
@@ -133,8 +134,14 @@ const memberData = ref({
   address: "",
 });
 
+const visible = ref(false);
+
 const toggleEditMode = () => {
-  isEditMode.value = !isEditMode.value;
+  if (isEditMode.value) {
+    // 저장하기 버튼을 누를 때
+    saveChanges(); // 수정 내용을 저장
+  }
+  isEditMode.value = !isEditMode.value; // 수정 모드 토글
 };
 
 const saveChanges = async () => {
