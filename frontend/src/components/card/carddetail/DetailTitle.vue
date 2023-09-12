@@ -72,8 +72,9 @@
                 <svg-icon
                   type="mdi"
                   :path="isShow ? heartOutline : heart"
-                  style="margin-right: 8px"
+                  style="margin-right: 3px"
                   color="#1867C0"
+                  size="27"
                 ></svg-icon>
                 관심상품 등록</v-btn
               >

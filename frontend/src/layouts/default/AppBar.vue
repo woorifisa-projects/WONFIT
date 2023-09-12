@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat>
+  <v-app-bar flat max-height="70px">
     <v-app-bar-title class="d-flex align-left" style="margin-top: 5px">
       <div class="logo" style="margin-left: 150px">
         <div class="d-flex align-center">
