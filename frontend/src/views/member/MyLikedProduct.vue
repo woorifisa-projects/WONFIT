@@ -77,7 +77,7 @@ let autoIncrement = 1; // 바깥에서 auto-increment 값을 초기화
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/member/mypage/liked`);
+    const response = await axios.get(`http://13.125.155.169:8080/member/mypage/liked`);
     const data = response.data;
 
     data.forEach((item) => {

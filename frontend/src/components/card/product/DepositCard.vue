@@ -24,7 +24,12 @@
         <v-btn class="order-last" @click.stop="navigateToSubscribe(2)">가입하기</v-btn>
         <call-num btnName="전화가입" @click.stop />
         <v-btn class="order-first" @click.stop="toggleLike">
-          <svg-icon type="mdi" :path="isShow ? heartOutline : heart" color="#0056C7"></svg-icon
+          <svg-icon
+            type="mdi"
+            :path="isShow ? heartOutline : heart"
+            color="#0056C7"
+            size="27"
+          ></svg-icon
           >관심상품
         </v-btn>
       </v-card-actions>
