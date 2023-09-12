@@ -1,10 +1,7 @@
 package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.dto.MemberDetails;
-import com.woori.wonfit.member.member.dto.MemberDto;
-import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
-import com.woori.wonfit.member.member.dto.MembersResponse;
+import com.woori.wonfit.member.member.dto.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +20,7 @@ public interface MemberService {
 
     List<MembersResponse> getAllMembers();
 
-    Member findById(Long id);
+    MemberUpdateRequest findById(Long id);
 
     Cookie leaveMember(String loginId, String memberPw, HttpServletRequest request) throws Exception;
 

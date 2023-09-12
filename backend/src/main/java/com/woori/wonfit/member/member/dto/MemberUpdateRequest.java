@@ -28,4 +28,17 @@ public class MemberUpdateRequest {
                 .address(member.getAddress())
                 .build();
     }
+
+    public static MemberUpdateRequest toNewDetail(Member member) {
+        return MemberUpdateRequest.builder()
+                .name(member.getName())
+                .registrationNumber(member.getRegistrationNumber())
+                .bankAccountNumber(member.getBankAccountNumber())
+                .loginId(member.getLoginId())
+                .password(null)
+                .email(member.getEmail())
+                .phoneNumber(member.getPhoneNumber())
+                .address(member.getAddress())
+                .build();
+    }
 }

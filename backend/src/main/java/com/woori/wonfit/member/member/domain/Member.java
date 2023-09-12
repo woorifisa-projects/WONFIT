@@ -53,9 +53,9 @@ public class Member {
     @ColumnDefault("true")
     private boolean status; // 회원 상태(정상, 탈퇴)
 
-    @Column(name = "marketing_info_agree")
-    @ColumnDefault("true")
-    private boolean marketingInfoAgree;
+//    @Column(name = "marketing_info_agree")
+//    @ColumnDefault("true")
+//    private boolean marketingInfoAgree;
 
     @Column(name = "address")
     private String address;
@@ -88,6 +88,7 @@ public class Member {
                 .status(true)
                 .address(memberUpdateRequest.getAddress())
                 .refreshToken(refreshToken)
-                .marketingInfoAgree(true).build();
+//                .marketingInfoAgree(true)
+                .build();
     }
 }
