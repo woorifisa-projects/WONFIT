@@ -2,6 +2,7 @@ package com.woori.wonfit.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
@@ -53,4 +54,16 @@ public class CookieConfig {
         cookie.setHttpOnly(true);
         return cookie;
     }
+
+    public ResponseCookie createResponseCookie(String value){
+        ResponseCookie cookie = ResponseCookie.from(key, value)
+                .domain(".wonfit.site")
+                .path("/")
+                .httpOnly(true)
+                .maxAge(7 * 24 * 60 * 60)
+                .build();
+        return cookie;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
+import org.springframework.http.ResponseCookie;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface MemberService {
     MemberDto register(MemberRegisterRequest request);
 
-    Cookie login(String loginId, String memberPw, HttpServletRequest request);
+    ResponseCookie login(String loginId, String memberPw, HttpServletRequest request);
 
     Cookie logout(HttpServletRequest request);
 

@@ -15,6 +15,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Cookie login(String loginId, String memberPw, HttpServletRequest request) {
+    public ResponseCookie login(String loginId, String memberPw, HttpServletRequest request) {
         Member member = memberRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new RuntimeException("회원정보를 찾을 수 없습니다."));
 
@@ -91,7 +92,7 @@ public class MemberServiceImpl implements MemberService {
             String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
 
-            Cookie cookie = cookieConfig.createCookie(accessToken);
+            ResponseCookie cookie = cookieConfig.createResponseCookie(accessToken);
 
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
