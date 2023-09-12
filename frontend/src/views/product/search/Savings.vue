@@ -1,6 +1,6 @@
 <template>
-  <div style="white-space: nowrap" class="logo-text">
-    <div class="d-flex flex-column align-center justify-center mt-10">
+  <div class="bg-color" style="white-space: nowrap">
+    <div class="d-flex flex-column align-center justify-center mt-3 pt-5">
       <v-container>
         <v-row justify="center">
           <type-button content="예금" @click="navigateToSearchDefault" />
@@ -12,11 +12,11 @@
     </div>
 
     <v-text-field
-      class="mx-auto mt-10 mb-n5 centered-text-field"
+      class="mx-auto mt-10 mb-n3 centered-text-field"
       v-model="searchQuery"
       variant="tonal"
       rounded
-      label="상품명을 입력해주세요."
+      label="상품명 또는 상품타입을 입력해주세요."
       prepend-inner-icon="mdi-magnify"
       single-line
       @click="search"
@@ -26,17 +26,19 @@
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
-            <v-sheet>
+            <v-sheet class="bg-color">
               <!-- savingsCard 컴포넌트에 데이터 전달 -->
               <savings-card
                 v-for="productDetail in displayedData"
                 :key="productDetail.id"
                 :savingsName="productDetail.savingsName"
                 :savingsInfo="productDetail.savingsInfo"
-                :interestRate="'기본 금리: ' + productDetail.interestRate + '%'"
-                :savingsType="'상품 타입: ' + productDetail.savingsType"
+                :interestRate="'기본금리: ' + productDetail.interestRate + '%'"
+                :savingsType="'상품타입: ' + productDetail.savingsType"
               />
-              <div v-if="displayedData.length === 0">검색 결과가 없습니다.</div>
+              <div v-if="displayedData.length === 0">
+                <p class="d-flex justify-center">검색 결과가 없습니다.</p>
+              </div>
             </v-sheet>
           </v-col>
         </v-row>
@@ -70,8 +72,11 @@ onBeforeMount(async () => {
 const search = () => {
   const query = searchQuery.value.toLowerCase() || "";
   displayedData.value = savingsData.value.filter((product) => {
-    if (product.savingsName) {
-      return product.savingsName.toLowerCase().includes(query);
+    if (product.savingsName || product.savingsType) {
+      return (
+        product.savingsName.toLowerCase().includes(query) ||
+        product.savingsType.toLowerCase().includes(query)
+      );
     }
     return false;
   });
@@ -105,5 +110,10 @@ const navigateToSearchLoan = () => {
   border-radius: 50px;
   height: 55px;
   width: 530px;
+  background-color: white;
+}
+
+.bg-color {
+  background-color: #f6f7ff;
 }
 </style>

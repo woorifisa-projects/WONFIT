@@ -3,15 +3,15 @@
     <!-- 배너 영역 -->
     <div class="banner-container d-flex justify-center">
       <!-- 배너 이미지 추가 -->
-      <h1 style="margin: 120px 210px">
+      <p class="mainFontSize" style="margin: 120px 210px">
         우리WONFIT에서<br />
         나에게 딱 맞게
-      </h1>
+      </p>
       <img src="@/assets/puzzler.png" class="banner-image" />
     </div>
 
     <div class="banner-content">
-      <h2>목적에 맞는 금융상품을</h2>
+      <p style="font-size: 30px; color: black">목적에 맞는 금융상품을</p>
       <p>성향분석 검사를 통해 편리하게 추천 받으세요</p>
     </div>
 
@@ -52,18 +52,17 @@
     <!-- 배너 영역 -->
     <div class="banner-container2 d-flex justify-center">
       <!-- 배너 이미지 추가 -->
-      <h1 style="margin: 100px 200px">
+      <p class="mainFontSize" style="margin: 100px 200px">
         모든 금융내역을<br />
         한 곳에서 관리하세요 <br />
         <v-btn
-            color="#2965ED"
-            height="42px"
-            rounded="lg"
-            style="margin-top: 30px; font-weight: bold; color: white"
-            @click="navigateToIncomeAnalysisPage"
-        >마이데이터 보러가기</v-btn
+          color="#2965ED"
+          height="42px"
+          style="margin-top: 30px; color: white"
+          @click="navigateToIncomeAnalysisPage"
+          >마이데이터 보러가기</v-btn
         >
-      </h1>
+      </p>
       <img src="@/assets/receipt.png" class="banner-image" />
     </div>
   </div>
@@ -145,6 +144,11 @@ const navigateToSavingsTestPage = () => {
 .banner-content p {
   font-size: 16px;
   color: #666; /* 텍스트 색상 설정 */
+}
+
+.mainFontSize {
+  font-size: 30px;
+  color: #333; /* 텍스트 색상 설정 */
 }
 
 /* 각 span 요소를 중앙 정렬하고 간격을 조정합니다 */

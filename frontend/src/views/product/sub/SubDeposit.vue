@@ -2,7 +2,7 @@
   <div class="mt-5">
     <!-- 선택한 상품정보 CARD -->
     <div>
-      <v-card class="mx-auto mt-12 mb-10" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-12 mb-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 선택한 상품정보 </v-card-title>
         <v-divider></v-divider>
 
@@ -39,7 +39,7 @@
 
     <!-- 가입약관 CARD -->
     <div>
-      <v-card class="mx-auto mt-16 mb-10" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-16 mb-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 가입약관 </v-card-title>
         <v-divider></v-divider>
 
@@ -104,7 +104,7 @@
 
     <!-- 정보입력 CARD -->
     <div>
-      <v-card class="mx-auto my-10" max-width="900" elevation="4">
+      <v-card class="mx-auto my-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 정보입력 </v-card-title>
         <v-divider></v-divider>
 
@@ -150,6 +150,7 @@
               </v-col>
               <v-col cols="8">
                 <v-text-field
+                  v-model="subDeposit"
                   placeholder="입금하고자하는 금액을 입력해주세요."
                   :rules="[rules.minDeposit]"
                   :hint="getHint()"
@@ -158,7 +159,6 @@
                 >
                 </v-text-field>
               </v-col>
-              <v-col> </v-col>
             </v-row>
 
             <v-row>
@@ -166,7 +166,7 @@
                 <span>가입 기간</span>
               </v-col>
               <v-col>
-                <v-radio-group inline>
+                <v-radio-group inline v-model="expirePeriod">
                   <v-radio label="3개월" value="3" style="color: black"></v-radio>
                   <v-radio label="6개월" value="6" style="color: black"></v-radio>
                   <v-radio label="12개월" value="12" style="color: black"></v-radio>
@@ -179,7 +179,7 @@
                 <span>세금우대선택</span>
               </v-col>
               <v-col>
-                <v-radio-group>
+                <v-radio-group v-model="taxDeduction">
                   <v-radio label="일반세율" value="일반세율" style="color: black"></v-radio>
                   <v-radio
                     label="세금우대(1년 이상 가입 시 가능)"
@@ -206,11 +206,10 @@
     </div>
 
     <div class="d-flex justify-center my-10">
-      <v-btn class="mx-3" color="#E2EEFF" size="large" rounded="lg" @click="requestSubscribe">
-        <!-- style="color: #0025c9" -->
+      <v-btn class="mx-3" color="primary" size="large" rounded @click="requestSubscribe">
         가입하기
       </v-btn>
-      <v-btn class="mx-3" size="large" rounded="lg" @click="goBack"> 취소하기 </v-btn>
+      <v-btn class="mx-3" size="large" rounded @click="goBack"> 취소하기 </v-btn>
     </div>
   </div>
 </template>
@@ -236,8 +235,8 @@ const show1 = ref(false);
 const password = ref("");
 const value = ref(""); // v-model로 입력값을 받아올 변수
 
-const subDeposit = ref(0);
-const expireDate = ref();
+const subDeposit = ref();
+const expirePeriod = ref();
 const taxDeduction = ref();
 
 const rules = {
@@ -280,18 +279,19 @@ onBeforeMount(async () => {
 // 상품 가입 post 요청
 const requestSubscribe = async () => {
   try {
-    await postApi({
-      url: `/member/mypage/sublog`,
+    const response = await postApi({
+      url: `/member/mypage/sublog/deposit/${productId}`,
       data: {
         subDeposit: subDeposit.value,
-        expireDate: expireDate.value,
+        expirePeriod: expirePeriod.value,
         taxDeduction: taxDeduction.value,
       },
     });
-    if (requestSubscribe.status == 200) {
+    console.log(response);
+    if (response === "가입완료") {
       console.log("상품 가입 성공");
     } else {
-      console.error("상품 가입 실패:", response.data); // 실패 시 에러 메시지를 출력
+      console.error("상품 가입 실패 error:", response.data); // 실패 시 에러 메시지를 출력
     }
   } catch (error) {
     console.error("상품 가입 실패:", error);

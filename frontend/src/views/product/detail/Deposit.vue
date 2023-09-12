@@ -6,7 +6,7 @@
           <detail-title
             :name="depositData.depositName"
             :info="depositData.depositInfo"
-            :interestRate="'상품 금리: ' + depositData.interestRate + '%'"
+            :interestRate="'기본 금리: ' + depositData.interestRate + '%'"
             :target="'가입 대상: ' + depositData.target"
             :period="'가입 기간: ' + depositData.period + '개월'"
             :minDeposit="'가입 금액: ' + depositData.minDeposit + '원'"

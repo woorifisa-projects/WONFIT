@@ -23,7 +23,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public List<LoanResponse> findAll() {
         List<LoanResponse> loans = loanRepository.findAll().stream()
-                .map(loan -> new LoanResponse(loan.getId(), loan.getLoanName(), loan.getInterestRate(), loan.getPeriod(), loan.getTarget(), loan.getLoanLimit(), loan.getLoanInfo(),loan.getLoanDesc(),loan.getLoanType())).collect(Collectors.toList());
+                .map(loan -> new LoanResponse(loan.getId(), loan.getLoanName(), loan.getInterestRate(), loan.getPeriod(), loan.getTarget(), loan.getLoanLimit(), loan.getLoanInfo(),loan.getLoanType())).collect(Collectors.toList());
         return loans;
     }
 
@@ -48,7 +48,6 @@ public class LoanServiceImpl implements LoanService {
                 .target(request.getTarget())
                 .loanLimit(request.getLoanLimit())
                 .loanInfo(request.getLoanInfo())
-                .loanDesc(request.getLoanDesc())
                 .loanType(request.getLoanType())
                 .build();
 
@@ -68,7 +67,6 @@ public class LoanServiceImpl implements LoanService {
                 .target(loan.map(Loan::getTarget).orElse("기본값"))
                 .loanLimit(loan.map(Loan::getLoanLimit).orElse(0L))
                 .loanInfo(loan.map(Loan::getLoanInfo).orElse("기본값"))
-                .loanDesc(loan.map(Loan::getLoanDesc).orElse("기본값"))
                 .loanType(loan.map(Loan::getLoanType).orElse("기본값"))
                 .build();
     }

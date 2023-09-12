@@ -2,7 +2,7 @@
   <div class="mt-5">
     <!-- 선택한 상품정보 CARD -->
     <div>
-      <v-card class="mx-auto mt-12" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-12" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 선택한 상품정보 </v-card-title>
         <v-divider></v-divider>
 
@@ -42,7 +42,7 @@
 
     <!-- 가입약관 CARD -->
     <div>
-      <v-card class="mx-auto mt-16 mb-10" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-16 mb-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 가입약관 </v-card-title>
         <v-divider></v-divider>
 
@@ -107,7 +107,7 @@
 
     <!-- 정보입력 CARD -->
     <div>
-      <v-card class="mx-auto my-10" max-width="900" elevation="4">
+      <v-card class="mx-auto my-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 정보입력 </v-card-title>
         <v-divider></v-divider>
 
@@ -122,7 +122,7 @@
                   clearable
                   placeholder="출금 계좌번호를 선택해주세요."
                   single-line
-                  :items="accountNumbers"
+                  :items="bankAccountNumber"
                   variant="outlined"
                   style="width: 500px; margin-left: 22px"
                 ></v-select>
@@ -153,9 +153,10 @@
               </v-col>
               <v-col cols="8">
                 <v-text-field
+                  v-model="loanAmount"
                   placeholder="대출하고자하는 금액을 입력해주세요."
                   :rules="[rules.loanLimit]"
-                  :hint="'대출 가능 금액은 ' + loanData.loanLimit + '원 입니다.'"
+                  :hint="'대출 가능 금액은 최대 ' + loanData.loanLimit + '원 입니다.'"
                   style="width: 300px; margin-left: 22px"
                   variant="outlined"
                 >
@@ -168,7 +169,7 @@
                 <span>대출 기간</span>
               </v-col>
               <v-col>
-                <v-radio-group inline>
+                <v-radio-group inline v-model="expirePeriod">
                   <v-radio label="3개월" value="3" style="color: black"></v-radio>
                   <v-radio label="6개월" value="6" style="color: black"></v-radio>
                   <v-radio label="12개월" value="12" style="color: black"></v-radio>
@@ -182,6 +183,7 @@
               </v-col>
               <v-col cols="8">
                 <v-select
+                  v-model="monthlyChargeDate"
                   clearable
                   :items="items"
                   density="comfortable"
@@ -197,10 +199,10 @@
                 <span>상환방식선택</span>
               </v-col>
               <v-col>
-                <v-radio-group>
-                  <v-radio label="원리금 균등" value="1" style="color: black"></v-radio>
-                  <v-radio label="원금 균등" value="2" style="color: black"></v-radio>
-                  <v-radio label="만기일시상환" value="3" style="color: black"></v-radio>
+                <v-radio-group v-model="repaymentMethod">
+                  <v-radio label="원리금 균등" value="원리금 균등" style="color: black"></v-radio>
+                  <v-radio label="원금 균등" value="원금 균등" style="color: black"></v-radio>
+                  <v-radio label="만기일시상환" value="만기일시상환" style="color: black"></v-radio>
                 </v-radio-group>
               </v-col>
             </v-row>
@@ -210,7 +212,9 @@
     </div>
 
     <div class="d-flex justify-center my-10">
-      <v-btn class="mx-3" color="primary" size="large" rounded> 가입하기 </v-btn>
+      <v-btn class="mx-3" color="primary" size="large" rounded @click="requestSubscribe">
+        가입하기
+      </v-btn>
       <v-btn class="mx-3" size="large" rounded @click="goBack"> 취소하기 </v-btn>
     </div>
   </div>
@@ -218,22 +222,28 @@
 
 <script setup>
 import { ref, onBeforeMount } from "vue";
-import { getApi } from "@/api/modules";
+import { getApi, postApi } from "@/api/modules";
 import { useRoute } from "vue-router";
 
 const loanData = ref([]);
+const accountData = ref([]);
 const route = useRoute();
 // URL에서 productId를 가져오기 위해 route.params를 사용합니다.
 const productId = route.params.id;
 // 약관 동의 체크박스
 const selected = ref([]);
 // 출금계좌번호
-let accountNumbers = ref([]);
+let bankAccountNumber = ref([]);
 // 최소 입금 금액
 let loanLimit = ref(0);
 
 const show1 = ref(false);
 const password = ref("");
+
+const loanAmount = ref();
+const expirePeriod = ref();
+const monthlyChargeDate = ref();
+const repaymentMethod = ref();
 
 const rules = {
   minLength: (v) => v.length <= 4,
@@ -254,9 +264,41 @@ onBeforeMount(async () => {
   });
   loanData.value = data;
   console.log(data);
-  accountNumbers.value = [loanData.value.loanName];
   loanLimit.value = loanData.value.loanLimit;
 });
+
+// 계좌 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: `/member/detail`,
+  });
+  accountData.value = data;
+  console.log(data);
+  bankAccountNumber.value = [accountData.value.bankAccountNumber];
+});
+
+// 상품 가입 post 요청
+const requestSubscribe = async () => {
+  try {
+    const response = await postApi({
+      url: `/member/mypage/sublog/loan/${productId}`,
+      data: {
+        loanAmount: loanAmount.value,
+        expirePeriod: expirePeriod.value,
+        monthlyChargeDate: monthlyChargeDate.value,
+        repaymentMethod: repaymentMethod.value,
+      },
+    });
+    console.log(response);
+    if (response === "가입완료") {
+      console.log("상품 가입 성공");
+    } else {
+      console.error("상품 가입 실패 error:", response.data); // 실패 시 에러 메시지를 출력
+    }
+  } catch (error) {
+    console.error("상품 가입 실패:", error);
+  }
+};
 </script>
 
 <style scoped>

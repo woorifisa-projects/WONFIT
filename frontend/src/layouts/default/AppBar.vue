@@ -102,7 +102,6 @@ const navigateToSignup = () => {
   font-family: "WooridaumB";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
     format("woff2");
-  font-weight: 700;
   font-style: normal;
 }
 
@@ -111,10 +110,12 @@ const navigateToSignup = () => {
   align-items: center;
 }
 
-.logo-text:hover {
+.logo-text {
   font-size: 16px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
+  color: rgb(49, 49, 49);
+}
+
+.logo-text:hover {
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }

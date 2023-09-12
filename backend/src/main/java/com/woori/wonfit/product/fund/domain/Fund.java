@@ -33,9 +33,6 @@ public class Fund {
     @Column(name = "fund_info")
     private String fundInfo;
 
-    @Column(name = "fund_desc")
-    private String fundDesc; // 상세 설명
-
     @Column(name = "status")
     private String status; // 상품 상태
 }

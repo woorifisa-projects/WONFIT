@@ -21,7 +21,7 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public List<DepositResponse> findAll() {
         List<DepositResponse> DepositResponses = depositRepository.findAll().stream()
-                .map(Deposit -> new DepositResponse(Deposit.getId(),Deposit.getDepositName(),Deposit.getInterestRate(),Deposit.getPeriod(),Deposit.getTarget(),Deposit.getMinDeposit(),Deposit.getDepositInfo(),Deposit.getDepositDesc(),Deposit.getDepositType()))
+                .map(Deposit -> new DepositResponse(Deposit.getId(),Deposit.getDepositName(),Deposit.getInterestRate(),Deposit.getPeriod(),Deposit.getTarget(),Deposit.getMinDeposit(),Deposit.getDepositInfo(),Deposit.getDepositType()))
                 .collect(Collectors.toList());
 
         return DepositResponses;
@@ -39,7 +39,6 @@ public class DepositServiceImpl implements DepositService {
                 .target(request.getTarget())
                 .minDeposit(request.getMinDeposit())
                 .depositInfo(request.getDepositInfo())
-                .depositDesc(request.getDepositDesc())
                 .depositType(request.getDepositType())
                 .build();
 
@@ -59,7 +58,6 @@ public class DepositServiceImpl implements DepositService {
                 .target(deposit.map(Deposit::getTarget).orElse("기본값"))
                 .minDeposit(deposit.map(Deposit::getMinDeposit).orElse(0))
                 .depositInfo(deposit.map(Deposit::getDepositInfo).orElse("기본값"))
-                .depositDesc(deposit.map(Deposit::getDepositDesc).orElse("기본값"))
                 .depositType(deposit.map(Deposit::getDepositType).orElse("기본값"))
                 .build();
     }

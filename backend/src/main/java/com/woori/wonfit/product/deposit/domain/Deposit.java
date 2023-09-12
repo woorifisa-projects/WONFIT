@@ -34,9 +34,6 @@ public class Deposit {
     @Column(name = "deposit_info")
     private String depositInfo; // 간단 설명
 
-    @Column(name = "deposit_desc")
-    private String depositDesc; // 상세 설명
-
     @Column(name = "deposit_type")
     private String depositType; // 안정형, 중립형, 공격형
 
