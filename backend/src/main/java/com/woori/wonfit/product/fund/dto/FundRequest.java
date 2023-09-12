@@ -17,6 +17,5 @@ public class FundRequest {
         private String fundType; // 안정형, 중립형, 공격형
         private double fundPrice;
         private String fundInfo;
-        private String fundDesc; // 상세 설명
 
 }

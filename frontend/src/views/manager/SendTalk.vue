@@ -118,7 +118,9 @@ onMounted(fetchSmsData);
 
 async function fetchSmsData() {
   try {
-    const response = await axios.get("http://localhost:8080/manager/sms", {
+
+    const response = await axios.get("http://13.125.155.169:8080/manager/sms", {
+
       withCredentials: true,
     });
     smsData.value = response.data;
@@ -137,7 +139,9 @@ async function sendMessage() {
   };
 
   try {
-    const response = await axios.post("http://localhost:8080/manager/sms", body, {
+
+    const response = await axios.post("http://13.125.155.169:8080/manager/sms", body, {
+
       withCredentials: true,
     });
     console.log(response.data);

@@ -157,7 +157,7 @@ const saveChanges = async () => {
       address: memberData.value.address,
     };
 
-    const response = await axios.patch("http://localhost:8080/member/detail", updatedData, {
+    const response = await axios.patch("http://13.125.155.169:8080/member/detail", updatedData, {
       withCredentials: true,
     });
 

@@ -1,5 +1,5 @@
 <template>
-  <v-footer class = "logo-text">
+  <v-footer>
     <v-row justify="center" no-gutters>
       <v-btn
         v-for="link in links"
@@ -24,18 +24,4 @@ export default {
   }),
 };
 </script>
-<style>
-@font-face {
-  font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
-  font-weight: 700;
-  font-style: normal;
-}
-
-.logo-text {
-  font-size: 16px;
-  font-weight: bold;
-  font-family: "WooridaumB", sans-serif; /* 적용한 폰트 스타일 사용 */
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,6 +1,6 @@
 <template>
-  <div style="white-space: nowrap" class="logo-text">
-    <div class="d-flex flex-column align-center justify-center mt-10">
+  <div style="white-space: nowrap" class="bg-color">
+    <div class="d-flex flex-column align-center justify-center mt-3 pt-5">
       <v-container>
         <v-row justify="center">
           <type-button content="예금" @click="navigateToSearchDefault" />
@@ -16,7 +16,7 @@
       v-model="searchQuery"
       variant="tonal"
       rounded
-      label="상품명을 입력해주세요."
+      label="상품명 또는 상품타입을 입력해주세요."
       prepend-inner-icon="mdi-magnify"
       single-line
       @click="search"
@@ -26,7 +26,7 @@
       <v-container>
         <v-row class="flex-child text-subtitle-2">
           <v-col class="mx-auto" width="900">
-            <v-sheet>
+            <v-sheet class="bg-color">
               <!-- FundCard 컴포넌트에 데이터 전달 -->
               <fund-card
                 v-for="productDetail in displayedData"
@@ -36,9 +36,11 @@
                 :returnRate1="'1개월 수익률: ' + productDetail.returnRate1 + '%'"
                 :returnRate2="'6개월 수익률: ' + productDetail.returnRate2 + '%'"
                 :fundPrice="'기준가: ' + productDetail.fundPrice + '원'"
-                :fundType="'상품 타입: ' + productDetail.fundType"
+                :fundType="'상품타입: ' + productDetail.fundType"
               />
-              <div v-if="displayedData.length === 0">검색 결과가 없습니다.</div>
+              <div v-if="displayedData.length === 0">
+                <p class="d-flex justify-center">검색 결과가 없습니다.</p>
+              </div>
             </v-sheet>
           </v-col>
         </v-row>
@@ -72,8 +74,11 @@ onBeforeMount(async () => {
 const search = () => {
   const query = searchQuery.value.toLowerCase() || "";
   displayedData.value = fundData.value.filter((product) => {
-    if (product.fundName) {
-      return product.fundName.toLowerCase().includes(query);
+    if (product.fundName || product.fundType) {
+      return (
+        product.fundName.toLowerCase().includes(query) ||
+        product.fundType.toLowerCase().includes(query)
+      );
     }
     return false;
   });
@@ -107,5 +112,10 @@ const navigateToSearchLoan = () => {
   border-radius: 50px;
   height: 55px;
   width: 530px;
+  background-color: white;
+}
+
+.bg-color {
+  background-color: #f6f7ff;
 }
 </style>

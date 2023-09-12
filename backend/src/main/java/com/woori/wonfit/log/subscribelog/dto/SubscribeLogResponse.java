@@ -19,11 +19,11 @@ public class SubscribeLogResponse {
     private Long id;
     private Member member;
     private String subDate;
-    private LocalDateTime expireDate;
+    private String expirePeriod;
     private int subDeposit;
     private int subSavings;
     private int monthlyCharge;
-    private LocalDateTime monthlyChargeDate;
+    private String monthlyChargeDate;
     private String taxDeduction;
     private int fundQuantity;
     private int loanAmount;
@@ -39,7 +39,7 @@ public class SubscribeLogResponse {
                 .id(subscribeLog.getId())
                 .member(subscribeLog.getMember())
                 .subDate(time)
-                .expireDate(subscribeLog.getExpireDate())
+                .expirePeriod(subscribeLog.getExpirePeriod())
                 .subDeposit(subscribeLog.getSubDeposit())
                 .subSavings(subscribeLog.getSubSavings())
                 .monthlyCharge(subscribeLog.getMonthlyCharge())

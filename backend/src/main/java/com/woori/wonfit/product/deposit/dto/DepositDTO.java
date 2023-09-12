@@ -13,7 +13,6 @@ public class DepositDTO {
     private String target;
     private int minDeposit;
     private String depositInfo;
-    private String depositDesc;
     private String depositType;
 
     @Builder
@@ -24,7 +23,6 @@ public class DepositDTO {
         this.target = target;
         this.minDeposit = minDeposit;
         this.depositInfo = depositInfo;
-        this.depositDesc = depositDesc;
         this.depositType = depositType;
     }
 }

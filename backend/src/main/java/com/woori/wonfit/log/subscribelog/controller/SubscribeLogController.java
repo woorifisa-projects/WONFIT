@@ -1,18 +1,16 @@
 package com.woori.wonfit.log.subscribelog.controller;
 
-import com.woori.wonfit.config.CookieConfig;
+import com.woori.wonfit.config.ExceptionConfig;
 import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
 import com.woori.wonfit.log.subscribelog.service.SubscribeLogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,35 +18,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubscribeLogController {
     private final SubscribeLogService subscribeLogService;
-    private final CookieConfig cookieConfig;
-
-    LocalDateTime date = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String time = date.format(formatter).substring(0, 19);
 
     // 멤버 1명 상품 가입 기록 전체 조회
     @GetMapping
-    public List<SubscribeLogResponse> findByMemberId(HttpServletRequest request) {
-        String token = cookieConfig.parseCookie(request);
-        Long memberId = cookieConfig.getIdFromToken(token);
-
-        List<SubscribeLog> subscribeLogs = subscribeLogService.findByMemberId(memberId);
-        List<SubscribeLogResponse> responseList = new ArrayList<>();
-
-        for (SubscribeLog subscribeLog : subscribeLogs) {
-            SubscribeLogResponse response = SubscribeLogResponse.From_sub_log(subscribeLog, time);
-            responseList.add(response);
-        }
-
-        return responseList;
+    public ResponseEntity<List<SubscribeLogResponse>> findById(@AuthenticationPrincipal String id) {
+        List<SubscribeLogResponse> subscribeLogs = subscribeLogService.findById(id);
+        return new ResponseEntity<>(subscribeLogs, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<SubscribeLogResponse> createSubscribeLog(@RequestBody SubscribeLogRequest subscribeLogRequest) {
-
-        SubscribeLog subscribeLog = SubscribeLogRequest.To_sub_log(subscribeLogRequest, time);
-        SubscribeLog createSubscribeLog = subscribeLogService.save(subscribeLog);
-        SubscribeLogResponse subscribeLogResponse = SubscribeLogResponse.From_sub_log(createSubscribeLog, time);
-        return ResponseEntity.ok(subscribeLogResponse);
+    // 상품 가입 하기
+    @PostMapping("/{product}/{productid}")
+    public ResponseEntity<String> createSubscribeLog(@PathVariable Long productid, @PathVariable String product, @RequestBody SubscribeLogRequest subscribeLogRequest, @AuthenticationPrincipal String id) {
+        try {
+            SubscribeLog createSubscribeLog = subscribeLogService.save(productid, product, subscribeLogRequest, id);
+            return new ResponseEntity<>("가입완료", HttpStatus.OK);
+        }
+        catch (ExceptionConfig e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

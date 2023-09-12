@@ -62,12 +62,19 @@
             </v-dialog>
 
             <div class="pa-2 mt-1">
-              <v-btn rounded="xl" width="160" height="45" style="font-size: medium">
+              <v-btn
+                rounded="xl"
+                width="160"
+                height="45"
+                style="font-size: medium"
+                @click.stop="toggleLike"
+              >
                 <svg-icon
                   type="mdi"
-                  :path="path"
-                  style="margin-right: 8px"
+                  :path="isShow ? heartOutline : heart"
+                  style="margin-right: 3px"
                   color="#1867C0"
+                  size="27"
                 ></svg-icon>
                 관심상품 등록</v-btn
               >
@@ -80,16 +87,19 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onBeforeMount } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiPuzzleHeart } from "@mdi/js";
+import { mdiPuzzleHeart, mdiPuzzleHeartOutline } from "@mdi/js";
+import { getApi } from "@/api/modules";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
 
-// ref를 사용하여 초기값이 false인 loading 데이터를 정의합니다.
-const path = ref(mdiPuzzleHeart);
+const heart = ref(mdiPuzzleHeart);
+const heartOutline = ref(mdiPuzzleHeartOutline);
+const isShow = ref(true);
+const likedData = ref([]);
 const dialog = ref(false);
 
 const props = defineProps([
@@ -113,6 +123,20 @@ const props = defineProps([
 const name = props.name;
 const info = props.info;
 const type = props.type;
+
+// "좋아요" 상태를 토글하는 메서드
+const toggleLike = () => {
+  isShow.value = !isShow.value; // "좋아요" 상태를 반전시킵니다.
+};
+
+// 관심상품 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: "/member/mypage/liked",
+  });
+  likedData.value = data;
+  console.log(likedData);
+});
 
 const navigateToSubscribe = () => {
   router.push(`/subscribe/${props.url}/${route.params.id}`);

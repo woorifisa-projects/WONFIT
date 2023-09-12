@@ -81,7 +81,7 @@ const login = async () => {
       password: password.value,
     };
 
-    const response = await axios.post("http://localhost:8080/wonfit/login", requestBody, {
+    const response = await axios.post("http://13.125.155.169:8080/wonfit/login", requestBody, {
       withCredentials: true,
     });
     if (response.status == 200) {
