@@ -32,7 +32,6 @@ public class SavingsController {
     @GetMapping("/{id}")
     public ResponseEntity<SavingsResponse> findById(@PathVariable Long id) {
         SavingsResponse savingsResponse = savingsService.findById(id);
-        System.out.println("done");
         return ResponseEntity.ok(savingsResponse);
     }
 }

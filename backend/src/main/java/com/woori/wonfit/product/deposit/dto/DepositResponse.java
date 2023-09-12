@@ -1,6 +1,5 @@
 package com.woori.wonfit.product.deposit.dto;
 
-import com.woori.wonfit.product.deposit.domain.Deposit;
 import lombok.*;
 
 @Getter

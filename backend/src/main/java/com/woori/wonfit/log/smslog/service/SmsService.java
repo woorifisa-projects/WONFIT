@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface SmsService {
     SmsSendResponse sendSms(SmsRequest request) throws Exception;
+
     List<Sms> getAllSms();
 }

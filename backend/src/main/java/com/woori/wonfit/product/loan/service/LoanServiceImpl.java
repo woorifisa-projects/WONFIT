@@ -4,6 +4,7 @@ import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.loan.dto.LoanDTO;
 import com.woori.wonfit.product.loan.dto.LoanResponse;
 import com.woori.wonfit.product.loan.repository.LoanRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,19 +12,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class LoanServiceImpl implements LoanService {
 
     private final LoanRepository loanRepository;
 
-    public LoanServiceImpl(LoanRepository loanRepository) {
-        super();
-        this.loanRepository = loanRepository;
-    }
-    
     @Override
     public List<LoanResponse> findAll() {
         List<LoanResponse> loans = loanRepository.findAll().stream()
-                .map(loan -> new LoanResponse(loan.getId(), loan.getLoanName(), loan.getInterestRate(), loan.getPeriod(), loan.getTarget(), loan.getLoanLimit(), loan.getLoanInfo(),loan.getLoanType())).collect(Collectors.toList());
+                .map(loan -> new LoanResponse(loan.getId(), loan.getLoanName(), loan.getInterestRate(), loan.getPeriod(), loan.getTarget(), loan.getLoanLimit(), loan.getLoanInfo(), loan.getLoanType())).collect(Collectors.toList());
         return loans;
     }
 
@@ -70,5 +67,4 @@ public class LoanServiceImpl implements LoanService {
                 .loanType(loan.map(Loan::getLoanType).orElse("기본값"))
                 .build();
     }
-
 }

@@ -1,7 +1,5 @@
 package com.woori.wonfit.log.subscribelog.controller;
 
-import com.woori.wonfit.config.ExceptionConfig;
-import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
 import com.woori.wonfit.log.subscribelog.service.SubscribeLogService;
@@ -28,13 +26,8 @@ public class SubscribeLogController {
 
     // 상품 가입 하기
     @PostMapping("/{product}/{productid}")
-    public ResponseEntity<String> createSubscribeLog(@PathVariable Long productid, @PathVariable String product, @RequestBody SubscribeLogRequest subscribeLogRequest, @AuthenticationPrincipal String id) {
-        try {
-            SubscribeLog createSubscribeLog = subscribeLogService.save(productid, product, subscribeLogRequest, id);
-            return new ResponseEntity<>("가입완료", HttpStatus.OK);
-        }
-        catch (ExceptionConfig e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> createSubscribeLog(@PathVariable Long productid, @PathVariable String product, @RequestBody SubscribeLogRequest subscribeLogRequest, @AuthenticationPrincipal String id) throws Exception {
+        subscribeLogService.save(productid, product, subscribeLogRequest, id);
+        return new ResponseEntity<>("가입완료", HttpStatus.OK);
     }
 }

@@ -8,15 +8,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 @RestController
 @RequestMapping("/member/recommend/product")
@@ -24,10 +22,10 @@ import java.util.List;
 @Slf4j
 public class InvestTypeController {
     private final InvestTypeService investTypeService;
+
     @GetMapping
-    public List<InvestTypeResponse> findByMemberId(HttpServletRequest request) {
-        log.info(request.getCookies().toString());
-        List<InvestType> investTypes = investTypeService.findByMemberId(request);
+    public List<InvestTypeResponse> findByMemberId(String id) {
+        List<InvestType> investTypes = investTypeService.findByMemberId(id);
         List<InvestTypeResponse> responseList = new ArrayList<>();
 
         for (InvestType investType : investTypes) {
@@ -36,9 +34,10 @@ public class InvestTypeController {
         }
         return responseList;
     }
+
     @PostMapping
-    public ResponseEntity<Cookie> createInvestType(@RequestBody InvestTypeRequest investTypeRequest, HttpServletRequest request, HttpServletResponse response) {
-        Cookie cookie = investTypeService.save(investTypeRequest, request);
+    public ResponseEntity<Cookie> createInvestType(@RequestBody InvestTypeRequest investTypeRequest, @AuthenticationPrincipal String id, HttpServletResponse response) {
+        Cookie cookie = investTypeService.save(investTypeRequest, id);
         response.addCookie(cookie);
         return new ResponseEntity<>(cookie, HttpStatus.OK);
     }

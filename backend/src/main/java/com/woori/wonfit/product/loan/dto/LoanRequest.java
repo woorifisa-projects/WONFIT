@@ -13,5 +13,4 @@ public class LoanRequest {
     private String loanName;
     private double interestRate;
     private int period;
-
 }

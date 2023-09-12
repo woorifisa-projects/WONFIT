@@ -1,4 +1,5 @@
 package com.woori.wonfit.member.investtype.dto;
+
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.*;
@@ -20,7 +21,7 @@ public class InvestTypeResponse {
     private int fundQuizScore;
     private int loanQuizScore;
 
-    public static InvestTypeResponse From_InvestType(InvestType investType){
+    public static InvestTypeResponse From_InvestType(InvestType investType) {
         return InvestTypeResponse.builder()
                 .id(investType.getId())
                 .member(investType.getMember())

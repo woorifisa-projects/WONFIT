@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class SavingsDTO {
 
     private String savingsName;
@@ -15,14 +16,4 @@ public class SavingsDTO {
     private int maxDeposit;
     private String savingsInfo;
     private String savingsType;
-
-    public SavingsDTO(String savingsName, double interestRate, int period, String target, int maxDeposit, String savingsInfo, String savingsType) {
-        this.savingsName = savingsName;
-        this.interestRate = interestRate;
-        this.period = period;
-        this.target = target;
-        this.maxDeposit = maxDeposit;
-        this.savingsInfo = savingsInfo;
-        this.savingsType = savingsType;
-    }
 }

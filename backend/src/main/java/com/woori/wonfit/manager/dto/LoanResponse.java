@@ -1,15 +1,12 @@
 package com.woori.wonfit.manager.dto;
 
 import com.woori.wonfit.product.loan.domain.Loan;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
-@ToString
+@Builder
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class LoanResponse {
     private Long id;
     private String loanName;
@@ -21,23 +18,7 @@ public class LoanResponse {
     private String loanDesc;
     private String loanType;
 
-
-    @Builder
-    public LoanResponse(Long id, String loanName, double interestRate, int period, String target, long loanLimit, String loanInfo, String loanDesc, String loanType) {
-        this.id = id;
-        this.loanName = loanName;
-        this.interestRate = interestRate;
-        this.period = period;
-        this.target = target;
-        this.loanLimit = loanLimit;
-        this.loanInfo = loanInfo;
-        this.loanDesc = loanDesc;
-        this.loanType = loanType;
-    }
-
-
-
-public static LoanResponse FromLoan(Loan loan) {
+    public static LoanResponse FromLoan(Loan loan) {
         return LoanResponse.builder()
                 .id(loan.getId())
                 .loanName(loan.getLoanName())
@@ -47,8 +28,6 @@ public static LoanResponse FromLoan(Loan loan) {
                 .loanLimit(loan.getLoanLimit())
                 .loanInfo(loan.getLoanInfo())
                 .loanType(loan.getLoanType())
-
                 .build();
-}
-
+    }
 }

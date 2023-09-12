@@ -1,10 +1,7 @@
 package com.woori.wonfit.product.fund.service;
 
 import com.woori.wonfit.product.fund.domain.Fund;
-import com.woori.wonfit.product.fund.dto.FundResponse;
-import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.fund.dto.FundDTO;
-import com.woori.wonfit.product.fund.dto.FundRequest;
 import com.woori.wonfit.product.fund.dto.FundResponse;
 import com.woori.wonfit.product.fund.repository.FundRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +17,13 @@ public class FundServiceImpl implements FundService {
 
     private final FundRepository fundRepository;
 
-
     @Override
     public List<FundResponse> findAll() {
         List<FundResponse> getfunds = fundRepository.findAll()
                 .stream()
-                .map(fund -> new FundResponse
-
-                        (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo())).collect(Collectors.toList());
-
-
+                .map(fund -> new FundResponse(fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo())).collect(Collectors.toList());
         return getfunds;
     }
-
 
     public void updateFund(Long id, FundDTO request) {
         Fund fund = fundRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Fund not found"));
@@ -64,5 +55,4 @@ public class FundServiceImpl implements FundService {
                 .fundType(fund.map(Fund::getFundType).orElse("기본값"))
                 .build();
     }
-
 }

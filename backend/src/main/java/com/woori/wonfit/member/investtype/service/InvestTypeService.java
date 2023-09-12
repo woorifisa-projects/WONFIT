@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface InvestTypeService {
-    List<InvestType> findByMemberId(HttpServletRequest request);
+    List<InvestType> findByMemberId(String id);
 
-    Cookie save(InvestTypeRequest investType, HttpServletRequest request);
+    Cookie save(InvestTypeRequest investType, String id);
 
     void registInvestment(Member member);
 

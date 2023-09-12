@@ -88,7 +88,6 @@ public class Member {
                 .status(true)
                 .address(memberUpdateRequest.getAddress())
                 .refreshToken(refreshToken)
-//                .marketingInfoAgree(true)
                 .build();
     }
 }

@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InvestTypeRepository extends JpaRepository<InvestType,Long> {
+public interface InvestTypeRepository extends JpaRepository<InvestType, Long> {
     List<InvestType> findAllByMemberId(Long memberId);
+
     InvestType findByMemberId(Long memberId);
+
     InvestType save(InvestType investType);
 }

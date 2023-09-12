@@ -1,8 +1,6 @@
 package com.woori.wonfit.log.subscribelog.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.fund.domain.Fund;
@@ -14,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -84,25 +81,4 @@ public class SubscribeLog {
     @ManyToOne
     @JoinColumn(name = "loan_id", nullable = true)
     private Loan loan;
-
-    public static SubscribeLog toEntity(SubscribeLog request){
-        return SubscribeLog.builder()
-                .member(request.getMember())
-                .subDate(request.getSubDate())
-                .expirePeriod(request.getExpirePeriod())
-                .subDeposit(request.getSubDeposit())
-                .subSavings(request.getSubSavings())
-                .monthlyCharge(request.getMonthlyCharge())
-                .monthlyChargeDate(request.getMonthlyChargeDate())
-                .taxDeduction(request.getTaxDeduction())
-                .fundQuantity(request.getFundQuantity())
-                .loanAmount(request.getLoanAmount())
-                .repaymentMethod(request.getRepaymentMethod())
-                .subscribeStatus(request.isSubscribeStatus())
-                .deposit(request.getDeposit())
-                .savings(request.getSavings())
-                .fund(request.getFund())
-                .loan(request.getLoan())
-                .build();
-    }
 }

@@ -15,7 +15,6 @@ import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -102,11 +100,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Cookie logout(HttpServletRequest request) {
-        String token = cookieConfig.parseCookie(request);
-        Long id = cookieConfig.getIdFromToken(token);
-
-        Member member = memberRepository.findById(id).get();
+    public Cookie logout(String id) {
+        Member member = memberRepository.findById(Long.parseLong(id)).get();
 
         member.setRefreshToken("");
         memberRepository.save(member);
@@ -135,40 +130,33 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberUpdateRequest findById(Long id) {
-        Member member = memberRepository.findById(id).get();
-
+    public MemberUpdateRequest findById(String id) {
+        Member member = memberRepository.findById(Long.parseLong(id)).get();
         return MemberUpdateRequest.toNewDetail(member);
     }
 
     @Override
-    public Cookie leaveMember(String loginId, String password, HttpServletRequest request) {
-        String token = cookieConfig.parseCookie(request);
-        Long id = cookieConfig.getIdFromToken(token);
-        Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+    public Cookie leaveMember(String loginId, String password, String id) {
+        Member member = memberRepository.findById(Long.parseLong(id)).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
 
         if (!bCryptPasswordEncoder.matches(password, member.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         } else {
-            Cookie cookie = logout(request);
+            Cookie cookie = logout(id);
             member.setStatus(false);
             memberRepository.save(member);
             return cookie;
         }
     }
 
-
     @Override
-    public void updateMemberDetails(HttpServletRequest request, Member member) {
-        String token = cookieConfig.parseCookie(request);
-        Long id = cookieConfig.getIdFromToken(token);
-        log.info(member.getPassword());
+    public void updateMemberDetails(String id, Member member) {
         String password = bCryptPasswordEncoder.encode(member.getPassword());
 
         MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.toEntity(member, password);
 
-        Member basicMember = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
-        Member updateMember = basicMember.toEntity(id, memberUpdateRequest, password, member.getRefreshToken());
+        Member basicMember = memberRepository.findById(Long.parseLong(id)).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+        Member updateMember = basicMember.toEntity(Long.parseLong(id), memberUpdateRequest, password, member.getRefreshToken());
         memberRepository.save(updateMember);
     }
 }

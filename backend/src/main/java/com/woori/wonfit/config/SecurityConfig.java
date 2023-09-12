@@ -1,6 +1,5 @@
 package com.woori.wonfit.config;
 
-import com.woori.wonfit.member.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

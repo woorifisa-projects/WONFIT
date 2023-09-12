@@ -1,7 +1,9 @@
 package com.woori.wonfit.log.liked.service;
 
-import com.woori.wonfit.log.liked.repository.LikedRepository;
 import com.woori.wonfit.log.liked.domain.Liked;
+import com.woori.wonfit.log.liked.dto.LikedRequest;
+import com.woori.wonfit.log.liked.dto.LikedResponse;
+import com.woori.wonfit.log.liked.repository.LikedRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +22,11 @@ public class LikedServiceImpl implements LikedService {
     }
 
     @Override
-    public Liked save(Liked liked) {
-        return likedRepository.save(liked);
+    public LikedResponse save(LikedRequest likedRequest) {
+        Liked liked = LikedRequest.To_Liked(likedRequest);
+        Liked createLiked = likedRepository.save(liked);
+        LikedResponse likedResponse = LikedResponse.From_liked(createLiked);
+        return likedResponse;
     }
 
     @Override

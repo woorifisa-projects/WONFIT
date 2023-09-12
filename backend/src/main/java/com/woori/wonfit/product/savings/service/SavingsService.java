@@ -11,6 +11,5 @@ public interface SavingsService {
 
     void updateSavings(Long id, SavingsDTO savingsDTO);
 
-
     SavingsResponse findById(Long id);
 }

@@ -1,8 +1,10 @@
 package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.dto.*;
-import org.springframework.http.ResponseCookie;
+import com.woori.wonfit.member.member.dto.MemberDto;
+import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
+import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
+import com.woori.wonfit.member.member.dto.MembersResponse;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ public interface MemberService {
 
     Cookie login(String loginId, String memberPw, HttpServletRequest request);
 
-    Cookie logout(HttpServletRequest request);
+    Cookie logout(String id);
 
     String extractBrowser(String userAgent);
 
@@ -21,10 +23,10 @@ public interface MemberService {
 
     List<MembersResponse> getAllMembers();
 
-    MemberUpdateRequest findById(Long id);
+    MemberUpdateRequest findById(String id);
 
-    Cookie leaveMember(String loginId, String memberPw, HttpServletRequest request) throws Exception;
+    Cookie leaveMember(String loginId, String memberPw, String id) throws Exception;
 
-    void updateMemberDetails(HttpServletRequest request, Member member);
+    void updateMemberDetails(String id, Member member);
 
 }

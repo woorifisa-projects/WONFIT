@@ -1,6 +1,5 @@
 package com.woori.wonfit.log.subscribelog.service;
 
-import com.woori.wonfit.config.ExceptionConfig;
 import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
@@ -40,7 +39,7 @@ public class SubscribeLogServiceImpl implements SubscribeLogService {
     String time = date.format(formatter).substring(0, 19);
 
     @Override
-    public SubscribeLog save(Long productId, String productType, SubscribeLogRequest subscribeLogRequest, String id) throws ExceptionConfig {
+    public SubscribeLog save(Long productId, String productType, SubscribeLogRequest subscribeLogRequest, String id) throws Exception {
         Member member = memberRepository.findById(Long.parseLong(id)).get();
 
         Deposit deposit = null;
@@ -51,33 +50,32 @@ public class SubscribeLogServiceImpl implements SubscribeLogService {
         if (productType.equals("deposit")) {
             log.info("productType is ={}", productType);
             if (subscribeLogRepository.findByMemberIdAndDepositId(Long.parseLong(id), productId).size() >= 1) {
-                throw new ExceptionConfig("이미 가입한 상품입니다.");
+                throw new Exception("이미 가입한 상품입니다.");
             } else {
                 deposit = depositRepository.findById(productId).orElse(null);
             }
         } else if (productType.equals("savings")) {
             log.info("productType is ={}", productType);
             if (subscribeLogRepository.findByMemberIdAndSavingsId(Long.parseLong(id), productId).size() >= 1) {
-                throw new ExceptionConfig("이미 가입한 상품입니다.");
+                throw new Exception("이미 가입한 상품입니다.");
             } else {
                 savings = savingsRepository.findById(productId).orElse(null);
             }
         } else if (productType.equals("fund")) {
             log.info("productType is ={}", productType);
             if (subscribeLogRepository.findByMemberIdAndFundId(Long.parseLong(id), productId).size() >= 1) {
-                throw new ExceptionConfig("이미 가입한 상품입니다.");
+                throw new Exception("이미 가입한 상품입니다.");
             } else {
                 fund = fundRepository.findById(productId).orElse(null);
             }
         } else if (productType.equals("loan")) {
             log.info("productType is ={}", productType);
             if (subscribeLogRepository.findByMemberIdAndLoanId(Long.parseLong(id), productId).size() >= 1) {
-                throw new ExceptionConfig("이미 가입한 상품입니다.");
+                throw new Exception("이미 가입한 상품입니다.");
             } else {
                 loan = loanRepository.findById(productId).orElse(null);
             }
         }
-
         SubscribeLog log = SubscribeLogRequest.To_sub_log(subscribeLogRequest, member, deposit, savings, fund, loan, time);
 
         return subscribeLogRepository.save(log);

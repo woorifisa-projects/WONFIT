@@ -1,7 +1,7 @@
 package com.woori.wonfit.manager.service;
 
-import com.woori.wonfit.manager.dto.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
+import com.woori.wonfit.manager.dto.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.ManagerRegisterRequest;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositRequest;

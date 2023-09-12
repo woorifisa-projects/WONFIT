@@ -2,7 +2,6 @@ package com.woori.wonfit.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
@@ -17,7 +16,7 @@ public class CookieConfig {
     @Value("${jwt.token.access}")
     private String accessKey;
 
-    public String parseCookie(HttpServletRequest request){
+    public String parseCookie(HttpServletRequest request) {
         log.info("parseCookie called!");
         Cookie[] cookies = request.getCookies();
         log.info("Cookey key = {}", key);
@@ -40,14 +39,14 @@ public class CookieConfig {
         return null;
     }
 
-    public Long getIdFromToken(String token){
+    public Long getIdFromToken(String token) {
         String accessId = JwtUtil.getId(token, accessKey);
         log.info("getIdFromToken In accessId = {}", accessId);
         Long id = Long.parseLong(accessId);
         return id;
     }
 
-    public Cookie createCookie(String value){
+    public Cookie createCookie(String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setPath("/");

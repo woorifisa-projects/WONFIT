@@ -1,6 +1,8 @@
 package com.woori.wonfit.log.liked.service;
 
 import com.woori.wonfit.log.liked.domain.Liked;
+import com.woori.wonfit.log.liked.dto.LikedRequest;
+import com.woori.wonfit.log.liked.dto.LikedResponse;
 
 import java.util.List;
 
@@ -9,5 +11,5 @@ public interface LikedService {
 
     String deleteById(Long id);
 
-    Liked save(Liked liked);
+    LikedResponse save(LikedRequest likedRequest);
 }

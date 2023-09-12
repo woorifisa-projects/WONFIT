@@ -5,11 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name ="manager")
+@Table(name = "manager")
 public class Manager {
 
     @Id
@@ -24,7 +25,6 @@ public class Manager {
 
     @Column(name = "refresh_token")
     private String refreshToken;
-
 }
 
 

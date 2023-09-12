@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findAll();
+
     Loan save(Loan loan);
+
     void save(Optional<Loan> existingLoan);
 }

@@ -7,7 +7,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "invest_type")
@@ -21,16 +22,16 @@ public class InvestType {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "deposit_type",nullable = true)
+    @Column(name = "deposit_type", nullable = true)
     private String deposit_type;
 
-    @Column(name = "savings_type",nullable = true)
+    @Column(name = "savings_type", nullable = true)
     private String savings_type;
 
-    @Column(name = "fund_type",nullable = true)
+    @Column(name = "fund_type", nullable = true)
     private String fund_type;
 
-    @Column(name = "loan_type",nullable = true)
+    @Column(name = "loan_type", nullable = true)
     private String loan_type;
 
     @Column(name = "deposit_quiz_score", nullable = true)
@@ -44,20 +45,4 @@ public class InvestType {
 
     @Column(name = "loan_quiz_score", nullable = true)
     private Integer loanQuizScore;
-
-
-
-    public static InvestType toEntity(InvestType investType, Member member){
-        return InvestType.builder()
-                .member(member)
-                .deposit_type(investType.getDeposit_type())
-                .savings_type(investType.getSavings_type())
-                .fund_type(investType.getFund_type())
-                .loan_type(investType.getLoan_type())
-                .depositQuizScore(investType.getDepositQuizScore())
-                .savingsQuizScore(investType.getSavingsQuizScore())
-                .fundQuizScore(investType.getFundQuizScore())
-                .loanQuizScore(investType.getLoanQuizScore())
-                .build();
-    }
 }

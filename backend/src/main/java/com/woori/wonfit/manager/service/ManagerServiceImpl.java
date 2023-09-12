@@ -3,8 +3,8 @@ package com.woori.wonfit.manager.service;
 import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.manager.domain.Manager;
-import com.woori.wonfit.manager.dto.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.DeleteMemberRequest;
+import com.woori.wonfit.manager.dto.ManagerLoginRequest;
 import com.woori.wonfit.manager.dto.ManagerRegisterRequest;
 import com.woori.wonfit.manager.repository.ManagerRepository;
 import com.woori.wonfit.member.member.repository.MemberRepository;
@@ -45,7 +45,7 @@ public class ManagerServiceImpl implements ManagerService {
     private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
 
     @Override
-    public String managerRegister(ManagerRegisterRequest request){
+    public String managerRegister(ManagerRegisterRequest request) {
         String encodePassword = bCryptPasswordEncoder.encode(request.getPassword());
         Manager manager = Manager.builder().loginId(request.getLoginId()).password(encodePassword).build();
         managerRepository.save(manager);
@@ -53,12 +53,12 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Cookie managerLogin(ManagerLoginRequest request){
-        Manager manager = managerRepository.findByLoginId(request.getLoginId()).orElseThrow(() -> new RuntimeException("매니저 정보를 찾을 수 없습니다."));;
+    public Cookie managerLogin(ManagerLoginRequest request) {
+        Manager manager = managerRepository.findByLoginId(request.getLoginId()).orElseThrow(() -> new RuntimeException("매니저 정보를 찾을 수 없습니다."));
 
         if (!bCryptPasswordEncoder.matches(request.getPassword(), manager.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }else {
+        } else {
             String accessToken = JwtUtil.createAccessToken(manager.getId().toString(), accessTokenExpireTime, "ADMIN", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(manager.getId().toString(), refreshTokenExpireTime, "ADMIN", refreshKey);
 
@@ -70,6 +70,7 @@ public class ManagerServiceImpl implements ManagerService {
             return cookie;
         }
     }
+
     @Override
     public Fund createFund(FundRequest fundRequest) {
         Fund fund = Fund.builder()
@@ -130,7 +131,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public String deleteMember(DeleteMemberRequest request){
+    public String deleteMember(DeleteMemberRequest request) {
         memberRepository.deleteById(request.getId());
         return "회원 정보 삭제가 왼료되었습니다.";
     }

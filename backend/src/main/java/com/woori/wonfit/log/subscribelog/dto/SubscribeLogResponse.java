@@ -8,8 +8,6 @@ import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Builder
 @Getter
 @ToString

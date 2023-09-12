@@ -28,7 +28,7 @@ public class Sms {
     @Column(name = "status")
     private boolean status;
 
-    public static Sms toEntity(SmsRequest request, String from, String date, boolean status){
+    public static Sms toEntity(SmsRequest request, String from, String date, boolean status) {
         return Sms.builder()
                 .to(request.getTo())
                 .from(from)

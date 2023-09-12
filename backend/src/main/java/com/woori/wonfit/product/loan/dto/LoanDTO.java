@@ -1,14 +1,12 @@
 package com.woori.wonfit.product.loan.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Builder
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class LoanDTO {
 
     private String loanName;
@@ -18,14 +16,4 @@ public class LoanDTO {
     private long loanLimit;
     private String loanInfo;
     private String loanType;
-
-    public LoanDTO(String loanName, double interestRate, int period, String target, long loanLimit, String loanInfo, String loanType) {
-        this.loanName = loanName;
-        this.interestRate = interestRate;
-        this.period = period;
-        this.target = target;
-        this.loanLimit = loanLimit;
-        this.loanInfo = loanInfo;
-        this.loanType = loanType;
-    }
 }
