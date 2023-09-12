@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanResponse {
-    
+
     private Long id;
     private String loanName;
     private double interestRate;
@@ -17,5 +17,4 @@ public class LoanResponse {
     private long loanLimit;
     private String loanInfo;
     private String loanType;
-  
 }

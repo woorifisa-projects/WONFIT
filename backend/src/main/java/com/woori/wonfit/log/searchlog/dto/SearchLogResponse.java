@@ -12,6 +12,4 @@ public class SearchLogResponse {
     private String searchWord; // 검색어
     private String searchDate; // 검색 날짜 및 시간
     private String searchUrl; // 검색 결과 URL
-
-
 }

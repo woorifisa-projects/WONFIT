@@ -6,7 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "deposit")
 @Builder
 @NoArgsConstructor

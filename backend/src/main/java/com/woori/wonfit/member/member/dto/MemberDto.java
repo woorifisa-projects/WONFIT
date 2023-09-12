@@ -23,7 +23,7 @@ public class MemberDto {
     private String registrationNumber;
     private String address;
 
-    public static MemberDto fromEntity(Member member)  {
+    public static MemberDto fromEntity(Member member) {
         MemberDto memberDto = MemberDto.builder()
                 .loginId(member.getLoginId())
                 .password(member.getPassword())

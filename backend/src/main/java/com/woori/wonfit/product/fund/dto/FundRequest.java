@@ -10,12 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 public class FundRequest {
 
-        private Long id;
-        private String fundName;
-        private double returnRate1;
-        private double returnRate2;
-        private String fundType; // 안정형, 중립형, 공격형
-        private double fundPrice;
-        private String fundInfo;
-
+    private Long id;
+    private String fundName;
+    private double returnRate1;
+    private double returnRate2;
+    private String fundType; // 안정형, 중립형, 공격형
+    private double fundPrice;
+    private String fundInfo;
 }

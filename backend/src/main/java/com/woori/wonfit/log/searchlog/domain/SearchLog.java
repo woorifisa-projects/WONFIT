@@ -33,5 +33,4 @@ public class SearchLog {
 
     @Column(name = "search_url")
     private String searchUrl; // 검색 결과 URL
-
 }

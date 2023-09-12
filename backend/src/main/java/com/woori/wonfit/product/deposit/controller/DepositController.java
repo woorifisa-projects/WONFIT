@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/product/deposit")
@@ -48,5 +49,4 @@ public class DepositController {
         System.out.println("done");
         return ResponseEntity.ok(depositResponse);
     }
-
 }

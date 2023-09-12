@@ -6,7 +6,10 @@ import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.fund.domain.Fund;
 import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

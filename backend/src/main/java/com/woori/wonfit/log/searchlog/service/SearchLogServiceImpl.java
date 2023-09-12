@@ -34,7 +34,6 @@ public class SearchLogServiceImpl implements SearchLogService {
         searchLogRepository.save(searchLog);
     }
 
-
     @Override
     public List<SearchLogResponse> findById(Long memberId) {
         List<SearchLog> searchLogList = searchLogRepository.findByMemberId(memberId);
@@ -60,5 +59,4 @@ public class SearchLogServiceImpl implements SearchLogService {
             throw new IllegalArgumentException("해당 검색기록이 없습니다. id=" + memberId);
         }
     }
-
 }

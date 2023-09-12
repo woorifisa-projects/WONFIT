@@ -1,11 +1,6 @@
 package com.woori.wonfit.manager.controller;
 
-
-import com.woori.wonfit.manager.dto.ManagerLoginRequest;
-import com.woori.wonfit.manager.dto.DeleteMemberRequest;
-import com.woori.wonfit.manager.dto.LoanRequest;
-import com.woori.wonfit.manager.dto.LoanResponse;
-import com.woori.wonfit.manager.dto.ManagerRegisterRequest;
+import com.woori.wonfit.manager.dto.*;
 import com.woori.wonfit.manager.service.ManagerService;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.deposit.dto.DepositDTO;
@@ -42,12 +37,13 @@ public class ManagerController {
     private final FundService fundService;
 
     @PostMapping("/register")
-    public ResponseEntity<String > managerRegister(@RequestBody ManagerRegisterRequest request){
+    public ResponseEntity<String> managerRegister(@RequestBody ManagerRegisterRequest request) {
         String result = managerService.managerRegister(request);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
     @PostMapping("/login")
-    public ResponseEntity<String> managerLogin(@RequestBody ManagerLoginRequest request, HttpServletResponse response){
+    public ResponseEntity<String> managerLogin(@RequestBody ManagerLoginRequest request, HttpServletResponse response) {
         Cookie cookie = managerService.managerLogin(request);
         response.addCookie(cookie);
         return new ResponseEntity<>("매니저 로그인이 완료되었습니다.", HttpStatus.OK);
@@ -146,7 +142,7 @@ public class ManagerController {
 
     // 멤버 1명 삭제
     @DeleteMapping("/delete/member")
-    public ResponseEntity<String> deleteMember(@RequestBody DeleteMemberRequest request){
+    public ResponseEntity<String> deleteMember(@RequestBody DeleteMemberRequest request) {
         String result = managerService.deleteMember(request);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

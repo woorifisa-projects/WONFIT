@@ -4,7 +4,9 @@ import lombok.*;
 
 @Getter
 @ToString
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DepositDTO {
 
     private String depositName;
@@ -14,15 +16,4 @@ public class DepositDTO {
     private int minDeposit;
     private String depositInfo;
     private String depositType;
-
-    @Builder
-    public DepositDTO(String depositName, double interestRate, int period, String target, int minDeposit, String depositInfo, String depositDesc, String depositType) {
-        this.depositName = depositName;
-        this.interestRate = interestRate;
-        this.period = period;
-        this.target = target;
-        this.minDeposit = minDeposit;
-        this.depositInfo = depositInfo;
-        this.depositType = depositType;
-    }
 }

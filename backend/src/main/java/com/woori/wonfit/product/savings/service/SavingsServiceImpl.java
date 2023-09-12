@@ -1,8 +1,8 @@
 package com.woori.wonfit.product.savings.service;
 
 import com.woori.wonfit.product.savings.domain.Savings;
-import com.woori.wonfit.product.savings.dto.SavingsResponse;
 import com.woori.wonfit.product.savings.dto.SavingsDTO;
+import com.woori.wonfit.product.savings.dto.SavingsResponse;
 import com.woori.wonfit.product.savings.repository.SavingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,15 +17,11 @@ public class SavingsServiceImpl implements SavingsService {
 
     private final SavingsRepository savingsRepository;
 
-
     @Override
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> getsavings = savingsRepository.findAll().stream()
-
-                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsType()))
-
-                        .collect(Collectors.toList());
-
+                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(), savings.getSavingsType()))
+                .collect(Collectors.toList());
         return getsavings;
     }
 
@@ -62,7 +58,6 @@ public class SavingsServiceImpl implements SavingsService {
                 .savingsType(savings.map(Savings::getSavingsType).orElse("기본값"))
                 .build();
     }
-
 }
 
 

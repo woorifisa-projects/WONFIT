@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@Slf4j // log 기록
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/product/fund")
@@ -22,10 +21,10 @@ public class FundController {
 
     // 펀드 상품 전체 조회
     @GetMapping
-        public List<FundResponse> findAll() {
-            List<FundResponse> list = fundService.findAll();
-            return list;
-        }
+    public List<FundResponse> findAll() {
+        List<FundResponse> list = fundService.findAll();
+        return list;
+    }
 
     // 펀드 상품 상세 조회
     @GetMapping("/{id}")

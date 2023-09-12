@@ -28,6 +28,7 @@ public class JwtUtil {
             return claims.get("id", String.class);
         }
     }
+
     public static String getRole(String token, String secretKey) {
         try {
             log.info("called getRole");
@@ -43,7 +44,6 @@ public class JwtUtil {
         }
     }
 
-
     public static boolean isExpired(String token, String secretKey) {
         try {
             return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
@@ -52,7 +52,6 @@ public class JwtUtil {
             return true;
         }
     }
-
 
     public static String createAccessToken(String id, long accessExpireTime, String roles, String accessKey) {
         Claims claims = Jwts.claims();
@@ -72,6 +71,7 @@ public class JwtUtil {
 
         return accessToken;
     }
+
     public static String createRefreshToken(String id, long refreshExpireTime, String roles, String refreshKey) {
         Claims claims = Jwts.claims();
         claims.put("roles", roles);

@@ -2,6 +2,7 @@ package com.woori.wonfit.product.loan.controller;
 
 import com.woori.wonfit.product.loan.dto.LoanResponse;
 import com.woori.wonfit.product.loan.service.LoanService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +14,15 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/product/loan")
 public class LoanController {
 
-    private LoanService loanService;
-    public LoanController(LoanService loanService) {
-        this.loanService = loanService;
-    }
+    private final LoanService loanService;
 
     // 대출 상품 전체 조회
     @GetMapping
-    public List<LoanResponse> findAll () {
+    public List<LoanResponse> findAll() {
         List<LoanResponse> list = loanService.findAll();
         log.info("list call {}", list.get(0));
         return list;
@@ -33,7 +32,6 @@ public class LoanController {
     @GetMapping("/{id}")
     public ResponseEntity<LoanResponse> findById(@PathVariable Long id) {
         LoanResponse loanResponse = loanService.findById(id);
-        System.out.println("done");
         return ResponseEntity.ok(loanResponse);
     }
 }

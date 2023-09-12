@@ -8,9 +8,6 @@ import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
 import lombok.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-
 @Builder
 @Getter
 @ToString
@@ -35,7 +32,7 @@ public class SubscribeLogRequest {
     private Fund fund;
     private Loan loan;
 
-    public static SubscribeLog To_sub_log(SubscribeLogRequest subscribeLogRequest, Member member,Deposit deposit, Savings savings, Fund fund, Loan loan, String time) {
+    public static SubscribeLog To_sub_log(SubscribeLogRequest subscribeLogRequest, Member member, Deposit deposit, Savings savings, Fund fund, Loan loan, String time) {
         return SubscribeLog.builder()
                 .id(subscribeLogRequest.getId())
                 .member(member)

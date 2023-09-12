@@ -18,10 +18,10 @@ public class MakeSignature {
     private String serviceId;
 
     public String makeSignature(long timestamp) throws Exception {
-        String space = " ";					
+        String space = " ";
         String newLine = "\n";
         String httpMethod = "POST";
-        String url = "/sms/v2/services/"+ serviceId +"/messages";
+        String url = "/sms/v2/services/" + serviceId + "/messages";
 
         String message = new StringBuilder()
                 .append(httpMethod)

@@ -1,4 +1,5 @@
 package com.woori.wonfit.member.investtype.dto;
+
 import lombok.*;
 
 @Builder

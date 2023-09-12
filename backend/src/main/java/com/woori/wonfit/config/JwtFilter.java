@@ -37,6 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private String id;
     private String role;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Filter called!");
@@ -66,9 +67,9 @@ public class JwtFilter extends OncePerRequestFilter {
         String accessTokenMemberRole = JwtUtil.getRole(accessToken, accessKey);
         log.info("accessToken MemberRole = {}", accessTokenMemberRole);
 
-        if(accessTokenMemberRole.equals("USER")){
+        if (accessTokenMemberRole.equals("USER")) {
             role = "ROLE_USER";
-        }else if(accessTokenMemberRole.equals("ADMIN")){
+        } else if (accessTokenMemberRole.equals("ADMIN")) {
             role = "ROLE_ADMIN";
         }
         log.info(role);
