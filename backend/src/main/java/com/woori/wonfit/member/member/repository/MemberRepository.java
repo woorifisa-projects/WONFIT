@@ -21,7 +21,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT new com.woori.wonfit.member.member.dto.MembersResponse(m.name, m.loginId, m.phoneNumber, m.status) FROM Member m")
 
+
+
     @Query("SELECT m.id, m.loginId, m.name, m.status, m.phoneNumber FROM Member m")
+
 
     List<MembersResponse> selectMembersData();
 

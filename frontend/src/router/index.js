@@ -51,12 +51,6 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerPage.vue"),
       },
-      {
-        path: "manage-log",
-        name: "ManageLog",
-        component: () =>
-          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManageLog.vue"),
-      },
 
       {
         path: "manage-product",
@@ -218,6 +212,11 @@ const routes = [
         name: "SavingsTest",
         component: () =>
           import(/* webpackChunkName: "savingstest" */ "@/views/test/SavingsTest.vue"),
+      },
+      {
+        path: "not-found",
+        name: "404Page",
+        component: () => import(/* webpackChunkName: "main" */ "@/views/404page.vue"),
       },
     ],
   },

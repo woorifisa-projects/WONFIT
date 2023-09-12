@@ -12,8 +12,8 @@
                 <v-list-item class="logo-text" @click="navigateToManageProduct"
                   >상품 관리</v-list-item
                 >
-                <v-list-item class="logo-text" @click="navigateToManageLog"> 로그 관리</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToSendTalk">SMS</v-list-item>
+
+                <v-list-item class="logo-text" @click="navigateToSendTalk">SMS 관리</v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
@@ -82,7 +82,13 @@
                       maxlength="90"
                     ></v-textarea>
                     <div class="text-right">
-                      <v-btn color="blue" text @click.native="showModal = false">취소</v-btn>
+                      <v-btn
+                        color="blue"
+                        text
+                        @click.native="showModal = false"
+                        style="margin-right: 10px"
+                        >취소</v-btn
+                      >
                       <v-btn color="blue" text type="submit">전송</v-btn>
                     </div>
                   </form>
@@ -112,7 +118,9 @@ onMounted(fetchSmsData);
 
 async function fetchSmsData() {
   try {
+
     const response = await axios.get("http://13.125.155.169:8080/manager/sms", {
+
       withCredentials: true,
     });
     smsData.value = response.data;
@@ -131,7 +139,9 @@ async function sendMessage() {
   };
 
   try {
+
     const response = await axios.post("http://13.125.155.169:8080/manager/sms", body, {
+
       withCredentials: true,
     });
     console.log(response.data);
