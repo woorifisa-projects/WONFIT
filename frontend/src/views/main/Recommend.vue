@@ -6,13 +6,8 @@
           <div class="d-flex align-center justify-center">
             <v-row class="mx-auto mt-n16 text-center">
               <v-col>
-                <v-card
-                  rounded="lg"
-                  class="asset-info mx-auto mt-n16 mb-10"
-                  max-width="700"
-                  height="400"
-                  ><v-card-title>마이데이터</v-card-title></v-card
-                >
+                <v-card rounded="lg" class="asset-info mx-auto mt-n16 mb-10" max-width="700"
+                  height="400"><v-card-title>마이데이터</v-card-title></v-card>
               </v-col>
               <!-- <v-col>
                 <v-card class="mx-auto mt-n16" max-width="300" height="400"
@@ -30,22 +25,12 @@
             <div class="container">
               <v-item>
                 <div class="glass" style="--r: -15" data-text="예금">
-                  <svg-icon
-                    class="custom-icon mt-n8"
-                    type="mdi"
-                    :path="deposit"
-                    size="100"
-                  ></svg-icon>
+                  <svg-icon class="custom-icon mt-n8" type="mdi" :path="deposit" size="100"></svg-icon>
                 </div>
               </v-item>
               <v-item>
                 <div class="glass" style="--r: 5" data-text="적금">
-                  <svg-icon
-                    class="custom-icon mt-n8"
-                    type="mdi"
-                    :path="savings"
-                    size="100"
-                  ></svg-icon>
+                  <svg-icon class="custom-icon mt-n8" type="mdi" :path="savings" size="100"></svg-icon>
                 </div>
               </v-item>
               <v-item>
@@ -100,7 +85,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(depositValue)) {
         try {
-          const response = await axios.get(`http://13.125.155.169:8080/product/deposit`);
+          const response = await axios.get(`http://api.wonfit.site:8080/product/deposit`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -128,7 +113,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(savingsValue)) {
         try {
-          const response = await axios.get(`http://13.125.155.169:8080/product/savings`);
+          const response = await axios.get(`http://api.wonfit.site:8080/product/savings`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -156,7 +141,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(fundValue)) {
         try {
-          const response = await axios.get(`http://13.125.155.169:8080/product/fund`);
+          const response = await axios.get(`http://api.wonfit.site:8080/product/fund`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -183,7 +168,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(loanValue)) {
         try {
-          const response = await axios.get(`http://13.125.155.169:8080/product/loan`);
+          const response = await axios.get(`http://api.api.wonfit.site:8080/product/loan`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -215,11 +200,16 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
 .header {
-  text-align: center; /* 텍스트 중앙 정렬 */
-  margin-top: 20px; /* 텍스트 상단 여백 조절 */
-  color: #fff; /* 텍스트 색상 설정 */
+  text-align: center;
+  /* 텍스트 중앙 정렬 */
+  margin-top: 20px;
+  /* 텍스트 상단 여백 조절 */
+  color: #fff;
+  /* 텍스트 색상 설정 */
 }
+
 .v-main {
   display: flex;
   justify-content: center;
