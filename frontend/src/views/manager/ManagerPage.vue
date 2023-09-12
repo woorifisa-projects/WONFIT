@@ -12,10 +12,8 @@
                 <v-list-item class="logo-text" @click="navigateToManageProduct"
                   >상품 관리</v-list-item
                 >
-                <v-list-item class="logo-text" @click="navigateToManageLog"> 로그 관리</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToSendTalk"
-                  >알림톡 보내기</v-list-item
-                >
+
+                <v-list-item class="logo-text" @click="navigateToSendTalk">SMS 관리</v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
@@ -50,6 +48,14 @@
                   </tr>
                 </tbody>
               </v-table>
+            </v-sheet>
+            <v-sheet class="logo-text" style="margin-top: 20px" min-height="70vh" rounded="lg">
+              <v-card>
+                <v-tabs bg-color="blue" center-active class="d-flex justify-center">
+                  <v-tab style="margin-left: 210px">로그인 기록</v-tab>
+                  <v-tab style="margin-left: 210px">검색 기록</v-tab>
+                </v-tabs>
+              </v-card>
             </v-sheet>
           </v-col>
         </v-row>
@@ -88,10 +94,6 @@ const navigateToManageProduct = () => {
 
 const navigateToSendTalk = () => {
   router.push({ name: "SendTalk" });
-};
-
-const navigateToManageLog = () => {
-  router.push({ name: "ManageLog" });
 };
 </script>
 

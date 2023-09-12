@@ -25,7 +25,6 @@
           </v-col>
 
           <v-col>
-
             <v-sheet min-height="50vh" rounded="lg">
               <v-form @submit.prevent="withdraw">
                 <v-responsive>
@@ -50,15 +49,15 @@
                 ></v-responsive>
 
                 <div class="d-flex flex-column align-center justify-center">
-                  <grey-button
+                  <WithdrawAlert
                     type="submit"
-                    content="탈퇴하기"
+                    btnName="탈퇴하기"
+                    text="회원탈퇴가 완료되었습니다."
                     class="logo-text center-button"
                     style="margin: 30px; padding: 25px"
                   />
                 </div>
               </v-form>
-
             </v-sheet>
           </v-col>
         </v-row>
@@ -68,8 +67,8 @@
 </template>
 
 <script setup>
-import GreyButton from "@/components/button/GreyButton.vue";
-// import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
+// import GreyButton from "@/components/button/GreyButton.vue";
+import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -125,7 +124,6 @@ const withdraw = async () => {
     console.error("데이터 업데이트 오류:", error);
   }
 };
-
 </script>
 
 <style scoped>
