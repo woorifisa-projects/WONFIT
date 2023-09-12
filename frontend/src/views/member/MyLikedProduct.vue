@@ -7,24 +7,13 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
-                  >내 가입상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToMyLikedProduct"
-                  >내 관심상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToRecommend"
-                  >나의 투자성향 보기</v-list-item
-                >
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
 
                 <v-divider class="my-2"></v-divider>
 
-                <v-list-item
-                  class="logo-text"
-                  color="grey-lighten-4"
-                  link
-                  @click="navigateToWithdraw"
-                >
+                <v-list-item class="logo-text" color="grey-lighten-4" link @click="navigateToWithdraw">
                   회원 탈퇴
                 </v-list-item>
               </v-list>
@@ -32,8 +21,7 @@
           </v-col>
 
           <v-col>
-            <v-sheet min-height="70vh" rounded="lg"
-              ><v-table fixed-header height="500px">
+            <v-sheet min-height="70vh" rounded="lg"><v-table fixed-header height="500px">
                 <thead>
                   <tr>
                     <th></th>
@@ -77,7 +65,7 @@ let autoIncrement = 1; // 바깥에서 auto-increment 값을 초기화
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`http://13.125.155.169:8080/member/mypage/liked`);
+    const response = await axios.get(`http://WONFIT.SITE:8080/member/mypage/liked`);
     const data = response.data;
 
     data.forEach((item) => {
@@ -149,8 +137,7 @@ const navigateToWithdraw = () => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
 }

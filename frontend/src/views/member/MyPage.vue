@@ -7,22 +7,11 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
-                  >내 가입상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToMyLikedProduct"
-                  >내 관심상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToRecommend"
-                  >나의 투자성향 보기</v-list-item
-                >
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
                 <v-divider class="my-2"></v-divider>
-                <v-list-item
-                  class="logo-text"
-                  color="grey-lighten-4"
-                  link
-                  @click="navigateToWithdraw"
-                >
+                <v-list-item class="logo-text" color="grey-lighten-4" link @click="navigateToWithdraw">
                   회원 탈퇴
                 </v-list-item>
               </v-list>
@@ -33,72 +22,38 @@
             <v-sheet class="logo-text" style="padding: 40px" min-height="70vh" rounded="lg">
               <div>
                 <h4>비밀번호를 입력해 주세요.</h4>
-                <v-text-field
-                  :disabled="!isEditMode"
-                  :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                  :type="visible ? 'text' : 'password'"
-                  @click:append-inner="visible = !visible"
-                  variant="underlined"
-                  v-model="memberData.password"
-                ></v-text-field
-                ><br />
+                <v-text-field :disabled="!isEditMode" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                  :type="visible ? 'text' : 'password'" @click:append-inner="visible = !visible" variant="underlined"
+                  v-model="memberData.password"></v-text-field><br />
 
                 <h4>아이디</h4>
-                <v-text-field
-                  :disabled="!isEditMode"
-                  :value="memberData.loginId"
-                  variant="underlined"
-                ></v-text-field
-                ><br />
+                <v-text-field :disabled="!isEditMode" :value="memberData.loginId"
+                  variant="underlined"></v-text-field><br />
 
                 <v-form>
                   <h4>이름</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    :value="memberData.name"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" :value="memberData.name"
+                    variant="underlined"></v-text-field><br />
                   <h4>주민등록번호</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    :value="memberData.registrationNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" :value="memberData.registrationNumber"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>계좌번호</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    :value="memberData.bankAccountNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" :value="memberData.bankAccountNumber"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>이메일</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.email"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.email"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>전화번호</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.phoneNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.phoneNumber"
+                    variant="underlined"></v-text-field><br />
 
                   <h4>주소</h4>
 
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    v-model="memberData.address"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <v-text-field :disabled="!isEditMode" v-model="memberData.address"
+                    variant="underlined"></v-text-field><br />
                   <div class="d-flex justify-center">
                     <v-btn text class="mx-2" @click="toggleEditMode">{{
                       isEditMode ? "저장하기" : "수정하기"
@@ -157,7 +112,7 @@ const saveChanges = async () => {
       address: memberData.value.address,
     };
 
-    const response = await axios.patch("http://13.125.155.169:8080/member/detail", updatedData, {
+    const response = await axios.patch("http://WONFIT.SITE:8080/member/detail", updatedData, {
       withCredentials: true,
     });
 
@@ -200,8 +155,7 @@ const navigateToWithdraw = () => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
 }
