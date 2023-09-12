@@ -22,43 +22,34 @@
 
           <v-col>
             <v-sheet class="logo-text" style="padding: 10px" min-height="70vh" rounded="lg">
-              <!-- <v-table fixed-header height="500px">
+              <v-table fixed-header height="500px">
                 <thead>
                   <tr>
                     <th></th>
                     <th class="text-left">번호</th>
-                    <th class="text-left">성함</th>
-                    <th class="text-left">아이디</th>
-                    <th class="text-left">회원상태</th>
-                    <th class="text-left">가입일자</th>
+                    <th class="text-left">이름</th>
+                    <th class="text-left">회원 아이디</th>
+                    <th class="text-left">전화번호</th>
+                    <th class="text-left">상태</th>
                   </tr>
                 </thead>
                 <template v-slot:column.name="{ column }">
                   {{ column.title.toUpperCase() }}
                 </template>
                 <tbody>
-                  <tr v-for="item in users" :key="item.idx">
+                  <tr v-for="item in memberData" :key="item.idx">
                     <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
                     <td>{{ item.idx }}</td>
                     <td>{{ item.name }}</td>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.status }}</td>
-                    <td>{{ item.rgDate }}</td>
+                    <td>{{ item.loginId }}</td>
+                    <td>{{ item.phoneNumber }}</td>
+                    <td>
+                      <span v-if="item.status">정상</span>
+                      <span v-else>탈퇴</span>
+                    </td>
                   </tr>
                 </tbody>
-              </v-table> -->
-
-              <v-sheet>
-                <v-card>
-                  <v-tabs bg-color="blue" center-active class="d-flex justify-center">
-                    <v-tab style="margin-left: 30px">회원 정보</v-tab>
-                    <v-tab @click="navigateToSearchLog">검색 기록</v-tab>
-                    <v-tab>상품 가입 기록</v-tab>
-                    <v-tab>회원 탈퇴 관리</v-tab>
-                    <v-tab>관심 상품 조회</v-tab>
-                  </v-tabs>
-                </v-card>
-              </v-sheet>
+              </v-table>
             </v-sheet>
           </v-col>
         </v-row>
@@ -69,8 +60,23 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { ref, onBeforeMount } from "vue";
+import { getApi } from "@/api/modules";
 
 const router = useRouter();
+const memberData = ref([]);
+
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: `/manager/members`,
+  });
+
+  for (let i = 0; i < data.length; i++) {
+    data[i].idx = i + 1;
+  }
+
+  memberData.value = data;
+});
 
 const navigateToManagerPage = () => {
   router.push({ name: "ManagerPage" });

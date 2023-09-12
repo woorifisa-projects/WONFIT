@@ -36,6 +36,7 @@ public class MemberRegisterRequest {
                 .bankAccountNumber(bankAccountNumber)
                 .bankAccountPassword(bankAccountPassword)
                 .address(address)
-                .marketingInfoAgree(marketingInfoAgree).build();
+//                .marketingInfoAgree(marketingInfoAgree)
+                .build();
     }
 }

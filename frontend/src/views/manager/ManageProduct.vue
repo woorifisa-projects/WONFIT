@@ -6,14 +6,16 @@
           <v-col cols="3">
             <v-sheet rounded="lg">
               <v-list rounded="lg">
-                <v-list-item class="logo-text" @click="navigateToManagerPage"
+                <v-list-item class="logo-text" @click="navigateTo('ManagerPage')"
                   >사용자 관리</v-list-item
                 >
-                <v-list-item class="logo-text" @click="navigateToManageProduct"
+                <v-list-item class="logo-text" @click="navigateTo('ManageProduct')"
                   >상품 관리</v-list-item
                 >
-                <v-list-item class="logo-text" @click="navigateToManageLog"> 로그 관리</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToSendTalk"
+                <v-list-item class="logo-text" @click="navigateTo('ManageLog')"
+                  >로그 관리</v-list-item
+                >
+                <v-list-item class="logo-text" @click="navigateTo('SendTalk')"
                   >알림톡 보내기</v-list-item
                 >
               </v-list>
@@ -22,17 +24,126 @@
 
           <v-col>
             <v-sheet class="logo-text" style="padding: 10px" min-height="70vh" rounded="lg">
-              <v-sheet>
-                <v-card>
-                  <v-tabs bg-color="blue" center-active class="d-flex justify-center">
-                    <v-tab style="margin-left: 20px" @click="navigateToMemberInfo">회원 정보</v-tab>
-                    <v-tab>검색 기록</v-tab>
-                    <v-tab>상품 가입 기록</v-tab>
-                    <v-tab>회원 탈퇴 관리</v-tab>
-                    <v-tab>관심 상품 조회</v-tab>
-                  </v-tabs>
-                </v-card>
-              </v-sheet>
+              <v-card>
+                <v-tabs bg-color="blue" center-active class="d-flex justify-center">
+                  <v-tab @click="selectTab('예금')">예금</v-tab>
+                  <v-tab @click="selectTab('적금')">적금</v-tab>
+                  <v-tab @click="selectTab('대출')">대출</v-tab>
+                  <v-tab @click="selectTab('펀드')">펀드</v-tab>
+                </v-tabs>
+              </v-card>
+              <v-table fixed-header height="500px" v-if="selectedTab === '예금'">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="text-left">번호</th>
+                    <th class="text-left">이름</th>
+                    <th class="text-left">회원 아이디</th>
+                    <th class="text-left">전화번호</th>
+                    <th class="text-left">상태</th>
+                  </tr>
+                </thead>
+                <template v-slot:column.name="{ column }">
+                  {{ column.title.toUpperCase() }}
+                </template>
+                <tbody>
+                  <tr v-for="item in memberData" :key="item.idx">
+                    <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
+                    <td>{{ item.idx }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.loginId }}</td>
+                    <td>{{ item.phoneNumber }}</td>
+                    <td>
+                      <span v-if="item.status">정상</span>
+                      <span v-else>탈퇴</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </v-table>
+              <v-table fixed-header height="500px" v-if="selectedTab === '적금'">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="text-left">번호</th>
+                    <th class="text-left">이름</th>
+                    <th class="text-left">회원 아이디</th>
+                    <th class="text-left">전화번호</th>
+                    <th class="text-left">상태</th>
+                  </tr>
+                </thead>
+                <template v-slot:column.name="{ column }">
+                  {{ column.title.toUpperCase() }}
+                </template>
+                <tbody>
+                  <tr v-for="item in memberData" :key="item.idx">
+                    <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
+                    <td>{{ item.idx }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.loginId }}</td>
+                    <td>{{ item.phoneNumber }}</td>
+                    <td>
+                      <span v-if="item.status">정상</span>
+                      <span v-else>탈퇴</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </v-table>
+              <v-table fixed-header height="500px" v-if="selectedTab === '대출'">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="text-left">번호</th>
+                    <th class="text-left">이름</th>
+                    <th class="text-left">회원 아이디</th>
+                    <th class="text-left">전화번호</th>
+                    <th class="text-left">상태</th>
+                  </tr>
+                </thead>
+                <template v-slot:column.name="{ column }">
+                  {{ column.title.toUpperCase() }}
+                </template>
+                <tbody>
+                  <tr v-for="item in memberData" :key="item.idx">
+                    <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
+                    <td>{{ item.idx }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.loginId }}</td>
+                    <td>{{ item.phoneNumber }}</td>
+                    <td>
+                      <span v-if="item.status">정상</span>
+                      <span v-else>탈퇴</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </v-table>
+              <v-table fixed-header height="500px" v-if="selectedTab === '펀드'">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="text-left">번호</th>
+                    <th class="text-left">이름</th>
+                    <th class="text-left">회원 아이디</th>
+                    <th class="text-left">전화번호</th>
+                    <th class="text-left">상태</th>
+                  </tr>
+                </thead>
+                <template v-slot:column.name="{ column }">
+                  {{ column.title.toUpperCase() }}
+                </template>
+                <tbody>
+                  <tr v-for="item in memberData" :key="item.idx">
+                    <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
+                    <td>{{ item.idx }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.loginId }}</td>
+                    <td>{{ item.phoneNumber }}</td>
+                    <td>
+                      <span v-if="item.status">정상</span>
+                      <span v-else>탈퇴</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </v-table>
             </v-sheet>
           </v-col>
         </v-row>
@@ -42,25 +153,20 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter, ref } from "vue-router";
 
 const router = useRouter();
+const selectedTab = ref("예금");
 
-const navigateToManagerPage = () => {
-  router.push({ name: "ManagerPage" });
+const navigateTo = (pageName) => {
+  router.push({ name: pageName });
 };
 
-const navigateToManageProduct = () => {
-  router.push({ name: "ManageProduct" });
+const selectTab = (tab) => {
+  selectedTab.value = tab;
 };
 
-const navigateToSendTalk = () => {
-  router.push({ name: "SendTalk" });
-};
-
-const navigateToManageLog = () => {
-  router.push({ name: "ManageLog" });
-};
+// You can fetch data for each tab as needed here.
 </script>
 
 <style scoped>
