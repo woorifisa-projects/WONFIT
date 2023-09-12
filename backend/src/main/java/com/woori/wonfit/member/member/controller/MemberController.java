@@ -70,6 +70,7 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
+
     // 사용자 마이페이지 상세정보 수정
     @PatchMapping("member/detail")
     public ResponseEntity<String> updateMemberDetails(@RequestBody Member member, HttpServletRequest request) {
