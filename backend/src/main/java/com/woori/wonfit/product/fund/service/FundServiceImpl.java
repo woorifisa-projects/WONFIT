@@ -27,7 +27,7 @@ public class FundServiceImpl implements FundService {
                 .stream()
                 .map(fund -> new FundResponse
 
-                        (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo(), fund.getFundDesc())).collect(Collectors.toList());
+                        (fund.getId(), fund.getFundName(), fund.getReturnRate1(), fund.getReturnRate2(), fund.getFundType(), fund.getFundPrice(), fund.getFundInfo())).collect(Collectors.toList());
 
 
         return getfunds;
@@ -45,7 +45,6 @@ public class FundServiceImpl implements FundService {
                 .fundPrice(request.getFundPrice())
                 .fundType(request.getFundType())
                 .fundInfo(request.getFundInfo())
-                .fundDesc(request.getFundDesc())
                 .build();
 
         fundRepository.save(newFund); // 수정된 내용을 저장
@@ -62,7 +61,6 @@ public class FundServiceImpl implements FundService {
                 .returnRate2(fund.map(Fund::getReturnRate2).orElse(0.0))
                 .fundPrice(fund.map(Fund::getFundPrice).orElse(0.0))
                 .fundInfo(fund.map(Fund::getFundInfo).orElse("기본값"))
-                .fundDesc(fund.map(Fund::getFundDesc).orElse("기본값"))
                 .fundType(fund.map(Fund::getFundType).orElse("기본값"))
                 .build();
     }

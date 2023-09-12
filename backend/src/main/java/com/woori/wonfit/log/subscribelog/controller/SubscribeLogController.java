@@ -6,6 +6,7 @@ import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
 import com.woori.wonfit.log.subscribelog.service.SubscribeLogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,12 +44,9 @@ public class SubscribeLogController {
         return responseList;
     }
 
-    @PostMapping
-    public ResponseEntity<SubscribeLogResponse> createSubscribeLog(@RequestBody SubscribeLogRequest subscribeLogRequest) {
-
-        SubscribeLog subscribeLog = SubscribeLogRequest.To_sub_log(subscribeLogRequest, time);
-        SubscribeLog createSubscribeLog = subscribeLogService.save(subscribeLog);
-        SubscribeLogResponse subscribeLogResponse = SubscribeLogResponse.From_sub_log(createSubscribeLog, time);
-        return ResponseEntity.ok(subscribeLogResponse);
+    @PostMapping("/{product}/{id}")
+    public ResponseEntity<String> createSubscribeLog(@PathVariable Long id, @PathVariable String product, @RequestBody SubscribeLogRequest subscribeLogRequest, HttpServletRequest request) {
+        SubscribeLog createSubscribeLog = subscribeLogService.save(id, product, subscribeLogRequest, request, time);
+        return new ResponseEntity<>("가입완료", HttpStatus.OK);
     }
 }

@@ -16,7 +16,6 @@ public class LoanResponse {
     private String target;
     private long loanLimit;
     private String loanInfo;
-    private String loanDesc;
     private String loanType;
   
 }

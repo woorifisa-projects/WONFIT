@@ -34,9 +34,6 @@ public class Savings {
     @Column(name = "savings_info")
     private String savingsInfo;
 
-    @Column(name = "savings_desc")
-    private String savingsDesc; // 상세 설명
-
     @Column(name = "savings_type")
     private String savingsType; // 안정형, 중립형, 공격형
 

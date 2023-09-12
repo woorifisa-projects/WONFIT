@@ -8,6 +8,7 @@
       <div class="product-info" @click="navigateToSavingsDetail(2)">
         <v-card-item>
           <v-card-title
+            class="py-2"
             style="font-size: 25px; color: rgb(0, 86, 199)"
             @click="navigateToSavingsDetail(2)"
             >{{ savingsName }}</v-card-title
@@ -22,7 +23,10 @@
       <v-card-actions class="flex-row-reverse" @click="navigateToSavingsDetail(2)">
         <v-btn class="order-last" text @click.stop="navigateToSubscribe(2)">가입하기</v-btn>
         <call-num btnName="전화가입" @click.stop />
-        <v-btn class="order-first" @click.stop>관심상품</v-btn>
+        <v-btn class="order-first" @click.stop="toggleLike"
+          ><svg-icon type="mdi" :path="isShow ? heartOutline : heart" color="#0056C7"></svg-icon
+          >관심상품</v-btn
+        >
       </v-card-actions>
     </v-card>
   </div>
@@ -30,17 +34,23 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { ref, defineProps, onBeforeMount } from "vue";
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiPuzzleHeart, mdiPuzzleHeartOutline } from "@mdi/js";
+import { getApi } from "@/api/modules";
 import CallNum from "@/components/modal/CallNum.vue";
+
+const heart = ref(mdiPuzzleHeart);
+const heartOutline = ref(mdiPuzzleHeartOutline);
+const isShow = ref(true);
+const likedData = ref([]);
 
 const router = useRouter();
 
 defineProps({
   savingsName: String,
   savingsInfo: String,
-  target: String,
   interestRate: Number,
-  period: Number,
-  maxDeposit: Number,
   savingsType: String,
 });
 
@@ -52,6 +62,20 @@ const navigateToSavingsDetail = (productId) => {
   console.log(productId);
   router.push({ name: "SavingsDetailId", params: { id: productId } });
 };
+
+// "좋아요" 상태를 토글하는 메서드
+const toggleLike = () => {
+  isShow.value = !isShow.value; // "좋아요" 상태를 반전시킵니다.
+};
+
+// 관심상품 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: "/member/mypage/liked",
+  });
+  likedData.value = data;
+  console.log(likedData);
+});
 
 // subscribe 페이지로 이동하는 코드
 const navigateToSubscribe = (productId) => {
@@ -84,8 +108,10 @@ const navigateToSubscribe = (productId) => {
 .box-border {
   border: 1px solid #e6e8e9;
   border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 5px #dae6f6;
 }
 .box-border:hover {
-  box-shadow: 3px 3px 15px #dae6f6;
+  box-shadow: 5px 5px 20px #dae6f6;
 }
 </style>

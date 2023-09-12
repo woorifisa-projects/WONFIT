@@ -6,7 +6,7 @@
           <detailTitle
             :name="loanData.loanName"
             :info="loanData.loanInfo"
-            :interestRate="'상품 금리: ' + loanData.interestRate + '%'"
+            :interestRate="'기본 금리: ' + loanData.interestRate + '%'"
             :target="'대출 대상: ' + loanData.target"
             :period="'대출 기간: ' + loanData.period + '개월'"
             :loanLimit="'대출 한도: ' + loanData.loanLimit + '원'"

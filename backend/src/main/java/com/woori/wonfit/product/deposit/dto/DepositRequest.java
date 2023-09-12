@@ -16,7 +16,6 @@ public class DepositRequest {
     private String target;
     private int minDeposit;
     private String depositInfo;
-    private String depositDesc;
     private String depositType;
 }
 
