@@ -43,6 +43,14 @@
                 ></v-text-field
                 ><br />
 
+                <h4>아이디</h4>
+                <v-text-field
+                  :disabled="!isEditMode"
+                  :value="memberData.loginId"
+                  variant="underlined"
+                ></v-text-field
+                ><br />
+
                 <v-form>
                   <h4>이름</h4>
                   <v-text-field
@@ -63,14 +71,6 @@
                   <v-text-field
                     :disabled="!isEditMode"
                     :value="memberData.bankAccountNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
-
-                  <h4>아이디</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    :value="memberData.loginId"
                     variant="underlined"
                   ></v-text-field
                   ><br />

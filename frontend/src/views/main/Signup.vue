@@ -1,7 +1,27 @@
 <template>
   <v-card class="mx-auto" max-width="500" style="margin: 50px" title="Member Registration">
-    <v-form @submit.prevent="signup">
+    <v-form>
       <v-container>
+        <v-text-field
+          v-model="id"
+          color="primary"
+          label="아이디"
+          hint="5자 이상 15자 이하로 입력해 주세요."
+          maxLength="15"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="password"
+          color="primary"
+          label="비밀번호"
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          @click:append-inner="visible = !visible"
+          hint="8자 이상 20자 이하로 입력해 주세요."
+          maxLength="20"
+          variant="underlined"
+        ></v-text-field>
         <v-text-field
           v-model="name"
           color="primary"
@@ -35,27 +55,6 @@
         ></v-text-field>
 
         <v-text-field
-          v-model="id"
-          color="primary"
-          label="아이디"
-          hint="5자 이상 15자 이하로 입력해 주세요."
-          maxLength="15"
-          variant="underlined"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="password"
-          color="primary"
-          label="비밀번호"
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
-          @click:append-inner="visible = !visible"
-          hint="8자 이상 20자 이하로 입력해 주세요."
-          maxLength="20"
-          variant="underlined"
-        ></v-text-field>
-
-        <v-text-field
           v-model="email"
           color="primary"
           label="이메일"
@@ -79,7 +78,7 @@
         <v-checkbox
           v-model="terms"
           color="secondary"
-          label="I agree to WooriWONFIT terms and conditions"
+          label="[필수] 우리WONFIT 서비스 이용약관 동의"
         ></v-checkbox>
       </v-container>
 
@@ -88,11 +87,20 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn type="submit" color="blue">
+        <!-- <v-btn type="submit" @click="navigateToMainPage" color="blue">
           Complete Registration
 
           <v-icon icon="mdi-chevron-right" end></v-icon>
-        </v-btn>
+        </v-btn> -->
+
+        <WithdrawAlert
+          @click="signup"
+          btnName="Complete Registration"
+          text="회원가입이 완료되었습니다."
+          class="logo-text center-button"
+          style="margin: 15px"
+        />
+        <v-icon icon="mdi-chevron-right"></v-icon>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -102,9 +110,10 @@
 import { useRouter } from "vue-router";
 const router = useRouter();
 
+import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
+
 import { postApi } from "@/api/modules";
 import { ref } from "vue";
-
 
 const visible = ref(false);
 
@@ -117,7 +126,7 @@ const password = ref();
 const address = ref();
 const email = ref();
 const phoneNumber = ref();
-const terms = ref();
+const terms = ref(false); // 초기값으로 false를 설정합니다.
 
 const signup = async () => {
   try {
