@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 @Slf4j
 @Component
@@ -51,6 +53,14 @@ public class CookieConfig {
         cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        // SameSite=None 옵션 설정
+        try {
+            Method method = Cookie.class.getDeclaredMethod("setSameSite", String.class);
+            method.invoke(cookie, "None");
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
         return cookie;
     }
 }
