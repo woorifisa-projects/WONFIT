@@ -11,4 +11,9 @@ public interface SubscribeLogRepository extends JpaRepository<SubscribeLog, Long
     List<SubscribeLog> findAllByMemberId(Long memberId);
 
     SubscribeLog save(SubscribeLog subscribeLog);
+
+    List<SubscribeLog> findByMemberIdAndDepositId(Long memberId, Long depositId);
+    List<SubscribeLog> findByMemberIdAndSavingsId(Long memberId, Long SavingsId);
+    List<SubscribeLog> findByMemberIdAndFundId(Long memberId, Long FundId);
+    List<SubscribeLog> findByMemberIdAndLoanId(Long memberId, Long LoanId);
 }

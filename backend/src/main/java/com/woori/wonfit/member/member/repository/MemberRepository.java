@@ -16,9 +16,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findById(Long id);
 
-    @Query("select m.refreshToken from Member m where m.loginId = :loginId")
-    Optional<String> findRefreshTokenByLoginId(@Param("loginId") String loginId);
-
     @Query("SELECT m.id, m.loginId, m.name, m.status, m.phoneNumber FROM Member m")
     List<MembersResponse> selectMembersData();
 

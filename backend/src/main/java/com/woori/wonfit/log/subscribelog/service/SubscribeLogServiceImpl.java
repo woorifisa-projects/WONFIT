@@ -1,6 +1,6 @@
 package com.woori.wonfit.log.subscribelog.service;
 
-import com.woori.wonfit.config.CookieConfig;
+import com.woori.wonfit.config.ExceptionConfig;
 import com.woori.wonfit.log.subscribelog.domain.SubscribeLog;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.log.subscribelog.dto.SubscribeLogResponse;
@@ -19,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -27,37 +29,53 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubscribeLogServiceImpl implements SubscribeLogService {
     private final SubscribeLogRepository subscribeLogRepository;
-    private final CookieConfig cookieConfig;
     private final MemberRepository memberRepository;
     private final DepositRepository depositRepository;
     private final SavingsRepository savingsRepository;
     private final FundRepository fundRepository;
     private final LoanRepository loanRepository;
 
+    LocalDateTime date = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    String time = date.format(formatter).substring(0, 19);
 
     @Override
-    public SubscribeLog save(Long productId, String productType, SubscribeLogRequest subscribeLogRequest, HttpServletRequest request, String time) {
-        String token = cookieConfig.parseCookie(request);
-        Long memberId = cookieConfig.getIdFromToken(token);
+    public SubscribeLog save(Long productId, String productType, SubscribeLogRequest subscribeLogRequest, String id) throws ExceptionConfig {
+        Member member = memberRepository.findById(Long.parseLong(id)).get();
 
-        Member member = memberRepository.findById(memberId).get();
         Deposit deposit = null;
         Savings savings = null;
         Fund fund = null;
         Loan loan = null;
 
-        if(productType.equals("deposit")){
+        if (productType.equals("deposit")) {
             log.info("productType is ={}", productType);
-            deposit = depositRepository.findById(productId).orElse(null);
+            if (subscribeLogRepository.findByMemberIdAndDepositId(Long.parseLong(id), productId).size() >= 1) {
+                throw new ExceptionConfig("이미 가입한 상품입니다.");
+            } else {
+                deposit = depositRepository.findById(productId).orElse(null);
+            }
         } else if (productType.equals("savings")) {
             log.info("productType is ={}", productType);
-            savings = savingsRepository.findById(productId).orElse(null);
+            if (subscribeLogRepository.findByMemberIdAndSavingsId(Long.parseLong(id), productId).size() >= 1) {
+                throw new ExceptionConfig("이미 가입한 상품입니다.");
+            } else {
+                savings = savingsRepository.findById(productId).orElse(null);
+            }
         } else if (productType.equals("fund")) {
             log.info("productType is ={}", productType);
-            fund = fundRepository.findById(productId).orElse(null);
+            if (subscribeLogRepository.findByMemberIdAndFundId(Long.parseLong(id), productId).size() >= 1) {
+                throw new ExceptionConfig("이미 가입한 상품입니다.");
+            } else {
+                fund = fundRepository.findById(productId).orElse(null);
+            }
         } else if (productType.equals("loan")) {
             log.info("productType is ={}", productType);
-            loan = loanRepository.findById(productId).orElse(null);
+            if (subscribeLogRepository.findByMemberIdAndLoanId(Long.parseLong(id), productId).size() >= 1) {
+                throw new ExceptionConfig("이미 가입한 상품입니다.");
+            } else {
+                loan = loanRepository.findById(productId).orElse(null);
+            }
         }
 
         SubscribeLog log = SubscribeLogRequest.To_sub_log(subscribeLogRequest, member, deposit, savings, fund, loan, time);
@@ -66,7 +84,15 @@ public class SubscribeLogServiceImpl implements SubscribeLogService {
     }
 
     @Override
-    public List<SubscribeLog> findByMemberId(Long memberId) {
-        return subscribeLogRepository.findAllByMemberId(memberId);
+    public List<SubscribeLogResponse> findById(String id) {
+        List<SubscribeLog> subscribeLogs = subscribeLogRepository.findAllByMemberId(Long.parseLong(id));
+
+        List<SubscribeLogResponse> responseList = new ArrayList<>();
+
+        for (SubscribeLog subscribeLog : subscribeLogs) {
+            SubscribeLogResponse response = SubscribeLogResponse.From_sub_log(subscribeLog, time);
+            responseList.add(response);
+        }
+        return responseList;
     }
 }
