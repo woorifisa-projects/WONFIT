@@ -52,18 +52,7 @@ public class CookieConfig {
         cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        cookie.setDomain(".wonfit.site");
         return cookie;
     }
-
-    public ResponseCookie createResponseCookie(String value){
-        ResponseCookie cookie = ResponseCookie.from(key, value)
-                .domain(".wonfit.site")
-                .path("/")
-                .httpOnly(true)
-                .maxAge(7 * 24 * 60 * 60)
-                .build();
-        return cookie;
-    }
-
-
 }

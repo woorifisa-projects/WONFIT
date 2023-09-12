@@ -34,8 +34,8 @@ public class MemberController {
     // 로그인
     @PostMapping("wonfit/login")
     public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletRequest request, HttpServletResponse response) {
-        ResponseCookie cookie = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
-        response.addHeader("Set-Cookie", cookie.toString());
+        Cookie cookie = memberService.login(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), request);
+        response.addCookie(cookie);
         return new ResponseEntity<>(new MemberLoginResponse(memberLoginRequest.getLoginId()), HttpStatus.OK);
     }
 

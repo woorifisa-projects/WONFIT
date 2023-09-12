@@ -11,7 +11,7 @@ import java.util.List;
 public interface MemberService {
     MemberDto register(MemberRegisterRequest request);
 
-    ResponseCookie login(String loginId, String memberPw, HttpServletRequest request);
+    Cookie login(String loginId, String memberPw, HttpServletRequest request);
 
     Cookie logout(HttpServletRequest request);
 

@@ -69,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseCookie login(String loginId, String memberPw, HttpServletRequest request) {
+    public Cookie login(String loginId, String memberPw, HttpServletRequest request) {
         Member member = memberRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new RuntimeException("회원정보를 찾을 수 없습니다."));
 
@@ -92,7 +92,7 @@ public class MemberServiceImpl implements MemberService {
             String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
 
-            ResponseCookie cookie = cookieConfig.createResponseCookie(accessToken);
+            Cookie cookie = cookieConfig.createCookie(accessToken);
 
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
