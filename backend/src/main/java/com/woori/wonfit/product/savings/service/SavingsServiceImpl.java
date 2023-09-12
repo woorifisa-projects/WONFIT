@@ -22,7 +22,7 @@ public class SavingsServiceImpl implements SavingsService {
     public List<SavingsResponse> findAll() {
         List<SavingsResponse> getsavings = savingsRepository.findAll().stream()
 
-                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsDesc(),savings.getSavingsType()))
+                .map(savings -> new SavingsResponse(savings.getId(), savings.getSavingsName(), savings.getInterestRate(), savings.getPeriod(), savings.getTarget(), savings.getMaxDeposit(), savings.getSavingsInfo(),savings.getSavingsType()))
 
                         .collect(Collectors.toList());
 
@@ -40,7 +40,6 @@ public class SavingsServiceImpl implements SavingsService {
                 .target(request.getTarget())
                 .maxDeposit(request.getMaxDeposit())
                 .savingsInfo(request.getSavingsInfo())
-                .savingsDesc(request.getSavingsDesc())
                 .savingsType(request.getSavingsType())
                 .build();
 
@@ -60,7 +59,6 @@ public class SavingsServiceImpl implements SavingsService {
                 .target(savings.map(Savings::getTarget).orElse("기본값"))
                 .maxDeposit(savings.map(Savings::getMaxDeposit).orElse(0))
                 .savingsInfo(savings.map(Savings::getSavingsInfo).orElse("기본값"))
-                .savingsDesc(savings.map(Savings::getSavingsDesc).orElse("기본값"))
                 .savingsType(savings.map(Savings::getSavingsType).orElse("기본값"))
                 .build();
     }

@@ -2,7 +2,7 @@
   <div class="mt-5">
     <!-- 선택한 상품정보 CARD -->
     <div>
-      <v-card class="mx-auto mt-12" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-12" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 선택한 상품정보 </v-card-title>
         <v-divider></v-divider>
 
@@ -70,7 +70,7 @@
 
     <!-- 가입약관 CARD -->
     <div>
-      <v-card class="mx-auto mt-16 mb-10" max-width="900" elevation="4">
+      <v-card class="mx-auto mt-16 mb-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 가입약관 </v-card-title>
         <v-divider></v-divider>
 
@@ -135,7 +135,7 @@
 
     <!-- 정보입력 CARD -->
     <div>
-      <v-card class="mx-auto my-10" max-width="900" elevation="4">
+      <v-card class="mx-auto my-10" max-width="900" elevation="3">
         <v-card-title style="background-color: #e2eeff"> 정보입력 </v-card-title>
         <v-divider></v-divider>
 
@@ -150,7 +150,7 @@
                   clearable
                   placeholder="출금 계좌번호를 선택해주세요."
                   single-line
-                  :items="accountNumbers"
+                  :items="bankAccountNumber"
                   variant="outlined"
                   style="width: 500px; margin-left: 22px"
                 ></v-select>
@@ -181,16 +181,16 @@
               </v-col>
               <v-col cols="8">
                 <v-text-field
+                  v-model="fundQuantity"
                   class="mx-5"
                   placeholder="매수하고자하는 개수를 입력해주세요."
-                  :rules="[rules.minDeposit]"
+                  :rules="[rules.minQuantity]"
                   hint="1개 이상 입력해주세요."
-                  style="width: 300px; smargin-left: 22px"
+                  style="width: 300px; margin-left: 22px"
                   variant="outlined"
                 >
                 </v-text-field>
               </v-col>
-              <v-col> </v-col>
             </v-row>
 
             <div class="mt-9 mb-10">
@@ -204,7 +204,9 @@
     </div>
 
     <div class="d-flex justify-center my-10">
-      <v-btn class="mx-3" color="primary" size="large" rounded> 가입하기 </v-btn>
+      <v-btn class="mx-3" color="primary" size="large" rounded @click="requestSubscribe">
+        가입하기
+      </v-btn>
       <v-btn class="mx-3" size="large" rounded @click="goBack"> 취소하기 </v-btn>
     </div>
   </div>
@@ -212,34 +214,27 @@
 
 <script setup>
 import { ref, onBeforeMount } from "vue";
-import { getApi } from "@/api/modules";
+import { getApi, postApi } from "@/api/modules";
 import { useRoute } from "vue-router";
 
 const fundData = ref([]);
+const accountData = ref([]);
 const route = useRoute();
 // URL에서 productId를 가져오기 위해 route.params를 사용합니다.
 const productId = route.params.id;
 // 약관 동의 체크박스
 const selected = ref([]);
 // 출금계좌번호
-let accountNumbers = ref([]);
-// 최소 입금 금액
-let minDeposit = ref(0);
+let bankAccountNumber = ref([]);
 
 const show1 = ref(false);
 const password = ref("");
-const value = ref(""); // v-model로 입력값을 받아올 변수
+
+const fundQuantity = ref();
 
 const rules = {
   minLength: (v) => v.length <= 4,
-  minDeposit: (v) => v >= 1,
-};
-
-const getHint = () => {
-  if (!value || value < minDeposit.value) {
-    return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
-  }
-  return `최소 입금 금액은 ${minDeposit.value}원 입니다.`;
+  minQuantity: (v) => v >= 1,
 };
 
 // 이전 페이지로 이동하는 코드
@@ -254,9 +249,37 @@ onBeforeMount(async () => {
   });
   fundData.value = data;
   console.log(data);
-  accountNumbers.value = [fundData.value.fundName];
-  minDeposit.value = fundData.value.minDeposit;
 });
+
+// 계좌 정보 가져오기
+onBeforeMount(async () => {
+  const data = await getApi({
+    url: `/member/detail`,
+  });
+  accountData.value = data;
+  console.log(data);
+  bankAccountNumber.value = [accountData.value.bankAccountNumber];
+});
+
+// 상품 가입 post 요청
+const requestSubscribe = async () => {
+  try {
+    const response = await postApi({
+      url: `/member/mypage/sublog/fund/${productId}`,
+      data: {
+        fundQuantity: fundQuantity.value,
+      },
+    });
+    console.log(response);
+    if (response === "가입완료") {
+      console.log("상품 가입 성공");
+    } else {
+      console.error("상품 가입 실패 error:", response.data); // 실패 시 에러 메시지를 출력
+    }
+  } catch (error) {
+    console.error("상품 가입 실패:", error);
+  }
+};
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@ import com.woori.wonfit.product.loan.domain.Loan;
 import com.woori.wonfit.product.savings.domain.Savings;
 import lombok.*;
 
-import java.time.LocalDate;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @Builder
@@ -20,26 +20,28 @@ public class SubscribeLogRequest {
     private Long id;
     private Member member;
     private String subDate;
-    private LocalDateTime expireDate;
+    private String expirePeriod;
     private int subDeposit;
-    private int subSavings;
+    private int subSavings; // 가입 금액(적금)
     private int monthlyCharge;
-    private LocalDateTime monthlyChargeDate;
-    private String taxDeduction;
-    private int fundQuantity;
-    private int loanAmount;
-    private String repaymentMethod;
+    private String monthlyChargeDate; // 월 납입일(적금,대출)
+    private String taxDeduction; // 세금우대방법(예금,적금)
+    private int fundQuantity; // 펀드 매수 수량(펀드)
+    private int loanAmount; // 대출 금액
+    private String repaymentMethod; // 원리금균등상환, 원금균등상환, 만기일시상환(대출)
     private boolean subscribeStatus;
     private Deposit deposit;
     private Savings savings;
     private Fund fund;
     private Loan loan;
 
-    public static SubscribeLog To_sub_log(SubscribeLogRequest subscribeLogRequest, String time) {
-        return SubscribeLog.builder().id(subscribeLogRequest.getId())
-                .member(subscribeLogRequest.getMember())
+    public static SubscribeLog To_sub_log(SubscribeLogRequest subscribeLogRequest, Member member,Deposit deposit, Savings savings, Fund fund, Loan loan, String time) {
+        return SubscribeLog.builder()
+                .id(subscribeLogRequest.getId())
+                .member(member)
+                .subDeposit(subscribeLogRequest.getSubDeposit())
                 .subDate(time)
-                .expireDate(subscribeLogRequest.getExpireDate())
+                .expirePeriod(subscribeLogRequest.getExpirePeriod())
                 .subDeposit(subscribeLogRequest.getSubDeposit())
                 .subSavings(subscribeLogRequest.getSubSavings())
                 .monthlyCharge(subscribeLogRequest.getMonthlyCharge())
@@ -49,10 +51,10 @@ public class SubscribeLogRequest {
                 .loanAmount(subscribeLogRequest.getLoanAmount())
                 .repaymentMethod(subscribeLogRequest.getRepaymentMethod())
                 .subscribeStatus(subscribeLogRequest.isSubscribeStatus())
-                .deposit(subscribeLogRequest.getDeposit())
-                .savings(subscribeLogRequest.getSavings())
-                .fund(subscribeLogRequest.getFund())
-                .loan(subscribeLogRequest.getLoan())
+                .deposit(deposit)
+                .savings(savings)
+                .fund(fund)
+                .loan(loan)
                 .build();
     }
 }

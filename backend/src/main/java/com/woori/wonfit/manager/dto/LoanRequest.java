@@ -39,7 +39,6 @@ public class LoanRequest {
                 .target(loanRequest.getTarget())
                 .loanLimit(loanRequest.getLoanLimit())
                 .loanInfo(loanRequest.getLoanInfo())
-                .loanDesc(loanRequest.getLoanDesc())
                 .loanType(loanRequest.getLoanType())
                 .build();
     }

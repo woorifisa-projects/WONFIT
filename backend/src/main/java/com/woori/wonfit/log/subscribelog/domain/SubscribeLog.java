@@ -1,6 +1,8 @@
 package com.woori.wonfit.log.subscribelog.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.woori.wonfit.log.subscribelog.dto.SubscribeLogRequest;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.product.deposit.domain.Deposit;
 import com.woori.wonfit.product.fund.domain.Fund;
@@ -25,6 +27,7 @@ public class SubscribeLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "member_id", nullable = true)
     private Member member;
@@ -32,8 +35,8 @@ public class SubscribeLog {
     @Column(name = "subscribe_date")
     private String subDate; // 가입 날짜, 펀드 매수 날짜
 
-    @Column(name = "expire_date", nullable = true)
-    private LocalDateTime expireDate; // 만료 날짜(가입,대출 기간 - 예금,적금,대출)
+    @Column(name = "expire_period", nullable = true)
+    private String expirePeriod; // (가입,대출 기간 - 예금,적금,대출)
 
     @Column(name = "subscribe_deposit", nullable = true)
     private int subDeposit; // 가입 금액(적금)
@@ -45,7 +48,7 @@ public class SubscribeLog {
     private int monthlyCharge; //월 납입 금액(적금)
 
     @Column(name = "monthly_charge_date", nullable = true)
-    private LocalDateTime monthlyChargeDate; // 월 납입일(적금,대출)
+    private String monthlyChargeDate; // 월 납입일(적금,대출)
 
     @Column(name = "tax_deduction", nullable = true)
     private String taxDeduction; // 세금우대방법(예금,적금)
@@ -62,19 +65,44 @@ public class SubscribeLog {
     @Column(name = "subscribe_status")
     private boolean subscribeStatus; // ACTIVE(가입중), INACTIVE(해지)
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "deposit_id", nullable = true)
     private Deposit deposit;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "savings_id", nullable = true)
     private Savings savings;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fund_id", nullable = true)
     private Fund fund;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "loan_id", nullable = true)
     private Loan loan;
+
+    public static SubscribeLog toEntity(SubscribeLog request){
+        return SubscribeLog.builder()
+                .member(request.getMember())
+                .subDate(request.getSubDate())
+                .expirePeriod(request.getExpirePeriod())
+                .subDeposit(request.getSubDeposit())
+                .subSavings(request.getSubSavings())
+                .monthlyCharge(request.getMonthlyCharge())
+                .monthlyChargeDate(request.getMonthlyChargeDate())
+                .taxDeduction(request.getTaxDeduction())
+                .fundQuantity(request.getFundQuantity())
+                .loanAmount(request.getLoanAmount())
+                .repaymentMethod(request.getRepaymentMethod())
+                .subscribeStatus(request.isSubscribeStatus())
+                .deposit(request.getDeposit())
+                .savings(request.getSavings())
+                .fund(request.getFund())
+                .loan(request.getLoan())
+                .build();
+    }
 }

@@ -16,6 +16,8 @@ defineProps({
   },
   // props는 여러 개가 될 수 있음
 });
+
+// 버튼 클릭 유지
 </script>
 
 <style lang="scss" scoped>
@@ -27,8 +29,8 @@ defineProps({
   }
 
   // border: 1px solid hwb(225 94% 1%);
-  background-color: #e2eeff;
+  background-color: #ffffff;
+  border: 1px solid #e6e8e9;
   border-radius: 10px;
-  border-color: hsl(0, 0%, 93%);
 }
 </style>

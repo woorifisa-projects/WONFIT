@@ -46,7 +46,6 @@ public static LoanResponse FromLoan(Loan loan) {
                 .target(loan.getTarget())
                 .loanLimit(loan.getLoanLimit())
                 .loanInfo(loan.getLoanInfo())
-                .loanDesc(loan.getLoanDesc())
                 .loanType(loan.getLoanType())
 
                 .build();

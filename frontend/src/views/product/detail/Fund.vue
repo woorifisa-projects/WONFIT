@@ -6,8 +6,8 @@
           <detailTitle
             :name="fundData.fundName"
             :info="fundData.fundInfo"
-            :interestRate="'1개월 금리: ' + fundData.returnRate1 + '%'"
-            :returnRate2="'6개월 금리: ' + fundData.returnRate2 + '%'"
+            :interestRate="'1개월 수익률: ' + fundData.returnRate1 + '%'"
+            :returnRate2="'6개월 수익률: ' + fundData.returnRate2 + '%'"
             :fundPrice="'기준가: ' + fundData.fundPrice + '원'"
             :type="'상품 타입: ' + fundData.fundType"
             :button1="'가입하기'"

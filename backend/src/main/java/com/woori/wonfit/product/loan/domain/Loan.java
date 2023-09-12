@@ -33,9 +33,6 @@ public class Loan {
     @Column(name = "loan_info")
     private String loanInfo;
 
-    @Column(name = "loan_desc")
-    private String loanDesc; // 상세 설명
-
     @Column(name = "loan_type")
     private String loanType; // 안정형, 중립형, 공격형
 
