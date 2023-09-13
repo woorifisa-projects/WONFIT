@@ -35,5 +35,5 @@ public class Fund {
     private String fundInfo;
 
     @Column(name = "status")
-    private String status; // 상품 상태
+    private boolean status; // 상품 상태
 }
