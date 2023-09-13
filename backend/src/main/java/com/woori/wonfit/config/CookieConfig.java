@@ -51,7 +51,6 @@ public class CookieConfig {
         cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setDomain(".wonfit.site");
         return cookie;
     }
 }
