@@ -48,6 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
         String path = request.getRequestURI();
+        log.info("path = {}", path);
         if (path.startsWith("/wonfit/") || path.startsWith("/product/") || path.startsWith("/manager/login") || path.startsWith("/manager/register")) {
             log.info("request url is /wonfit/ or /product/ or manager/login");
             filterChain.doFilter(request, response);
