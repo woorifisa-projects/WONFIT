@@ -39,7 +39,6 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/useAuthStore";
 
 const auth = useAuthStore();
-
 const router = useRouter();
 
 const navigateToSignup = () => {
@@ -59,9 +58,7 @@ const login = async () => {
       password: password.value,
     };
 
-    const response = await axios.post("https://back.wonfit.site/manager/login", requestBody, {
-      withCredentials: true,
-    });
+    const response = await axios.post("https://back.wonfit.site/manager/login", requestBody, { withCredentials: true });
     if (response.status == 200) {
       // 쿠키 저장 메소드
       auth.setIsLogin(true);
