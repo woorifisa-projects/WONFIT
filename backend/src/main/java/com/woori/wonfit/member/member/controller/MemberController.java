@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -73,6 +74,20 @@ public class MemberController {
     public ResponseEntity<String> updateMemberDetails(@RequestBody Member member, @AuthenticationPrincipal String id) {
         log.info("updateMemberDetails called");
         memberService.updateMemberDetails(id, member);
+        return ResponseEntity.ok("수정이 완료되었습니다.");
+    }
+    @Transactional
+    @PatchMapping("member/mydata")
+    public ResponseEntity<String> updateMemberMydata(@RequestBody Member member, @AuthenticationPrincipal String id) {
+        log.info("updateMemberMydata called");
+        memberService.updateMemberMydata(Long.parseLong(id), member);
+        return ResponseEntity.ok("수정이 완료되었습니다.");
+    }
+    @Transactional
+    @PatchMapping("member/marketing")
+    public ResponseEntity<String> updateMemberMarketing(@RequestBody Member member, @AuthenticationPrincipal String id) {
+        log.info("updateMemberMarketing called");
+        memberService.updateMemberMarketing(Long.parseLong(id), member);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
 }
