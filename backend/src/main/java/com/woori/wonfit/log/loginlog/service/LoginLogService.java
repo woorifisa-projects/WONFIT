@@ -10,5 +10,5 @@ import java.util.List;
 public interface LoginLogService {
     List<LoginLog> getAllLoginLog(String id);
 
-    List<LoginLog> getAllLoginLog(Long id);
+    List<LoginLog> getAllLoginLog(LoginLogRequest request);
 }
