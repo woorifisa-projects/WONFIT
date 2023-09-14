@@ -1,15 +1,22 @@
 package com.woori.wonfit.member.member.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Setter
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class MembersResponse {
-    private String name;
+    private Long id;
     private String loginId;
-    private String phoneNumber;
+    private String name;
     private boolean status;
+    private String phoneNumber;
+
+    public MembersResponse(Long id, String loginId, String name, boolean status, String phoneNumber) {
+        this.id = id;
+        this.loginId = loginId;
+        this.name = name;
+        this.status = status;
+        this.phoneNumber = phoneNumber;
+    }
 }
