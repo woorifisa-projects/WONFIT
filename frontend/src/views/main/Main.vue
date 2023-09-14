@@ -122,7 +122,7 @@ const navigateToSavingsTestPage = () => {
 <style lang="scss" scoped>
 .banner-container {
   height: 600px;
-  background-color: #f6f7ff; /* 배경색 설정 */
+  background-color: #d1e4ffd3;
   padding: 20px; /* 내부 여백 추가 */
   display: flex;
   align-items: center;
@@ -132,7 +132,7 @@ const navigateToSavingsTestPage = () => {
 
 .banner-container2 {
   height: 600px;
-  background-color: #f6f7ff; /* 배경색 설정 */
+  background-color: #d1e4ffd3;
   padding: 20px; /* 내부 여백 추가 */
   display: flex;
   align-items: center;
