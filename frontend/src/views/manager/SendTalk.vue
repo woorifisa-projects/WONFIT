@@ -96,7 +96,7 @@ onMounted(fetchSmsData);
 async function fetchSmsData() {
   try {
 
-    const response = await axios.get("http://BACK.WONFIT.SITE/manager/sms", {
+    const response = await axios.get("https://back.wonfit.site/manager/sms", {
 
       withCredentials: true,
     });
@@ -117,7 +117,7 @@ async function sendMessage() {
 
   try {
 
-    const response = await axios.post("http://BACK.WONFIT.SITE/manager/sms", body, {
+    const response = await axios.post("https://back.wonfit.site/manager/sms", body, {
 
       withCredentials: true,
     });

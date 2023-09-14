@@ -80,7 +80,7 @@ watch(searchQuery, () => {
   clearTimeout(searchTimer.value); // 이전 타이머 클리어
   searchTimer.value = setTimeout(() => { // 새로운 타이머 설정
     search();
-    axios.post("http://localhost/member/mypage/searchlog", {
+    axios.post("https://back.wonfit.site/member/mypage/searchlog", {
       searchWord: searchQuery
     }, {
       withCredentials: true

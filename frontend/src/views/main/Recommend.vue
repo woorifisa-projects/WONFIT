@@ -85,7 +85,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(depositValue)) {
         try {
-          const response = await axios.get(`http://back.wonfit.site/product/deposit`);
+          const response = await axios.get(`https://back.wonfit.site/product/deposit`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -113,7 +113,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(savingsValue)) {
         try {
-          const response = await axios.get(`http://back.wonfit.site/product/savings`);
+          const response = await axios.get(`https://back.wonfit.site/product/savings`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -141,7 +141,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(fundValue)) {
         try {
-          const response = await axios.get(`http://back.wonfit.site/product/fund`);
+          const response = await axios.get(`https://back.wonfit.site/product/fund`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {
@@ -168,7 +168,7 @@ export default {
 
       if (["attack", "middle", "safe"].includes(loanValue)) {
         try {
-          const response = await axios.get(`http://api.back.wonfit.site/product/loan`);
+          const response = await axios.get(`https://back.wonfit.site/product/loan`);
 
           // 데이터가 어레이에 존재 하는지 확인
           if (Array.isArray(response.data) && response.data.length) {

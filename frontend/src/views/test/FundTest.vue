@@ -157,7 +157,7 @@ export default {
       // 서버에 POST 요청을 보냅니다.
       await axios
         .post(
-          "http://BACK.WONFIT.SITE/member/recommend/product",
+          "https://back.wonfit.site/member/recommend/product",
           {
             productType: "fund",
             score: this.correctAnswersCount,

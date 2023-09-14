@@ -66,7 +66,7 @@ let autoIncrement = 1; // 바깥에서 auto-increment 값을 초기화
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://BACK.WONFIT.SITE/member/mypage/sublog");
+    const response = await axios.get("https://back.wonfit.site/member/mypage/sublog");
     const data = response.data;
 
     data.forEach((item) => {
