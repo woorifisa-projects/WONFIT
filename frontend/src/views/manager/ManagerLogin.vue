@@ -58,7 +58,7 @@ const login = async () => {
       password: password.value,
     };
 
-    const response = await axios.post("https://back.wonfit.site/manager/login", requestBody, { withCredentials: true });
+    const response = await axios.post("http://localhost:8080/manager/login", requestBody, { withCredentials: true });
     if (response.status == 200) {
       // 쿠키 저장 메소드
       auth.setIsLogin(true);
