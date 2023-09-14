@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register").permitAll()
-                        .antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers("/member/**").hasAnyRole("USER")
                         .antMatchers("/manager/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement()
