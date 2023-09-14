@@ -6,12 +6,8 @@
           <v-col cols="3">
             <v-sheet rounded="lg">
               <v-list rounded="lg">
-                <v-list-item class="logo-text" @click="navigateToManagerPage"
-                  >사용자 관리</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToManageProduct"
-                  >상품 관리</v-list-item
-                >
+                <v-list-item class="logo-text" @click="navigateToManagerPage">사용자 관리</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToManageProduct">상품 관리</v-list-item>
 
                 <v-list-item class="logo-text" @click="navigateToSendTalk">SMS 관리</v-list-item>
               </v-list>
@@ -56,9 +52,7 @@
               <div class="d-flex justify-end align-center" style="width: 100%; height: 100%">
                 <div class="d-flex justify-end">
                   <!-- 이 부분 추가 -->
-                  <v-btn color="blue" style="margin-left: 100px" @click="showModal = true"
-                    >메시지 전송</v-btn
-                  >
+                  <v-btn color="blue" style="margin-left: 100px" @click="showModal = true">메시지 전송</v-btn>
                 </div>
               </div>
             </v-col>
@@ -67,28 +61,11 @@
                 <v-card-title>메시지 전송</v-card-title>
                 <v-card-text>
                   <form @submit.prevent="sendMessage">
-                    <v-select
-                      :items="['010-3203-7238']"
-                      label="발신자 전화번호"
-                      required
-                    ></v-select>
-                    <v-text-field
-                      v-model="receiverPhoneNumberModal"
-                      label="수신자 전화번호"
-                    ></v-text-field>
-                    <v-textarea
-                      v-model="messageContentModal"
-                      label="메시지 내용"
-                      maxlength="90"
-                    ></v-textarea>
+                    <v-select :items="['010-3203-7238']" label="발신자 전화번호" required></v-select>
+                    <v-text-field v-model="receiverPhoneNumberModal" label="수신자 전화번호"></v-text-field>
+                    <v-textarea v-model="messageContentModal" label="메시지 내용" maxlength="90"></v-textarea>
                     <div class="text-right">
-                      <v-btn
-                        color="blue"
-                        text
-                        @click.native="showModal = false"
-                        style="margin-right: 10px"
-                        >취소</v-btn
-                      >
+                      <v-btn color="blue" text @click.native="showModal = false" style="margin-right: 10px">취소</v-btn>
                       <v-btn color="blue" text type="submit">전송</v-btn>
                     </div>
                   </form>
@@ -119,7 +96,7 @@ onMounted(fetchSmsData);
 async function fetchSmsData() {
   try {
 
-    const response = await axios.get("http://13.125.155.169:8080/manager/sms", {
+    const response = await axios.get("http://BACK.WONFIT.SITE/manager/sms", {
 
       withCredentials: true,
     });
@@ -140,7 +117,7 @@ async function sendMessage() {
 
   try {
 
-    const response = await axios.post("http://13.125.155.169:8080/manager/sms", body, {
+    const response = await axios.post("http://BACK.WONFIT.SITE/manager/sms", body, {
 
       withCredentials: true,
     });
@@ -178,8 +155,7 @@ const navigateToManageLog = () => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
 }

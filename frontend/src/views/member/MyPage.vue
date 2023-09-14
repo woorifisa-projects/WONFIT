@@ -112,7 +112,7 @@ const saveChanges = async () => {
       address: memberData.value.address,
     };
 
-    const response = await axios.patch("http://API.WONFIT.SITE:8080/member/detail", updatedData, {
+    const response = await axios.patch("http://BACK.WONFIT.SITE/member/detail", updatedData, {
       withCredentials: true,
     });
 

@@ -7,12 +7,8 @@
         <p v-if="warningMessage" style="color: red">답을 골라주세요</p>
         <div class="quiz__view"></div>
         <div class="quiz__answer">
-          <label
-            v-for="(choice, index) in quizInfo[quizCount].answerChoice"
-            :key="'choice' + index"
-            :class="{ selected: selectedAnswer === choice }"
-            class="choice"
-          >
+          <label v-for="(choice, index) in quizInfo[quizCount].answerChoice" :key="'choice' + index"
+            :class="{ selected: selectedAnswer === choice }" class="choice">
             <input type="radio" v-model="selectedAnswer" :value="choice" />
             {{ choice.text }}
           </label>
@@ -158,7 +154,7 @@ export default {
       // 서버에 POST 요청을 보냅니다.
       await axios
         .post(
-          "http://l13.125.155.169:8080/member/recommend/product",
+          "http://l13.125.155.169/member/recommend/product",
           {
             productType: "loan",
             score: this.correctAnswersCount,
@@ -212,8 +208,7 @@ export default {
 /* 스타일 내용 */
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -242,7 +237,7 @@ export default {
   transition: 0.5s ease-in-out;
 }
 
-.choice input[type="radio"]:checked + label span::before {
+.choice input[type="radio"]:checked+label span::before {
   box-shadow: inset -2px -2px rgba(0, 0, 0, 0.4), inset -3px -3px rgba(255, 255, 255, 0.7),
     inset 10em10em #671010;
   /* 체크된 상태에서의 색상 */
@@ -321,7 +316,7 @@ export default {
   margin-right: 10px;
 }
 
-.choice label input:checked + span::before {
+.choice label input:checked+span::before {
   box-shadow: inset 0px 0px 0px 10px #f8b74e;
 }
 

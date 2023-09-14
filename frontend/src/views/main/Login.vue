@@ -59,7 +59,7 @@ const login = async () => {
       password: password.value,
     };
 
-    const response = await axios.post("https://back.wonfit.site:8080/wonfit/login", requestBody, {
+    const response = await axios.post("https://back.wonfit.site/wonfit/login", requestBody, {
       withCredentials: true,
     });
     if (response.status == 200) {

@@ -93,16 +93,16 @@ const loadData = async (tab) => {
     // 탭에 따라 다른 엔드포인트를 선택
     switch (tab) {
       case "예금":
-        endpoint = "http://API.WONFIT.SITE:8080/product/deposit"; // 예금 데이터를 가져오는 엔드포인트
+        endpoint = "http://BACK.WONFIT.SITE/product/deposit"; // 예금 데이터를 가져오는 엔드포인트
         break;
       case "적금":
-        endpoint = "http://API.WONFIT.SITE:8080/product/savings"; // 적금 데이터를 가져오는 엔드포인트
+        endpoint = "http://BACK.WONFIT.SITE/product/savings"; // 적금 데이터를 가져오는 엔드포인트
         break;
       case "펀드":
-        endpoint = "http://API.WONFIT.SITE:8080/product/fund"; // 펀드 데이터를 가져오는 엔드포인트
+        endpoint = "http://BACK.WONFIT.SITE/product/fund"; // 펀드 데이터를 가져오는 엔드포인트
         break;
       case "대출":
-        endpoint = "http://API.WONFIT.SITE:8080/product/loan"; // 대출 데이터를 가져오는 엔드포인트
+        endpoint = "http://BACK.WONFIT.SITE/product/loan"; // 대출 데이터를 가져오는 엔드포인트
         break;
       default:
         break;
