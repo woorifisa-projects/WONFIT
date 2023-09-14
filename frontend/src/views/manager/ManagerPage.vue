@@ -38,7 +38,10 @@
                   <tr v-for="item in memberData" :key="item.idx">
                     <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
                     <td>{{ item.idx }}</td>
-                    <td>{{ item.name }}</td>
+                    <td @click="toggleCardDetails(item)" class="logo-text hoverable">
+                      {{ item.name }}
+                    </td>
+
                     <td>{{ item.loginId }}</td>
                     <td>{{ item.phoneNumber }}</td>
                     <td>
@@ -49,7 +52,13 @@
                 </tbody>
               </v-table>
             </v-sheet>
-            <v-sheet class="logo-text" style="margin-top: 20px" min-height="70vh" rounded="lg">
+            <v-sheet
+              class="logo-text"
+              style="margin-top: 20px"
+              min-height="70vh"
+              rounded="lg"
+              v-if="showCardDetails"
+            >
               <v-card>
                 <v-tabs bg-color="blue" center-active class="d-flex justify-center">
                   <v-tab style="margin-left: 210px">로그인 기록</v-tab>
@@ -72,6 +81,15 @@ import { getApi } from "@/api/modules";
 const router = useRouter();
 const memberData = ref([]);
 
+const showCardDetails = ref(false);
+
+const toggleCardDetails = (item) => {
+  // 해당 아이템을 클릭했을 때 해당 아이템의 상세 정보를 표시하도록 구현
+  // 예: item을 이용하여 해당 아이템의 상세 정보를 가져와서 표시하는 로직을 추가
+
+  showCardDetails.value = !showCardDetails.value;
+};
+
 onBeforeMount(async () => {
   const data = await getApi({
     url: `/manager/members`,
@@ -91,6 +109,7 @@ const navigateToManagerPage = () => {
 const navigateToManageProduct = () => {
   router.push({ name: "ManageProduct" });
 };
+// /member/mypage/loginlog/loginId
 
 const navigateToSendTalk = () => {
   router.push({ name: "SendTalk" });
@@ -109,5 +128,9 @@ const navigateToSendTalk = () => {
 .logo-text {
   font-size: 15px;
   font-family: "WooridaumB", sans-serif;
+}
+
+.logo-text:hover {
+  cursor: pointer;
 }
 </style>
