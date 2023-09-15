@@ -19,7 +19,7 @@ import java.util.List;
 public class LoginLogController {
     private final LoginLogService loginLogService;
 
-    // 멤버 로그인 로그 조회
+    // 멤버 로그인 로그 조결회
     @GetMapping
     public ResponseEntity<List<LoginLog>> getAllLoginLog(@AuthenticationPrincipal String id) {
         List<LoginLog> loginLogs = loginLogService.getAllLoginLog(id);
@@ -28,8 +28,9 @@ public class LoginLogController {
 
     // 관리자 로그인 로그 조회
     @PostMapping("/by/loginid")
-    public ResponseEntity<List<LoginLog>> getAllLoginLog(@RequestBody LoginLogRequest request) {
-        List<LoginLog> loginLogs = loginLogService.getAllLoginLog(request);
+    public ResponseEntity<List<LoginLog>> getLoginLog(@RequestBody LoginLogRequest request) {
+        List<LoginLog> loginLogs = loginLogService.getLoginLog(request.getLoginId());
         return new ResponseEntity<>(loginLogs, HttpStatus.OK);
     }
 }
+
