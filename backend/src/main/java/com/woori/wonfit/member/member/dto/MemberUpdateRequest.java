@@ -15,6 +15,8 @@ public class MemberUpdateRequest {
     private String email; // 회원 이메일
     private String phoneNumber; // 회원 전화번호
     private String address; // 회원 주소
+    private String annualIncome;
+    private String ageGroup;
     private String refreshToken;
 
     public static MemberUpdateRequest toEntity(Member member, String password) {

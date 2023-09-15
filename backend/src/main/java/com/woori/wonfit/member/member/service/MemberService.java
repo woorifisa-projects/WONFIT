@@ -29,4 +29,9 @@ public interface MemberService {
 
     void updateMemberDetails(String id, Member member);
 
+    void updateMemberMydata(Long id, Member member);
+
+    void updateMemberMarketing(Long id, Member member);
+
+
 }
