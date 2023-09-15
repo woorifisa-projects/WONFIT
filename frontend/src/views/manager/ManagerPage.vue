@@ -8,12 +8,10 @@
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToManagerPage">사용자 관리</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToManageProduct">상품 관리</v-list-item>
-
                 <v-list-item class="logo-text" @click="navigateToSendTalk">SMS 관리</v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
-
           <v-col>
             <v-sheet class="logo-text" style="padding: 10px" min-height="50vh" rounded="lg">
               <v-table fixed-header height="500px">
@@ -34,10 +32,9 @@
                   <tr v-for="item in memberData" :key="item.idx">
                     <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
                     <td>{{ item.idx }}</td>
-                    <td @click="toggleCardDetails(item)" class="logo-text hoverable">
+                    <td @click="[toggleCardDetails(item), onClickLoginLog()]" class="logo-text hoverable">
                       {{ item.name }}
                     </td>
-
                     <td>{{ item.loginId }}</td>
                     <td>{{ item.phoneNumber }}</td>
                     <td>
@@ -54,12 +51,8 @@
                   <v-tab style="margin-left: 210px" @click="onClickLoginLog">로그인 기록</v-tab>
                   <v-tab style="margin-left: 210px">검색 기록</v-tab>
                 </v-tabs>
-
               </v-card>
-
               <v-table fixed-header height="500px">
-                <!-- 테이블 헤더와 데이터 표시 부분 -->
-                <!-- 아래 v-for를 통해 각 탭에서 다른 데이터를 표시합니다. -->
                 <thead>
                   <tr>
                     <th></th>
@@ -84,9 +77,6 @@
                   </tr>
                 </tbody>
               </v-table>
-
-
-
             </v-sheet>
           </v-col>
         </v-row>
@@ -98,7 +88,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref, onBeforeMount } from "vue";
-import { getApi } from "@/api/modules";
+import { getApi, postApi } from "@/api/modules";
 
 const router = useRouter();
 const memberData = ref([]);
@@ -106,12 +96,15 @@ const loginLogData = ref([]);
 
 const showCardDetails = ref(false);
 
-const toggleCardDetails = (item) => {
-  // 해당 아이템을 클릭했을 때 해당 아이템의 상세 정보를 표시하도록 구현
-  // 예: item을 이용하여 해당 아이템의 상세 정보를 가져와서 표시하는 로직을 추가
+const memberId = ref([]);
 
-  showCardDetails.value = !showCardDetails.value;
+const toggleCardDetails = (item) => {
+  if (!showCardDetails.value) {
+    showCardDetails.value = !showCardDetails.value;
+  }
+  memberId.value = item.loginId;
 };
+
 
 onBeforeMount(async () => {
   const data = await getApi({
@@ -121,28 +114,28 @@ onBeforeMount(async () => {
   for (let i = 0; i < data.length; i++) {
     data[i].idx = i + 1;
   }
-
   memberData.value = data;
 });
 
 const onClickLoginLog = async () => {
   try {
-    const data = await getApi({
-      url: `/member/mypage/loginlog/by/1`,
+    const requestBody = {
+      loginId: memberId.value,
+    };
+    const data = await postApi({
+      url: `/member/mypage/loginlog/by/loginid`,
+      data: requestBody
     });
     for (let i = 0; i < data.length; i++) {
       data[i].idx = i + 1;
     }
     loginLogData.value = data;
 
-    console.log('로그 데이터:', data); // 데이터 로그 출력
+    console.log('로그 데이터:', data);
   } catch (error) {
-    console.error('에러 발생:', error); // 에러 로그 출력
+    console.error('에러 발생:', error);
   }
 };
-
-
-
 
 const navigateToManagerPage = () => {
   router.push({ name: "ManagerPage" });
