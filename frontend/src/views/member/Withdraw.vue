@@ -7,15 +7,9 @@
             <v-sheet rounded="lg">
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToMyPage">내 정보 보기</v-list-item>
-                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct"
-                  >내 가입상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToMyLikedProduct"
-                  >내 관심상품 확인하기</v-list-item
-                >
-                <v-list-item class="logo-text" @click="navigateToRecommend"
-                  >나의 투자성향 보기</v-list-item
-                >
+                <v-list-item class="logo-text" @click="navigateToMySubscribeProduct">내 가입상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToMyLikedProduct">내 관심상품 확인하기</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToRecommend">나의 투자성향 보기</v-list-item>
 
                 <v-divider class="my-2"></v-divider>
 
@@ -28,34 +22,17 @@
             <v-sheet min-height="50vh" rounded="lg">
               <v-form @submit.prevent="withdraw">
                 <v-responsive>
-                  <v-text-field
-                    v-model="id"
-                    color="primary"
-                    placeholder="Enter your id"
-                    maxLength="15"
-                    variant="outlined"
-                    :style="{ width: '300px', margin: '30px auto' }"
-                  ></v-text-field>
+                  <v-text-field v-model="id" color="primary" placeholder="Enter your id" maxLength="15" variant="outlined"
+                    :style="{ width: '300px', margin: '30px auto' }"></v-text-field>
 
-                  <v-text-field
-                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                    :type="visible ? 'text' : 'password'"
-                    placeholder="Enter your password"
-                    v-model="password"
-                    variant="outlined"
-                    @click:append-inner="visible = !visible"
-                    :style="{ width: '300px', margin: '10px auto' }"
-                  ></v-text-field
-                ></v-responsive>
+                  <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'" placeholder="Enter your password" v-model="password"
+                    variant="outlined" @click:append-inner="visible = !visible"
+                    :style="{ width: '300px', margin: '10px auto' }"></v-text-field></v-responsive>
 
                 <div class="d-flex flex-column align-center justify-center">
-                  <WithdrawAlert
-                    type="submit"
-                    btnName="탈퇴하기"
-                    text="회원탈퇴가 완료되었습니다."
-                    class="logo-text center-button"
-                    style="margin: 30px; padding: 25px"
-                  />
+                  <WithdrawAlert type="submit" btnName="탈퇴하기" text="회원탈퇴가 완료되었습니다." class="logo-text center-button"
+                    style="margin: 30px; padding: 25px" @click="withdraw" />
                 </div>
               </v-form>
             </v-sheet>
@@ -129,8 +106,7 @@ const withdraw = async () => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
 }

@@ -90,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
             String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
 
-            Cookie cookie = cookieConfig.createCookie(accessToken);
+            Cookie cookie = cookieConfig.createHttpOnlyCookie(accessToken);
 
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
@@ -106,7 +106,7 @@ public class MemberServiceImpl implements MemberService {
         member.setRefreshToken("");
         memberRepository.save(member);
 
-        Cookie cookie = cookieConfig.createCookie("");
+        Cookie cookie = cookieConfig.createHttpOnlyCookie("");
 
         return cookie;
     }

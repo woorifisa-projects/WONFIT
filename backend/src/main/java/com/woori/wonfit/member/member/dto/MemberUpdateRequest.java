@@ -17,6 +17,7 @@ public class MemberUpdateRequest {
     private String address; // 회원 주소
     private String annualIncome;
     private String ageGroup;
+    private String refreshToken;
 
     public static MemberUpdateRequest toEntity(Member member, String password) {
         return MemberUpdateRequest.builder()
@@ -28,6 +29,7 @@ public class MemberUpdateRequest {
                 .email(member.getEmail())
                 .phoneNumber(member.getPhoneNumber())
                 .address(member.getAddress())
+                .refreshToken(member.getRefreshToken())
                 .build();
     }
 

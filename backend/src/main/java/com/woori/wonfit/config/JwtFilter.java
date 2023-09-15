@@ -99,7 +99,7 @@ public class JwtFilter extends OncePerRequestFilter {
             } else {
                 accessToken = JwtUtil.createAccessToken(accessTokenMemberId.toString(), 1000 * 60 * 60l, role, accessKey);
                 log.info("Regenerated accessToken");
-                Cookie responseCookie = cookieConfig.createCookie(accessToken);
+                Cookie responseCookie = cookieConfig.createHttpOnlyCookie(accessToken);
                 response.addCookie(responseCookie);
             }
         }

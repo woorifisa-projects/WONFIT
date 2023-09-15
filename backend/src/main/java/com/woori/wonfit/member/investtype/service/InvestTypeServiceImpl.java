@@ -1,5 +1,6 @@
 package com.woori.wonfit.member.investtype.service;
 
+import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.investtype.dto.InvestTypeRequest;
 import com.woori.wonfit.member.investtype.repository.InvestTypeRepository;
@@ -17,43 +18,42 @@ import java.util.List;
 @Slf4j
 public class InvestTypeServiceImpl implements InvestTypeService {
     private final InvestTypeRepository investTypeRepository;
+    private final CookieConfig cookieConfig;
 
     @Override
     public Cookie save(InvestTypeRequest investTypeRequest, String id) {
-        String deposit_type = "검사를 진행 해주세요";
+        String symbol = "검사를 진행 해주세요";
 
         int score = investTypeRequest.getScore();
         String productType = investTypeRequest.getProductType();
 
         if (score >= 10 && score <= 16) {
-            deposit_type = "safe";
+            symbol = "safe";
         } else if (score >= 17 && score <= 23) {
-            deposit_type = "middle";
+            symbol = "middle";
         } else if (score >= 24 && score <= 30) {
-            deposit_type = "attack";
+            symbol = "attack";
         }
 
         InvestType investType = investTypeRepository.findByMemberId(Long.parseLong(id));
 
         log.info(productType);
         if (productType.equals("deposit")) {
-            investType.setDeposit_type(deposit_type);
+            investType.setDeposit_type(symbol);
             investType.setDepositQuizScore(score);
         } else if (productType.equals("savings")) {
-            investType.setSavings_type(deposit_type);
+            investType.setSavings_type(symbol);
             investType.setSavingsQuizScore(score);
         } else if (productType.equals("fund")) {
-            investType.setFund_type(deposit_type);
+            investType.setFund_type(symbol);
             investType.setFundQuizScore(score);
         } else if (productType.equals("loan")) {
-            investType.setLoan_type(deposit_type);
+            investType.setLoan_type(symbol);
             investType.setLoanQuizScore(score);
         }
         investTypeRepository.save(investType);
 
-        Cookie cookie = new Cookie(productType, deposit_type);
-        cookie.setMaxAge(7 * 24 * 60 * 60);
-        cookie.setPath("/");
+        Cookie cookie = cookieConfig.createCookie(productType, symbol);
 
         return cookie;
     }
