@@ -18,18 +18,22 @@
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
           @click:append-inner="visible = !visible"
-          hint="8자 이상 20자 이하로 입력해 주세요."
+          hint="8자 이상 20자 이하, 문자/숫자/특수문자를 모두 포함해야 합니다."
           maxLength="20"
           variant="underlined"
+          :rules="passwordRules"
         ></v-text-field>
+
         <v-text-field
           v-model="name"
           color="primary"
           label="이름"
           variant="underlined"
         ></v-text-field>
+
         <v-text-field
           v-model="registrationNumber"
+          @input="onChangeRn"
           color="primary"
           label="주민등록번호"
           variant="underlined"
@@ -42,17 +46,24 @@
           variant="underlined"
         ></v-text-field>
 
-        <v-text-field
-          v-model="bankAccountPassword"
-          color="primary"
-          label="계좌 비밀번호"
-          maxLength="4"
-          hint="비밀번호 4자리를 입력해 주세요."
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
-          @click:append-inner="visible = !visible"
-          variant="underlined"
-        ></v-text-field>
+        <v-form @submit.prevent>
+          <v-text-field
+            v-model="bankAccountPassword"
+            color="primary"
+            label="계좌 비밀번호"
+            variant="underlined"
+            readonly
+            hint="비밀번호 4자리를 입력해 주세요."
+            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'"
+            @click:append-inner="visible = !visible"
+            @click.self.prevent.stop="keyboardVisible = true"
+          ></v-text-field>
+
+          <div v-if="keyboardVisible" ref="keyboardContainer">
+            <VirtualKeyboard v-model="bankAccountPassword" @click.stop />
+          </div>
+        </v-form>
 
         <v-text-field
           v-model="email"
@@ -87,12 +98,6 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <!-- <v-btn type="submit" @click="navigateToMainPage" color="blue">
-          Complete Registration
-
-          <v-icon icon="mdi-chevron-right" end></v-icon>
-        </v-btn> -->
-
         <WithdrawAlert
           @click="signup"
           btnName="Complete Registration"
@@ -107,20 +112,18 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
+import { postApi } from "@/api/modules";
+import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
+import VirtualKeyboard from "@/views/main/VirtualKeyboard.vue";
+
 const router = useRouter();
 
-import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
-
-import { postApi } from "@/api/modules";
-import { ref } from "vue";
-
 const visible = ref(false);
-
+const bankAccountPassword = ref("");
 const name = ref();
-const registrationNumber = ref();
 const bankAccountNumber = ref();
-const bankAccountPassword = ref();
 const id = ref();
 const password = ref();
 const address = ref();
@@ -128,7 +131,44 @@ const email = ref();
 const phoneNumber = ref();
 const terms = ref(false); // 초기값으로 false를 설정합니다.
 
-const signup = async () => {
+const passwordRules = [
+  (v) => !!v || "비밀번호는 필수 입력 항목입니다.",
+  (v) =>
+    /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,20}$/.test(v) ||
+    "비밀번호는 영어 대소문자, 숫자 및 특수 문자가 최소 하나 이상 포함된 8~20 자리여야 합니다.",
+];
+
+const registrationNumber = ref("");
+
+const onChangeRn = () => {
+  if (registrationNumber.value.length > 7) {
+    // 주민등록번호 앞자리와 '-'(7자리) 이후부터 마스크 처리 시작
+    const front = registrationNumber.value.slice(0, 7); // 앞부분 추출
+    const back = "*".repeat(registrationNumber.value.length - 7); // 뒷부분은 '*'로 대체
+    registrationNumber.value = front + back;
+  }
+};
+
+// For Virtual Keyboard
+const keyboardVisible = ref(false);
+const keyboardContainer = ref(null);
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
+
+function handleClickOutside(e) {
+  if (keyboardContainer.value && !keyboardContainer.value.contains(e.target)) {
+    keyboardVisible.value = false;
+  }
+}
+
+// Signup function
+async function signup() {
   try {
     const requestBody = {
       name: name.value,
@@ -150,15 +190,11 @@ const signup = async () => {
     });
 
     if (response.status == 200) {
-      // 쿠키 저장 메소드
       router.push({ name: "MainPage" });
-
-      // 요청이 성공하면 적절한 처리를 수행합니다.
       console.log("데이터 업데이트 성공:", response);
     }
   } catch (error) {
-    // 요청이 실패하면 오류 처리를 수행합니다.
     console.error("데이터 업데이트 오류:", error);
   }
-};
+}
 </script>
