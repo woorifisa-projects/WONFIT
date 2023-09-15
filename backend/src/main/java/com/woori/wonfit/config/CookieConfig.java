@@ -46,11 +46,18 @@ public class CookieConfig {
         return id;
     }
 
-    public Cookie createCookie(String value) {
+    public Cookie createHttpOnlyCookie(String value) {
         Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setMaxAge(24 * 60 * 60);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        return cookie;
+    }
+
+    public Cookie createCookie(String key, String value){
+        Cookie cookie = new Cookie(key, value);
+        cookie.setMaxAge(24 * 60 * 60);
+        cookie.setPath("/");
         return cookie;
     }
 }

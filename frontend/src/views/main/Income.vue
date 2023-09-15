@@ -8,7 +8,7 @@
 
     <label-component label="우리WONFIT 신용정보 제공 동의 (필수)" />
     <label-component label="우리WONFIT 개인정보 수집·이용 동의 (필수)" />
-    <label-component label="우리WONFIT 마케팅 수신 동의 (선택)" />
+    <LabelComponent label="우리WONFIT 마케팅 수신 동의 (선택)" v-model:checked="marketingAgree" />
 
     <grey-button content="은행 선택하기" class="logo-text center-button" style="margin:30px; padding:25px"
       @click="navigateToBankSelect" />
@@ -17,19 +17,26 @@
 </template>
 
 <script setup>
-
-import LabelComponent from '@/components/checkbox/LabelComponent.vue'
-import GreyButton from '@/components/button/GreyButton.vue';
-
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
+
+
+import LabelComponent from "@/views/main/LabelComponent.vue";
+import GreyButton from "@/components/button/GreyButton.vue";
+
 const router = useRouter();
+const marketingAgree = ref(false); // 초기 값은 false
 
-const navigateToBankSelect = () => {
-  router.push({ name: "BankSelect" });
-};
 
-const components = {
-  LabelComponent, GreyButton
+const navigateToBankSelect = async () => {
+  console.log(marketingAgree.value)
+  try {
+    await axios.patch("https://back.wonfit.site/member/marketing", { marketingInfoAgree: marketingAgree.value });
+    router.push({ name: "BankSelect" });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 </script>

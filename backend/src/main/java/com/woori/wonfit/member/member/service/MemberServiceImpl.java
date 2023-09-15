@@ -90,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
             String accessToken = JwtUtil.createAccessToken(member.getId().toString(), accessTokenExpireTime, "USER", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(member.getId().toString(), refreshTokenExpireTime, "USER", refreshKey);
 
-            Cookie cookie = cookieConfig.createCookie(accessToken);
+            Cookie cookie = cookieConfig.createHttpOnlyCookie(accessToken);
 
             member.setRefreshToken(refreshToken);
             memberRepository.save(member);
@@ -106,7 +106,7 @@ public class MemberServiceImpl implements MemberService {
         member.setRefreshToken("");
         memberRepository.save(member);
 
-        Cookie cookie = cookieConfig.createCookie("");
+        Cookie cookie = cookieConfig.createHttpOnlyCookie("");
 
         return cookie;
     }
@@ -149,6 +149,7 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+
     @Override
     public void updateMemberDetails(String id, Member member) {
         String password = bCryptPasswordEncoder.encode(member.getPassword());
@@ -158,5 +159,16 @@ public class MemberServiceImpl implements MemberService {
         Member basicMember = memberRepository.findById(Long.parseLong(id)).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
         Member updateMember = basicMember.toEntity(Long.parseLong(id), memberUpdateRequest, password, member.getRefreshToken());
         memberRepository.save(updateMember);
+    }
+    @Override
+    @Transactional
+    public void updateMemberMydata(Long id, Member member) {
+        memberRepository.updateMemberMydata(id, member.getAnnualIncome(), member.getAgeGroup());
+    }
+
+    @Override
+    @Transactional
+    public void updateMemberMarketing(Long id, Member member) {
+        memberRepository.updateMemberMarketing(member.isMarketingInfoAgree(),id);
     }
 }

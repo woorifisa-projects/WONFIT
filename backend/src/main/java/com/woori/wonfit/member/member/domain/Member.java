@@ -57,6 +57,12 @@ public class Member {
     @ColumnDefault("true")
     private boolean marketingInfoAgree;
 
+    @Column(name = "annual_income")
+    private String annualIncome;
+
+    @Column(name = "age_group")
+    private String ageGroup;
+
     @Column(name = "address")
     private String address;
 
@@ -88,6 +94,9 @@ public class Member {
                 .status(true)
                 .address(memberUpdateRequest.getAddress())
                 .refreshToken(refreshToken)
+                .ageGroup(memberUpdateRequest.getAgeGroup())
+                .annualIncome(memberUpdateRequest.getAnnualIncome())
+//                .marketingInfoAgree(true)
                 .build();
     }
 }
