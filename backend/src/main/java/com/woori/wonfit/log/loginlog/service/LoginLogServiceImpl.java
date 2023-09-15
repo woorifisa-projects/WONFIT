@@ -23,9 +23,10 @@ public class LoginLogServiceImpl implements LoginLogService {
     }
 
     @Override
-    public List<LoginLog> getAllLoginLog(LoginLogRequest request) {
-        Member member = memberRepository.findByLoginId(request.getLoginId()).get();
+    public List<LoginLog> getLoginLog(String loginId) {
+        Member member = memberRepository.findByLoginId(loginId).get();
         List<LoginLog> loginLogs = getAllLoginLog(member.getId().toString());
         return loginLogs;
     }
 }
+

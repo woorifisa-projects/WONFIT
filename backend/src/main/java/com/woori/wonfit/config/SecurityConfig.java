@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests(auth -> auth.antMatchers("/wonfit/login", "/wonfit/register", "/product/**", "/manager/login", "/manager/register").permitAll()
                         .antMatchers("/member/**").hasAnyRole("USER")
-                        .antMatchers("/manager/**").hasAnyRole("ADMIN")
+                        .antMatchers("/manager/**", "/member/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
