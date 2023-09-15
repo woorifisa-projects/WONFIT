@@ -305,4 +305,5 @@ const handleCardClick = async (type) => {
   margin-top: 10px;
 }
 
+
 </style>

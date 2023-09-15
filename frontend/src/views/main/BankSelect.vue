@@ -130,7 +130,6 @@ const navigateToIncomeAnalysisPage = async () => {
 
   await axios.patch('https://back.wonfit.site/member/mydata', body);
 
-
   router.push({ name: "Recommend" });
 }
 
