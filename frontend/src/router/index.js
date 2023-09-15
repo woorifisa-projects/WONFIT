@@ -46,6 +46,12 @@ const routes = [
 
       // views/manager
       {
+        path: "manager/login",
+        name: "ManagerLogin",
+        component: () =>
+          import(/* webpackChunkName: "managerpage" */ "@/views/manager/ManagerLogin.vue"),
+      },
+      {
         path: "manager-page",
         name: "ManagerPage",
         component: () =>
