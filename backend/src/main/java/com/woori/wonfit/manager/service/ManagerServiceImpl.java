@@ -62,7 +62,7 @@ public class ManagerServiceImpl implements ManagerService {
             String accessToken = JwtUtil.createAccessToken(manager.getId().toString(), accessTokenExpireTime, "ADMIN", accessKey);
             String refreshToken = JwtUtil.createRefreshToken(manager.getId().toString(), refreshTokenExpireTime, "ADMIN", refreshKey);
 
-            Cookie cookie = cookieConfig.createCookie(accessToken);
+            Cookie cookie = cookieConfig.createHttpOnlyCookie(accessToken);
 
             manager.setRefreshToken(refreshToken);
             managerRepository.save(manager);
