@@ -29,8 +29,6 @@ public class LoginLogController {
     // 관리자 로그인 로그 조회
     @PostMapping("/by/loginid")
     public ResponseEntity<List<LoginLog>> getAllLoginLog(@RequestBody LoginLogRequest request) {
-        log.info("LoginLogController called");
-        log.info("loginId = {}", request.getLoginId());
         List<LoginLog> loginLogs = loginLogService.getAllLoginLog(request);
         return new ResponseEntity<>(loginLogs, HttpStatus.OK);
     }

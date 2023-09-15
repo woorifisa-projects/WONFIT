@@ -8,12 +8,10 @@
               <v-list rounded="lg">
                 <v-list-item class="logo-text" @click="navigateToManagerPage">사용자 관리</v-list-item>
                 <v-list-item class="logo-text" @click="navigateToManageProduct">상품 관리</v-list-item>
-
                 <v-list-item class="logo-text" @click="navigateToSendTalk">SMS 관리</v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
-
           <v-col>
             <v-sheet class="logo-text" style="padding: 10px" min-height="50vh" rounded="lg">
               <v-table fixed-header height="500px">
@@ -133,14 +131,11 @@ const onClickLoginLog = async () => {
     }
     loginLogData.value = data;
 
-    console.log('로그 데이터:', data); // 데이터 로그 출력
+    console.log('로그 데이터:', data);
   } catch (error) {
-    console.error('에러 발생:', error); // 에러 로그 출력
+    console.error('에러 발생:', error);
   }
 };
-
-
-
 
 const navigateToManagerPage = () => {
   router.push({ name: "ManagerPage" });

@@ -1,24 +1,40 @@
 <template>
-  <div id="main" style="font-family: 'WooridaumB'">
+  <div id="main" class="v-main" style="font-family: 'WooridaumB'">
     <div class="quiz__wrap">
       <div class="quiz">
-        <h1>맞춤 예금 테스트</h1>
-        <h2 class="quiz__question">{{ quizInfo[quizCount].answerAsk }}</h2>
-        <p v-if="warningMessage" style="color: red">답을 골라주세요</p>
-        <div class="quiz__view"></div>
-        <div class="quiz__answer">
-          <label v-for="(choice, index) in quizInfo[quizCount].answerChoice" :key="'choice' + index"
-            :class="{ selected: selectedAnswer === choice }" class="choice">
-            <input type="radio" v-model="selectedAnswer" :value="choice" />
-            {{ choice.text }}
-          </label>
+        <h1 class="d-flex justify-center" style="padding: 10px; font-size: 35px; color: #2965ed">
+          예금 성향분석 검사
+        </h1>
+        <h2 class="quiz__question" style="font-family: 'WooridaumB'">
+          {{ quizInfo[quizCount].answerAsk }}
+        </h2>
 
-          <button v-if="showResult" @click.prevent="navigateToRecommendPage">
-            {{ resultMessage }}
-          </button>
+        <div class="quiz__view">
+          <div class="quiz__answer">
+            <label
+              v-for="(choice, index) in quizInfo[quizCount].answerChoice"
+              :key="'choice' + index"
+              :class="{ selected: selectedAnswer === choice }"
+              class="choice"
+            >
+              <input type="radio" v-model="selectedAnswer" :value="choice" />
+              {{ choice.text }}
+            </label>
+            <p
+              v-if="warningMessage"
+              style="color: rgb(229, 70, 70); margin-top: 10px; font-size: 16px"
+            >
+              답을 선택해 주세요
+            </p>
+          </div>
+          <div class="btncss">
+            <button v-if="showResult" @click.prevent="navigateToRecommendPage">
+              {{ resultMessage }}
+            </button>
 
-          <!-- 다음 문제 버튼 -->
-          <button @click.prevent="nextQuestion" v-if="!showResult">다음 문제 ≫</button>
+            <!-- 다음 문제 버튼 -->
+            <button @click.prevent="nextQuestion" v-if="!showResult">다음 문제 ≫</button>
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +51,7 @@ export default {
       quizInfo: [
         {
           answerNum: "1",
-          answerAsk: "Q1.붕어빵 먹을 때 가장 먼저 먹는 부위는?",
+          answerAsk: "Q1. 붕어빵 먹을 때 가장 먼저 먹는 부위는?",
           answerChoice: [
             { text: "1. 머리! 머리가 정석 아님?", score: 1 },
             { text: "2. 몸통! 중간을 덥썩 먹어야지", score: 2 },
@@ -44,19 +60,22 @@ export default {
         },
         {
           answerNum: "2",
-          answerAsk: "Q2.투자에 대한 지식수준이 어느 정도냐는 질문을 받았습니다 당신의 대답은?",
+          answerAsk: "Q2. 투자에 대한 지식수준이 어느 정도냐는 질문을 받았습니다 당신의 대답은?",
           answerChoice: [
             {
               text: "1. 높은 수준. 나는 투자할 수 있는 금융상품 차이들도 알고 주식 고수지!",
               score: 3,
             },
-            { text: "2. 낮은 수준. 주식이랑 채권은 뭐가 뭔진 알겠는데..나머진 모르겠네", score: 2 },
+            {
+              text: "2. 낮은 수준. 주식이랑 채권은 뭐가 뭔진 알겠는데.. 나머진 모르겠네",
+              score: 2,
+            },
             { text: "3. 경험이 없는 수준. 투자가 뭐지..? 해본 적 없는데 (하하)", score: 1 },
           ],
         },
         {
           answerNum: "3",
-          answerAsk: "Q3.내 연간 소득은 어느 정도 냐면~",
+          answerAsk: "Q3. 내 연간 소득은 어느 정도냐면~",
           answerChoice: [
             { text: "1. 3천만원 이하", score: 1 },
             { text: "2. 5천만원 이하", score: 2 },
@@ -65,7 +84,7 @@ export default {
         },
         {
           answerNum: "4",
-          answerAsk: "Q4.얏호~ 급여 들어왔다! 근데 내 급여는 말이야",
+          answerAsk: "Q4. 얏호~ 급여 들어왔다! 근데 내 급여는 말이야",
           answerChoice: [
             { text: "1. 일정한 수입이 발생중이고 미래에 지금이랑 비슷하거나 더 벌거야!", score: 3 },
             { text: "2. 지금은 꾸준히 들어오고 있는데 나중에 줄거나 불안해질거 같아..", score: 2 },
@@ -75,17 +94,17 @@ export default {
         {
           answerNum: "5",
           answerAsk:
-            "Q5.새로 의자를 사야하는데 오래 앉아있어야 하는 직업인 당신! 어떤 의자를 살거냐면..",
+            "Q5. 새로 의자를 사야하는데 오래 앉아있어야 하는 직업인 당신! 어떤 의자를 살거냐면..",
           answerChoice: [
             { text: "1. 꼼꼼하게 조사해서 가성비가 좋은게 좋지 역시", score: 2 },
             { text: "2. 그냥 비싼게 최고야 예산만큼 비싼거 사자!", score: 3 },
-            { text: "3. 주변 사람들이 이게 최고라는데?추천 받은 의자", score: 1 },
+            { text: "3. 주변 사람들이 이게 최고라는데? 추천 받은 의자", score: 1 },
           ],
         },
         {
           answerNum: "6",
           answerAsk:
-            "Q6.친구들 만날 때 돈도 못 쓰고.. 적금이 드디어 만기다! 근데 이자가.. 작고 귀엽다. 이자를 보니 이런 생각이 드네",
+            "Q6. 친구들 만날 때 돈도 못 쓰고.. 적금이 드디어 만기다! 근데 이자가.. 작고 귀엽다. 이자를 보니 이런 생각이 드네",
           answerChoice: [
             { text: "1. 에휴..다음 적금은 괜찮으려나 다음 적금이나 들자", score: 1 },
             { text: "2. 오 그래도 모은돈은 좀 되는데..? 적금 말고 투자나 해봐?", score: 3 },
@@ -95,7 +114,7 @@ export default {
         {
           answerNum: "7",
           answerAsk:
-            "Q7.친구랑 여행을 가려고 했는데 계획도 오케이 예약도 오케이 근데 다른 여행지도 재밌어 보이는데 이걸 어쩌지?",
+            "Q7. 친구랑 여행을 가려고 했는데 계획도 오케이 예약도 오케이 근데 다른 여행지도 재밌어 보이는데 이걸 어쩌지?",
           answerChoice: [
             { text: "1. 위약금은 물 수 없지 그냥 가자", score: 1 },
             { text: "2. 일단 친구한테 물어볼까?", score: 2 },
@@ -104,7 +123,7 @@ export default {
         },
         {
           answerNum: "8",
-          answerAsk: "Q8.헤드헌터에게 세가지 제안이 왔다 어디 회사로 가야할까",
+          answerAsk: "Q8. 헤드헌터에게 3가지 제안이 왔다 어디 회사로 가야할까",
           answerChoice: [
             { text: "1. 성과도 좋고 탄탄한 회사", score: 1 },
             { text: "2. 잘 맞고 배울 수 있을 것 같은 회사", score: 3 },
@@ -113,11 +132,11 @@ export default {
         },
         {
           answerNum: "9",
-          answerAsk: "Q9.투자를 하게 되면 원하는 수익과 감내할 수 있는 손실 수준은?",
+          answerAsk: "Q9. 투자를 하게 되면 원하는 수익과 감내할 수 있는 손실 수준은?",
           answerChoice: [
             { text: "1. 원하는 수준의 수익을 기대 못 한다면 20%미만 정도야..", score: 2 },
             {
-              text: "2. 일정한 수준의 수익을 기대할 수 있다면 10%미만 까지는 손실 감수 할 수 있음",
+              text: "2. 일정한 수준의 수익을 기대할 수 있다면 10%미만 까지는 손실 감수할 수 있음",
               score: 3,
             },
             { text: "3. 무슨 일이 있어도 투자 원금은 보전되어야 함(엄근진)", score: 1 },
@@ -208,17 +227,21 @@ export default {
 /* 스타일 내용 */
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
+    format("woff2");
   font-weight: 700;
   font-style: normal;
 }
 
 .choice:hover {
-  background-color: #94afe1;
+  background-color: aliceblue;
+  transform: scale(1.02); /* 마우스를 올렸을 때 글씨 크기를 약간 키웁니다. */
+  transition: transform 0.1s ease-in-out; /* 부드러운 애니메이션 효과를 추가합니다. */
 }
 
 .choice.selected {
-  background-color: #6098ff;
+  background-color: aliceblue;
+  padding: 5px;
 }
 
 .choice input[type="radio"] {
@@ -237,7 +260,7 @@ export default {
   transition: 0.5s ease-in-out;
 }
 
-.choice input[type="radio"]:checked+label span::before {
+.choice input[type="radio"]:checked + label span::before {
   box-shadow: inset -2px -2px rgba(0, 0, 0, 0.4), inset -3px -3px rgba(255, 255, 255, 0.7),
     inset 10em10em #671010;
   /* 체크된 상태에서의 색상 */
@@ -247,18 +270,14 @@ export default {
 .quiz__answer {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
 }
 
 .choice {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.choice {
-  display: flex;
-  flex-direction: column;
+  overflow: hidden; /* 글씨 크기에 맞춰서 텍스트가 잘리도록 설정합니다. */
+  position: relative;
 }
 
 * {
@@ -277,17 +296,19 @@ export default {
 }
 
 .quiz {
-  max-width: 500px;
-  width: 100%;
+  max-width: 1000px;
+  width: 840px;
   background-color: #fff;
-  margin: 10px;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  padding: 35px;
 }
 
 .quiz__question {
-  padding: 20px;
-  font-family: "MabinogiClassic";
+  padding: 20px 25px;
+  font-size: 24px;
   font-weight: normal;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .quiz__question .number {
@@ -300,7 +321,8 @@ export default {
 
 .quiz__answer {
   padding: 10px;
-  background-color: #f5f5f5;
+  font-size: 21px;
+  margin-left: 20px;
 }
 
 .choice {
@@ -316,12 +338,29 @@ export default {
   margin-right: 10px;
 }
 
-.choice label input:checked+span::before {
+.choice label input:checked + span::before {
   box-shadow: inset 0px 0px 0px 10px #f8b74e;
 }
 
 .choice {
   width: 100%;
   text-align: center;
+}
+
+.v-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #d1e4ffd3;
+}
+
+.btncss {
+  display: flex;
+  font-size: 19px;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 20px; /* 버튼과 위의 답변 선택 부분 사이의 간격 조정 */
+  margin-right: 10px;
 }
 </style>
