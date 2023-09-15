@@ -128,7 +128,8 @@ const navigateToIncomeAnalysisPage = async () => {
     ageGroup: ageGroup.value, // .value 를 사용하여 ref의 값을 가져옵니다. 
   }
 
-  await axios.patch('http://localhost:8080/member/mydata', body);
+  await axios.patch('https://back.wonfit.site/member/mydata', body);
+
 
   router.push({ name: "Recommend" });
 }
