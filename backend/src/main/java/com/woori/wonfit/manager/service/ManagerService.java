@@ -17,6 +17,7 @@ public interface ManagerService {
     String managerRegister(ManagerRegisterRequest request);
 
     Cookie managerLogin(ManagerLoginRequest request);
+    Cookie managerLogout(String id);
 
     Fund createFund(FundRequest fundRequest);
 
