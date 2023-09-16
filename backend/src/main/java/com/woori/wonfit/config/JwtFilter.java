@@ -1,5 +1,6 @@
 package com.woori.wonfit.config;
 
+import com.woori.wonfit.manager.repository.ManagerRepository;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -32,11 +34,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
+    private final ManagerRepository managerRepository;
     private final MemberRepository memberRepository;
     private final CookieConfig cookieConfig;
 
     private String id;
     private String role;
+    private String refreshToken;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -70,13 +74,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (accessTokenMemberRole.equals("USER")) {
             role = "ROLE_USER";
+            refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();
         } else if (accessTokenMemberRole.equals("ADMIN")) {
             role = "ROLE_ADMIN";
+            refreshToken = managerRepository.findById(accessTokenMemberId).get().getRefreshToken();
         }
         log.info(role);
-
-        // accessToken과 매칭되는 member의 refreshToken을 가져옴
-        String refreshToken = memberRepository.findById(accessTokenMemberId).get().getRefreshToken();
         log.info("refreshToken = {}", refreshToken);
         log.info("refreshKey = {}", refreshKey);
         String refreshTokenMemberId = JwtUtil.getId(refreshToken, refreshKey);
