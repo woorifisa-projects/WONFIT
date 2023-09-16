@@ -29,7 +29,7 @@
     </v-app-bar-title>
 
     <!--로그인하면 로그아웃으로 변경-->
-    <template v-if="isLogin">
+    <template v-if="auth.isLogin">
       <div class="logo-text mt-2" style="margin-right: 23px" @click="navigateToMyPage">
         마이페이지
       </div>
@@ -52,13 +52,11 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { postApi } from "@/api/modules";
-import { useAuthStore } from "@/store/useAuthStore";
-import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/modules/useAuthStore";
 
 const router = useRouter();
 
 const auth = useAuthStore();
-const { isLogin } = storeToRefs(auth);
 
 const logout = async () => {
   try {
@@ -109,7 +107,11 @@ const navigateToSignup = () => {
   display: flex;
   align-items: center;
 }
-
+.v-app-bar {
+  background-color: #fff;
+  box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.151);
+  height: 70px;
+}
 .logo-text {
   font-size: 16px;
   color: rgb(49, 49, 49);

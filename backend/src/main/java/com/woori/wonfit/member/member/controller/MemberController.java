@@ -90,4 +90,10 @@ public class MemberController {
         memberService.updateMemberMarketing(Long.parseLong(id), member);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
+
+    @GetMapping("member/islogin")
+    public ResponseEntity<Boolean> isLogin(@AuthenticationPrincipal String id) {
+        log.info("isLogin controller called");
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
 }
