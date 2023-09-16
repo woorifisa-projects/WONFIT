@@ -10,6 +10,7 @@ public class MemberUpdateRequest {
     private String name;
     private String registrationNumber; // 회원 주민번호
     private String bankAccountNumber; // 계좌번호
+    private String bankAccountPassword;
     private String loginId; // 회원 아이디 (영어 소문자, 숫자 포함 5자 이상, 15자 이하)
     private String password; // 회원 패스워드 (영어 대소문자, 숫자 포함 20자 이하)
     private String email; // 회원 이메일
@@ -38,6 +39,7 @@ public class MemberUpdateRequest {
                 .name(member.getName())
                 .registrationNumber(member.getRegistrationNumber())
                 .bankAccountNumber(member.getBankAccountNumber())
+                .bankAccountPassword(member.getBankAccountPassword())
                 .loginId(member.getLoginId())
                 .password(null)
                 .email(member.getEmail())

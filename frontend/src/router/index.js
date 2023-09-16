@@ -1,5 +1,9 @@
 // Composables
+import { useAuthStore } from "@/store/modules/useAuthStore";
+import VueCookies from "vue-cookies";
+import { getApi } from "@/api/modules";
 import { createRouter, createWebHistory } from "vue-router";
+import axios from "axios";
 
 const routes = [
   {
@@ -18,6 +22,7 @@ const routes = [
         name: "BankSelect",
         component: () =>
           import(/* webpackChunkName: "bankselectpage" */ "@/views/main/BankSelect.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
@@ -36,12 +41,14 @@ const routes = [
         path: "recommend",
         name: "Recommend",
         component: () => import(/* webpackChunkName: "Recommend" */ "@/views/main/Recommend.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
         path: "income",
         name: "Income",
         component: () => import(/* webpackChunkName: "managerpage" */ "@/views/main/Income.vue"),
+        meta: { requiresAuth: true },
       },
 
       // views/manager
@@ -76,6 +83,7 @@ const routes = [
         path: "mypage",
         name: "MyPage",
         component: () => import(/* webpackChunkName: "mypage" */ "@/views/member/MyPage.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
@@ -83,6 +91,7 @@ const routes = [
         name: "MyLikedProduct",
         component: () =>
           import(/* webpackChunkName: "MyLikedProduct" */ "@/views/member/MyLikedProduct.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
@@ -92,12 +101,14 @@ const routes = [
           import(
             /* webpackChunkName: "MySubscribeProduct" */ "@/views/member/MySubscribeProduct.vue"
           ),
+        meta: { requiresAuth: true },
       },
 
       {
         path: "withdraw",
         name: "Withdraw",
         component: () => import(/* webpackChunkName: "Withdraw" */ "@/views/member/Withdraw.vue"),
+        meta: { requiresAuth: true },
       },
 
       // views/product
@@ -168,6 +179,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "subdeposit" */ "@/views/product/sub/SubDeposit.vue"),
         props: true,
+        meta: { requiresAuth: true },
       },
 
       {
@@ -176,6 +188,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "subFund" */ "@/views/product/sub/SubFund.vue"),
         props: true,
+        meta: { requiresAuth: true },
       },
 
       {
@@ -184,6 +197,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "subLoan" */ "@/views/product/sub/SubLoan.vue"),
         props: true,
+        meta: { requiresAuth: true },
       },
 
       {
@@ -192,18 +206,21 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "subSavings" */ "@/views/product/sub/SubSavings.vue"),
         props: true,
+        meta: { requiresAuth: true },
       },
 
       {
         path: "fund-test",
         name: "FundTest",
         component: () => import(/* webpackChunkName: "fundtest" */ "@/views/test/FundTest.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
         path: "loan-test",
         name: "LoanTest",
         component: () => import(/* webpackChunkName: "loantest" */ "@/views/test/LoanTest.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
@@ -211,6 +228,7 @@ const routes = [
         name: "DepositTest",
         component: () =>
           import(/* webpackChunkName: "deposittest" */ "@/views/test/DepositTest.vue"),
+        meta: { requiresAuth: true },
       },
 
       {
@@ -218,6 +236,7 @@ const routes = [
         name: "SavingsTest",
         component: () =>
           import(/* webpackChunkName: "savingstest" */ "@/views/test/SavingsTest.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "not-found",
@@ -231,6 +250,25 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(async (to) => {
+  const loginCheckStore = useAuthStore();
+  await axios
+    .get("https://back.wonfit.site/member/islogin", { withCredentials: true })
+
+    // .get("http://localhost:8080/member/islogin", { withCredentials: true })
+    .then((res) => {
+      if (res.data) {
+        loginCheckStore.setIsLogin(true);
+      } else {
+        loginCheckStore.setIsLogin(false);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  if (to.meta.requiresAuth && !loginCheckStore.isLogin) return "/login";
 });
 
 export default router;
