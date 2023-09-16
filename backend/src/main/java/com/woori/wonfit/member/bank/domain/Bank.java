@@ -1,5 +1,7 @@
 package com.woori.wonfit.member.bank.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity

@@ -1,10 +1,12 @@
 package com.woori.wonfit.member.bank.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
+@JsonSerialize(using = BankInfoSerializer.class)
 public class BankInfo {
     private String bankName;
     private int money;

@@ -117,7 +117,7 @@ public class MemberController {
         log.info("selectedBankNames: {}", selectedBankNames);
         if (selectedBankNames == null || selectedBankNames.isEmpty()) {
         }
-        List<Object[]> results = memberRepository.getMemberMydataForSelectedBanks(Long.parseLong(memberId), selectedBankNames);
+        List<Object[]> results = memberRepository.getMemberMydataForSelectedBanks(Long.parseLong(memberId));
         List<BankInfo> bankInfoList = results.stream()
                 .map(result -> new BankInfo((String) result[1], (Integer) result[0]))
                 .collect(Collectors.toList());
