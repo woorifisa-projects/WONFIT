@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="500" style="margin: 50px" title="Member Registration">
+  <v-card class="mx-auto" max-width="500" style="margin: 50px" title="WONFIT 회원가입">
     <v-form>
       <v-container>
         <v-text-field
@@ -31,14 +31,20 @@
           variant="underlined"
         ></v-text-field>
 
-        <v-text-field
-          v-model="registrationNumber"
-          @input="onChangeRn"
-          color="primary"
-          label="주민등록번호"
-          maxLength="14"
-          variant="underlined"
-        ></v-text-field>
+        <br />
+        <div>
+          <input v-model="frontPart" placeholder="주민등록번호 앞자리" maxLength="6" />
+          <span style="margin-right: 50px">-</span>
+          <input
+            v-model="backPart"
+            placeholder="주민등록번호 뒷자리"
+            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'"
+            @click:append-inner="visible = !visible"
+            maxLength="7"
+          />
+        </div>
+        <br />
 
         <v-text-field
           v-model="address"
@@ -102,7 +108,7 @@
 
         <WithdrawAlert
           @click="signup"
-          btnName="Complete Registration"
+          btnName="가입하기"
           text="회원가입이 완료되었습니다."
           class="logo-text center-button"
           style="margin: 15px"
@@ -114,7 +120,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { postApi } from "@/api/modules";
 import WithdrawAlert from "@/components/modal/WithdrawAlert.vue";
@@ -140,19 +146,6 @@ const passwordRules = [
     "비밀번호는 영어 대소문자, 숫자 및 특수 문자가 최소 하나 이상 포함된 8~20 자리여야 합니다.",
 ];
 
-const registrationNumber = ref(""); // 마스킹된 주민등록번호
-const originalRegistrationNumber = ref(""); // 원본 주민등록번호 <-- 추가된 부분
-
-// 사용자가 입력할 때마다 원본 주민등록번호를 업데이트하는 함수
-const onChangeRn = (event) => {
-  originalRegistrationNumber.value = event.target.value; // 사용자가 입력한 원본 값을 별도로 저장합니다. <-- 추가된 부분
-  if (registrationNumber.value.length > 7) {
-    const front = registrationNumber.value.slice(0, 8);
-    const back = "*".repeat(registrationNumber.value.length - 8);
-    registrationNumber.value = front + back;
-  }
-};
-
 // For Virtual Keyboard
 const keyboardVisible = ref(false);
 const keyboardContainer = ref(null);
@@ -171,12 +164,21 @@ function handleClickOutside(e) {
   }
 }
 
+const frontPart = ref("");
+const backPart = ref("");
+const registrationNumber = ref("");
+
+// Watch for changes in frontPart and backPart
+watch([frontPart, backPart], () => {
+  registrationNumber.value = `${frontPart.value}-${backPart.value}`;
+});
+
 // Signup function
 async function signup() {
   try {
     const requestBody = {
       name: name.value,
-      registrationNumber: originalRegistrationNumber.value, // DB에는 원본 주민등록번호 전송 <-- 변경된 부분
+      registrationNumber: registrationNumber.value, // DB에는 원본 주민등록번호 전송 <-- 변경된 부분
       bankAccountNumber: bankAccountNumber.value,
       bankAccountPassword: bankAccountPassword.value,
       loginId: id.value,
