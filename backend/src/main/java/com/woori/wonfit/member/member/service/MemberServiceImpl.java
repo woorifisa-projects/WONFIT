@@ -4,6 +4,7 @@ import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
+import com.woori.wonfit.member.bank.util.CookieUtils;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
@@ -30,10 +31,8 @@ public class MemberServiceImpl implements MemberService {
     private final LoginLogRepository loginLogRepository;
 
     private final InvestTypeService investTypeService;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CookieConfig cookieConfig;
-
 
     @Value("${jwt.token.access}")
     private String accessKey;
@@ -163,6 +162,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateMemberMarketing(Long id, Member member) {
-        memberRepository.updateMemberMarketing(member.isMarketingInfoAgree(),id);
+        memberRepository.updateMemberMarketing(member.isMarketingInfoAgree(), id);
+
+    }
+    @Override
+    public List<String> parseSelectBankCookie(String selectBankCookie) {
+        return CookieUtils.parseSelectBankCookie(selectBankCookie);
     }
 }

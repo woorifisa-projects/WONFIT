@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByLoginId(String loginId);
@@ -27,5 +28,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member m SET m.marketingInfoAgree = :marketingInfoAgree WHERE m.id = :id")
     void updateMemberMarketing(@Param("marketingInfoAgree") boolean marketingInfoAgree, @Param("id") Long id);
+
+    @Query("SELECT m.money, b.bankName FROM MyData m JOIN m.bank b WHERE m.member.id = :id")
+    List<Object[]> getBankDataForSelectedBanks(@Param("id") Long id);
 
 }
