@@ -32,7 +32,15 @@
           <v-col>
             <v-sheet class="logo-text" style="padding: 40px" min-height="70vh" rounded="lg">
               <div>
-                <h4>비밀번호를 입력해 주세요.</h4>
+                <h4>아이디</h4>
+                <v-text-field
+                  :disabled="!isEditMode"
+                  :value="memberData.loginId"
+                  variant="underlined"
+                ></v-text-field
+                ><br />
+
+                <h4>기존에 설정된 비밀번호를 입력해 주세요.</h4>
                 <v-text-field
                   :disabled="!isEditMode"
                   :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -40,14 +48,6 @@
                   @click:append-inner="visible = !visible"
                   variant="underlined"
                   v-model="memberData.password"
-                ></v-text-field
-                ><br />
-
-                <h4>아이디</h4>
-                <v-text-field
-                  :disabled="!isEditMode"
-                  :value="memberData.loginId"
-                  variant="underlined"
                 ></v-text-field
                 ><br />
 
@@ -67,18 +67,11 @@
                   ></v-text-field
                   ><br />
 
-                  <h4>계좌번호</h4>
-                  <v-text-field
-                    :disabled="!isEditMode"
-                    :value="memberData.bankAccountNumber"
-                    variant="underlined"
-                  ></v-text-field
-                  ><br />
+                  <h4>주소</h4>
 
-                  <h4>이메일</h4>
                   <v-text-field
                     :disabled="!isEditMode"
-                    v-model="memberData.email"
+                    v-model="memberData.address"
                     variant="underlined"
                   ></v-text-field
                   ><br />
@@ -91,14 +84,22 @@
                   ></v-text-field
                   ><br />
 
-                  <h4>주소</h4>
-
+                  <h4>이메일</h4>
                   <v-text-field
                     :disabled="!isEditMode"
-                    v-model="memberData.address"
+                    v-model="memberData.email"
                     variant="underlined"
                   ></v-text-field
                   ><br />
+
+                  <h4>계좌번호</h4>
+                  <v-text-field
+                    :disabled="!isEditMode"
+                    :value="memberData.bankAccountNumber"
+                    variant="underlined"
+                  ></v-text-field
+                  ><br />
+
                   <div class="d-flex justify-center">
                     <v-btn text class="mx-2" @click="toggleEditMode">{{
                       isEditMode ? "저장하기" : "수정하기"
