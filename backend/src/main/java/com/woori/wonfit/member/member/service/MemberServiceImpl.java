@@ -5,6 +5,7 @@ import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
+import com.woori.wonfit.member.bank.util.CookieUtils;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
@@ -170,12 +171,6 @@ public class MemberServiceImpl implements MemberService {
     }
     @Override
     public List<String> parseSelectBankCookie(String selectBankCookie) {
-        try {
-            String decoded = URLDecoder.decode(selectBankCookie, StandardCharsets.UTF_8.name());
-            ObjectMapper mapper = new ObjectMapper();
-            return Arrays.asList(mapper.readValue(decoded, String[].class));
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to parse selectBank cookie", e);
-        }
+        return CookieUtils.parseSelectBankCookie(selectBankCookie);
     }
 }

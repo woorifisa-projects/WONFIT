@@ -11,8 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long > {
+public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByLoginId(String loginId);
 
     Optional<Member> findById(Long id);
@@ -30,8 +31,9 @@ public interface MemberRepository extends JpaRepository<Member, Long > {
 
     @Query("SELECT m.money, b.bankName FROM MyData m JOIN Bank b ON m.id = b.id WHERE m.id = :id")
     List<Object[]> getMemberMydataForSelectedBanks(@Param("id") Long id);
-//@Query("SELECT m.money, b.bankName FROM MyData m JOIN Bank b ON m.id = b.id WHERE m.id = :id AND b.bankName IN :bankNames")
-//List<Object[]> getMemberMydataForSelectedBanks(@Param("id") Long id, @Param("bankNames") List<String> bankNames);
 
+
+    @Query("SELECT m.money, b.bankName FROM MyData m JOIN m.bank b WHERE m.member.id = :id")
+    List<Object[]> getBankDataForSelectedBanks(@Param("id") Long id);
 
 }

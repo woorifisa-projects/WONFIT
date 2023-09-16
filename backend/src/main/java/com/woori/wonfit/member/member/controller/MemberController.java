@@ -28,8 +28,6 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
 
-
-
     // 회원 가입
     @PostMapping("wonfit/register")
     public ResponseEntity<MemberRegisterResponse> register(@RequestBody MemberRegisterRequest memeberRegisterRequest) {
@@ -104,23 +102,20 @@ public class MemberController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    //    @GetMapping("/member/mydata")
-//    public ResponseEntity<List<BankInfo>> getBankDataForSelectedBanks(@CookieValue(name = "selectBank", required = false) String selectBankCookie, @AuthenticationPrincipal String memberId) {
-//        List<String> selectedBankNames = parseSelectBankCookie(selectBankCookie);
-//        List<BankInfo> bankInfoList = myDataService.getBankDataForSelectedBanks(selectedBankNames, memberId);
-//        return new ResponseEntity<>(bankInfoList, HttpStatus.OK);
-//    }
     @GetMapping("/member/mydata")
-    public ResponseEntity<List<BankInfo>> getBankDataForSelectedBanks(@CookieValue(name = "selectBank", required = false) List<String> selectedBankNames,
+    public ResponseEntity<List<BankInfo>> getBankDataForSelectedBanks(@CookieValue(name = "selectedBank", required = false) String selectedBankCookie,
                                                                       @AuthenticationPrincipal String memberId) {
         log.info("getBankDataForSelectedBanks called");
-        log.info("selectedBankNames: {}", selectedBankNames);
-        if (selectedBankNames == null || selectedBankNames.isEmpty()) {
-        }
-        List<Object[]> results = memberRepository.getMemberMydataForSelectedBanks(Long.parseLong(memberId));
+        List<String> selectedBankNames = memberService.parseSelectBankCookie(selectedBankCookie); // parseSelectBankCookie 메서드 호출
+
+        List<Object[]> results = memberRepository.getBankDataForSelectedBanks(Long.parseLong(memberId));
+        results.forEach(result -> log.info("Bank name: {}, Money: {}", result[1], result[0]));
+
         List<BankInfo> bankInfoList = results.stream()
                 .map(result -> new BankInfo((String) result[1], (Integer) result[0]))
+                .filter(bankInfo -> selectedBankNames.contains(bankInfo.getBankName()))  // Add this line
                 .collect(Collectors.toList());
+
 
         return new ResponseEntity<>(bankInfoList, HttpStatus.OK);
     }
