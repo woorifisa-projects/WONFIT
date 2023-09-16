@@ -1,8 +1,8 @@
 <template>
   <div class="bg-color" style="white-space: nowrap">
-    <div class="d-flex flex-column align-center justify-center mt-3 pt-5">
+    <div class="d-flex flex-column align-center justify-center pt-5">
       <v-container>
-        <v-row justify="center">
+        <v-row justify="center mt-4">
           <type-button content="예금" @click="navigateToSearchDefault" />
           <type-button content="적금" @click="navigateToSearchSavings" />
           <type-button content="펀드" @click="navigateToSearchFund" />
@@ -12,7 +12,7 @@
     </div>
 
     <v-text-field
-      class="mx-auto mt-10 mb-n3 centered-text-field"
+      class="mx-auto mt-7 mb-n3 centered-text-field"
       v-model="searchQuery"
       variant="tonal"
       rounded
@@ -31,11 +31,12 @@
               <loan-card
                 v-for="productDetail in displayedData"
                 :key="productDetail.id"
+                :productId="productDetail.id"
                 :loanName="productDetail.loanName"
                 :loanInfo="productDetail.loanInfo"
                 :interestRate="'기본금리: ' + productDetail.interestRate + '%'"
                 :loanLimit="'대출한도: ' + productDetail.loanLimit + '원'"
-                :loanType="'상품타입: ' + productDetail.loanType"
+                :loanType="'상품타입: ' + getInvestmentType(productDetail.loanType)"
               />
               <div v-if="displayedData.length === 0">
                 <p class="d-flex justify-center">검색 결과가 없습니다.</p>
@@ -54,11 +55,23 @@ import { useRouter } from "vue-router";
 import { getApi } from "@/api/modules";
 import TypeButton from "@/components/button/TypeButton.vue";
 import LoanCard from "@/components/card/product/LoanCard.vue";
+import axios from "axios";
 
 const router = useRouter();
 const loanData = ref([]);
 const searchQuery = ref("");
 const displayedData = ref([]);
+const searchTimer = ref(null);
+
+function getInvestmentType(loanType) {
+  if (loanType === "safe") {
+    return "안정형";
+  } else if (loanType === "middle") {
+    return "중립형";
+  } else if (loanType === "attack") {
+    return "공격형";
+  }
+}
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
@@ -81,11 +94,26 @@ const search = () => {
     }
     return false;
   });
-  console.log(displayedData);
 };
 
 watch(searchQuery, () => {
+  clearTimeout(searchTimer.value); // 이전 타이머 클리어
   search();
+  searchTimer.value = setTimeout(() => {
+    axios.post(
+      "https://back.wonfit.site/member/mypage/searchlog",
+      // "http://localhost:8080/member/mypage/searchlog",
+
+      {
+        searchWord: searchQuery,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log(`검색어 "${searchQuery.value}"가 저장되었습니다.`);
+  }, 5000);
 });
 
 const navigateToSearchDefault = () => {

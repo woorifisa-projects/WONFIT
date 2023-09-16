@@ -10,7 +10,7 @@
             :target="'가입 대상: ' + savingsData.target"
             :period="'가입 기간: ' + savingsData.period + '개월'"
             :maxDeposit="'적립 금액: ' + savingsData.maxDeposit + '원'"
-            :type="'상품 타입: ' + savingsData.savingsType"
+            :type="'상품 타입: ' + getInvestmentType(savingsData.savingsType)"
             :button1="'가입하기'"
             :button2="'전화가입'"
             :url="'savings'"
@@ -93,6 +93,16 @@ const route = useRoute();
 const productId = route.params.id;
 
 let detailTitle;
+
+function getInvestmentType(savingsType) {
+  if (savingsType === "safe") {
+    return "안정형";
+  } else if (savingsType === "middle") {
+    return "중립형";
+  } else if (savingsType === "attack") {
+    return "공격형";
+  }
+}
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {

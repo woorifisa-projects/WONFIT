@@ -179,6 +179,7 @@ export default {
       await axios
         .post(
           "https://back.wonfit.site/member/recommend/product",
+          // "http://localhost:8080/member/recommend/product",
           {
             productType: "fund",
             score: this.correctAnswersCount,

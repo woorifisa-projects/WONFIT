@@ -5,14 +5,11 @@
       variant="outlined"
       width="800"
     >
-      <div class="product-info" @click="navigateToDepositDetail(2)">
+      <div class="product-info" @click="navigateToDetail">
         <v-card-item>
-          <v-card-title
-            class="py-2"
-            style="font-size: 25px; color: rgb(0, 86, 199)"
-            @click="navigateToDepositDetail(2)"
-            >{{ depositName }}</v-card-title
-          >
+          <v-card-title class="py-2" style="font-size: 25px; color: rgb(0, 86, 199)">{{
+            depositName
+          }}</v-card-title>
           <v-card-subtitle style="font-size: 17px">{{ depositInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
@@ -20,17 +17,18 @@
           <p>{{ depositType }}</p>
         </v-card-text>
       </div>
-      <v-card-actions class="flex-row-reverse" @click="navigateToDepositDetail(2)">
-        <v-btn class="order-last" @click.stop="navigateToSubscribe(2)">가입하기</v-btn>
+      <v-card-actions class="flex-row-reverse" @click="navigateToDetail">
+        <v-btn class="order-last" @click.stop="navigateToSubscribe">가입하기</v-btn>
         <call-num btnName="전화가입" @click.stop />
-        <v-btn class="order-first" @click.stop="toggleLike">
+        <v-btn class="order-first" @click.stop.prevent="toggleLike">
           <svg-icon
             type="mdi"
-            :path="isShow ? heartOutline : heart"
             color="#0056C7"
             size="27"
+            :path="isShow ? heartOutline : heart"
           ></svg-icon
           >관심상품
+          <!-- :path="likedStore.isProductLiked(props.productId) ? heart : heartOutline" -->
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -42,8 +40,9 @@ import { useRouter } from "vue-router";
 import { ref, defineProps, onBeforeMount } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiPuzzleHeart, mdiPuzzleHeartOutline } from "@mdi/js";
-import { getApi } from "@/api/modules";
 import CallNum from "@/components/modal/CallNum.vue";
+// import { useLikedStore } from "@/store/modules/useLikedStore.js";
+// const likedStore = useLikedStore();
 
 const heart = ref(mdiPuzzleHeart);
 const heartOutline = ref(mdiPuzzleHeartOutline);
@@ -52,39 +51,45 @@ const likedData = ref([]);
 
 const router = useRouter();
 const props = defineProps({
+  productId: Number,
   depositName: String,
   depositInfo: String,
   interestRate: Number,
   depositType: String,
 });
 
-// 이전 페이지에서
-// 선택된 상품의 ID를 전달하는 함수
-const navigateToDepositDetail = (productId) => {
-  // productId는 선택된 상품의 ID입니다.
-  // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
-  console.log(productId);
+const productId = props.productId;
+
+const navigateToDetail = () => {
   router.push({ name: "DepositDetailId", params: { id: productId } });
 };
 
-// "좋아요" 상태를 토글하는 메서드
-const toggleLike = () => {
-  isShow.value = !isShow.value; // "좋아요" 상태를 반전시킵니다.
-};
-
-// 관심상품 정보 가져오기
-onBeforeMount(async () => {
-  const data = await getApi({
-    url: "/member/mypage/liked",
-  });
-  likedData.value = data;
-  console.log(likedData);
-});
-
-// subscribe 페이지로 이동하는 코드
-const navigateToSubscribe = (productId) => {
+const navigateToSubscribe = () => {
   router.push({ name: "SubDeposit", params: { id: productId } });
 };
+
+// // "좋아요" 상태를 토글하는 메서드
+// const toggleLike = () => {
+//   isShow.value = !isShow.value; // "좋아요" 상태를 반전시킵니다.
+// };
+
+// // 관심상품 정보 가져오기
+// onBeforeMount(async () => {
+//   const data = await getApi({
+//     url: "/member/mypage/liked",
+//   });
+//   likedData.value = data;
+//   console.log(likedData);
+// });
+// // "좋아요" 상태를 토글하는 메서드
+// const toggleLike = () => {
+//   likedStore.toggleLike(props.productId);
+// };
+
+// // 관심상품 정보 가져오기
+// onBeforeMount(() => {
+//   likedStore.loadLikedData();
+// });
 </script>
 
 <style lang="scss" scoped>

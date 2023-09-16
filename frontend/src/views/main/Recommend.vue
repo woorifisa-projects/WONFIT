@@ -93,7 +93,7 @@
 <script setup>
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiPiggyBank, mdiCashMultiple, mdiFinance, mdiAccountCash } from "@mdi/js";
-import { ref, onBeforeMount, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { getApi } from "@/api/modules";
 import VueCookies from "vue-cookies";
 import { useRouter } from "vue-router";
@@ -304,6 +304,4 @@ const handleCardClick = async (type) => {
   font-weight: bold;
   margin-top: 10px;
 }
-
-
 </style>

@@ -91,14 +91,14 @@
       </v-card>
       <v-checkbox
         class="d-flex justify-center mt-n7"
-        v-model="selected"
+        v-model="selected1"
         style="color: black"
         value="상품 확인"
         label="본인은 약관 및 상품설명서를 제공받고 내용을 충분히 이해하고 동의하며 본 상품에 가입함을 확인합니다."
       />
       <v-checkbox
         class="d-flex justify-center mt-n4"
-        v-model="selected"
+        v-model="selected2"
         style="color: black"
         value="해지 확인"
         label="본인은 인터넷뱅킹으로 예·대출을 해지할 경우 고객상담센터 또는 휴대폰 본인인증을 통해 해지가능함을 확인합니다."
@@ -119,6 +119,7 @@
               </v-col>
               <v-col cols="8">
                 <v-select
+                  v-model="selectedAccountNumber"
                   clearable
                   placeholder="출금 계좌번호를 선택해주세요."
                   single-line
@@ -136,7 +137,7 @@
               <v-col cols="8">
                 <v-text-field
                   v-model="password"
-                  :rules="[rules.minLength]"
+                  :rules="[rules.minLength, rules.onlyNumbers, rules.isCorrectPassword]"
                   :type="show1 ? 'text' : 'password'"
                   placeholder="계좌 비밀번호를 입력해주세요."
                   hint="4글자를 입력해주세요."
@@ -155,7 +156,7 @@
                 <v-text-field
                   v-model="loanAmount"
                   placeholder="대출하고자하는 금액을 입력해주세요."
-                  :rules="[rules.loanLimit]"
+                  :rules="[rules.onlyNumbers, rules.loanMin, rules.loanLimit]"
                   :hint="'대출 가능 금액은 최대 ' + loanData.loanLimit + '원 입니다.'"
                   style="width: 300px; margin-left: 22px"
                   variant="outlined"
@@ -212,7 +213,14 @@
     </div>
 
     <div class="d-flex justify-center my-10">
-      <v-btn class="mx-3" color="primary" size="large" rounded @click="requestSubscribe">
+      <v-btn
+        class="mx-3"
+        color="primary"
+        size="large"
+        rounded
+        @click="requestSubscribe"
+        :disabled="!isAllChecked"
+      >
         가입하기
       </v-btn>
       <v-btn class="mx-3" size="large" rounded @click="goBack"> 취소하기 </v-btn>
@@ -221,7 +229,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import { getApi, postApi } from "@/api/modules";
 import { useRoute } from "vue-router";
 
@@ -231,9 +239,26 @@ const route = useRoute();
 // URL에서 productId를 가져오기 위해 route.params를 사용합니다.
 const productId = route.params.id;
 // 약관 동의 체크박스
-const selected = ref([]);
+const selectedAccountNumber = ref(null);
+const selected1 = ref(false);
+const selected2 = ref(false);
+// 가입 체크
+const isAllChecked = computed(() => {
+  return (
+    selected1.value &&
+    selected2.value &&
+    selectedAccountNumber.value &&
+    password.value === bankAccountPassword.value[0] &&
+    expirePeriod.value &&
+    monthlyChargeDate.value &&
+    repaymentMethod.value &&
+    loanAmount.value >= 1000000 &&
+    loanAmount.value <= loanLimit.value
+  );
+});
 // 출금계좌번호
 let bankAccountNumber = ref([]);
+let bankAccountPassword = ref([]);
 // 최소 입금 금액
 let loanLimit = ref(0);
 
@@ -247,7 +272,11 @@ const repaymentMethod = ref();
 
 const rules = {
   minLength: (v) => v.length <= 4,
+  loanMin: (v) => v >= 1000000 || "대출 최소 금액은 1,000,000원 입니다.",
   loanLimit: (v) => v <= loanLimit.value,
+  onlyNumbers: (v) => v == "" || /^\d+$/.test(v) || "숫자만 입력해 주세요.",
+  isCorrectPassword: (v) =>
+    v == "" || v === bankAccountPassword.value[0] || "비밀번호가 일치하지 않습니다.",
 };
 
 const items = ref(Array.from({ length: 28 }, (_, i) => `${i + 1}일`));
@@ -275,6 +304,7 @@ onBeforeMount(async () => {
   accountData.value = data;
   console.log(data);
   bankAccountNumber.value = [accountData.value.bankAccountNumber];
+  bankAccountPassword.value = [accountData.value.bankAccountPassword];
 });
 
 // 상품 가입 post 요청

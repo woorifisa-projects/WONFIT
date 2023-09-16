@@ -9,7 +9,7 @@
             :interestRate="'1개월 수익률: ' + fundData.returnRate1 + '%'"
             :returnRate2="'6개월 수익률: ' + fundData.returnRate2 + '%'"
             :fundPrice="'기준가: ' + fundData.fundPrice + '원'"
-            :type="'상품 타입: ' + fundData.fundType"
+            :type="'상품 타입: ' + getInvestmentType(fundData.fundType)"
             :button1="'가입하기'"
             :button2="'전화가입'"
             :url="'fund'"
@@ -92,6 +92,15 @@ const productId = route.params.id;
 
 let detailTitle;
 
+function getInvestmentType(fundType) {
+  if (fundType === "safe") {
+    return "안정형";
+  } else if (fundType === "middle") {
+    return "중립형";
+  } else if (fundType === "attack") {
+    return "공격형";
+  }
+}
 // 상품 정보 가져오기
 onBeforeMount(async () => {
   const data = await getApi({

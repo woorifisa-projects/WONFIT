@@ -10,7 +10,7 @@
             :target="'대출 대상: ' + loanData.target"
             :period="'대출 기간: ' + loanData.period + '개월'"
             :loanLimit="'대출 한도: ' + loanData.loanLimit + '원'"
-            :type="'상품 타입: ' + loanData.loanType"
+            :type="'상품 타입: ' + getInvestmentType(loanData.loanType)"
             :button1="'대출신청'"
             :button2="'전화신청'"
             :url="'loan'"
@@ -140,6 +140,16 @@ const route = useRoute();
 const productId = route.params.id;
 
 let detailTitle;
+
+function getInvestmentType(loanType) {
+  if (loanType === "safe") {
+    return "안정형";
+  } else if (loanType === "middle") {
+    return "중립형";
+  } else if (loanType === "attack") {
+    return "공격형";
+  }
+}
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {

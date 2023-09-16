@@ -5,14 +5,11 @@
       variant="outlined"
       width="800"
     >
-      <div class="product-info" @click="navigateToLoanDetail(2)">
+      <div class="product-info" @click="navigateToDetail">
         <v-card-item>
-          <v-card-title
-            class="py-2"
-            style="font-size: 25px; color: rgb(0, 86, 199)"
-            @click="navigateToLoanDetail(2)"
-            >{{ loanName }}</v-card-title
-          >
+          <v-card-title class="py-2" style="font-size: 25px; color: rgb(0, 86, 199)">{{
+            loanName
+          }}</v-card-title>
           <v-card-subtitle style="font-size: 17px">{{ loanInfo }}</v-card-subtitle>
         </v-card-item>
         <v-card-text>
@@ -21,8 +18,8 @@
           <p>{{ loanType }}</p>
         </v-card-text>
       </div>
-      <v-card-actions class="flex-row-reverse" @click="navigateToLoanDetail(2)">
-        <v-btn class="order-last" text @click.stop="navigateToSubscribe(2)">대출신청</v-btn>
+      <v-card-actions class="flex-row-reverse" @click="navigateToDetail">
+        <v-btn class="order-last" text @click.stop="navigateToSubscribe">대출신청</v-btn>
         <call-num btnName="전화신청" @click.stop />
         <v-btn class="order-first" @click.stop="toggleLike"
           ><svg-icon
@@ -53,7 +50,8 @@ const likedData = ref([]);
 
 const router = useRouter();
 
-defineProps({
+const props = defineProps({
+  productId: Number,
   loanName: String,
   loanInfo: String,
   interestRate: Number,
@@ -61,13 +59,14 @@ defineProps({
   loanType: String,
 });
 
-// 이전 페이지에서
-// 선택된 상품의 ID를 전달하는 함수
-const navigateToLoanDetail = (productId) => {
-  // productId는 선택된 상품의 ID입니다.
-  // 라우터를 사용하여 선택된 상품 페이지로 이동합니다.
+const productId = props.productId;
+const navigateToDetail = () => {
   console.log(productId);
   router.push({ name: "LoanDetailId", params: { id: productId } });
+};
+
+const navigateToSubscribe = () => {
+  router.push({ name: "SubLoan", params: { id: productId } });
 };
 
 // "좋아요" 상태를 토글하는 메서드
@@ -83,11 +82,6 @@ onBeforeMount(async () => {
   likedData.value = data;
   console.log(likedData);
 });
-
-// subscribe 페이지로 이동하는 코드
-const navigateToSubscribe = (productId) => {
-  router.push({ name: "SubLoan", params: { id: productId } });
-};
 </script>
 
 <style lang="scss" scoped>
