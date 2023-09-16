@@ -1,5 +1,6 @@
 package com.woori.wonfit.member.member.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woori.wonfit.config.CookieConfig;
 import com.woori.wonfit.config.JwtUtil;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
@@ -18,8 +19,11 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -30,10 +34,8 @@ public class MemberServiceImpl implements MemberService {
     private final LoginLogRepository loginLogRepository;
 
     private final InvestTypeService investTypeService;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CookieConfig cookieConfig;
-
 
     @Value("${jwt.token.access}")
     private String accessKey;
@@ -163,6 +165,17 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateMemberMarketing(Long id, Member member) {
-        memberRepository.updateMemberMarketing(member.isMarketingInfoAgree(),id);
+        memberRepository.updateMemberMarketing(member.isMarketingInfoAgree(), id);
+
+    }
+    @Override
+    public List<String> parseSelectBankCookie(String selectBankCookie) {
+        try {
+            String decoded = URLDecoder.decode(selectBankCookie, StandardCharsets.UTF_8.name());
+            ObjectMapper mapper = new ObjectMapper();
+            return Arrays.asList(mapper.readValue(decoded, String[].class));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse selectBank cookie", e);
+        }
     }
 }

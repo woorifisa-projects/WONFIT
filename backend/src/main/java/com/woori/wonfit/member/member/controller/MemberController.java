@@ -2,7 +2,9 @@ package com.woori.wonfit.member.member.controller;
 
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
+import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.member.service.MemberService;
+import com.woori.wonfit.member.bank.domain.BankInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
@@ -22,6 +25,10 @@ import java.util.List;
 @Slf4j
 public class MemberController {
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
+
+
+
 
     // 회원 가입
     @PostMapping("wonfit/register")
@@ -96,4 +103,27 @@ public class MemberController {
         log.info("isLogin controller called");
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
+    //    @GetMapping("/member/mydata")
+//    public ResponseEntity<List<BankInfo>> getBankDataForSelectedBanks(@CookieValue(name = "selectBank", required = false) String selectBankCookie, @AuthenticationPrincipal String memberId) {
+//        List<String> selectedBankNames = parseSelectBankCookie(selectBankCookie);
+//        List<BankInfo> bankInfoList = myDataService.getBankDataForSelectedBanks(selectedBankNames, memberId);
+//        return new ResponseEntity<>(bankInfoList, HttpStatus.OK);
+//    }
+    @GetMapping("/member/mydata")
+    public ResponseEntity<List<BankInfo>> getBankDataForSelectedBanks(@CookieValue(name = "selectBank", required = false) List<String> selectedBankNames,
+                                                                      @AuthenticationPrincipal String memberId) {
+        log.info("getBankDataForSelectedBanks called");
+        log.info("selectedBankNames: {}", selectedBankNames);
+        if (selectedBankNames == null || selectedBankNames.isEmpty()) {
+        }
+        List<Object[]> results = memberRepository.getMemberMydataForSelectedBanks(Long.parseLong(memberId), selectedBankNames);
+        List<BankInfo> bankInfoList = results.stream()
+                .map(result -> new BankInfo((String) result[1], (Integer) result[0]))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(bankInfoList, HttpStatus.OK);
+    }
+
+
 }

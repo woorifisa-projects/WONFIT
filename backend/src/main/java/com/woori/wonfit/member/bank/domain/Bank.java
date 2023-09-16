@@ -3,6 +3,7 @@ package com.woori.wonfit.member.bank.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "bank")
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

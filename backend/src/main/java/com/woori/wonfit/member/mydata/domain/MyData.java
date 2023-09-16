@@ -4,6 +4,7 @@ import com.woori.wonfit.member.bank.domain.Bank;
 import com.woori.wonfit.member.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "mydata")
+@Getter
 public class MyData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

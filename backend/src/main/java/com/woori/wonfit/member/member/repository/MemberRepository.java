@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long > {
     Optional<Member> findByLoginId(String loginId);
 
     Optional<Member> findById(Long id);
@@ -27,5 +27,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member m SET m.marketingInfoAgree = :marketingInfoAgree WHERE m.id = :id")
     void updateMemberMarketing(@Param("marketingInfoAgree") boolean marketingInfoAgree, @Param("id") Long id);
+
+//    @Query("SELECT m.money, b.bankName FROM MyData m JOIN Bank b ON m.id = b.id WHERE m.id = :id")
+//    List<Object[]> getMemberMydataForSelectedBanks(@Param("id") Long id);
+@Query("SELECT m.money, b.bankName FROM MyData m JOIN Bank b ON m.id = b.id WHERE m.id = :id AND b.bankName IN :bankNames")
+List<Object[]> getMemberMydataForSelectedBanks(@Param("id") Long id, @Param("bankNames") List<String> bankNames);
+
 
 }
