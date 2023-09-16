@@ -59,9 +59,10 @@
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/modules/useAuthStore";
+import { postApi } from "@/api/modules";
 
 const auth = useAuthStore();
 
@@ -85,6 +86,7 @@ const login = async () => {
     };
 
     const response = await axios.post("https://back.wonfit.site/wonfit/login", requestBody, {
+      // const response = await axios.post("http://localhost:8080/wonfit/login", requestBody, {
       withCredentials: true,
     });
     if (response.status == 200) {
@@ -96,4 +98,15 @@ const login = async () => {
     console.error("An error occurred:", error);
   }
 };
+
+// onBeforeMount(async () => {
+//   const response = await postApi("login", {
+//     loginId: loginId.value,
+//     password: password.value,
+//   });
+//   if (response.status == 200) {
+//     auth.setIsLogin(true);
+//     router.push({ name: "MainPage" });
+//   }
+// });
 </script>

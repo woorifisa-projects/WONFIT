@@ -171,7 +171,8 @@ export default {
       // 서버에 POST 요청을 보냅니다.
       await axios
         .post(
-          "http://l13.125.155.169/member/recommend/product",
+          "https://back.wonfit.site/member/recommend/product",
+          // "http://localhost:8080/member/recommend/product",
           {
             productType: "loan",
             score: this.correctAnswersCount,

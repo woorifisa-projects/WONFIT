@@ -6,7 +6,9 @@
           <v-col cols="3">
             <v-sheet rounded="lg">
               <v-list rounded="lg">
-                <v-list-item class="logo-text" @click="navigateToManagerPage">사용자 관리</v-list-item>
+                <v-list-item class="logo-text" @click="navigateToManagerPage"
+                  >사용자 관리</v-list-item
+                >
                 <v-list-item class="logo-text" @click="loadData('예금')">상품 관리</v-list-item>
 
                 <v-list-item class="logo-text" @click="navigateToSendTalk">SMS 관리</v-list-item>
@@ -18,7 +20,12 @@
             <v-sheet class="logo-text" style="padding: 10px" min-height="70vh" rounded="lg">
               <v-sheet>
                 <v-card>
-                  <v-tabs bg-color="blue" center-active class="d-flex justify-center" v-model="selectedTab">
+                  <v-tabs
+                    bg-color="blue"
+                    center-active
+                    class="d-flex justify-center"
+                    v-model="selectedTab"
+                  >
                     <v-tab style="margin-left: 100px" @click="loadData('예금')">예금</v-tab>
                     <v-tab style="margin-left: 100px" @click="loadData('적금')">적금</v-tab>
                     <v-tab style="margin-left: 100px" @click="loadData('펀드')">펀드</v-tab>
@@ -103,7 +110,19 @@ const loadData = async (tab) => {
         break;
       case "대출":
         endpoint = "https://back.wonfit.site/product/loan"; // 대출 데이터를 가져오는 엔드포인트
-        break;
+
+      //   endpoint = "http://localhost:8080/product/deposit"; // 예금 데이터를 가져오는 엔드포인트
+      //   break;
+      // case "적금":
+      //   endpoint = "http://localhost:8080/product/savings"; // 적금 데이터를 가져오는 엔드포인트
+      //   break;
+      // case "펀드":
+      //   endpoint = "http://localhost:8080/product/fund"; // 펀드 데이터를 가져오는 엔드포인트
+      //   break;
+      // case "대출":
+      //   endpoint = "http://localhost:8080/product/loan"; // 대출 데이터를 가져오는 엔드포인트
+      //   break;
+
       default:
         break;
     }
@@ -156,7 +175,8 @@ const loadData = async (tab) => {
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
+    format("woff2");
   font-weight: 300;
   font-style: normal;
 }

@@ -1,27 +1,42 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-main class="d-flex flex-column align-center justify-center" style="margin-top: 30px; min-height: 400px">
-      <div class="d-flex flex-column align-center justify-center logo-text" style="font-size: 1.5em">
+    <v-main
+      class="d-flex flex-column align-center justify-center"
+      style="margin-top: 30px; min-height: 400px"
+    >
+      <div
+        class="d-flex flex-column align-center justify-center logo-text"
+        style="font-size: 1.5em"
+      >
         어떤 은행사를 연결할까요?
         <div class="image-grid bank-name">
           <div class="grid-row">
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('국민은행') }"
-                @click="toggleBank('국민은행')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('국민은행') }"
+                @click="toggleBank('국민은행')"
+              >
                 <img src="@/assets/kookmin.png" alt="국민은행" />
                 <p>국민은행</p>
               </button>
             </div>
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('우리은행') }"
-                @click="toggleBank('우리은행')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('우리은행') }"
+                @click="toggleBank('우리은행')"
+              >
                 <img src="@/assets/woori.png" alt="우리은행" />
                 <p>우리은행</p>
               </button>
             </div>
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('신한은행') }"
-                @click="toggleBank('신한은행')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('신한은행') }"
+                @click="toggleBank('신한은행')"
+              >
                 <img src="@/assets/shinhan.png" alt="신한은행" />
                 <p>신한은행</p>
               </button>
@@ -29,22 +44,31 @@
           </div>
           <div class="grid-row">
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('카카오뱅크') }"
-                @click="toggleBank('카카오뱅크')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('카카오뱅크') }"
+                @click="toggleBank('카카오뱅크')"
+              >
                 <img src="@/assets/kakao.png" alt="카카오뱅크" />
                 <p>카카오뱅크</p>
               </button>
             </div>
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('토스뱅크') }"
-                @click="toggleBank('토스뱅크')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('토스뱅크') }"
+                @click="toggleBank('토스뱅크')"
+              >
                 <img src="@/assets/toss.png" alt="토스뱅크" />
                 <p>토스뱅크</p>
               </button>
             </div>
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('케이뱅크') }"
-                @click="toggleBank('케이뱅크')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('케이뱅크') }"
+                @click="toggleBank('케이뱅크')"
+              >
                 <img src="@/assets/kbank.png" alt="케이뱅크" />
                 <p>케이뱅크</p>
               </button>
@@ -52,22 +76,31 @@
           </div>
           <div class="grid-row">
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('농협은행') }"
-                @click="toggleBank('농협은행')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('농협은행') }"
+                @click="toggleBank('농협은행')"
+              >
                 <img src="@/assets/nonghyup.png" alt="농협은행" />
                 <p>농협은행</p>
               </button>
             </div>
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('IBK기업은행') }"
-                @click="toggleBank('IBK기업은행')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('IBK기업은행') }"
+                @click="toggleBank('IBK기업은행')"
+              >
                 <img src="@/assets/ibk.png" alt="IBK기업은행" />
                 <p>IBK기업은행</p>
               </button>
             </div>
             <div class="grid-item">
-              <button class="bank-button" :class="{ 'bank-button-selected': selectedBank.includes('SC제일은행') }"
-                @click="toggleBank('SC제일은행')">
+              <button
+                class="bank-button"
+                :class="{ 'bank-button-selected': selectedBank.includes('SC제일은행') }"
+                @click="toggleBank('SC제일은행')"
+              >
                 <img src="@/assets/sc.png" alt="SC제일은행" />
                 <p>SC제일은행</p>
               </button>
@@ -77,19 +110,24 @@
       </div>
 
       <div class="mb-5 logo-text" style="margin: 60px; font-size: 1.5em">
-        <AnnualIncomeComponent @update="(val) => annualIncome = val" />
-
+        <AnnualIncomeComponent @update="(val) => (annualIncome = val)" />
       </div>
 
-      <div class="mb-2 logo-text d-flex flex-column align-center justify-center" style="margin: 10px; font-size: 1.5em">
-        <AgeGroupComponent @update:group="(val) => ageGroup = val" />
-
+      <div
+        class="mb-2 logo-text d-flex flex-column align-center justify-center"
+        style="margin: 10px; font-size: 1.5em"
+      >
+        <AgeGroupComponent @update:group="(val) => (ageGroup = val)" />
       </div>
 
       <v-spacer></v-spacer>
       <div class="mb-15">
-        <v-btn variant="tonal" class="d-flex justify-center align-center logo-text-button"
-          style="padding: 30px; font-size: 1.1em; border-radius: 10px" @click="navigateToIncomeAnalysisPage">
+        <v-btn
+          variant="tonal"
+          class="d-flex justify-center align-center logo-text-button"
+          style="padding: 30px; font-size: 1.1em; border-radius: 10px"
+          @click="navigateToIncomeAnalysisPage"
+        >
           결과보기
         </v-btn>
       </div>
@@ -98,11 +136,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref } from "vue";
+import axios from "axios";
 import { useRouter } from "vue-router";
-import AnnualIncomeComponent from './AnnualIncomeComponent.vue';
-import AgeGroupComponent from './AgeGroupComponent.vue';
+import AnnualIncomeComponent from "./AnnualIncomeComponent.vue";
+import AgeGroupComponent from "./AgeGroupComponent.vue";
 
 const router = useRouter();
 
@@ -125,21 +163,20 @@ const navigateToIncomeAnalysisPage = async () => {
 
   const body = {
     annualIncome: annualIncome.value, // .value 를 사용하여 ref의 값을 가져옵니다.
-    ageGroup: ageGroup.value, // .value 를 사용하여 ref의 값을 가져옵니다. 
-  }
+    ageGroup: ageGroup.value, // .value 를 사용하여 ref의 값을 가져옵니다.
+  };
 
-  await axios.patch('https://back.wonfit.site/member/mydata', body);
-
+  await axios.patch("https://back.wonfit.site/member/mydata", body);
+  // await axios.patch('http://localhost:8080/member/mydata', body);
   router.push({ name: "Recommend" });
-}
-
+};
 </script>
-
 
 <style scoped>
 @font-face {
   font-family: "WooridaumB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2")
+    format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -218,4 +255,3 @@ const navigateToIncomeAnalysisPage = async () => {
   border-radius: 5px;
 }
 </style>
-

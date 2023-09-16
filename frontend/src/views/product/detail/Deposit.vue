@@ -10,7 +10,7 @@
             :target="'가입 대상: ' + depositData.target"
             :period="'가입 기간: ' + depositData.period + '개월'"
             :minDeposit="'가입 금액: ' + depositData.minDeposit + '원'"
-            :type="'상품 타입: ' + depositData.depositType"
+            :type="'상품 타입: ' + getInvestmentType(depositData.depositType)"
             :button1="'가입하기'"
             :button2="'전화가입'"
             :url="'deposit'"
@@ -91,6 +91,16 @@ const route = useRoute();
 const productId = route.params.id;
 
 let detailTitle;
+
+function getInvestmentType(depositType) {
+  if (depositType === "safe") {
+    return "안정형";
+  } else if (depositType === "middle") {
+    return "중립형";
+  } else if (depositType === "attack") {
+    return "공격형";
+  }
+}
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {

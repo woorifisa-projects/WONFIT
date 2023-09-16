@@ -1,8 +1,8 @@
 <template>
   <div style="white-space: nowrap" class="bg-color">
-    <div class="d-flex flex-column align-center justify-center mt-3 pt-5">
+    <div class="d-flex flex-column align-center justify-center pt-5">
       <v-container>
-        <v-row justify="center">
+        <v-row justify="center mt-4">
           <type-button content="예금" @click="navigateToSearchDefault" />
           <type-button content="적금" @click="navigateToSearchSavings" />
           <type-button content="펀드" @click="navigateToSearchFund" />
@@ -12,7 +12,7 @@
     </div>
 
     <v-text-field
-      class="mx-auto mt-10 mb-n5 centered-text-field"
+      class="mx-auto mt-7 mb-n3 centered-text-field"
       v-model="searchQuery"
       variant="tonal"
       rounded
@@ -31,12 +31,13 @@
               <fund-card
                 v-for="productDetail in displayedData"
                 :key="productDetail.id"
+                :productId="productDetail.id"
                 :fundName="productDetail.fundName"
                 :fundInfo="productDetail.fundInfo"
                 :returnRate1="'1개월 수익률: ' + productDetail.returnRate1 + '%'"
                 :returnRate2="'6개월 수익률: ' + productDetail.returnRate2 + '%'"
                 :fundPrice="'기준가: ' + productDetail.fundPrice + '원'"
-                :fundType="'상품타입: ' + productDetail.fundType"
+                :fundType="'상품타입: ' + getInvestmentType(productDetail.fundType)"
               />
               <div v-if="displayedData.length === 0">
                 <p class="d-flex justify-center">검색 결과가 없습니다.</p>
@@ -55,11 +56,23 @@ import { useRouter } from "vue-router";
 import { getApi } from "@/api/modules";
 import TypeButton from "@/components/button/TypeButton.vue";
 import FundCard from "@/components/card/product/FundCard.vue";
+import axios from "axios";
 
 const router = useRouter();
 const fundData = ref([]);
 const searchQuery = ref("");
 const displayedData = ref([]);
+const searchTimer = ref(null);
+
+function getInvestmentType(fundType) {
+  if (fundType === "safe") {
+    return "안정형";
+  } else if (fundType === "middle") {
+    return "중립형";
+  } else if (fundType === "attack") {
+    return "공격형";
+  }
+}
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
@@ -82,11 +95,26 @@ const search = () => {
     }
     return false;
   });
-  console.log(displayedData);
 };
 
 watch(searchQuery, () => {
+  clearTimeout(searchTimer.value);
   search();
+  searchTimer.value = setTimeout(() => {
+    axios.post(
+      "https://back.wonfit.site/member/mypage/searchlog",
+      // "http://localhost:8080/member/mypage/searchlog",
+
+      {
+        searchWord: searchQuery,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log(`검색어 "${searchQuery.value}"가 저장되었습니다.`);
+  }, 5000);
 });
 
 const navigateToSearchDefault = () => {
