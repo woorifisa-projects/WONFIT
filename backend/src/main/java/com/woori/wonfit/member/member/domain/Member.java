@@ -5,6 +5,7 @@ import com.woori.wonfit.log.liked.domain.Liked;
 import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.searchlog.domain.SearchLog;
 import com.woori.wonfit.member.investtype.domain.InvestType;
+import com.woori.wonfit.member.member.dto.MemberDetatilUpdateRequest;
 import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -81,22 +82,23 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<SearchLog> searchLogs;
 
-    public static Member toEntity(Long id, MemberUpdateRequest memberUpdateRequest, String password, String refreshToken) {
+    public static Member toEntity(Long id, Member member, MemberDetatilUpdateRequest memberDetatilUpdateRequest, String password, String refreshToken, String bankAccountPassword) {
         return Member.builder()
                 .id(id)
-                .loginId(memberUpdateRequest.getLoginId())
+                .loginId(member.getLoginId())
                 .password(password)
-                .name(memberUpdateRequest.getName())
-                .email(memberUpdateRequest.getEmail())
-                .registrationNumber(memberUpdateRequest.getRegistrationNumber())
-                .phoneNumber(memberUpdateRequest.getPhoneNumber())
-                .bankAccountNumber(memberUpdateRequest.getBankAccountNumber())
+                .name(memberDetatilUpdateRequest.getName())
+                .email(memberDetatilUpdateRequest.getEmail())
+                .registrationNumber(memberDetatilUpdateRequest.getRegistrationNumber())
+                .phoneNumber(memberDetatilUpdateRequest.getPhoneNumber())
+                .bankAccountNumber(memberDetatilUpdateRequest.getBankAccountNumber())
+                .bankAccountPassword(bankAccountPassword)
                 .status(true)
-                .address(memberUpdateRequest.getAddress())
+                .address(memberDetatilUpdateRequest.getAddress())
                 .refreshToken(refreshToken)
-                .ageGroup(memberUpdateRequest.getAgeGroup())
-                .annualIncome(memberUpdateRequest.getAnnualIncome())
-//                .marketingInfoAgree(true)
+                .ageGroup(member.getAgeGroup())
+                .annualIncome(member.getAnnualIncome())
+                .marketingInfoAgree(member.isMarketingInfoAgree())
                 .build();
     }
 }

@@ -2,7 +2,7 @@ package com.woori.wonfit.member.member.controller;
 
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
-import com.woori.wonfit.member.member.service.MemberServiceImpl;
+import com.woori.wonfit.member.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
-    private final MemberServiceImpl memberService;
+    private final MemberService memberService;
 
     // 회원 가입
     @PostMapping("wonfit/register")
@@ -48,7 +48,7 @@ public class MemberController {
 
     // 회원 탈퇴
     @PostMapping("member/leave")
-    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest, @AuthenticationPrincipal String id, HttpServletResponse response) {
+    public ResponseEntity<String> leaveMember(@RequestBody MemberLoginRequest memberLoginRequest, @AuthenticationPrincipal String id, HttpServletResponse response) throws Exception {
         Cookie cookie = memberService.leaveMember(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword(), id);
         response.addCookie(cookie);
         return new ResponseEntity<>("회원 탈퇴가 왼료되었습니다.", HttpStatus.OK);
@@ -68,14 +68,13 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
-
     // 사용자 마이페이지 상세정보 수정
     @PatchMapping("member/detail")
-    public ResponseEntity<String> updateMemberDetails(@RequestBody Member member, @AuthenticationPrincipal String id) {
-        log.info("updateMemberDetails called");
-        memberService.updateMemberDetails(id, member);
+    public ResponseEntity<String> updateMemberDetails(@RequestBody MemberDetatilUpdateRequest memberDetatilUpdateRequest, @AuthenticationPrincipal String id) {
+        memberService.updateMemberDetails(id, memberDetatilUpdateRequest);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
+
     @Transactional
     @PatchMapping("member/mydata")
     public ResponseEntity<String> updateMemberMydata(@RequestBody Member member, @AuthenticationPrincipal String id) {
@@ -83,6 +82,7 @@ public class MemberController {
         memberService.updateMemberMydata(Long.parseLong(id), member);
         return ResponseEntity.ok("수정이 완료되었습니다.");
     }
+
     @Transactional
     @PatchMapping("member/marketing")
     public ResponseEntity<String> updateMemberMarketing(@RequestBody Member member, @AuthenticationPrincipal String id) {
