@@ -1,10 +1,7 @@
 package com.woori.wonfit.member.member.service;
 
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.dto.MemberDto;
-import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
-import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
-import com.woori.wonfit.member.member.dto.MembersResponse;
+import com.woori.wonfit.member.member.dto.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +24,7 @@ public interface MemberService {
 
     Cookie leaveMember(String loginId, String memberPw, String id) throws Exception;
 
-    void updateMemberDetails(String id, Member member);
+    void updateMemberDetails(String id, MemberDetatilUpdateRequest memberDetatilUpdateRequest);
 
     void updateMemberMydata(Long id, Member member);
 

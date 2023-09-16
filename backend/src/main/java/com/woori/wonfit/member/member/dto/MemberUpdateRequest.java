@@ -20,20 +20,6 @@ public class MemberUpdateRequest {
     private String ageGroup;
     private String refreshToken;
 
-    public static MemberUpdateRequest toEntity(Member member, String password) {
-        return MemberUpdateRequest.builder()
-                .name(member.getName())
-                .registrationNumber(member.getRegistrationNumber())
-                .bankAccountNumber(member.getBankAccountNumber())
-                .loginId(member.getLoginId())
-                .password(password)
-                .email(member.getEmail())
-                .phoneNumber(member.getPhoneNumber())
-                .address(member.getAddress())
-                .refreshToken(member.getRefreshToken())
-                .build();
-    }
-
     public static MemberUpdateRequest toNewDetail(Member member) {
         return MemberUpdateRequest.builder()
                 .name(member.getName())

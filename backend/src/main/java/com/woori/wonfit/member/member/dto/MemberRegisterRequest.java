@@ -24,7 +24,7 @@ public class MemberRegisterRequest {
     private boolean marketingInfoAgree;
     private String refreshToken;
 
-    public Member toEntity(String password) {
+    public Member toEntity(String password, String bankAccountPassword) {
         return Member.builder()
                 .loginId(loginId)
                 .password(password)

@@ -6,10 +6,7 @@ import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.loginlog.repository.LoginLogRepository;
 import com.woori.wonfit.member.investtype.service.InvestTypeService;
 import com.woori.wonfit.member.member.domain.Member;
-import com.woori.wonfit.member.member.dto.MemberDto;
-import com.woori.wonfit.member.member.dto.MemberRegisterRequest;
-import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
-import com.woori.wonfit.member.member.dto.MembersResponse;
+import com.woori.wonfit.member.member.dto.*;
 import com.woori.wonfit.member.member.repository.MemberRepository;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
@@ -58,10 +55,9 @@ public class MemberServiceImpl implements MemberService {
                     throw new RuntimeException();
                 });
 
-        Member saveMember = memberRepository.save(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())));
-
-        Member member = memberRepository.findById(saveMember.getId()).get();
-        investTypeService.registInvestment(member);
+        Member saveMember = memberRepository.save(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword()), bCryptPasswordEncoder.encode(request.getBankAccountPassword())));
+        log.info("saveMember loginId = {}", saveMember.getLoginId());
+        investTypeService.registInvestment(saveMember);
 
         return MemberDto.fromEntity(saveMember);
     }
@@ -149,15 +145,13 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-
     @Override
-    public void updateMemberDetails(String id, Member member) {
-        String password = bCryptPasswordEncoder.encode(member.getPassword());
-
-        MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.toEntity(member, password);
-
+    public void updateMemberDetails(String id, MemberDetatilUpdateRequest memberDetatilUpdateRequest) {
         Member basicMember = memberRepository.findById(Long.parseLong(id)).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
-        Member updateMember = basicMember.toEntity(Long.parseLong(id), memberUpdateRequest, password, member.getRefreshToken());
+
+        String password = bCryptPasswordEncoder.encode(memberDetatilUpdateRequest.getPassword());
+
+        Member updateMember = basicMember.toEntity(Long.parseLong(id), basicMember, memberDetatilUpdateRequest, password, basicMember.getRefreshToken(), basicMember.getBankAccountPassword());
         memberRepository.save(updateMember);
     }
     @Override
