@@ -4,8 +4,8 @@
     <div class="banner-container d-flex justify-center">
       <!-- 배너 이미지 추가 -->
       <p class="mainFontSize" style="margin: 120px 210px">
-        우리WONFIT에서<br />
-        나에게 딱 맞게
+        <span style="color: #2965ed">우리WONFIT</span>에서 찾아보는<br />
+        나에게 딱 맞는 금융상품
       </p>
       <img
         src="@/assets/puzzler.png"
@@ -19,9 +19,9 @@
         <p>성향분석 검사를 통해 편리하게 추천 받으세요</p> -->
         <P>내게 맞는 금융상품 찾기 힘드시죠?</P>
         <p style="margin-top: 5px">
-          나만의 <span style="color: #2965ed">FIT 퍼즐</span>을 찾아 보세요!
+          <span style="color: #2965ed">FIT 퍼즐</span>로 나의 성향을 검사해보세요!
         </p>
-        <p style="margin-top: 35px; font-size: 20px">성향분석 검사하기</p>
+        <!-- <p style="margin-top: 35px; font-size: 20px">성향분석 검사하기</p> -->
       </div>
       <div>
         <div class="scrolldown">
@@ -79,7 +79,7 @@
       <!-- 배너 이미지 추가 -->
       <p class="mainFontSize" style="margin: 100px 200px">
         모든 금융내역을<br />
-        한 곳에서 관리하세요 <br />
+        <span style="color: #2965ed">한 곳</span>에서 관리하세요 <br />
         <v-btn
           color="#2965ED"
           height="50px"
@@ -121,23 +121,21 @@ const navigateToSavingsTestPage = () => {
 
 <style lang="scss" scoped>
 .banner-container {
-  height: 600px;
+  height: 500px;
   background-color: #d1e4ffd3;
   padding: 20px; /* 내부 여백 추가 */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;
 }
 
 .banner-container2 {
-  height: 600px;
+  height: 500px;
   background-color: #d1e4ffd3;
   padding: 20px; /* 내부 여백 추가 */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 50px;
 }
 
 /* 배너 이미지 스타일 */

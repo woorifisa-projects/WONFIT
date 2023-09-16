@@ -24,4 +24,13 @@ export default {
   }),
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.v-footer {
+  background-color: #fff;
+  padding: 10px; /* 내부 여백 추가 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px 0;
+}
+</style>
