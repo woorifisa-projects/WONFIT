@@ -72,6 +72,17 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    public Cookie managerLogout(String id) {
+        Manager manager = managerRepository.findById(Long.parseLong(id)).get();
+        
+        manager.setRefreshToken("");
+        managerRepository.save(manager);
+
+        Cookie cookie = cookieConfig.createHttpOnlyCookie("");
+        return cookie;
+    }
+
+    @Override
     public Fund createFund(FundRequest fundRequest) {
         Fund fund = Fund.builder()
                 .fundName(fundRequest.getFundName())
