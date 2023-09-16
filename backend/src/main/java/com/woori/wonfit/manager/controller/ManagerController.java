@@ -18,13 +18,19 @@ import com.woori.wonfit.product.savings.dto.SavingsDTO;
 import com.woori.wonfit.product.savings.dto.SavingsRequest;
 import com.woori.wonfit.product.savings.service.SavingsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
+
+@Slf4j
 @RestController
 @RequestMapping("/manager")
 @RequiredArgsConstructor
@@ -46,7 +52,20 @@ public class ManagerController {
     public ResponseEntity<String> managerLogin(@RequestBody ManagerLoginRequest request, HttpServletResponse response) {
         Cookie cookie = managerService.managerLogin(request);
         response.addCookie(cookie);
-        return new ResponseEntity<>("매니저 로그인이 완료되었습니다.", HttpStatus.OK);
+        return new ResponseEntity<>("매니저 로그인", HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Cookie> logout(@AuthenticationPrincipal String id, HttpServletResponse response){
+    Cookie cookie = managerService.managerLogout(id);
+        response.addCookie(cookie);
+        return new ResponseEntity<>(cookie, HttpStatus.OK);
+}
+
+    @GetMapping("/islogin")
+    public ResponseEntity<Boolean> isLogin(@AuthenticationPrincipal String id) {
+        log.info("isLogin controller called");
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     // 펀드 상품 1개 추가
