@@ -36,6 +36,28 @@
           @input="onChangeRn"
           color="primary"
           label="주민등록번호"
+          maxLength="14"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="address"
+          color="primary"
+          label="주소"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="phoneNumber"
+          color="primary"
+          label="전화번호"
+          variant="underlined"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="email"
+          color="primary"
+          label="이메일"
           variant="underlined"
         ></v-text-field>
 
@@ -54,6 +76,7 @@
             variant="underlined"
             readonly
             hint="비밀번호 4자리를 입력해 주세요."
+            maxLength="4"
             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
             :type="visible ? 'text' : 'password'"
             @click:append-inner="visible = !visible"
@@ -64,27 +87,6 @@
             <VirtualKeyboard v-model="bankAccountPassword" @click.stop />
           </div>
         </v-form>
-
-        <v-text-field
-          v-model="email"
-          color="primary"
-          label="이메일"
-          variant="underlined"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="phoneNumber"
-          color="primary"
-          label="전화번호"
-          variant="underlined"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="address"
-          color="primary"
-          label="주소"
-          variant="underlined"
-        ></v-text-field>
 
         <v-checkbox
           v-model="terms"
@@ -138,13 +140,15 @@ const passwordRules = [
     "비밀번호는 영어 대소문자, 숫자 및 특수 문자가 최소 하나 이상 포함된 8~20 자리여야 합니다.",
 ];
 
-const registrationNumber = ref("");
+const registrationNumber = ref(""); // 마스킹된 주민등록번호
+const originalRegistrationNumber = ref(""); // 원본 주민등록번호 <-- 추가된 부분
 
-const onChangeRn = () => {
+// 사용자가 입력할 때마다 원본 주민등록번호를 업데이트하는 함수
+const onChangeRn = (event) => {
+  originalRegistrationNumber.value = event.target.value; // 사용자가 입력한 원본 값을 별도로 저장합니다. <-- 추가된 부분
   if (registrationNumber.value.length > 7) {
-    // 주민등록번호 앞자리와 '-'(7자리) 이후부터 마스크 처리 시작
-    const front = registrationNumber.value.slice(0, 7); // 앞부분 추출
-    const back = "*".repeat(registrationNumber.value.length - 7); // 뒷부분은 '*'로 대체
+    const front = registrationNumber.value.slice(0, 8);
+    const back = "*".repeat(registrationNumber.value.length - 8);
     registrationNumber.value = front + back;
   }
 };
@@ -172,7 +176,7 @@ async function signup() {
   try {
     const requestBody = {
       name: name.value,
-      registrationNumber: registrationNumber.value,
+      registrationNumber: originalRegistrationNumber.value, // DB에는 원본 주민등록번호 전송 <-- 변경된 부분
       bankAccountNumber: bankAccountNumber.value,
       bankAccountPassword: bankAccountPassword.value,
       loginId: id.value,
