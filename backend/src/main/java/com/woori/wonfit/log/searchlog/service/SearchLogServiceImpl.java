@@ -27,8 +27,6 @@ public class SearchLogServiceImpl implements SearchLogService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다. id=" + memberId));
         SearchLog searchLog = SearchLog.builder()
                 .searchWord(searchLogRequest.getSearchWord())
-                .searchDate(LocalDateTime.parse(searchLogRequest.getSearchDate()))
-                .searchUrl(searchLogRequest.getSearchUrl())
                 .member(member)
                 .build();
         searchLogRepository.save(searchLog);
