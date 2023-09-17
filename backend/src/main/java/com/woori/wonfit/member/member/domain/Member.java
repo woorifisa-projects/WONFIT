@@ -6,7 +6,6 @@ import com.woori.wonfit.log.loginlog.domain.LoginLog;
 import com.woori.wonfit.log.searchlog.domain.SearchLog;
 import com.woori.wonfit.member.investtype.domain.InvestType;
 import com.woori.wonfit.member.member.dto.MemberDetatilUpdateRequest;
-import com.woori.wonfit.member.member.dto.MemberUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 

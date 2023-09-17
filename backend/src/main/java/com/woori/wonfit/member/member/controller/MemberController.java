@@ -1,7 +1,9 @@
 package com.woori.wonfit.member.member.controller;
 
+import com.woori.wonfit.member.bank.domain.BankInfo;
 import com.woori.wonfit.member.member.domain.Member;
 import com.woori.wonfit.member.member.dto.*;
+import com.woori.wonfit.member.member.repository.MemberRepository;
 import com.woori.wonfit.member.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
@@ -22,6 +25,8 @@ import java.util.List;
 @Slf4j
 public class MemberController {
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
+
 
     // 회원 가입
     @PostMapping("wonfit/register")
@@ -96,4 +101,24 @@ public class MemberController {
         log.info("isLogin controller called");
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
+    @GetMapping("/member/mydata")
+    public ResponseEntity<List<BankInfo>> getBankDataForSelectedBanks(@CookieValue(name = "selectedBank", required = false) String selectedBankCookie,
+                                                                      @AuthenticationPrincipal String memberId) {
+        log.info("getBankDataForSelectedBanks called");
+        List<String> selectedBankNames = memberService.parseSelectBankCookie(selectedBankCookie); // parseSelectBankCookie 메서드 호출
+
+        List<Object[]> results = memberRepository.getBankDataForSelectedBanks(Long.parseLong(memberId));
+        results.forEach(result -> log.info("Bank name: {}, Money: {}", result[1], result[0]));
+
+        List<BankInfo> bankInfoList = results.stream()
+                .map(result -> new BankInfo((String) result[1], (Integer) result[0]))
+                .filter(bankInfo -> selectedBankNames.contains(bankInfo.getBankName()))  // Add this line
+                .collect(Collectors.toList());
+
+
+        return new ResponseEntity<>(bankInfoList, HttpStatus.OK);
+    }
+
+
 }

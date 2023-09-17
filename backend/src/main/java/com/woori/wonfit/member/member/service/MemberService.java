@@ -30,5 +30,5 @@ public interface MemberService {
 
     void updateMemberMarketing(Long id, Member member);
 
-
+    List<String> parseSelectBankCookie(String selectBankCookie);
 }
