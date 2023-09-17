@@ -62,6 +62,7 @@ public class MemberController {
     // 사용자 전체 조회
     @GetMapping("manager/members")
     public ResponseEntity<List<MembersResponse>> getAllMembers() {
+        log.info("members called");
         List<MembersResponse> member = memberService.getAllMembers();
         return new ResponseEntity<>(member, HttpStatus.OK);
     }

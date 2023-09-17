@@ -49,10 +49,10 @@
               <v-card>
                 <v-tabs bg-color="blue" center-active class="d-flex justify-center">
                   <v-tab style="margin-left: 210px" @click="onClickLoginLog">로그인 기록</v-tab>
-                  <v-tab style="margin-left: 210px">검색 기록</v-tab>
+                  <v-tab style="margin-left: 210px" @click="onClickSearchLog">검색 기록</v-tab>
                 </v-tabs>
               </v-card>
-              <v-table fixed-header height="500px">
+              <v-table fixed-header height="500px" v-if="(flag == 0)">
                 <thead>
                   <tr>
                     <th></th>
@@ -77,6 +77,27 @@
                   </tr>
                 </tbody>
               </v-table>
+              <v-table fixed-header height="500px" v-else="(flag == 1)">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="text-left">번호</th>
+                    <th class="text-left">검색어</th>
+                    <th class="text-left">검색 시간</th>
+                  </tr>
+                </thead>
+                <template v-slot:column.name="{ column }">
+                  {{ column.title.toUpperCase() }}
+                </template>
+                <tbody>
+                  <tr v-for="item in searchLogData" :key="item.idx">
+                    <v-checkbox style="margin-top: 1.3rem"></v-checkbox>
+                    <td>{{ item.idx }}</td>
+                    <td>{{ item.searchWord }}</td>
+                    <td>{{ item.searchDate }}</td>
+                  </tr>
+                </tbody>
+              </v-table>
             </v-sheet>
           </v-col>
         </v-row>
@@ -89,20 +110,24 @@
 import { useRouter } from "vue-router";
 import { ref, onBeforeMount } from "vue";
 import { getApi, postApi } from "@/api/modules";
+import axios from "axios";
 
 const router = useRouter();
 const memberData = ref([]);
 const loginLogData = ref([]);
-
+const searchLogData = ref([]);
+const flag = ref(0);
 const showCardDetails = ref(false);
 
 const memberId = ref([]);
+const id = ref([]);
 
 const toggleCardDetails = (item) => {
   if (!showCardDetails.value) {
     showCardDetails.value = !showCardDetails.value;
   }
   memberId.value = item.loginId;
+  id.value = item.id;
 };
 
 
@@ -119,6 +144,7 @@ onBeforeMount(async () => {
 
 const onClickLoginLog = async () => {
   try {
+    flag.value = 0;
     const requestBody = {
       loginId: memberId.value,
     };
@@ -136,6 +162,26 @@ const onClickLoginLog = async () => {
     console.error('에러 발생:', error);
   }
 };
+
+const onClickSearchLog = async () => {
+  try {
+    flag.value = 1;
+    const requestBody = {
+      loginId: memberId.value,
+    }
+    const data = await postApi({
+      url: `/member/mypage/searchlog/${id.value}`,
+      data: requestBody
+    });
+    for (let i = 0; i < data.length; i++) {
+      data[i].idx = i + 1;
+    }
+    searchLogData.value = data;
+    console.log('로그 데이터:', data);
+  } catch (error) {
+    console.error("erroe", error);
+  }
+}
 
 const navigateToManagerPage = () => {
   router.push({ name: "ManagerPage" });

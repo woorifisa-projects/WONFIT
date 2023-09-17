@@ -39,9 +39,6 @@ public class MemberServiceImpl implements MemberService {
     @Value("${jwt.token.refresh}")
     private String refreshKey;
 
-    private LocalDateTime dateTime = LocalDateTime.now();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     private Long accessTokenExpireTime = 1000 * 60 * 60l;
     private Long refreshTokenExpireTime = 1000 * 60 * 60 * 24l;
 
@@ -73,6 +70,8 @@ public class MemberServiceImpl implements MemberService {
         if (!member.isStatus()) {
             throw new IllegalArgumentException("이미 탈퇴한 회원입니다.");
         } else {
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String loginTime = dateTime.format(formatter).substring(0, 19);
             String loginIp = request.getRemoteAddr();
             String userAgent = request.getHeader("User-Agent");

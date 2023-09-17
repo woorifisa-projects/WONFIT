@@ -2,7 +2,7 @@ package com.woori.wonfit.log.searchlog.controller;
 
 import com.woori.wonfit.log.searchlog.dto.SearchLogRequest;
 import com.woori.wonfit.log.searchlog.dto.SearchLogResponse;
-import com.woori.wonfit.log.searchlog.service.SearchLogServiceImpl;
+import com.woori.wonfit.log.searchlog.service.SearchLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchLogController {
 
-    private final SearchLogServiceImpl searchLogService;
+    private final SearchLogService searchLogService;
 
     // 검색 기록 저장
     @PostMapping
@@ -29,8 +29,8 @@ public class SearchLogController {
     }
 
     // 회원 검색 기록 조회
-    @GetMapping
-    public ResponseEntity<List<SearchLogResponse>> getSearchLog(@AuthenticationPrincipal String id) {
+    @PostMapping("/{id}")
+    public ResponseEntity<List<SearchLogResponse>> getSearchLog(@PathVariable String id) {
         List<SearchLogResponse> searchLogList = searchLogService.findById(Long.parseLong(id));
         return new ResponseEntity<>(searchLogList, HttpStatus.OK);
     }

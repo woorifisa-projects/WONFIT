@@ -29,7 +29,7 @@ public class SearchLog {
     private String searchWord; // 검색어
 
     @Column(name = "search_date")
-    private LocalDateTime searchDate; // 검색 날짜 및 시간
+    private String searchDate; // 검색 날짜 및 시간
 
     @Column(name = "search_url")
     private String searchUrl; // 검색 결과 URL

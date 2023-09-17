@@ -9,7 +9,7 @@ public interface SearchLogService {
 
     void saveSearchLog(Long id, SearchLogRequest searchLogRequest);
 
-    List<SearchLogResponse> findById(Long memberid);
+    List<SearchLogResponse> findById(Long id);
 
     void deleteSearchLog(Long memberid, String searchWord);
 }
