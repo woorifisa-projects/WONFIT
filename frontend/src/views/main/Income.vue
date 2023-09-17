@@ -1,17 +1,24 @@
 <template>
   <div class="d-flex align-center flex-column">
-    <span class="logo" style="font-size: 30px; margin-top: 30px; margin-bottom: 5px" color="#3b7ee3"
+    <span
+      class="logo"
+      style="font-size: 40px; margin-top: 30px; margin-bottom: 5px; padding-top: 100px"
+      color="#3b7ee3"
       >WONFIT에서 당신의 소득을 분석해 보세요!</span
     >
 
-    <img src="@/assets/wonfit.png" style="width: 200px; margin-right: 5px; margin-top: 10px" />
-    <span class="logo" style="font-size: 25px; margin-top: 5px; margin-bottom: 30px" color="#3b7ee3"
+    <img src="@/assets/wonfit.png" style="width: 250px; margin-right: 5px; margin-top: 10px" />
+    <span class="logo" style="font-size: 25px; margin-top: 5px; margin-bottom: 40px" color="#3b7ee3"
       >FIT YOUR ACCOUNT!</span
     >
 
-    <label-component label="우리WONFIT 신용정보 제공 동의 (필수)" />
-    <label-component label="우리WONFIT 개인정보 수집·이용 동의 (필수)" />
-    <LabelComponent label="우리WONFIT 마케팅 수신 동의 (선택)" v-model:checked="marketingAgree" />
+    <label-component class="logo-text" label="우리WONFIT 신용정보 제공 동의 (필수)" /><br />
+    <label-component class="logo-text" label="우리WONFIT 개인정보 수집·이용 동의 (필수)" /><br />
+    <LabelComponent
+      class="logo-text"
+      label="우리WONFIT 마케팅 수신 동의 (선택)"
+      v-model:checked="marketingAgree"
+    /><br />
 
     <grey-button
       content="은행 선택하기"
@@ -37,10 +44,10 @@ const navigateToBankSelect = async () => {
   console.log(marketingAgree.value);
   try {
     await axios.patch("https://back.wonfit.site/member/marketing", {
-      // await axios.patch("http://localhost:8080/member/marketing", {
-
       marketingInfoAgree: marketingAgree.value,
     });
+    // await axios.patch("http://localhost:8080/member/marketing", { marketingInfoAgree: marketingAgree.value });
+
     router.push({ name: "BankSelect" });
   } catch (error) {
     console.error(error);
@@ -75,7 +82,7 @@ const navigateToBankSelect = async () => {
 }
 
 .logo-text {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
 
   font-family: "WooridaumB", sans-serif;

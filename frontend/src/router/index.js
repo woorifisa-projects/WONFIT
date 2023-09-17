@@ -259,7 +259,6 @@ router.beforeEach(async (to) => {
   const loginCheckStore = useAuthStore();
   await axios
     .get("https://back.wonfit.site/member/islogin", { withCredentials: true })
-
     // .get("http://localhost:8080/member/islogin", { withCredentials: true })
     .then((res) => {
       if (res.data) {
