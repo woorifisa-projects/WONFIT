@@ -38,6 +38,17 @@
       </div>
     </template>
 
+    <template v-else-if="auth.isAdmin">
+      <div class="logo-text mt-2" style="margin-right: 23px" @click="navigateToManagerPage">
+        관리자
+      </div>
+      <div>
+        <div class="logout-btn mt-2" style="margin-right: 200px" @click="managerLogout">
+          로그아웃
+        </div>
+      </div>
+    </template>
+
     <template v-else>
       <div class="logo-text mt-2" style="margin-right: 23px" @click="navigateToSignup">
         회원가입
@@ -70,6 +81,18 @@ const logout = async () => {
   }
 };
 
+const managerLogout = async () => {
+  try {
+    await postApi({
+      url: "/manager/logout",
+    });
+    auth.setIsAdmin(false);
+    router.push({ name: "MainPage" });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const navigateToMainPage = () => {
   router.push({ name: "MainPage" });
 };
@@ -88,6 +111,10 @@ const navigateToLoginPage = () => {
 
 const navigateToMyPage = () => {
   router.push({ name: "MyPage" });
+};
+
+const navigateToManagerPage = () => {
+  router.push({ name: "ManagerPage" });
 };
 
 const navigateToSignup = () => {

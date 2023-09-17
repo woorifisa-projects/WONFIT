@@ -66,10 +66,10 @@ const navigateToSubscribe = () => {
   router.push({ name: "SubSavings", params: { id: productId } });
 };
 
-// // "좋아요" 상태를 토글하는 메서드
-// const toggleLike = () => {
-//   isShow.value = !isShow.value; // "좋아요" 상태를 반전시킵니다.
-// };
+// "좋아요" 상태를 토글하는 메서드
+const toggleLike = () => {
+  isShow.value = !isShow.value; // "좋아요" 상태를 반전시킵니다.
+};
 
 // // 관심상품 정보 가져오기
 // onBeforeMount(async () => {

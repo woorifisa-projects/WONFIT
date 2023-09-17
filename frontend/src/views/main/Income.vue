@@ -37,10 +37,10 @@ const navigateToBankSelect = async () => {
   console.log(marketingAgree.value);
   try {
     await axios.patch("https://back.wonfit.site/member/marketing", {
+      // await axios.patch("http://localhost:8080/member/marketing", {
+
       marketingInfoAgree: marketingAgree.value,
     });
-    // await axios.patch("http://localhost:8080/member/marketing", { marketingInfoAgree: marketingAgree.value });
-
     router.push({ name: "BankSelect" });
   } catch (error) {
     console.error(error);

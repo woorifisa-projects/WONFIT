@@ -49,7 +49,7 @@ const searchQuery = ref("");
 const displayedData = ref([]);
 const searchTimer = ref(null);
 
-function getInvestmentType(savingsType) {
+const getInvestmentType = (savingsType) => {
   if (savingsType === "safe") {
     return "안정형";
   } else if (savingsType === "middle") {
@@ -57,7 +57,7 @@ function getInvestmentType(savingsType) {
   } else if (savingsType === "attack") {
     return "공격형";
   }
-}
+};
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
@@ -73,9 +73,10 @@ const search = () => {
   const query = searchQuery.value.toLowerCase() || "";
   displayedData.value = savingsData.value.filter((product) => {
     if (product.savingsName || product.savingsType) {
+      const investmentType = getInvestmentType(product.savingsType);
       return (
         product.savingsName.toLowerCase().includes(query) ||
-        product.savingsType.toLowerCase().includes(query)
+        investmentType.toLowerCase().includes(query)
       );
     }
     return false;

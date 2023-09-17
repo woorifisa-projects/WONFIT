@@ -50,7 +50,7 @@ const searchQuery = ref("");
 const displayedData = ref([]);
 const searchTimer = ref(null);
 
-function getInvestmentType(loanType) {
+const getInvestmentType = (loanType) => {
   if (loanType === "safe") {
     return "안정형";
   } else if (loanType === "middle") {
@@ -58,7 +58,7 @@ function getInvestmentType(loanType) {
   } else if (loanType === "attack") {
     return "공격형";
   }
-}
+};
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
@@ -74,9 +74,10 @@ const search = () => {
   const query = searchQuery.value.toLowerCase() || "";
   displayedData.value = loanData.value.filter((product) => {
     if (product.loanName || product.loanType) {
+      const investmentType = getInvestmentType(product.loanType);
       return (
         product.loanName.toLowerCase().includes(query) ||
-        product.loanType.toLowerCase().includes(query)
+        investmentType.toLowerCase().includes(query)
       );
     }
     return false;

@@ -51,7 +51,7 @@ const searchQuery = ref("");
 const displayedData = ref([]);
 const searchTimer = ref(null);
 
-function getInvestmentType(fundType) {
+const getInvestmentType = (fundType) => {
   if (fundType === "safe") {
     return "안정형";
   } else if (fundType === "middle") {
@@ -59,7 +59,7 @@ function getInvestmentType(fundType) {
   } else if (fundType === "attack") {
     return "공격형";
   }
-}
+};
 
 // 상품 정보 가져오기
 onBeforeMount(async () => {
@@ -75,9 +75,10 @@ const search = () => {
   const query = searchQuery.value.toLowerCase() || "";
   displayedData.value = fundData.value.filter((product) => {
     if (product.fundName || product.fundType) {
+      const investmentType = getInvestmentType(product.fundType);
       return (
         product.fundName.toLowerCase().includes(query) ||
-        product.fundType.toLowerCase().includes(query)
+        investmentType.toLowerCase().includes(query)
       );
     }
     return false;

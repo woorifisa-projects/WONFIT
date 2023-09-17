@@ -110,7 +110,8 @@ const loadData = async (tab) => {
         break;
       case "대출":
         endpoint = "https://back.wonfit.site/product/loan"; // 대출 데이터를 가져오는 엔드포인트
-
+        break;
+      // case "예금":
       //   endpoint = "http://localhost:8080/product/deposit"; // 예금 데이터를 가져오는 엔드포인트
       //   break;
       // case "적금":

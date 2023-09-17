@@ -3,7 +3,7 @@
     <v-app>
       <v-main>
         <v-container>
-          <div class="d-flex align-center justify-center">
+          <!-- <div class="d-flex align-center justify-center">
             <v-row class="mx-auto mt-n16 text-center">
               <v-col>
                 <v-card
@@ -11,18 +11,19 @@
                   class="asset-info mx-auto mt-n16 mb-10"
                   max-width="700"
                   height="400"
-                  ><v-card-title>마이데이터</v-card-title></v-card
+                  ><v-card-title>마이데이터</v-card-title>
+                  </v-card
                 >
               </v-col>
-              <!-- <v-col>
+              <v-col>
                 <v-card class="mx-auto mt-n16" max-width="300" height="400"
                   ><v-card-title>소득수준</v-card-title></v-card
                 >
-              </v-col> -->
+              </v-col>
             </v-row>
-          </div>
-          <div class="mb-16 header">
-            <p class="pt-10 d-flex justify-center" style="font-size: 32px">
+          </div> -->
+          <div class="header">
+            <p class="d-flex justify-center" style="font-size: 40px">
               {{ memberName }} 고객님에게 딱 맞는 BEST 금융상품 4가지!
             </p>
           </div>
@@ -128,9 +129,9 @@ const navigateToProductDetail = (type, productId) => {
 };
 
 const deposit = ref(mdiPiggyBank);
-const savings = ref(mdiAccountCash);
+const savings = ref(mdiCashMultiple);
 const fund = ref(mdiFinance);
-const loan = ref(mdiCashMultiple);
+const loan = ref(mdiAccountCash);
 
 const cardText = ref({
   deposit: "",
@@ -213,7 +214,8 @@ const handleCardClick = async (type) => {
 .header {
   text-align: center;
   /* 텍스트 중앙 정렬 */
-  margin-top: 20px;
+  // margin-top: 20px;
+  margin-bottom: 140px;
   /* 텍스트 상단 여백 조절 */
   color: #fff;
   /* 텍스트 색상 설정 */
@@ -222,9 +224,9 @@ const handleCardClick = async (type) => {
 .v-main {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 130vh;
-  margin-top: 10px;
+  // align-items: center;
+  padding-top: 150px;
+  // min-height: 80vh;
   background-color: #285eb1;
 }
 
@@ -240,7 +242,7 @@ const handleCardClick = async (type) => {
 }
 
 .card-wrap {
-  margin-right: 60px;
+  margin-right: 70px;
 }
 
 .card-wrap:hover {
@@ -255,8 +257,8 @@ const handleCardClick = async (type) => {
 
 .container .glass {
   position: relative;
-  width: 250px;
-  height: 280px;
+  width: 300px;
+  height: 330px;
   background: linear-gradient(rgba(255, 255, 255, 0.199), transparent);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 30px 40px 30px rgba(0, 0, 0, 0.25);
