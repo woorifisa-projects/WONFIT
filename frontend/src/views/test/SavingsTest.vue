@@ -170,8 +170,8 @@ export default {
       // 서버에 POST 요청을 보냅니다.
       await axios
         .post(
-          "https://back.wonfit.site/member/recommend/product",
-          // "http://localhost:8080/member/recommend/product",
+          // "https://back.wonfit.site/member/recommend/product",
+          "http://localhost:8080/member/recommend/product",
           {
             productType: "savings",
             score: this.correctAnswersCount,
@@ -232,13 +232,13 @@ export default {
 }
 
 .choice:hover {
-  background-color: aliceblue;
+  background-color: #95b3f8;
   transform: scale(1.02); /* 마우스를 올렸을 때 글씨 크기를 약간 키웁니다. */
   transition: transform 0.1s ease-in-out; /* 부드러운 애니메이션 효과를 추가합니다. */
 }
 
 .choice.selected {
-  background-color: aliceblue;
+  background-color: #95b3f8;
 }
 
 .choice input[type="radio"] {
