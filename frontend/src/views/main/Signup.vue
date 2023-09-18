@@ -78,7 +78,7 @@
           <v-text-field
             v-model="bankAccountPassword"
             color="primary"
-            label="계좌 비밀번호"
+            label="계좌 인증용 번호"
             variant="underlined"
             readonly
             hint="비밀번호 4자리를 입력해 주세요."
