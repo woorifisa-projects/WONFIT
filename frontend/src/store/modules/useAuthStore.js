@@ -4,6 +4,7 @@ import { ref } from "vue";
 export const useAuthStore = defineStore("auth", () => {
   // 로그인 상태
   const isLogin = ref(false);
+  const isAdmin = ref(false);
 
   const login = () => {
     isLogin.value = true;
@@ -16,8 +17,8 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const initializeAuth = () => {
-    const sotredIsLogin = localStorage.getItem("isLogin");
-    if (sotredIsLogin) {
+    const storedIsLogin = localStorage.getItem("isLogin");
+    if (storedIsLogin) {
       isLogin.value = true;
     } else {
       isLogin.value = false;
@@ -29,5 +30,9 @@ export const useAuthStore = defineStore("auth", () => {
     isLogin.value = value;
   };
 
-  return { isLogin, setIsLogin, login, logout, initializeAuth };
+  const setIsAdmin = (value) => {
+    isAdmin.value = value;
+  };
+
+  return { isLogin, isAdmin, setIsLogin, setIsAdmin, login, logout, initializeAuth };
 });
