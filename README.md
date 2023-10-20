@@ -31,8 +31,23 @@
 
 ## 🧩 기능
 
+<br >
 
 ## 🔧 기술 스택
+
+<br >
+
+## 시스템 아키텍처
+
+### [Frontend / Backend Infrastructure]
+<img width="900" alt="image" src="https://github.com/woorifisa-projects/WONFIT/assets/131655841/f8bbf90e-137f-42e6-905a-8b2a80c84db4">
+
+
+
+### [CI / CD]
+<img width="900" alt="image" src="https://github.com/woorifisa-projects/WONFIT/assets/131655841/80863953-7aad-482d-ba15-957a96c0fb40">
+
+
 
 
 
