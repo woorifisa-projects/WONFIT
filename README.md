@@ -32,6 +32,10 @@
 ## 🧩 기능
 
 
+## 🔧 기술 스택
+
+
+
 ## 👨‍👨‍👧‍👧 팀원 소개
 |[조윤나](https://github.com/younnacho)|[윤영인](https://github.com/purple11-11)|[정주영](https://github.com/suwonhansibak)|[유재원](https://github.com/Jaewonnnn)|
 |:---:|:---:|:---:|:---:|
