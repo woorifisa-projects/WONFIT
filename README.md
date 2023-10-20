@@ -34,10 +34,12 @@
 <br >
 
 ## 🔧 기술 스택
+<img width="650" alt="image" src="https://github.com/woorifisa-projects/WONFIT/assets/131655841/297e8728-9822-47ab-a7fd-21329d78ad3b">
+
 
 <br >
 
-## 시스템 아키텍처
+## 🏗️ 시스템 아키텍처
 
 ### [Frontend / Backend Infrastructure]
 <img width="900" alt="image" src="https://github.com/woorifisa-projects/WONFIT/assets/131655841/f8bbf90e-137f-42e6-905a-8b2a80c84db4">
